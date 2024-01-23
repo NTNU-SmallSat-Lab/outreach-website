@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
+import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("flex flex-col min-h-screen", inter.className)}>
-        <Navbar />
-        <main className="flex-grow m-5">
-          {children}
-        </main>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          <Navbar />
+          <main className="flex-grow m-5">
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

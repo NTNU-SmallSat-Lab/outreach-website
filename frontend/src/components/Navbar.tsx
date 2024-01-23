@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useTheme } from "next-themes";
 
 export default function Navbar() {
   const dropdownPaths = ["/team", "/partners", "/contact", "/positions", "/infrastructure"];
@@ -21,6 +22,8 @@ export default function Navbar() {
 
     return pathname === path ? "secondary" : "ghost";
   }
+
+  const { setTheme } = useTheme();
 
   return (
     <nav className="flex items-center justify-between p-4 bg-slate-700 text-white w-full">
@@ -47,7 +50,7 @@ export default function Navbar() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={getButtonVariant("/about")}>About</Button>
+            <Button variant={getButtonVariant("/about")}>About (arrow icon)</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <Link href="/team" passHref>
@@ -67,6 +70,13 @@ export default function Navbar() {
             </Link>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <Button onClick={() => setTheme("light")}>
+          Light
+        </Button>
+        <Button onClick={() => setTheme("dark")}>
+          Dark
+        </Button>
       </div>
 
       <div className="ml-auto">
