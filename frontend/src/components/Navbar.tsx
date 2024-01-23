@@ -1,14 +1,11 @@
 "use client";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -21,7 +18,7 @@ function Navbar() {
     if (path === '/about' && isPathInDropdown()) {
       return "secondary";
     }
-    
+
     return pathname === path ? "secondary" : "ghost";
   }
 
