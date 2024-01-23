@@ -2,42 +2,74 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function Navbar() {
+  const dropdownPaths = ["/team", "/partners", "/contact", "/positions", "/infrastructure"];
+  const isPathInDropdown = () => dropdownPaths.includes(pathname);
+
   const pathname = usePathname();
-  console.log(pathname)
   const getButtonVariant = (path: string) => {
-    return pathname === path ? "bg-slate-500" : "";
+    if (path === '/about' && isPathInDropdown()) {
+      return "secondary";
+    }
+    
+    return pathname === path ? "secondary" : "ghost";
   }
 
   return (
     <nav className="flex items-center justify-between p-3 bg-slate-700 text-white w-full">
       <div>
         <Link href="/">
-          <p className={cn("transition-colors hover:bg-slate-500 p-3 cursor-pointer", getButtonVariant("/"))}>
+          <Button variant={getButtonVariant("/")}>
             Logo
-          </p>
+          </Button>
         </Link>
       </div>
 
       <div className="flex items-center flex-grow justify-center gap-10">
         <Link href="/blog">
-          <p className={cn("transition-colors hover:bg-slate-500 p-3 cursor-pointer", getButtonVariant("/blog"))}>
+          <Button variant={getButtonVariant("/blog")}>
             Blog
-          </p>
+          </Button>
         </Link>
 
         <Link href="/projects">
-          <p className={cn("transition-colors hover:bg-slate-500 p-3 cursor-pointer", getButtonVariant("/projects"))}>
+          <Button variant={getButtonVariant("/projects")}>
             Projects
-          </p>
+          </Button>
         </Link>
 
-        <Link href="/team">
-          <p className={cn("transition-colors hover:bg-slate-500 p-3 cursor-pointer", getButtonVariant("/team"))}>
-            About
-          </p>
-        </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant={getButtonVariant("/about")}>About</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Link href="/team" passHref>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+            </Link>
+            <Link href="/partners" passHref>
+              <DropdownMenuItem>Partners</DropdownMenuItem>
+            </Link>
+            <Link href="/contact" passHref>
+              <DropdownMenuItem>Contact</DropdownMenuItem>
+            </Link>
+            <Link href="/positions" passHref>
+              <DropdownMenuItem>Positions</DropdownMenuItem>
+            </Link>
+            <Link href="/infrastructure" passHref>
+              <DropdownMenuItem>Infrastructure</DropdownMenuItem>
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <div className="ml-auto">
