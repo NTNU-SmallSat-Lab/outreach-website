@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-function Navbar() {
+export default function Navbar() {
   const dropdownPaths = ["/team", "/partners", "/contact", "/positions", "/infrastructure"];
   const isPathInDropdown = () => dropdownPaths.includes(pathname);
 
@@ -23,7 +23,7 @@ function Navbar() {
   }
 
   return (
-    <nav className="flex items-center justify-between p-3 bg-slate-700 text-white w-full">
+    <nav className="flex items-center justify-between p-4 bg-slate-700 text-white w-full">
       <div>
         <Link href="/">
           <Button variant={getButtonVariant("/")}>
@@ -79,5 +79,3 @@ function Navbar() {
     </nav>
   );
 }
-
-export default Navbar;
