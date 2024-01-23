@@ -1,48 +1,48 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 function Navbar() {
-  const dropdownPaths = ["/team", "/partners", "/contact", "/positions", "/infrastructure"];
+  const dropdownPaths = [
+    "/team",
+    "/partners",
+    "/contact",
+    "/positions",
+    "/infrastructure",
+  ];
   const isPathInDropdown = () => dropdownPaths.includes(pathname);
 
   const pathname = usePathname();
   const getButtonVariant = (path: string) => {
-    if (path === '/about' && isPathInDropdown()) {
+    if (path === "/about" && isPathInDropdown()) {
       return "secondary";
     }
 
     return pathname === path ? "secondary" : "ghost";
-  }
+  };
 
   return (
     <nav className="flex items-center justify-between p-3 bg-slate-700 text-white w-full">
       <div>
         <Link href="/">
-          <Button variant={getButtonVariant("/")}>
-            Logo
-          </Button>
+          <Button variant={getButtonVariant("/")}>Logo</Button>
         </Link>
       </div>
 
       <div className="flex items-center flex-grow justify-center gap-10">
         <Link href="/blog">
-          <Button variant={getButtonVariant("/blog")}>
-            Blog
-          </Button>
+          <Button variant={getButtonVariant("/blog")}>Blog</Button>
         </Link>
 
         <Link href="/projects">
-          <Button variant={getButtonVariant("/projects")}>
-            Projects
-          </Button>
+          <Button variant={getButtonVariant("/projects")}>Projects</Button>
         </Link>
 
         <DropdownMenu>
