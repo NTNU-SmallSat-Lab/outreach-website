@@ -3,5 +3,5 @@ export default function PositionsPage() {
         <div>
             <h1>Positions</h1>
         </div>
-    )
+    );
 }

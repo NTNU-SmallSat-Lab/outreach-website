@@ -3,5 +3,5 @@ export default function PartnersPage() {
         <div>
             <h1>Partners</h1>
         </div>
-    )
+    );
 }

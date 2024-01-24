@@ -3,5 +3,5 @@ export default function InfrastructurePage() {
         <div>
             <h1>Infrastructure</h1>
         </div>
-    )
+    );
 }
