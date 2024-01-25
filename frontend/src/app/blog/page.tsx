@@ -12,10 +12,6 @@ import Link from "next/link";
 import { getAllArticles } from "@/lib/strapi";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-function truncateWords(str: string, numWords: number) {
-    return str.split(" ").splice(0, numWords).join(" ");
-}
-
 export default async function BlogPage() {
     const response = await getAllArticles();
     const data: components["schemas"]["ArticleListResponseDataItem"][] =
