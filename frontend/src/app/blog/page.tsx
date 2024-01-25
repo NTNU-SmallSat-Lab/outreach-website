@@ -1,4 +1,4 @@
-import { components } from "@customTypes/strapiTypes";
+import { components } from "@customTypes/strapi";
 
 async function getData() {
     const res = await fetch("http://localhost:1337/api/articles", {
