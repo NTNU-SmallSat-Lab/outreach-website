@@ -368,22 +368,23 @@ export interface ApiArticleArticle extends Schema.CollectionType {
     singularName: 'article';
     pluralName: 'articles';
     displayName: 'Article';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Title: Attribute.String;
-    Subtitle: Attribute.String;
-    CoverImage: Attribute.Media;
-    DatePublished: Attribute.Date;
-    Body: Attribute.Blocks;
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    coverImage: Attribute.Media;
+    datePublished: Attribute.Date;
+    body: Attribute.Blocks;
     author: Attribute.Relation<
       'api::article.article',
       'oneToOne',
-      'admin::user'
+      'api::author.author'
     >;
-    slug: Attribute.UID<'api::article.article', 'Title'>;
+    slug: Attribute.UID;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -395,6 +396,38 @@ export interface ApiArticleArticle extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::article.article',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAuthorAuthor extends Schema.CollectionType {
+  collectionName: 'authors';
+  info: {
+    singularName: 'author';
+    pluralName: 'authors';
+    displayName: 'Author';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    avatar: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::author.author',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::author.author',
       'oneToOne',
       'admin::user'
     > &
@@ -832,6 +865,7 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::article.article': ApiArticleArticle;
+      'api::author.author': ApiAuthorAuthor;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;

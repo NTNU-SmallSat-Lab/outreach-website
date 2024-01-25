@@ -1,19 +1,23 @@
 import { components } from "@customTypes/strapi";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
+import { getAllArticles } from "@/lib/strapi";
+import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-async function getData() {
-    const res = await fetch("http://localhost:1337/api/articles", {
-        cache: "no-cache", // Disable caching during development
-    });
-
-    if (!res.ok) {
-        throw new Error("Failed to fetch data:" + res.statusText);
-    }
-
-    return res.json();
+function truncateWords(str: string, numWords: number) {
+    return str.split(" ").splice(0, numWords).join(" ");
 }
 
 export default async function BlogPage() {
-    const response = await getData();
+    const response = await getAllArticles();
     const data: components["schemas"]["ArticleListResponseDataItem"][] =
         response.data;
 
@@ -21,18 +25,52 @@ export default async function BlogPage() {
 
     return (
         <div>
-            <h1>Blog</h1>
-            {data.map((post) => {
-                return (
-                    <div key={post.id}>
-                        <h2>{post.attributes?.Title}</h2>
-                        <h3>{post.attributes?.Subtitle}</h3>
-                        <p>
-                            {(post.attributes?.Body as any)[0].children[0].text}
-                        </p>
-                    </div>
-                );
-            })}
+            <h1 className="text-4xl font-extrabold">Blog</h1>
+            <p className="text-sm text-muted-foreground">
+                News and other short stories about our activities are shown
+                here.
+            </p>
+            <div className="flex flex-col gap-4 mt-4">
+                {data.map((article) => {
+                    return (
+                        <Card key={article.id}>
+                            <CardHeader>
+                                <CardTitle>
+                                    <Link
+                                        className="hover:underline"
+                                        href={
+                                            "/blog/" + article.attributes?.slug
+                                        }
+                                    >
+                                        {article.attributes?.title}
+                                    </Link>
+                                </CardTitle>
+                                <CardDescription>
+                                    {article.attributes?.subtitle}
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <BlocksRenderer
+                                    content={
+                                        article.attributes
+                                            ?.body as BlocksContent
+                                    }
+                                />
+                            </CardContent>
+                            <CardFooter className="flex-row gap-2">
+                                <Avatar>
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                {
+                                    article.attributes?.author?.data?.attributes
+                                        ?.name
+                                }
+                            </CardFooter>
+                        </Card>
+                    );
+                })}
+            </div>
         </div>
     );
 }
