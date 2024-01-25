@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: General Issue
+about: New issue, relating to a new feature
 title: ''
 labels: ''
 assignees: ''
@@ -16,3 +16,5 @@ assignees: ''
 ### Tasks
 
 - [ ]
+
+### Connected Issues
