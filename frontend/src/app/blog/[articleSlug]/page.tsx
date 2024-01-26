@@ -1,6 +1,6 @@
 export const runtime = "edge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getArticleBySlug } from "@/lib/strapi";
+import { getArticleBySlug, getAvatarImageUrl } from "@/lib/strapi";
 import { components } from "@customTypes/strapi";
 import {
     BlocksRenderer,
@@ -15,8 +15,10 @@ export default async function Page({
     const response = await getArticleBySlug(params.articleSlug);
     const article: components["schemas"]["ArticleListResponseDataItem"] =
         response.data[0];
-
-    console.log(article);
+    const authorName = article.attributes?.author?.data?.attributes?.name;
+    let avatarURL = getAvatarImageUrl(
+        article.attributes?.author?.data?.attributes?.avatar,
+    );
 
     return (
         <>
@@ -33,8 +35,14 @@ export default async function Page({
 
                 <div className="flex flex-row justify-center gap-1 items-center">
                     <Avatar className="">
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarImage src={avatarURL} />
+                        <AvatarFallback>
+                            {// Get initials from author name
+                            authorName
+                                ?.split(" ")
+                                .map((name) => name[0])
+                                .join("")}
+                        </AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col justify-center">
                         <p>

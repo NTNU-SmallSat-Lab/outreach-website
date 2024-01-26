@@ -10,15 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { getAllArticles } from "@/lib/strapi";
+import { getAllArticles, getAvatarImageUrl } from "@/lib/strapi";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 export default async function BlogPage() {
     const response = await getAllArticles();
     const data: components["schemas"]["ArticleListResponseDataItem"][] =
         response.data;
-
-    console.log(response.data);
 
     return (
         <div>
@@ -29,6 +27,12 @@ export default async function BlogPage() {
             </p>
             <div className="flex flex-col gap-4 mt-4">
                 {data.map((article) => {
+                    let avatarURL = getAvatarImageUrl(
+                        article.attributes?.author?.data?.attributes?.avatar,
+                    );
+                    const authorName =
+                        article.attributes?.author?.data?.attributes?.name;
+                    const datePublished = article.attributes?.datePublished;
                     return (
                         <Card key={article.id}>
                             <CardHeader>
@@ -54,15 +58,23 @@ export default async function BlogPage() {
                                     }
                                 />
                             </CardContent>
-                            <CardFooter className="flex-row gap-2">
-                                <Avatar>
-                                    <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                {
-                                    article.attributes?.author?.data?.attributes
-                                        ?.name
-                                }
+                            <CardFooter>
+                                <div className="flex flex-row justify-center gap-1 items-center">
+                                    <Avatar className="">
+                                        <AvatarImage src={avatarURL} />
+                                        <AvatarFallback>
+                                            {// Get initials from author name
+                                            authorName
+                                                ?.split(" ")
+                                                .map((name) => name[0])
+                                                .join("")}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex flex-col justify-center">
+                                        <p>{authorName}</p>
+                                        <p>{datePublished}</p>
+                                    </div>
+                                </div>
                             </CardFooter>
                         </Card>
                     );

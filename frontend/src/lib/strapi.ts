@@ -1,12 +1,18 @@
 var qs = require("qs");
+import { components } from "@customTypes/strapi";
 
 const API_URL = process.env.API_URL;
+const HOST_URL = process.env.HOST_URL;
 
 export async function getAllArticles() {
     let params: string = qs.stringify(
         {
             sort: ["datePublished:desc"], // Sort by date published, descending
-            populate: "*", // Populate all relations
+            populate: {
+                author: {
+                    populate: ["avatar"],
+                },
+            },
         },
         { encode: false }, // Disable encoding of the query string, has to be disabled when using with Strapi
     );
@@ -27,7 +33,11 @@ export async function getArticleBySlug(slug: string) {
     let params: string = qs.stringify(
         {
             filters: { slug: { $eq: slug } },
-            populate: "*", // Populate all relations
+            populate: {
+                author: {
+                    populate: ["avatar"],
+                },
+            },
         },
         { encode: false }, // Disable encoding of the query string, has to be disabled when using with Strapi
     );
@@ -42,4 +52,12 @@ export async function getArticleBySlug(slug: string) {
     }
 
     return res.json();
+}
+
+export function getAvatarImageUrl(
+    avatar: components["schemas"]["Author"]["avatar"],
+) {
+    if (HOST_URL && avatar && avatar && avatar.data && avatar.data[0]) {
+        return HOST_URL + avatar.data[0].attributes?.url;
+    }
 }
