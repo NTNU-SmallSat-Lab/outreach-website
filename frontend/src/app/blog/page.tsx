@@ -78,9 +78,8 @@ export default async function BlogPage() {
             <div className="flex flex-col gap-4 mt-4">
                 {graphqlData.data.articles.data.map((article) => {
                     let avatarURL =
-                        graphqlData.data.articles?.data?.[0]?.attributes?.author
-                            ?.data?.attributes?.avatar?.data?.[0]?.attributes
-                            ?.url;
+                        article?.attributes?.author?.data?.attributes?.avatar
+                            ?.data?.[0]?.attributes?.url;
 
                     if (HOST_URL && avatarURL != undefined) {
                         avatarURL = HOST_URL + avatarURL;
