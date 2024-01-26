@@ -6,8 +6,14 @@ When updating a schema in Strapi, you have to run `npm run generateTypes` in the
 >
 > The generated documentation can be found at [http://localhost:1337/documentation/v1.0.0](http://localhost:1337/documentation/v1.0.0) when running the dev server.
 
-
-
-## Strapi First time boot
+### Strapi First time boot
 
 Goto Settings > Users & Permissions plugin > Roles > Public > Article, and enable `find` and `findOne`
+
+### Heroku
+
+Heroku is currently configured to run on [https://small-sat-lab-6ad3da13947b.herokuapp.com/](https://small-sat-lab-6ad3da13947b.herokuapp.com/)
+
+with the admin panel at [https://small-sat-lab-6ad3da13947b.herokuapp.com/admin](https://small-sat-lab-6ad3da13947b.herokuapp.com/admin)
+
+You can invite new admin users in `Settings > Administration panel > Users > Invite new user`
