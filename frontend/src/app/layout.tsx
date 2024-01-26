@@ -28,7 +28,7 @@ export default function RootLayout({
                     enableSystem
                 >
                     <Navbar />
-                    <main className="flex-grow m-5">{children}</main>
+                    <main className="flex-grow p-5">{children}</main>
                     <Footer />
                 </ThemeProvider>
             </body>

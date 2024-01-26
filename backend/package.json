@@ -16,19 +16,22 @@
   "dependencies": {
     "@creazy231/strapi-plugin-apollo-sandbox": "^0.0.13",
     "@strapi/plugin-cloud": "4.19.0",
+    "@strapi/plugin-documentation": "^4.19.0",
     "@strapi/plugin-graphql": "4.19.0",
     "@strapi/plugin-i18n": "4.19.0",
     "@strapi/plugin-users-permissions": "4.19.0",
     "@strapi/strapi": "4.19.0",
     "better-sqlite3": "8.6.0",
+    "pg": "^8.11.3",
+    "pg-connection-string": "^2.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
     "styled-components": "5.3.3"
   },
   "engines": {
-    "node": ">=18.0.0 <=20.x.x",
-    "npm": ">=6.0.0"
+    "node": "20.x.x",
+    "npm": ">=10.4.0"
   },
   "strapi": {
     "uuid": "9ba588bf-0d19-4b3a-8581-def4b74c1a92"
