@@ -7,7 +7,9 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "prettier": "npx prettier . --write"
+        "prettier": "npx prettier . --write",
+        "compile": "graphql-codegen",
+        "watch": " graphql-codegen -w"
     },
     "dependencies": {
         "@apollo/client": "^3.8.10",
@@ -29,6 +31,9 @@
     },
     "devDependencies": {
         "@cloudflare/next-on-pages": "^1.8.3",
+        "@graphql-codegen/cli": "^5.0.0",
+        "@graphql-codegen/client-preset": "^4.1.0",
+        "@graphql-typed-document-node/core": "^3.2.0",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
@@ -39,6 +44,6 @@
         "postcss": "^8",
         "prettier": "3.2.4",
         "tailwindcss": "^3.3.0",
-        "typescript": "^5"
+        "typescript": "^5.3.3"
     }
 }

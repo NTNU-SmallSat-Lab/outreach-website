@@ -13,7 +13,46 @@ import Link from "next/link";
 import { fetchArticlesAll, getAvatarImageUrl } from "@/lib/strapi";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { getClient } from "@/lib/ApolloClient";
-import { gql } from "@apollo/client";
+import { gql } from "@/__generated__/gql";
+
+const GET_ARTICLES = gql(`
+query GET_ARTICLES {
+    articles(sort: ["datePublished:desc"]) {
+        data {
+            id
+            attributes {
+                author {
+                    data {
+                        attributes {
+                            avatar {
+                                data {
+                                    attributes {
+                                        url
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                title
+                datePublished
+                body
+                coverImage {
+                    data {
+                        attributes {
+                            url
+                        }
+                    }
+                }
+                createdAt
+                publishedAt
+                slug
+                subtitle
+            }
+        }
+    }
+}
+`);
 
 export default async function BlogPage() {
     const response = await fetchArticlesAll();
@@ -21,44 +60,7 @@ export default async function BlogPage() {
         response.data;
 
     const graphqlData = await getClient().query({
-        query: gql`
-            query ExampleQuery {
-                articles(sort: ["datePublished:desc"]) {
-                    data {
-                        id
-                        attributes {
-                            author {
-                                data {
-                                    attributes {
-                                        avatar {
-                                            data {
-                                                attributes {
-                                                    url
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            title
-                            datePublished
-                            body
-                            coverImage {
-                                data {
-                                    attributes {
-                                        url
-                                    }
-                                }
-                            }
-                            createdAt
-                            publishedAt
-                            slug
-                            subtitle
-                        }
-                    }
-                }
-            }
-        `,
+        query: GET_ARTICLES,
     });
 
     return (
