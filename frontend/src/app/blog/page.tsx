@@ -68,13 +68,6 @@ export default async function BlogPage() {
         return <div>There are no articles to show.</div>;
     }
 
-    console.log(graphqlData);
-
-    console.log(
-        graphqlData.data.articles.data[0].attributes?.author?.data?.attributes
-            ?.avatar?.data[0].attributes?.url,
-    );
-
     return (
         <div>
             <h1 className="text-4xl font-extrabold">Blog</h1>
