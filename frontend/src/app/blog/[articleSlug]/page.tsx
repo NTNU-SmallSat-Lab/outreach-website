@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getArticleBySlug } from "@/lib/strapi";
 import { components } from "@customTypes/strapi";
