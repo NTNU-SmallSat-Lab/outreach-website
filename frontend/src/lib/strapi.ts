@@ -1,7 +1,7 @@
 var qs = require("qs");
 import { components } from "@customTypes/strapi";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.HOST_URL + "/api/";
 const HOST_URL = process.env.HOST_URL;
 
 export async function fetchArticlesAll() {

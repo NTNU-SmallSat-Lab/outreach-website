@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
+import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,15 +23,17 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={cn("flex flex-col min-h-screen", inter.className)}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                >
-                    <Navbar />
-                    <main className="flex-grow p-5">{children}</main>
-                    <Footer />
-                </ThemeProvider>
+                <ApolloWrapper>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                    >
+                        <Navbar />
+                        <main className="flex-grow p-5">{children}</main>
+                        <Footer />
+                    </ThemeProvider>
+                </ApolloWrapper>
             </body>
         </html>
     );
