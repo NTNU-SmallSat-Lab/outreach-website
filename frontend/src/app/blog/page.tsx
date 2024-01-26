@@ -12,6 +12,7 @@ import Link from "next/link";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
+const HOST_URL = process.env.HOST_URL;
 
 const GET_ARTICLES = gql(`
 query GET_ARTICLES {
@@ -59,11 +60,20 @@ export default async function BlogPage() {
     });
 
     if (
-        graphqlData.data.articles === null ||
-        graphqlData.data.articles === undefined
+        graphqlData.data === null ||
+        graphqlData.data === undefined ||
+        graphqlData.data.articles === undefined ||
+        graphqlData.data.articles === null
     ) {
         return <div>There are no articles to show.</div>;
     }
+
+    console.log(graphqlData);
+
+    console.log(
+        graphqlData.data.articles.data[0].attributes?.author?.data?.attributes
+            ?.avatar?.data[0].attributes?.url,
+    );
 
     return (
         <div>
@@ -75,8 +85,13 @@ export default async function BlogPage() {
             <div className="flex flex-col gap-4 mt-4">
                 {graphqlData.data.articles.data.map((article) => {
                     let avatarURL =
-                        article.attributes?.author?.data?.attributes?.avatar
-                            ?.data[0].attributes?.url;
+                        graphqlData.data.articles?.data[0].attributes?.author
+                            ?.data?.attributes?.avatar?.data[0].attributes?.url;
+
+                    if (HOST_URL && avatarURL != undefined) {
+                        avatarURL = HOST_URL + avatarURL;
+                    }
+
                     const authorName =
                         article.attributes?.author?.data?.attributes?.name;
                     const datePublished = article.attributes?.datePublished;

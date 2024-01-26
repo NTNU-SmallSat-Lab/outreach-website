@@ -12,7 +12,7 @@
         "watch": " graphql-codegen -w"
     },
     "dependencies": {
-        "@apollo/client": "^3.8.10",
+        "@apollo/client": "^3.9.0-alpha.5",
         "@apollo/experimental-nextjs-app-support": "^0.6.0",
         "@radix-ui/react-avatar": "^1.0.4",
         "@radix-ui/react-dropdown-menu": "^2.0.6",
