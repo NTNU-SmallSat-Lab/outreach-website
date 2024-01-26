@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
 
-const HOST_URL = process.env.HOST_URL
+const HOST_URL = process.env.HOST_URL;
 
 export const { getClient } = registerApolloClient(() => {
     return new ApolloClient({
