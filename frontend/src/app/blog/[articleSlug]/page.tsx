@@ -1,7 +1,6 @@
 export const runtime = "edge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { fetchArticleBySlug, getAvatarImageUrl } from "@/lib/strapi";
-import { components } from "@customTypes/strapi";
+
 import {
     BlocksRenderer,
     type BlocksContent,
