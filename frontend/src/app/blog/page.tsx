@@ -78,8 +78,8 @@ export default async function BlogPage() {
             <div className="flex flex-col gap-4 mt-4">
                 {graphqlData.data.articles.data.map((article) => {
                     let avatarURL =
-                        graphqlData.data.articles?.data?.[0].attributes?.author
-                            ?.data?.attributes?.avatar?.data?.[0].attributes
+                        graphqlData.data.articles?.data?.[0]?.attributes?.author
+                            ?.data?.attributes?.avatar?.data?.[0]?.attributes
                             ?.url;
 
                     if (HOST_URL && avatarURL != undefined) {
@@ -87,8 +87,8 @@ export default async function BlogPage() {
                     }
 
                     const authorName =
-                        article.attributes?.author?.data?.attributes?.name;
-                    const datePublished = article.attributes?.datePublished;
+                        article?.attributes?.author?.data?.attributes?.name;
+                    const datePublished = article?.attributes?.datePublished;
                     return (
                         <Card key={article.id}>
                             <CardHeader>
@@ -96,20 +96,20 @@ export default async function BlogPage() {
                                     <Link
                                         className="hover:underline"
                                         href={
-                                            "/blog/" + article.attributes?.slug
+                                            "/blog/" + article?.attributes?.slug
                                         }
                                     >
-                                        {article.attributes?.title}
+                                        {article?.attributes?.title}
                                     </Link>
                                 </CardTitle>
                                 <CardDescription>
-                                    {article.attributes?.subtitle}
+                                    {article?.attributes?.subtitle}
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <BlocksRenderer
                                     content={
-                                        article.attributes
+                                        article?.attributes
                                             ?.body as BlocksContent
                                     }
                                 />
