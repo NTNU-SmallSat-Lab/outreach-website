@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic";
 export const runtime = "edge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getArticleBySlug } from "@/lib/strapi";
