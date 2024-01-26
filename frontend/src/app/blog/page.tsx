@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { fetchArticlesAll, getAvatarImageUrl } from "@/lib/strapi";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
@@ -24,6 +23,7 @@ query GET_ARTICLES {
                 author {
                     data {
                         attributes {
+                            name
                             avatar {
                                 data {
                                     attributes {
@@ -55,13 +55,16 @@ query GET_ARTICLES {
 `);
 
 export default async function BlogPage() {
-    const response = await fetchArticlesAll();
-    const data: components["schemas"]["ArticleListResponseDataItem"][] =
-        response.data;
-
     const graphqlData = await getClient().query({
         query: GET_ARTICLES,
     });
+
+    if (
+        graphqlData.data.articles === null ||
+        graphqlData.data.articles === undefined
+    ) {
+        return <div>There are no articles to show.</div>;
+    }
 
     return (
         <div>
@@ -71,10 +74,10 @@ export default async function BlogPage() {
                 here.
             </p>
             <div className="flex flex-col gap-4 mt-4">
-                {data.map((article) => {
-                    let avatarURL = getAvatarImageUrl(
-                        article.attributes?.author?.data?.attributes?.avatar,
-                    );
+                {graphqlData.data.articles.data.map((article) => {
+                    let avatarURL =
+                        article.attributes?.author?.data?.attributes?.avatar
+                            ?.data[0].attributes?.url;
                     const authorName =
                         article.attributes?.author?.data?.attributes?.name;
                     const datePublished = article.attributes?.datePublished;
