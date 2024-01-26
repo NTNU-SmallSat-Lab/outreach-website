@@ -4,7 +4,7 @@ import { components } from "@customTypes/strapi";
 const API_URL = process.env.API_URL;
 const HOST_URL = process.env.HOST_URL;
 
-export async function getAllArticles() {
+export async function fetchArticlesAll() {
     let params: string = qs.stringify(
         {
             sort: ["datePublished:desc"], // Sort by date published, descending
@@ -29,7 +29,7 @@ export async function getAllArticles() {
     return res.json();
 }
 
-export async function getArticleBySlug(slug: string) {
+export async function fetchArticleBySlug(slug: string) {
     let params: string = qs.stringify(
         {
             filters: { slug: { $eq: slug } },

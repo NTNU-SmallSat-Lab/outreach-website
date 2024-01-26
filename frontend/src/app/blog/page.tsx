@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { getAllArticles, getAvatarImageUrl } from "@/lib/strapi";
+import { fetchArticlesAll, getAvatarImageUrl } from "@/lib/strapi";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 export default async function BlogPage() {
-    const response = await getAllArticles();
+    const response = await fetchArticlesAll();
     const data: components["schemas"]["ArticleListResponseDataItem"][] =
         response.data;
 

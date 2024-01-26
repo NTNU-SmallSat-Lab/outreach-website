@@ -1,6 +1,6 @@
 export const runtime = "edge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getArticleBySlug, getAvatarImageUrl } from "@/lib/strapi";
+import { fetchArticleBySlug, getAvatarImageUrl } from "@/lib/strapi";
 import { components } from "@customTypes/strapi";
 import {
     BlocksRenderer,
@@ -12,7 +12,7 @@ export default async function Page({
 }: {
     params: { articleSlug: string };
 }) {
-    const response = await getArticleBySlug(params.articleSlug);
+    const response = await fetchArticleBySlug(params.articleSlug);
     const article: components["schemas"]["ArticleListResponseDataItem"] =
         response.data[0];
     const authorName = article.attributes?.author?.data?.attributes?.name;
