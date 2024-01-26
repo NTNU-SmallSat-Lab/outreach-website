@@ -49,6 +49,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
+            - run: npm ci # Clean install packages
             - run: npm run lint # Run linter
 
     prettier:
@@ -66,4 +67,5 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
+            - run: npm ci # Clean install packages
             - run: npx prettier . --check # Run prettier
