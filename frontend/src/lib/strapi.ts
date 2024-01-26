@@ -1,5 +1,7 @@
 var qs = require("qs");
 
+const API_URL = process.env.API_URL;
+
 export async function getAllArticles() {
     let params: string = qs.stringify(
         {
@@ -9,7 +11,7 @@ export async function getAllArticles() {
         { encode: false }, // Disable encoding of the query string, has to be disabled when using with Strapi
     );
 
-    const res = await fetch("http://localhost:1337/api/articles?" + params, {
+    const res = await fetch(API_URL + "articles?" + params, {
         cache: "no-cache", // Disable caching during development
     });
 
@@ -32,7 +34,7 @@ export async function getArticleBySlug(slug: string) {
 
     console.log(params);
 
-    const res = await fetch("http://localhost:1337/api/articles?" + params, {
+    const res = await fetch(API_URL + "articles?" + params, {
         cache: "no-cache", // Disable caching during development
     });
 
