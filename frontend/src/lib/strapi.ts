@@ -32,8 +32,6 @@ export async function getArticleBySlug(slug: string) {
         { encode: false }, // Disable encoding of the query string, has to be disabled when using with Strapi
     );
 
-    console.log(params);
-
     const res = await fetch(API_URL + "articles?" + params, {
         cache: "no-cache", // Disable caching during development
     });
