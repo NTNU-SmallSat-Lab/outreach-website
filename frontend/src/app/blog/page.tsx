@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 import { components } from "@customTypes/strapi";
 import {
     Card,
