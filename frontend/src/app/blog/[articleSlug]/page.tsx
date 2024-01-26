@@ -71,8 +71,8 @@ export default async function Page({
     }
 
     let avatarURL =
-        graphqlData.data.articles?.data[0].attributes?.author?.data?.attributes
-            ?.avatar?.data[0].attributes?.url;
+        graphqlData.data.articles?.data[0]?.attributes?.author?.data?.attributes
+            ?.avatar?.data[0]?.attributes?.url;
 
     if (HOST_URL && avatarURL != undefined) {
         avatarURL = HOST_URL + avatarURL;
@@ -80,20 +80,20 @@ export default async function Page({
 
     const article = graphqlData.data.articles?.data[0];
 
-    const authorName = article.attributes?.author?.data?.attributes?.name;
-    const datePublished = article.attributes?.datePublished;
+    const authorName = article?.attributes?.author?.data?.attributes?.name;
+    const datePublished = article?.attributes?.datePublished;
 
     return (
         <>
             <div className="flex flex-col gap-4 items-center">
                 <h1 className="text-4xl font-extrabold">
-                    {article.attributes?.title}
+                    {article?.attributes?.title}
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                    {article.attributes?.subtitle}{" "}
+                    {article?.attributes?.subtitle}{" "}
                 </p>
                 <BlocksRenderer
-                    content={article.attributes?.body as BlocksContent}
+                    content={article?.attributes?.body as BlocksContent}
                 />
 
                 <div className="flex flex-row justify-center gap-1 items-center">
