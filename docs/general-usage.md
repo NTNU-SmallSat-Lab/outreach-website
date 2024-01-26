@@ -10,7 +10,11 @@ When updating a schema in Strapi, you have to run `npm run generateTypes` in the
 
 ###### GraphQL
 
-If you're using GraphQL, then you need to run `npm run compile` from `/frontend` whenever you update a schema or define a new graphQL request in the code.
+If you're using GraphQL, then you need to run `npm run compile` from `/frontend` whenever you update a schema or define a new graphQL request in the code. Make sure to import the correct `gql` as
+
+```
+import { gql } from"@/generated/gql";
+```
 
 > [https://www.apollographql.com/docs/react/development-testing/static-typing/](https://www.apollographql.com/docs/react/development-testing/static-typing/)
 
