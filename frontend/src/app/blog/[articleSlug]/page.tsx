@@ -6,19 +6,83 @@ import {
     BlocksRenderer,
     type BlocksContent,
 } from "@strapi/blocks-react-renderer";
+import { gql } from "@/__generated__/gql";
+import { getClient } from "@/lib/ApolloClient";
+const HOST_URL = process.env.HOST_URL;
+
+const GET_ARTICLE_BY_SLUG = gql(
+    `query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {
+    articles(filters: $articlesFilters) {
+      data {
+        attributes {
+          author {
+            data {
+              attributes {
+                name
+                avatar {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+          body
+          coverImage {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          datePublished
+          subtitle
+          title
+        }
+      }
+    }
+  }
+  
+  `,
+);
 
 export default async function Page({
     params,
 }: {
     params: { articleSlug: string };
 }) {
-    const response = await fetchArticleBySlug(params.articleSlug);
-    const article: components["schemas"]["ArticleListResponseDataItem"] =
-        response.data[0];
+    const graphqlData = await getClient().query({
+        query: GET_ARTICLE_BY_SLUG,
+        variables: {
+            articlesFilters: {
+                slug: { eq: params.articleSlug },
+            },
+        },
+    });
+
+    if (
+        graphqlData.data === null ||
+        graphqlData.data === undefined ||
+        graphqlData.data.articles === undefined ||
+        graphqlData.data.articles === null
+    ) {
+        return <div>Article not found</div>;
+    }
+
+    let avatarURL =
+        graphqlData.data.articles?.data[0].attributes?.author?.data?.attributes
+            ?.avatar?.data[0].attributes?.url;
+
+    if (HOST_URL && avatarURL != undefined) {
+        avatarURL = HOST_URL + avatarURL;
+    }
+
+    const article = graphqlData.data.articles?.data[0];
+
     const authorName = article.attributes?.author?.data?.attributes?.name;
-    let avatarURL = getAvatarImageUrl(
-        article.attributes?.author?.data?.attributes?.avatar,
-    );
+    const datePublished = article.attributes?.datePublished;
 
     return (
         <>
@@ -45,10 +109,8 @@ export default async function Page({
                         </AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col justify-center">
-                        <p>
-                            {article.attributes?.author?.data?.attributes?.name}
-                        </p>
-                        <p>{article.attributes?.datePublished}</p>
+                        <p>{authorName}</p>
+                        <p>{datePublished}</p>
                     </div>
                 </div>
             </div>
