@@ -57,9 +57,9 @@ export default async function PartnersPage() {
                         href={websiteUrl}
                         target="_blank"
                         key={partnerName}
-                        className="hover:transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                        className="hover:transform hover:scale-105 transition-transform duration-300 ease-in-out w-full max-w-lg mx-auto"
                     >
-                        <Card className="max-w-md mb-6 bg-neutral-50">
+                        <Card className="mb-6 bg-neutral-50">
                             <CardHeader>
                                 <CardTitle className="text-black">
                                     <p>{partnerName}</p>
