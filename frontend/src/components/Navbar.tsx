@@ -36,10 +36,15 @@ export default function Navbar() {
         <nav className="flex items-center justify-between p-4 bg-slate-700 dark:bg-slate-500 text-white w-full">
             <div>
                 <Link href="/">
-                    <Button variant={getButtonVariant("/")}>
-                        Logo
-                        <Icon icon="mdi-light:home" className="size-10 ml-6" />
-                    </Button>
+                    <h1 className="text-3xl font-bold flex flex-row">
+                        <Icon
+                            icon="twemoji:satellite"
+                            width="36"
+                            height="36"
+                            className="mr-2"
+                        />
+                        SmallSatLab
+                    </h1>
                 </Link>
             </div>
 
