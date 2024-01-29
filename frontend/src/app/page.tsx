@@ -4,22 +4,16 @@ import ColoredSection from "@/components/ui/coloredSection";
 import Hero from "@/components/ui/hero";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { gsap } from "gsap";
+
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default function Home() {
-    const myRef = useRef(null);
-
     function handleClick(): void {
-        if (myRef.current !== null) {
-            setTimeout(() => {
-                // @ts-ignore
-                myRef.current.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                    inline: "nearest",
-                });
-            });
-        }
+        gsap.to(window, { duration: 1, scrollTo: "#about-us" });
     }
 
     return (
@@ -32,8 +26,10 @@ export default function Home() {
                 className="min-h-[calc(100vh-72px)] flex flex-col justify-center"
                 handleClick={handleClick}
             ></Hero>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/rocketLaunch.gif" alt="rocket launching" />
             <ColoredSection
-                ref={myRef}
+                id="about-us"
                 className="flex flex-col items-center py-12 px-8"
             >
                 <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
