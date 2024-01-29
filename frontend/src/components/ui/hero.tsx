@@ -1,24 +1,34 @@
 import Link from "next/link";
 import { Button } from "@components/ui/button";
 import { cn } from "@/lib/utils";
+import React from "react";
 
-export default function Hero({
-    title,
-    description,
-    buttonText,
-    buttonLink,
-    className,
-    handleClick,
-}: {
+interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     description: string;
-    buttonText: string;
     buttonLink: string;
+    buttonText: string;
+    handleClick: () => void;
     className?: string;
-    handleClick?: () => void;
-}) {
-    return (
+}
+
+const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
+    (
+        {
+            title,
+            description,
+            buttonLink,
+            buttonText,
+            handleClick,
+            className,
+            children,
+            ...props
+        },
+        ref,
+    ) => (
         <section
+            ref={ref}
+            {...props}
             className={cn("w-full py-12 md:py-24 lg:py-32 xl:py-48", className)}
         >
             <div className="container px-4 md:px-6">
@@ -36,8 +46,13 @@ export default function Hero({
                             <Button onClick={handleClick}>{buttonText}</Button>
                         </Link>
                     </div>
+                    {children}
                 </div>
             </div>
         </section>
-    );
-}
+    ),
+);
+
+Hero.displayName = "Hero"; // Add display name
+
+export default Hero;

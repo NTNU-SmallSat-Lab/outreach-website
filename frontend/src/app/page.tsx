@@ -5,6 +5,7 @@ import Hero from "@/components/ui/hero";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -12,6 +13,25 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default function Home() {
+    useGSAP(() => {
+        gsap.fromTo(
+            "#rocket",
+            { y: 100, rotation: 45, zIndex: 1 },
+            {
+                y: -200,
+                x: 300,
+                opacity: 1,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: "#rocket",
+                    start: "top center",
+                    end: "bottom top",
+                    scrub: true,
+                },
+            },
+        );
+    });
+
     function handleClick(): void {
         gsap.to(window, { duration: 1, scrollTo: "#about-us" });
     }
@@ -19,15 +39,23 @@ export default function Home() {
     return (
         <main>
             <Hero
+                id="intro-hero"
                 title={"SmallSatLab"}
                 description={"We launch satellites 🚀"}
                 buttonText={"About us"}
                 buttonLink=""
-                className="min-h-[calc(100vh-72px)] flex flex-col justify-center"
+                className="min-h-[calc(100vh-72px)] flex flex-col justify-center z-10"
                 handleClick={handleClick}
-            ></Hero>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/rocketLaunch.gif" alt="rocket launching" />
+            >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    id="rocket"
+                    src="/images/rocketLaunch.gif"
+                    alt="rocket launching"
+                    className=""
+                />
+            </Hero>
+
             <ColoredSection
                 id="about-us"
                 className="flex flex-col items-center py-12 px-8"
@@ -80,7 +108,7 @@ export default function Home() {
                         other satellite autonomous sensor platforms.
                     </p>
                     <Link href={"/projects"}>
-                        <Button>View more</Button>
+                        <Button id="">View more</Button>
                     </Link>
                 </div>
             </div>
