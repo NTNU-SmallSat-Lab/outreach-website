@@ -5,7 +5,7 @@ export default function Home() {
         <main>
             <Hero
                 title={"SmallSatLab"}
-                description={"We launch satelites"}
+                description={"We launch satellites"}
                 buttonText={"About us"}
                 buttonLink={""}
             ></Hero>
