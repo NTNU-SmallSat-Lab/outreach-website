@@ -38,7 +38,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="flex items-center justify-between p-4 bg-slate-700 dark:bg-slate-500 text-white w-full">
+        <nav className="flex items-center justify-between p-4 bg-slate-700 text-white w-full">
             <div className="flex-1">
                 <Link href="/">
                     <h1 className="text-3xl font-bold flex flex-row">

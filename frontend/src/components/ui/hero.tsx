@@ -1,19 +1,24 @@
 import Link from "next/link";
 import { Button } from "@components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Hero({
     title,
     description,
     buttonText,
     buttonLink,
+    className,
 }: {
     title: string;
     description: string;
     buttonText: string;
     buttonLink: string;
+    className?: string;
 }) {
     return (
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+        <section
+            className={cn("w-full py-12 md:py-24 lg:py-32 xl:py-48", className)}
+        >
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center space-y-4 text-center">
                     <div className="space-y-2">
