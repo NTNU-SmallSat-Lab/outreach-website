@@ -62,44 +62,63 @@ export default async function TeamPage() {
 
     const projectsData = graphqlData?.data?.phDProjects?.data || [];
 
-    if (projectsData.length === 0) {
-        return <div>There are no projects to show.</div>;
-    }
+    const graphqlPeopleData = await getClient().query({
+        query: GET_PEOPLE,
+    });
+
+    const peopleData = graphqlPeopleData?.data?.people?.data || [];
 
     return (
         <div className="text-center">
-            <h1 className="mb-4 font-bold">MEET THE TEAM</h1>
-            <h1 className="mb-4">RESEARCHERS</h1>
-            <h1 className="mb-4">PHD CANDIDATES</h1>
-            <h1 className="mb-4">ENGINEERS</h1>
-            <h1 className="mb-4">CONTACT US</h1>
-            <div className="overflow-x-auto">
-                <h1 className="mb-4">Ongoing PhD Projects</h1>
-                <Table className="w-full border border-collapse border-gray-400">
-                    <TableCaption>Ongoing PhD Projects</TableCaption>
-                    <TableHeader>
-                        <TableRow className="border-b">
-                            <TableHead className="border-r">Name</TableHead>
-                            <TableHead className="border-r">Title (PhD title)</TableHead>
-                            <TableHead>Keywords</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {projectsData.map((project, index) => {
-                            const name = project.attributes?.name || "";
-                            const title = project.attributes?.title || "";
-                            const keywords = project.attributes?.keywords || "";
-                            return (
-                                <TableRow key={index}>
-                                    <TableCell className="border-r">{name}</TableCell>
-                                    <TableCell className="border-r">{title}</TableCell>
-                                    <TableCell>{keywords}</TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </div>
+            {peopleData.length == 0 ? (
+                <div>There are no team members to show.</div>
+            ) : (
+                <div>
+                    <h1 className="mb-4 font-bold">MEET THE TEAM</h1>
+                    <h1 className="mb-4">RESEARCHERS</h1>
+                    <h1 className="mb-4">PHD CANDIDATES</h1>
+                    <h1 className="mb-4">ENGINEERS</h1>
+                    <h1 className="mb-4">CONTACT US</h1>
+                </div>
+            )}
+            {projectsData.length == 0 ? (
+                <div>There are no projects to show.</div>
+            ) : (
+                <div className="overflow-x-auto">
+                    <h1 className="mb-4">Ongoing PhD Projects</h1>
+                    <Table className="w-full border border-collapse border-gray-400">
+                        <TableCaption>Ongoing PhD Projects</TableCaption>
+                        <TableHeader>
+                            <TableRow className="border-b">
+                                <TableHead className="border-r">Name</TableHead>
+                                <TableHead className="border-r">
+                                    Title (PhD title)
+                                </TableHead>
+                                <TableHead>Keywords</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {projectsData.map((project, index) => {
+                                const name = project.attributes?.name || "";
+                                const title = project.attributes?.title || "";
+                                const keywords =
+                                    project.attributes?.keywords || "";
+                                return (
+                                    <TableRow key={index}>
+                                        <TableCell className="border-r">
+                                            {name}
+                                        </TableCell>
+                                        <TableCell className="border-r">
+                                            {title}
+                                        </TableCell>
+                                        <TableCell>{keywords}</TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </div>
+            )}
         </div>
     );
 }
