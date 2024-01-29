@@ -23,9 +23,6 @@ query PhDProjects {
         name
         title
         keywords
-        reatedAt
-        updatedAt
-        publishedAt
         }
         id
     }
@@ -51,9 +48,6 @@ query People {
             }
         }
         profilePictureURL
-        reatedAt
-        updatedAt
-        publishedAt
         role
         }
     }
@@ -73,34 +67,39 @@ export default async function TeamPage() {
     }
 
     return (
-        <div>
-            <h1>Team</h1>
-            <Table>
-                <TableCaption>Ongoing PhD Projects</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="w-[100px]">Name</TableHead>
-                        <TableHead>Title(PhD title)</TableHead>
-                        <TableHead>Keywords</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {projectsData.map((project) => {
-                        const name = project.attributes?.name || "";
-                        const title = project.attributes?.title || "";
-                        const keywords = project.attributes?.keywords || "";
-
-                            <TableRow>
-                                <TableCell className="font-medium">
-                                    {name}
-                                </TableCell>
-                                <TableCell>{title}</TableCell>
-                                <TableCell>{keywords}</TableCell>
-                            </TableRow>,
-                        );
-                    })}
-                </TableBody>
-            </Table>
+        <div className="text-center">
+            <h1 className="mb-4 font-bold">MEET THE TEAM</h1>
+            <h1 className="mb-4">RESEARCHERS</h1>
+            <h1 className="mb-4">PHD CANDIDATES</h1>
+            <h1 className="mb-4">ENGINEERS</h1>
+            <h1 className="mb-4">CONTACT US</h1>
+            <div className="overflow-x-auto">
+                <h1 className="mb-4">Ongoing PhD Projects</h1>
+                <Table className="w-full border border-collapse border-gray-400">
+                    <TableCaption>Ongoing PhD Projects</TableCaption>
+                    <TableHeader>
+                        <TableRow className="border-b">
+                            <TableHead className="border-r">Name</TableHead>
+                            <TableHead className="border-r">Title (PhD title)</TableHead>
+                            <TableHead>Keywords</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {projectsData.map((project, index) => {
+                            const name = project.attributes?.name || "";
+                            const title = project.attributes?.title || "";
+                            const keywords = project.attributes?.keywords || "";
+                            return (
+                                <TableRow key={index}>
+                                    <TableCell className="border-r">{name}</TableCell>
+                                    <TableCell className="border-r">{title}</TableCell>
+                                    <TableCell>{keywords}</TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     );
 }
