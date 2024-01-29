@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
 import Hero from "@/components/ui/hero";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 
 export default function Home() {
@@ -64,7 +65,6 @@ export default function Home() {
                                 platforms.
                             </p>
                         </div>
-                        <Button className="">Read more</Button>
                     </div>
                 </div>
             </ColoredSection>
@@ -83,6 +83,9 @@ export default function Home() {
                         communication infrastructure for small satellites and
                         other satellite autonomous sensor platforms.
                     </p>
+                    <Link href={"/projects"}>
+                        <Button>View more</Button>
+                    </Link>
                 </div>
             </div>
             <ColoredSection className="flex flex-col items-center py-12 px-8">
