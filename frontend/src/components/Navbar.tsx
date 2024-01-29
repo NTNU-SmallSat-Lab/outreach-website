@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 
 export default function Navbar() {
     const dropdownPaths = [
@@ -38,7 +38,7 @@ export default function Navbar() {
                 <Link href="/">
                     <Button variant={getButtonVariant("/")}>
                         Logo
-                        <Icon icon="mdi-light:home" className='size-10 ml-6' />
+                        <Icon icon="mdi-light:home" className="size-10 ml-6" />
                     </Button>
                 </Link>
             </div>
