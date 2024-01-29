@@ -1,12 +1,13 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-export default function ColoredSection({
-    children,
-    className,
-}: {
-    children?: React.ReactNode;
-    className?: string;
-}) {
-    return <div className={cn("w-full bg-muted", className)}>{children}</div>;
-}
+const ColoredSection = React.forwardRef<
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+    <div ref={ref} className={cn("w-full bg-muted", className)} {...props} />
+));
+
+ColoredSection.displayName = "ColoredSection"; // Add display name
+
+export default ColoredSection;

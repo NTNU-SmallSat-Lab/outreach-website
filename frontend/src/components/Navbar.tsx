@@ -48,7 +48,9 @@ export default function Navbar() {
                             height="36"
                             className="mr-2"
                         />
-                        SmallSatLab
+                        <span className="transition duration-300 underline decoration-transparent hover:decoration-white">
+                            SmallSatLab
+                        </span>
                     </h1>
                 </Link>
             </div>

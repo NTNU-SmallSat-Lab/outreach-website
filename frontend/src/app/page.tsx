@@ -1,54 +1,74 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
 import Hero from "@/components/ui/hero";
 import Image from "next/image";
+import { useRef } from "react";
 
 export default function Home() {
+    const myRef = useRef(null);
+
+    function handleClick(): void {
+        if (myRef.current !== null) {
+            setTimeout(() => {
+                // @ts-ignore
+                myRef.current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                    inline: "nearest",
+                });
+            });
+        }
+    }
+
     return (
         <main>
             <Hero
                 title={"SmallSatLab"}
-                description={"We launch satellites"}
+                description={"We launch satellites 🚀"}
                 buttonText={"About us"}
-                buttonLink={""}
-                className="min-h-[calc(100vh-74px)]"
+                buttonLink=""
+                className="min-h-[calc(100vh-72px)] flex flex-col justify-center"
+                handleClick={handleClick}
             ></Hero>
-            <div className="flex flex-col items-center text-center">
-                <div className="">
-                    <div className="prose">
-                        <h1>
-                            Empowering Space Exploration One Satellite at a Time
-                        </h1>
-                    </div>
-                    <div className="flex flex-row">
+            <ColoredSection
+                ref={myRef}
+                className="flex flex-col items-center py-12"
+            >
+                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+                    <h1>
+                        Empowering Space Exploration One Satellite at a Time
+                    </h1>
+
+                    <div className="relative w-[300px] h-[300px]">
                         <Image
-                            src="https://cdn.mos.cms.futurecdn.net/ivDMoYPyqyUHYyiKjkAeK3.jpg"
-                            alt="satellite in orbit"
-                            width={250}
-                            height={250}
-                        ></Image>
-                        <div className="flex flex-col ">
-                            <div className="prose">
-                                <p>
-                                    NTNU Small Satellite Lab is an initiative to
-                                    strenghten the small satellite and space
-                                    related activities at NTNU and make them
-                                    more visible. At the lab, we have a group
-                                    consisting of about ten PhD-students, two
-                                    post.docs and many bachelor- and master
-                                    students every semester. Physically, the lab
-                                    consists of a concurrent design work space
-                                    as well as an well-equiped ESD-safe area for
-                                    development and testing of electronic and
-                                    mechanical parts for payloads and platforms.
-                                </p>
-                            </div>
-                            <Button>Read more</Button>
+                            alt="Satellite in orbit"
+                            src="/images/satellite.jpg"
+                            className="m-0 object-fill"
+                            layout="fill"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-4 items-center col-span-2 lg:col-span-2">
+                        <div className=" self-center">
+                            <p>
+                                NTNU Small Satellite Lab is an initiative to
+                                strenghten the small satellite and space related
+                                activities at NTNU and make them more visible.
+                                At the lab, we have a group consisting of about
+                                ten PhD-students, two post.docs and many
+                                bachelor- and master students every semester.
+                                Physically, the lab consists of a concurrent
+                                design work space as well as an well-equiped
+                                ESD-safe area for development and testing of
+                                electronic and mechanical parts for payloads and
+                                platforms.
+                            </p>
                         </div>
+                        <Button className="">Read more</Button>
                     </div>
                 </div>
-            </div>
-            <ColoredSection className="pt-8 items-center text-center flex flex-col">
+            </ColoredSection>
+            <div className="pt-8 items-center text-center flex flex-col py-12">
                 <div className="prose dark:prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
@@ -63,6 +83,20 @@ export default function Home() {
                         communication infrastructure for small satellites and
                         other satellite autonomous sensor platforms.
                     </p>
+                </div>
+            </div>
+            <ColoredSection className="flex flex-col items-center py-12">
+                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+                    <h1 className="">Most recent picture</h1>
+                    <div className="relative w-[300px] h-[300px]">
+                        <Image
+                            alt="Satellite image of city"
+                            src="/images/recent-image.jpg"
+                            className="m-0"
+                            layout="fill"
+                            objectFit="cover"
+                        />
+                    </div>
                 </div>
             </ColoredSection>
         </main>

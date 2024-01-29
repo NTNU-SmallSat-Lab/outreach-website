@@ -8,12 +8,14 @@ export default function Hero({
     buttonText,
     buttonLink,
     className,
+    handleClick,
 }: {
     title: string;
     description: string;
     buttonText: string;
     buttonLink: string;
     className?: string;
+    handleClick?: () => void;
 }) {
     return (
         <section
@@ -31,7 +33,7 @@ export default function Hero({
                     </div>
                     <div className="space-x-4">
                         <Link href={buttonLink}>
-                            <Button>{buttonText}</Button>
+                            <Button onClick={handleClick}>{buttonText}</Button>
                         </Link>
                     </div>
                 </div>
