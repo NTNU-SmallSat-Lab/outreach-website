@@ -106,9 +106,17 @@ export default function Navbar() {
             <div className="flex-1 flex justify-end">
                 <Button onClick={toggleTheme} variant={"ghost"}>
                     {isLightTheme ? (
-                        <Icon icon="material-symbols:dark-mode" />
+                        <Icon
+                            icon="material-symbols:dark-mode"
+                            width="32"
+                            height="32"
+                        />
                     ) : (
-                        <Icon icon="material-symbols:light-mode" />
+                        <Icon
+                            icon="material-symbols:light-mode"
+                            width="32"
+                            height="32"
+                        />
                     )}
                 </Button>
             </div>
