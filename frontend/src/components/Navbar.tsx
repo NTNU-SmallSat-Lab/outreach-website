@@ -32,7 +32,7 @@ export default function Navbar() {
     const { setTheme } = useTheme();
 
     return (
-        <nav className="flex items-center justify-between p-4 bg-slate-700 text-white w-full">
+        <nav className="flex items-center justify-between p-4 bg-slate-700 dark:bg-slate-500 text-white w-full">
             <div>
                 <Link href="/">
                     <Button variant={getButtonVariant("/")}>Logo</Button>
