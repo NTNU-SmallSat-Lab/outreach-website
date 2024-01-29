@@ -347,7 +347,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | Partner | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -468,6 +468,7 @@ export type Mutation = {
   createAuthor?: Maybe<AuthorEntityResponse>;
   createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  createPartner?: Maybe<PartnerEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -478,6 +479,7 @@ export type Mutation = {
   deleteAuthor?: Maybe<AuthorEntityResponse>;
   deleteContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   deleteContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  deletePartner?: Maybe<PartnerEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -500,6 +502,7 @@ export type Mutation = {
   updateContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updatePartner?: Maybe<PartnerEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -534,6 +537,11 @@ export type MutationCreateContentReleasesReleaseArgs = {
 
 export type MutationCreateContentReleasesReleaseActionArgs = {
   data: ContentReleasesReleaseActionInput;
+};
+
+
+export type MutationCreatePartnerArgs = {
+  data: PartnerInput;
 };
 
 
@@ -573,6 +581,11 @@ export type MutationDeleteContentReleasesReleaseArgs = {
 
 
 export type MutationDeleteContentReleasesReleaseActionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePartnerArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -667,6 +680,12 @@ export type MutationUpdateFileInfoArgs = {
 };
 
 
+export type MutationUpdatePartnerArgs = {
+  data: PartnerInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID']['input'];
@@ -714,6 +733,55 @@ export type PaginationArg = {
   start?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type Partner = {
+  __typename?: 'Partner';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  logoImage?: Maybe<UploadFileEntityResponse>;
+  logoUrl?: Maybe<Scalars['String']['output']>;
+  partnerName: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  websiteUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type PartnerEntity = {
+  __typename?: 'PartnerEntity';
+  attributes?: Maybe<Partner>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type PartnerEntityResponse = {
+  __typename?: 'PartnerEntityResponse';
+  data?: Maybe<PartnerEntity>;
+};
+
+export type PartnerEntityResponseCollection = {
+  __typename?: 'PartnerEntityResponseCollection';
+  data: Array<PartnerEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type PartnerFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PartnerFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  logoUrl?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PartnerFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PartnerFiltersInput>>>;
+  partnerName?: InputMaybe<StringFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  websiteUrl?: InputMaybe<StringFilterInput>;
+};
+
+export type PartnerInput = {
+  logoImage?: InputMaybe<Scalars['ID']['input']>;
+  logoUrl?: InputMaybe<Scalars['String']['input']>;
+  partnerName?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  websiteUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum PublicationState {
   Live = 'LIVE',
   Preview = 'PREVIEW'
@@ -732,6 +800,8 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  partner?: Maybe<PartnerEntityResponse>;
+  partners?: Maybe<PartnerEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -801,6 +871,19 @@ export type QueryI18NLocaleArgs = {
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryPartnerArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryPartnersArgs = {
+  filters?: InputMaybe<PartnerFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -1255,6 +1338,11 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type Get_PartnersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Get_PartnersQuery = { __typename?: 'Query', partners?: { __typename?: 'PartnerEntityResponseCollection', data: Array<{ __typename?: 'PartnerEntity', attributes?: { __typename?: 'Partner', partnerName: string, logoUrl?: string | null, websiteUrl?: string | null, logoImage?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
+
 export type ArticleWithSlugQueryVariables = Exact<{
   articlesFilters?: InputMaybe<ArticleFiltersInput>;
 }>;
@@ -1268,5 +1356,6 @@ export type Get_ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 export type Get_ArticlesQuery = { __typename?: 'Query', articles?: { __typename?: 'ArticleEntityResponseCollection', data: Array<{ __typename?: 'ArticleEntity', id?: string | null, attributes?: { __typename?: 'Article', title?: string | null, datePublished?: any | null, body?: any | null, createdAt?: any | null, publishedAt?: any | null, slug?: string | null, subtitle?: string | null, author?: { __typename?: 'AuthorEntityResponse', data?: { __typename?: 'AuthorEntity', attributes?: { __typename?: 'Author', name?: string | null, avatar?: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null }> } | null } | null } | null } | null, coverImage?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
 
 
+export const Get_PartnersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GET_PARTNERS"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partners"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partnerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"websiteUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<Get_PartnersQuery, Get_PartnersQueryVariables>;
 export const ArticleWithSlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ArticleWithSlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"articlesFilters"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ArticleFiltersInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filters"},"value":{"kind":"Variable","name":{"kind":"Name","value":"articlesFilters"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"coverImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"datePublished"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ArticleWithSlugQuery, ArticleWithSlugQueryVariables>;
 export const Get_ArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GET_ARTICLES"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"ListValue","values":[{"kind":"StringValue","value":"datePublished:desc","block":false}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"datePublished"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"coverImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}}]}}]}}]}}]} as unknown as DocumentNode<Get_ArticlesQuery, Get_ArticlesQueryVariables>;

@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "partners",
+  "info": {
+    "singularName": "partner",
+    "pluralName": "partners",
+    "displayName": "Partner"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "partnerName": {
+      "type": "string",
+      "required": true
+    },
+    "logoUrl": {
+      "type": "string"
+    },
+    "logoImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "websiteUrl": {
+      "type": "string"
+    }
+  }
+}
