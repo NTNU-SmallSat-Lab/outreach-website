@@ -1,10 +1,7 @@
-export const runtime = "edge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
-import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
-const HOST_URL = process.env.HOST_URL as string;
+import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 const GET_STRUCTURE = gql(`
 query GET_STRUCTURE {
     infrastructure {
@@ -22,57 +19,15 @@ export default async function PartnersPage() {
         query: GET_STRUCTURE,
     });
 
-    const structureData = graphqlData?.data?.infrastructure?.data || [];
-
-    if (structureData.length === 0) {
-        return <div>There are no infrastructure to show.</div>;
-    }
+    const content: BlocksContent =
+        graphqlData?.data?.infrastructure?.data?.attributes?.Content ?? [];
 
     return (
         <div className="flex flex-col items-center text-center">
             <h1 className="text-3xl font-bold mb-10 mt-5">
-                Partners and Collaborators
+                Infrastructure
             </h1>
-            {partnersData.map((partner) => {
-                let logoUrl = partner.attributes?.logoUrl || "";
-                if (partner.attributes?.logoImage?.data?.attributes?.url) {
-                    logoUrl =
-                        HOST_URL +
-                        partner.attributes.logoImage.data.attributes.url;
-                }
-                const websiteUrl = partner.attributes?.websiteUrl || "";
-                const partnerName = partner.attributes?.partnerName || "";
-
-                return (
-                    <Link
-                        href={websiteUrl}
-                        target="_blank"
-                        key={partnerName}
-                        className="hover:transform hover:scale-105 transition-transform duration-300 ease-in-out w-full max-w-lg mx-auto"
-                    >
-                        <Card className="mb-6 bg-neutral-50">
-                            <CardHeader>
-                                <CardTitle className="text-black">
-                                    <p>{partnerName}</p>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {logoUrl !== "" ? (
-                                    <Image
-                                        className="max-h-[75px]"
-                                        src={logoUrl}
-                                        alt={partnerName}
-                                        width={500}
-                                        height={0}
-                                    />
-                                ) : (
-                                    <h1 className="text-gray-500">No Logo</h1>
-                                )}
-                            </CardContent>
-                        </Card>
-                    </Link>
-                );
-            })}
+            <BlocksRenderer content={content} />
         </div>
     );
 }
