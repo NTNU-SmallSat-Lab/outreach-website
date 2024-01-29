@@ -347,7 +347,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | Partner | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | Partner | Person | PhDProject | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -469,6 +469,8 @@ export type Mutation = {
   createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   createPartner?: Maybe<PartnerEntityResponse>;
+  createPerson?: Maybe<PersonEntityResponse>;
+  createPhDProject?: Maybe<PhDProjectEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -480,6 +482,8 @@ export type Mutation = {
   deleteContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   deleteContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   deletePartner?: Maybe<PartnerEntityResponse>;
+  deletePerson?: Maybe<PersonEntityResponse>;
+  deletePhDProject?: Maybe<PhDProjectEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -503,6 +507,8 @@ export type Mutation = {
   updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updatePartner?: Maybe<PartnerEntityResponse>;
+  updatePerson?: Maybe<PersonEntityResponse>;
+  updatePhDProject?: Maybe<PhDProjectEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -542,6 +548,16 @@ export type MutationCreateContentReleasesReleaseActionArgs = {
 
 export type MutationCreatePartnerArgs = {
   data: PartnerInput;
+};
+
+
+export type MutationCreatePersonArgs = {
+  data: PersonInput;
+};
+
+
+export type MutationCreatePhDProjectArgs = {
+  data: PhDProjectInput;
 };
 
 
@@ -586,6 +602,16 @@ export type MutationDeleteContentReleasesReleaseActionArgs = {
 
 
 export type MutationDeletePartnerArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePersonArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePhDProjectArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -686,6 +712,18 @@ export type MutationUpdatePartnerArgs = {
 };
 
 
+export type MutationUpdatePersonArgs = {
+  data: PersonInput;
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdatePhDProjectArgs = {
+  data: PhDProjectInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID']['input'];
@@ -782,6 +820,108 @@ export type PartnerInput = {
   websiteUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Person = {
+  __typename?: 'Person';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  employeeLink?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  profilePicture?: Maybe<UploadFileEntityResponse>;
+  profilePictureURL?: Maybe<Scalars['String']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  role: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  workTitle?: Maybe<Scalars['String']['output']>;
+};
+
+export type PersonEntity = {
+  __typename?: 'PersonEntity';
+  attributes?: Maybe<Person>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type PersonEntityResponse = {
+  __typename?: 'PersonEntityResponse';
+  data?: Maybe<PersonEntity>;
+};
+
+export type PersonEntityResponseCollection = {
+  __typename?: 'PersonEntityResponseCollection';
+  data: Array<PersonEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type PersonFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PersonFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  employeeLink?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PersonFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PersonFiltersInput>>>;
+  profilePictureURL?: InputMaybe<StringFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  role?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  workTitle?: InputMaybe<StringFilterInput>;
+};
+
+export type PersonInput = {
+  employeeLink?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['ID']['input']>;
+  profilePictureURL?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
+  workTitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PhDProject = {
+  __typename?: 'PhDProject';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  keywords?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PhDProjectEntity = {
+  __typename?: 'PhDProjectEntity';
+  attributes?: Maybe<PhDProject>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type PhDProjectEntityResponse = {
+  __typename?: 'PhDProjectEntityResponse';
+  data?: Maybe<PhDProjectEntity>;
+};
+
+export type PhDProjectEntityResponseCollection = {
+  __typename?: 'PhDProjectEntityResponseCollection';
+  data: Array<PhDProjectEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type PhDProjectFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PhDProjectFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  keywords?: InputMaybe<StringFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PhDProjectFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PhDProjectFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type PhDProjectInput = {
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum PublicationState {
   Live = 'LIVE',
   Preview = 'PREVIEW'
@@ -802,6 +942,10 @@ export type Query = {
   me?: Maybe<UsersPermissionsMe>;
   partner?: Maybe<PartnerEntityResponse>;
   partners?: Maybe<PartnerEntityResponseCollection>;
+  people?: Maybe<PersonEntityResponseCollection>;
+  person?: Maybe<PersonEntityResponse>;
+  phDProject?: Maybe<PhDProjectEntityResponse>;
+  phDProjects?: Maybe<PhDProjectEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -882,6 +1026,32 @@ export type QueryPartnerArgs = {
 
 export type QueryPartnersArgs = {
   filters?: InputMaybe<PartnerFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryPeopleArgs = {
+  filters?: InputMaybe<PersonFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryPersonArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryPhDProjectArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryPhDProjectsArgs = {
+  filters?: InputMaybe<PhDProjectFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
