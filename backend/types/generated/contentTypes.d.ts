@@ -904,7 +904,10 @@ export interface ApiPersonPerson extends Schema.CollectionType {
     employeeLink: Attribute.String;
     profilePicture: Attribute.Media;
     profilePictureURL: Attribute.String;
-    role: Attribute.String & Attribute.Required;
+    role: Attribute.Enumeration<
+      ['Researchers', 'PhD candidates', 'Engineers', 'Contact us']
+    > &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

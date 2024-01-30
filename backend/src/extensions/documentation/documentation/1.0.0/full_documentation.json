@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-01-29T15:19:13.143Z"
+    "x-generation-date": "2024-01-30T16:29:51.556Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -2702,7 +2702,13 @@
                 "type": "string"
               },
               "role": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "Researchers",
+                  "PhD candidates",
+                  "Engineers",
+                  "Contact us"
+                ]
               }
             }
           }
@@ -3396,7 +3402,13 @@
             "type": "string"
           },
           "role": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "Researchers",
+              "PhD candidates",
+              "Engineers",
+              "Contact us"
+            ]
           },
           "createdAt": {
             "type": "string",

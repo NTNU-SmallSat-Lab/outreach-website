@@ -38,7 +38,13 @@
       "type": "string"
     },
     "role": {
-      "type": "string",
+      "type": "enumeration",
+      "enum": [
+        "Researchers",
+        "PhD candidates",
+        "Engineers",
+        "Contact us"
+      ],
       "required": true
     }
   }
