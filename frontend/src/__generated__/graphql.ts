@@ -316,6 +316,13 @@ export enum Enum_Contentreleasesreleaseaction_Type {
   Unpublish = 'unpublish'
 }
 
+export enum Enum_Person_Role {
+  ContactUs = 'Contact_us',
+  Engineers = 'Engineers',
+  PhDCandidates = 'PhD_candidates',
+  Researchers = 'Researchers'
+}
+
 export type FileInfoInput = {
   alternativeText?: InputMaybe<Scalars['String']['input']>;
   caption?: InputMaybe<Scalars['String']['input']>;
@@ -347,7 +354,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | Partner | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | Partner | Person | PhDProject | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -469,6 +476,8 @@ export type Mutation = {
   createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   createPartner?: Maybe<PartnerEntityResponse>;
+  createPerson?: Maybe<PersonEntityResponse>;
+  createPhDProject?: Maybe<PhDProjectEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -480,6 +489,8 @@ export type Mutation = {
   deleteContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   deleteContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   deletePartner?: Maybe<PartnerEntityResponse>;
+  deletePerson?: Maybe<PersonEntityResponse>;
+  deletePhDProject?: Maybe<PhDProjectEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -503,6 +514,8 @@ export type Mutation = {
   updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updatePartner?: Maybe<PartnerEntityResponse>;
+  updatePerson?: Maybe<PersonEntityResponse>;
+  updatePhDProject?: Maybe<PhDProjectEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -542,6 +555,16 @@ export type MutationCreateContentReleasesReleaseActionArgs = {
 
 export type MutationCreatePartnerArgs = {
   data: PartnerInput;
+};
+
+
+export type MutationCreatePersonArgs = {
+  data: PersonInput;
+};
+
+
+export type MutationCreatePhDProjectArgs = {
+  data: PhDProjectInput;
 };
 
 
@@ -586,6 +609,16 @@ export type MutationDeleteContentReleasesReleaseActionArgs = {
 
 
 export type MutationDeletePartnerArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePersonArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePhDProjectArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -686,6 +719,18 @@ export type MutationUpdatePartnerArgs = {
 };
 
 
+export type MutationUpdatePersonArgs = {
+  data: PersonInput;
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdatePhDProjectArgs = {
+  data: PhDProjectInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID']['input'];
@@ -782,6 +827,108 @@ export type PartnerInput = {
   websiteUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Person = {
+  __typename?: 'Person';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  employeeLink?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  profilePicture?: Maybe<UploadFileEntityResponse>;
+  profilePictureURL?: Maybe<Scalars['String']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  role: Enum_Person_Role;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  workTitle?: Maybe<Scalars['String']['output']>;
+};
+
+export type PersonEntity = {
+  __typename?: 'PersonEntity';
+  attributes?: Maybe<Person>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type PersonEntityResponse = {
+  __typename?: 'PersonEntityResponse';
+  data?: Maybe<PersonEntity>;
+};
+
+export type PersonEntityResponseCollection = {
+  __typename?: 'PersonEntityResponseCollection';
+  data: Array<PersonEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type PersonFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PersonFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  employeeLink?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PersonFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PersonFiltersInput>>>;
+  profilePictureURL?: InputMaybe<StringFilterInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  role?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  workTitle?: InputMaybe<StringFilterInput>;
+};
+
+export type PersonInput = {
+  employeeLink?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  profilePicture?: InputMaybe<Scalars['ID']['input']>;
+  profilePictureURL?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  role?: InputMaybe<Enum_Person_Role>;
+  workTitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PhDProject = {
+  __typename?: 'PhDProject';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  keywords?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PhDProjectEntity = {
+  __typename?: 'PhDProjectEntity';
+  attributes?: Maybe<PhDProject>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type PhDProjectEntityResponse = {
+  __typename?: 'PhDProjectEntityResponse';
+  data?: Maybe<PhDProjectEntity>;
+};
+
+export type PhDProjectEntityResponseCollection = {
+  __typename?: 'PhDProjectEntityResponseCollection';
+  data: Array<PhDProjectEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type PhDProjectFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PhDProjectFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  keywords?: InputMaybe<StringFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PhDProjectFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PhDProjectFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type PhDProjectInput = {
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum PublicationState {
   Live = 'LIVE',
   Preview = 'PREVIEW'
@@ -802,6 +949,10 @@ export type Query = {
   me?: Maybe<UsersPermissionsMe>;
   partner?: Maybe<PartnerEntityResponse>;
   partners?: Maybe<PartnerEntityResponseCollection>;
+  people?: Maybe<PersonEntityResponseCollection>;
+  person?: Maybe<PersonEntityResponse>;
+  phDProject?: Maybe<PhDProjectEntityResponse>;
+  phDProjects?: Maybe<PhDProjectEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -882,6 +1033,32 @@ export type QueryPartnerArgs = {
 
 export type QueryPartnersArgs = {
   filters?: InputMaybe<PartnerFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryPeopleArgs = {
+  filters?: InputMaybe<PersonFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryPersonArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryPhDProjectArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryPhDProjectsArgs = {
+  filters?: InputMaybe<PhDProjectFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -1343,6 +1520,16 @@ export type Get_PartnersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type Get_PartnersQuery = { __typename?: 'Query', partners?: { __typename?: 'PartnerEntityResponseCollection', data: Array<{ __typename?: 'PartnerEntity', attributes?: { __typename?: 'Partner', partnerName: string, logoUrl?: string | null, websiteUrl?: string | null, logoImage?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
 
+export type PhDProjectsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PhDProjectsQuery = { __typename?: 'Query', phDProjects?: { __typename?: 'PhDProjectEntityResponseCollection', data: Array<{ __typename?: 'PhDProjectEntity', id?: string | null, attributes?: { __typename?: 'PhDProject', name: string, title?: string | null, keywords?: string | null } | null }> } | null };
+
+export type PeopleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PeopleQuery = { __typename?: 'Query', people?: { __typename?: 'PersonEntityResponseCollection', data: Array<{ __typename?: 'PersonEntity', id?: string | null, attributes?: { __typename?: 'Person', name: string, workTitle?: string | null, employeeLink?: string | null, profilePictureURL?: string | null, role: Enum_Person_Role, profilePicture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string } | null } | null } | null } | null }> } | null };
+
 export type ArticleWithSlugQueryVariables = Exact<{
   articlesFilters?: InputMaybe<ArticleFiltersInput>;
 }>;
@@ -1357,5 +1544,7 @@ export type Get_ArticlesQuery = { __typename?: 'Query', articles?: { __typename?
 
 
 export const Get_PartnersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GET_PARTNERS"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partners"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"partnerName"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}},{"kind":"Field","name":{"kind":"Name","value":"websiteUrl"}},{"kind":"Field","name":{"kind":"Name","value":"logoImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<Get_PartnersQuery, Get_PartnersQueryVariables>;
+export const PhDProjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PhDProjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phDProjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"keywords"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<PhDProjectsQuery, PhDProjectsQueryVariables>;
+export const PeopleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"People"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"people"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"workTitle"}},{"kind":"Field","name":{"kind":"Name","value":"employeeLink"}},{"kind":"Field","name":{"kind":"Name","value":"profilePicture"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"profilePictureURL"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]}}]} as unknown as DocumentNode<PeopleQuery, PeopleQueryVariables>;
 export const ArticleWithSlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ArticleWithSlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"articlesFilters"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ArticleFiltersInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filters"},"value":{"kind":"Variable","name":{"kind":"Name","value":"articlesFilters"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"coverImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"datePublished"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ArticleWithSlugQuery, ArticleWithSlugQueryVariables>;
 export const Get_ArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GET_ARTICLES"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"ListValue","values":[{"kind":"StringValue","value":"datePublished:desc","block":false}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"datePublished"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"coverImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"publishedAt"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"subtitle"}}]}}]}}]}}]}}]} as unknown as DocumentNode<Get_ArticlesQuery, Get_ArticlesQueryVariables>;
