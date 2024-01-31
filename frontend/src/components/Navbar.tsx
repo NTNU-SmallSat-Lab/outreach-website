@@ -38,16 +38,20 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="flex items-center justify-between p-4 bg-slate-700 dark:bg-slate-500 text-white w-full">
+        <nav className="flex items-center justify-between p-4 bg-slate-700 text-white w-full">
             <div className="flex-1">
                 <Link href="/">
-                    <Button
-                        variant={getButtonVariant("/")}
-                        className="m-0 p-0 pr-4"
-                    >
-                        <Icon icon="mdi-light:home" className="size-10" />
-                        Logo
-                    </Button>
+                    <h1 className="text-3xl font-bold flex flex-row">
+                        <Icon
+                            icon="twemoji:satellite"
+                            width="36"
+                            height="36"
+                            className="mr-2"
+                        />
+                        <span className="transition duration-300 underline decoration-transparent hover:decoration-white">
+                            SmallSatLab
+                        </span>
+                    </h1>
                 </Link>
             </div>
 
@@ -104,9 +108,17 @@ export default function Navbar() {
             <div className="flex-1 flex justify-end">
                 <Button onClick={toggleTheme} variant={"ghost"}>
                     {isLightTheme ? (
-                        <Icon icon="material-symbols:dark-mode" />
+                        <Icon
+                            icon="material-symbols:dark-mode"
+                            width="32"
+                            height="32"
+                        />
                     ) : (
-                        <Icon icon="material-symbols:light-mode" />
+                        <Icon
+                            icon="material-symbols:light-mode"
+                            width="32"
+                            height="32"
+                        />
                     )}
                 </Button>
             </div>
