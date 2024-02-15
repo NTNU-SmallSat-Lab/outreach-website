@@ -989,6 +989,80 @@ export interface ApiPhDProjectPhDProject extends Schema.CollectionType {
   };
 }
 
+export interface ApiProjectProject extends Schema.CollectionType {
+  collectionName: 'projects';
+  info: {
+    singularName: 'project';
+    pluralName: 'projects';
+    displayName: 'Project';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    article: Attribute.Blocks;
+    satellites: Attribute.Relation<
+      'api::project.project',
+      'manyToMany',
+      'api::satellite.satellite'
+    >;
+    slug: Attribute.UID;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSatelliteSatellite extends Schema.CollectionType {
+  collectionName: 'satellites';
+  info: {
+    singularName: 'satellite';
+    pluralName: 'satellites';
+    displayName: 'Satellite';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    catalogNumberNORAD: Attribute.String;
+    projects: Attribute.Relation<
+      'api::satellite.satellite',
+      'manyToMany',
+      'api::project.project'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::satellite.satellite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::satellite.satellite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1013,6 +1087,8 @@ declare module '@strapi/types' {
       'api::partner.partner': ApiPartnerPartner;
       'api::person.person': ApiPersonPerson;
       'api::ph-d-project.ph-d-project': ApiPhDProjectPhDProject;
+      'api::project.project': ApiProjectProject;
+      'api::satellite.satellite': ApiSatelliteSatellite;
     }
   }
 }

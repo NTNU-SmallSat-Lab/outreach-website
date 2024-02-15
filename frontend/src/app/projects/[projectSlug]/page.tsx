@@ -1,0 +1,111 @@
+export const runtime = "edge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import {
+    BlocksRenderer,
+    type BlocksContent,
+} from "@strapi/blocks-react-renderer";
+import { gql } from "@/__generated__/gql";
+import { getClient } from "@/lib/ApolloClient";
+const HOST_URL = process.env.HOST_URL;
+
+const GET_PROJECT_BY_SLUG = gql(`
+query Projects($projectFilters: ProjectFiltersInput) {
+    projects(filters: $projectFilters) {
+      data {
+        attributes {
+          title
+          description
+          article
+          satellites {
+            data {
+              id
+              attributes {
+                catalogNumberNORAD
+                projects {
+                  data {
+                    id
+                  }
+                }
+                createdAt
+                updatedAt
+                publishedAt
+              }
+            }
+          }
+          slug
+        }
+      }
+    }
+  }`
+);
+
+export default async function Page({
+    params,
+}: {
+    params: { projectSlug: string };
+}) {
+    const graphqlData = await getClient().query({
+        query: GET_PROJECT_BY_SLUG,
+        variables: {
+          ProjectFilters: {
+                slug: { eq: params.projectSlug },
+            },
+        },
+    });
+
+    if (
+        graphqlData.data === null ||
+        graphqlData.data === undefined ||
+        graphqlData.data.articles === undefined ||
+        graphqlData.data.articles === null
+    ) {
+        return <div>Article not found</div>;
+    }
+
+    let avatarURL =
+        graphqlData.data.articles?.data[0]?.attributes?.author?.data?.attributes
+            ?.avatar?.data[0]?.attributes?.url;
+
+    if (HOST_URL && avatarURL != undefined) {
+        avatarURL = HOST_URL + avatarURL;
+    }
+
+    const article = graphqlData.data.articles?.data[0];
+
+    const authorName = article?.attributes?.author?.data?.attributes?.name;
+    const datePublished = article?.attributes?.datePublished;
+
+    return (
+        <>
+            <div className="flex flex-col gap-4 items-center">
+                <h1 className="text-4xl font-extrabold">
+                    {article?.attributes?.title}
+                </h1>
+                <p className="text-sm text-muted-foreground">
+                    {article?.attributes?.subtitle}{" "}
+                </p>
+                <BlocksRenderer
+                    content={article?.attributes?.body as BlocksContent}
+                />
+
+                <div className="flex flex-row justify-center gap-1 items-center">
+                    <Avatar className="">
+                        <AvatarImage src={avatarURL} />
+                        <AvatarFallback>
+                            {// Get initials from author name
+                            authorName
+                                ?.split(" ")
+                                .map((name) => name[0])
+                                .join("")}
+                        </AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col justify-center">
+                        <p>{authorName}</p>
+                        <p>{datePublished}</p>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
