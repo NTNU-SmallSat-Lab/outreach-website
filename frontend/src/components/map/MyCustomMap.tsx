@@ -7,6 +7,8 @@ import { defaults as defaultInteractions } from "ol/interaction.js";
 import { applyStyle } from "ol-mapbox-style";
 import { VectorTile } from "ol/layer.js";
 import { useMemo } from "react";
+import { Button } from "../ui/button";
+import { useTheme } from "next-themes";
 
 const MyCustomMap = () => {
     // useMemo to avoid creating a new instance of the layer on every render
@@ -22,8 +24,14 @@ const MyCustomMap = () => {
     // Create a state variable for the map
     const [map, setMap] = useState<Map>();
 
-    // Create a state variable for the current layer
-    const [currentLayer, setCurrentLayer] = useState(darkLayer);
+    // nextjs useTheme to decide layer
+    let currentLayer: VectorTile;
+    const { theme } = useTheme();
+    if (theme === "light") {
+        currentLayer = lightLayer;
+    } else {
+        currentLayer = darkLayer;
+    }
 
     // on component mount create the map and set the map refrences to the state
     useEffect(() => {
@@ -52,20 +60,8 @@ const MyCustomMap = () => {
         };
     }, [currentLayer, darkLayer]);
 
-    // Function to swap the layers
-    const swapLayers = () => {
-        if (map) {
-            map.getLayers().clear();
-            const newLayer =
-                currentLayer === darkLayer ? lightLayer : darkLayer;
-            map.addLayer(newLayer);
-            setCurrentLayer(newLayer);
-        }
-    };
-
     return (
         <>
-            <button onClick={swapLayers}>Swap Layers</button>
             <div
                 ref={mapContainer}
                 className="relative w-full h-[calc(75vh-72px)] bg-neutral-700"
