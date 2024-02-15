@@ -33,15 +33,15 @@ const MyCustomMap = () => {
     useEffect(() => {
         const mapInstance = new Map({
             interactions: defaultInteractions({
-                doubleClickZoom: false,
-                dragPan: false,
-                mouseWheelZoom: false,
+                // doubleClickZoom: false,
+                // dragPan: false,
+                // mouseWheelZoom: false,
             }),
             layers: [currentLayer],
             view: new View({
                 //Coordinate System: WGS 84 / Pseudo-Mercator-EPSG:3857
                 center: [0, 0],
-                zoom: 2,
+                zoom: 1,
             }),
         });
         if (mapContainer.current) {
@@ -58,7 +58,7 @@ const MyCustomMap = () => {
         <>
             <div
                 ref={mapContainer}
-                className="relative w-full h-[calc(75vh-72px)] bg-neutral-700"
+                className="relative aspect-square w-1/2 dark:bg-neutral-700 bg-neutral-600"
             ></div>
         </>
     );

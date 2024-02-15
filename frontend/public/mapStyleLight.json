@@ -202,7 +202,10 @@
             "source-layer": "water",
             "filter": ["==", "$type", "Polygon"],
             "layout": { "visibility": "visible" },
-            "paint": { "fill-color": "#c1c9cc", "fill-antialias": true }
+            "paint": {
+                "fill-color": "rgb(241, 245, 249)",
+                "fill-antialias": true
+            }
         },
         {
             "id": "waterway",
