@@ -7,7 +7,6 @@ import { defaults as defaultInteractions } from "ol/interaction.js";
 import { applyStyle } from "ol-mapbox-style";
 import { VectorTile } from "ol/layer.js";
 import { useMemo } from "react";
-import { Button } from "../ui/button";
 import { useTheme } from "next-themes";
 
 const MyCustomMap = () => {
@@ -20,9 +19,6 @@ const MyCustomMap = () => {
     applyStyle(lightLayer, "./mapStyleLight.json");
 
     const mapContainer = useRef(null);
-
-    // Create a state variable for the map
-    const [map, setMap] = useState<Map>();
 
     // nextjs useTheme to decide layer
     let currentLayer: VectorTile;
@@ -51,8 +47,6 @@ const MyCustomMap = () => {
         if (mapContainer.current) {
             mapInstance.setTarget(mapContainer.current);
         }
-
-        setMap(mapInstance);
 
         // on component unmount remove the map refrences to avoid unexpected behaviour
         return () => {
