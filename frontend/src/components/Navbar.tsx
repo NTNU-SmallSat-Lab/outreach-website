@@ -95,11 +95,6 @@ export default function Navbar() {
                                     Contact
                                 </DropdownMenuItem>
                             </Link>
-                            <Link href="/infrastructure" passHref>
-                                <DropdownMenuItem className="hover:cursor-pointer">
-                                    Infrastructure
-                                </DropdownMenuItem>
-                            </Link>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
