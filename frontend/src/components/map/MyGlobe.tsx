@@ -1,3 +1,4 @@
+"use client";
 import Globe, { GlobeInstance } from "globe.gl";
 import * as THREE from "three";
 import React, { useEffect } from "react";
@@ -8,6 +9,32 @@ const SAT_SIZE = 500; // km
 const TIME_STEP = 1 * 1000; // per frame
 
 const SATELLITE_AMOUNT = 100; // amount of satellites to display
+
+// Datasources
+// const EXAMPLE_DATA_TLE_URL = "../datasets/space-track-leo.txt"
+// Hypso 1 data
+const HYPSO1_TLE_URL =
+    "https://celestrak.org/NORAD/elements/gp.php?NAME=HYPSO-1&FORMAT=TLE";
+
+const FETCHED_DATA_URL = HYPSO1_TLE_URL;
+
+function mapRawDataToTleData(rawData: string): string[][] {
+    return (
+        rawData
+            // Remove any carriage returns
+            .replace(/\r/g, "")
+            // Split the data into individual TLEs (https://en.wikipedia.org/wiki/Two-line_element_set).
+            /* It splits the string at newline characters (\n) only if they are followed by a character that is not 1 or 2. The (?=[^12]) is a positive lookahead assertion,
+             ensuring that the newline is followed by a character that is not 1 or 2 without including that character in the split result.*/
+            .split(/\n(?=[^12])/)
+            //This step filters out any empty lines from the array of substrings obtained in the previous step. The callback function (d) => d checks if the substring d is truthy, effectively removing empty lines.
+            .filter((d) => d)
+            /* Finally, this step maps each substring (now representing a line) into an array of lines.
+             It splits each substring again using the newline character (\n) as the delimiter.
+             This results in a two-dimensional array where each element is an array of lines from the original string. */
+            .map((tle) => tle.split("\n"))
+    );
+}
 
 export default function MyGlobe() {
     const chart = React.useRef<HTMLDivElement>(null);
@@ -55,14 +82,10 @@ export default function MyGlobe() {
             );
 
             // Currently using example data from the example
-            fetch("../datasets/space-track-leo.txt")
+            fetch(FETCHED_DATA_URL)
                 .then((r) => r.text())
                 .then((rawData) => {
-                    const tleData = rawData
-                        .replace(/\r/g, "")
-                        .split(/\n(?=[^12])/)
-                        .filter((d) => d)
-                        .map((tle) => tle.split("\n"));
+                    const tleData = mapRawDataToTleData(rawData);
                     const satData = tleData
                         .map(([name, ...tle]) => ({
                             satrec: satellite.twoline2satrec(

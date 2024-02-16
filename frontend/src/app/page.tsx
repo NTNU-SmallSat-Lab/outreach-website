@@ -10,11 +10,13 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-import MyGlobe from "@/components/map/MyGlobe";
-
-// Dynamic import because of leaflet ssr problem with next.js
+// Dynamic import because of leaflet and globe.gl ssr problem with next.js
 import dynamic from "next/dynamic";
 const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
+    ssr: false,
+});
+
+const MyGlobe = dynamic(() => import("@/components/map/MyGlobe"), {
     ssr: false,
 });
 
