@@ -3,1430 +3,1093 @@
  * Do not make direct changes to the file.
  */
 
+
 export interface paths {
-    "/articles": {
-        get: operations["get/articles"];
-        post: operations["post/articles"];
+  "/articles": {
+    get: operations["get/articles"];
+    post: operations["post/articles"];
+  };
+  "/articles/{id}": {
+    get: operations["get/articles/{id}"];
+    put: operations["put/articles/{id}"];
+    delete: operations["delete/articles/{id}"];
+  };
+  "/authors": {
+    get: operations["get/authors"];
+    post: operations["post/authors"];
+  };
+  "/authors/{id}": {
+    get: operations["get/authors/{id}"];
+    put: operations["put/authors/{id}"];
+    delete: operations["delete/authors/{id}"];
+  };
+  "/partners": {
+    get: operations["get/partners"];
+    post: operations["post/partners"];
+  };
+  "/partners/{id}": {
+    get: operations["get/partners/{id}"];
+    put: operations["put/partners/{id}"];
+    delete: operations["delete/partners/{id}"];
+  };
+  "/people": {
+    get: operations["get/people"];
+    post: operations["post/people"];
+  };
+  "/people/{id}": {
+    get: operations["get/people/{id}"];
+    put: operations["put/people/{id}"];
+    delete: operations["delete/people/{id}"];
+  };
+  "/ph-d-projects": {
+    get: operations["get/ph-d-projects"];
+    post: operations["post/ph-d-projects"];
+  };
+  "/ph-d-projects/{id}": {
+    get: operations["get/ph-d-projects/{id}"];
+    put: operations["put/ph-d-projects/{id}"];
+    delete: operations["delete/ph-d-projects/{id}"];
+  };
+  "/upload": {
+    /** @description Upload files */
+    post: {
+      /** @description Upload files */
+      requestBody: {
+        content: {
+          "multipart/form-data": {
+            /** @description The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). */
+            path?: string;
+            /** @description The ID of the entry which the file(s) will be linked to */
+            refId?: string;
+            /** @description The unique ID (uid) of the model which the file(s) will be linked to (api::restaurant.restaurant). */
+            ref?: string;
+            /** @description The field of the entry which the file(s) will be precisely linked to. */
+            field?: string;
+            files: string[];
+          };
+        };
+      };
+      responses: {
+        /** @description response */
+        200: {
+          content: {
+            "application/json": components["schemas"]["UploadFile"][];
+          };
+        };
+      };
     };
-    "/articles/{id}": {
-        get: operations["get/articles/{id}"];
-        put: operations["put/articles/{id}"];
-        delete: operations["delete/articles/{id}"];
+  };
+  "/upload?id={id}": {
+    /** @description Upload file information */
+    post: {
+      parameters: {
+        query: {
+          /** @description File id */
+          id: string;
+        };
+      };
+      /** @description Upload files */
+      requestBody: {
+        content: {
+          "multipart/form-data": {
+            fileInfo?: {
+              name?: string;
+              alternativeText?: string;
+              caption?: string;
+            };
+            /** Format: binary */
+            files?: string;
+          };
+        };
+      };
+      responses: {
+        /** @description response */
+        200: {
+          content: {
+            "application/json": components["schemas"]["UploadFile"][];
+          };
+        };
+      };
     };
-    "/authors": {
-        get: operations["get/authors"];
-        post: operations["post/authors"];
+  };
+  "/upload/files": {
+    get: {
+      responses: {
+        /** @description Get a list of files */
+        200: {
+          content: {
+            "application/json": components["schemas"]["UploadFile"][];
+          };
+        };
+      };
     };
-    "/authors/{id}": {
-        get: operations["get/authors/{id}"];
-        put: operations["put/authors/{id}"];
-        delete: operations["delete/authors/{id}"];
+  };
+  "/upload/files/{id}": {
+    get: {
+      parameters: {
+        path: {
+          id: string;
+        };
+      };
+      responses: {
+        /** @description Get a specific file */
+        200: {
+          content: {
+            "application/json": components["schemas"]["UploadFile"];
+          };
+        };
+      };
     };
-    "/upload": {
-        /** @description Upload files */
-        post: {
-            /** @description Upload files */
-            requestBody: {
-                content: {
-                    "multipart/form-data": {
-                        /** @description The folder where the file(s) will be uploaded to (only supported on strapi-provider-upload-aws-s3). */
-                        path?: string;
-                        /** @description The ID of the entry which the file(s) will be linked to */
-                        refId?: string;
-                        /** @description The unique ID (uid) of the model which the file(s) will be linked to (api::restaurant.restaurant). */
-                        ref?: string;
-                        /** @description The field of the entry which the file(s) will be precisely linked to. */
-                        field?: string;
-                        files: string[];
-                    };
-                };
-            };
-            responses: {
-                /** @description response */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["UploadFile"][];
-                    };
-                };
-            };
+    delete: {
+      parameters: {
+        path: {
+          id: string;
         };
+      };
+      responses: {
+        /** @description Delete a file */
+        200: {
+          content: {
+            "application/json": components["schemas"]["UploadFile"];
+          };
+        };
+      };
     };
-    "/upload?id={id}": {
-        /** @description Upload file information */
-        post: {
-            parameters: {
-                query: {
-                    /** @description File id */
-                    id: string;
-                };
-            };
-            /** @description Upload files */
-            requestBody: {
-                content: {
-                    "multipart/form-data": {
-                        fileInfo?: {
-                            name?: string;
-                            alternativeText?: string;
-                            caption?: string;
-                        };
-                        /** Format: binary */
-                        files?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description response */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["UploadFile"][];
-                    };
-                };
-            };
+  };
+  "/connect/{provider}": {
+    /**
+     * Login with a provider
+     * @description Redirects to provider login before being redirect to /auth/{provider}/callback
+     */
+    get: {
+      parameters: {
+        path: {
+          /** @description Provider name */
+          provider: string;
         };
+      };
+      responses: {
+        /** @description Redirect response */
+        301: {
+          content: never;
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/upload/files": {
-        get: {
-            responses: {
-                /** @description Get a list of files */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["UploadFile"][];
-                    };
-                };
-            };
+  };
+  "/auth/local": {
+    /**
+     * Local login
+     * @description Returns a jwt token and user info
+     */
+    post: {
+      requestBody: {
+        content: {
+          /**
+           * @example {
+           *   "identifier": "foobar",
+           *   "password": "Test1234"
+           * }
+           */
+          "application/json": {
+            identifier?: string;
+            password?: string;
+          };
         };
+      };
+      responses: {
+        /** @description Connection */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/upload/files/{id}": {
-        get: {
-            parameters: {
-                path: {
-                    id: string;
-                };
-            };
-            responses: {
-                /** @description Get a specific file */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["UploadFile"];
-                    };
-                };
-            };
+  };
+  "/auth/local/register": {
+    /**
+     * Register a user
+     * @description Returns a jwt token and user info
+     */
+    post: {
+      requestBody: {
+        content: {
+          /**
+           * @example {
+           *   "username": "foobar",
+           *   "email": "foo.bar@strapi.io",
+           *   "password": "Test1234"
+           * }
+           */
+          "application/json": {
+            username?: string;
+            email?: string;
+            password?: string;
+          };
         };
-        delete: {
-            parameters: {
-                path: {
-                    id: string;
-                };
-            };
-            responses: {
-                /** @description Delete a file */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["UploadFile"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description Successful registration */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
+          };
         };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/connect/{provider}": {
-        /**
-         * Login with a provider
-         * @description Redirects to provider login before being redirect to /auth/{provider}/callback
-         */
-        get: {
-            parameters: {
-                path: {
-                    /** @description Provider name */
-                    provider: string;
-                };
-            };
-            responses: {
-                /** @description Redirect response */
-                301: {
-                    content: never;
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/auth/{provider}/callback": {
+    /** Default Callback from provider auth */
+    get: {
+      parameters: {
+        path: {
+          /** @description Provider name */
+          provider: string;
         };
+      };
+      responses: {
+        /** @description Returns a jwt token and user info */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/local": {
-        /**
-         * Local login
-         * @description Returns a jwt token and user info
-         */
-        post: {
-            requestBody: {
-                content: {
-                    /**
-                     * @example {
-                     *   "identifier": "foobar",
-                     *   "password": "Test1234"
-                     * }
-                     */
-                    "application/json": {
-                        identifier?: string;
-                        password?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Connection */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/auth/forgot-password": {
+    /** Send rest password email */
+    post: {
+      requestBody: {
+        content: {
+          /**
+           * @example {
+           *   "email": "foo.bar@strapi.io"
+           * }
+           */
+          "application/json": {
+            email?: string;
+          };
         };
+      };
+      responses: {
+        /** @description Returns ok */
+        200: {
+          content: {
+            "application/json": {
+              /** @enum {string} */
+              ok?: true;
+            };
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/local/register": {
-        /**
-         * Register a user
-         * @description Returns a jwt token and user info
-         */
-        post: {
-            requestBody: {
-                content: {
-                    /**
-                     * @example {
-                     *   "username": "foobar",
-                     *   "email": "foo.bar@strapi.io",
-                     *   "password": "Test1234"
-                     * }
-                     */
-                    "application/json": {
-                        username?: string;
-                        email?: string;
-                        password?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Successful registration */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/auth/reset-password": {
+    /** Rest user password */
+    post: {
+      requestBody: {
+        content: {
+          /**
+           * @example {
+           *   "password": "Test1234",
+           *   "passwordConfirmation": "Test1234",
+           *   "code": "zertyoaizndoianzodianzdonaizdoinaozdnia"
+           * }
+           */
+          "application/json": {
+            password?: string;
+            passwordConfirmation?: string;
+            code?: string;
+          };
         };
+      };
+      responses: {
+        /** @description Returns a jwt token and user info */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/{provider}/callback": {
-        /** Default Callback from provider auth */
-        get: {
-            parameters: {
-                path: {
-                    /** @description Provider name */
-                    provider: string;
-                };
-            };
-            responses: {
-                /** @description Returns a jwt token and user info */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/auth/change-password": {
+    /** Update user's own password */
+    post: {
+      requestBody: {
+        content: {
+          "application/json": {
+            password: string;
+            currentPassword: string;
+            passwordConfirmation: string;
+          };
         };
+      };
+      responses: {
+        /** @description Returns a jwt token and user info */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/forgot-password": {
-        /** Send rest password email */
-        post: {
-            requestBody: {
-                content: {
-                    /**
-                     * @example {
-                     *   "email": "foo.bar@strapi.io"
-                     * }
-                     */
-                    "application/json": {
-                        email?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Returns ok */
-                200: {
-                    content: {
-                        "application/json": {
-                            /** @enum {string} */
-                            ok?: true;
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/auth/email-confirmation": {
+    /** Confirm user email */
+    get: {
+      parameters: {
+        query?: {
+          /** @description confirmation token received by email */
+          confirmation?: string;
         };
+      };
+      responses: {
+        /** @description Redirects to the configure email confirmation redirect url */
+        301: {
+          content: never;
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/reset-password": {
-        /** Rest user password */
-        post: {
-            requestBody: {
-                content: {
-                    /**
-                     * @example {
-                     *   "password": "Test1234",
-                     *   "passwordConfirmation": "Test1234",
-                     *   "code": "zertyoaizndoianzodianzdonaizdoinaozdnia"
-                     * }
-                     */
-                    "application/json": {
-                        password?: string;
-                        passwordConfirmation?: string;
-                        code?: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Returns a jwt token and user info */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/auth/send-email-confirmation": {
+    /** Send confirmation email */
+    post: {
+      requestBody: {
+        content: {
+          "application/json": {
+            email?: string;
+          };
         };
+      };
+      responses: {
+        /** @description Returns email and boolean to confirm email was sent */
+        200: {
+          content: {
+            "application/json": {
+              email?: string;
+              /** @enum {string} */
+              sent?: true;
+            };
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/change-password": {
-        /** Update user's own password */
-        post: {
-            requestBody: {
-                content: {
-                    "application/json": {
-                        password: string;
-                        currentPassword: string;
-                        passwordConfirmation: string;
-                    };
-                };
+  };
+  "/users-permissions/permissions": {
+    /** Get default generated permissions */
+    get: {
+      responses: {
+        /** @description Returns the permissions tree */
+        200: {
+          content: {
+            "application/json": {
+              permissions?: components["schemas"]["Users-Permissions-PermissionsTree"];
             };
-            responses: {
-                /** @description Returns a jwt token and user info */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-UserRegistration"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+          };
         };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/email-confirmation": {
-        /** Confirm user email */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description confirmation token received by email */
-                    confirmation?: string;
-                };
+  };
+  "/users-permissions/roles": {
+    /** List roles */
+    get: {
+      responses: {
+        /** @description Returns list of roles */
+        200: {
+          content: {
+            "application/json": {
+              roles?: (components["schemas"]["Users-Permissions-Role"] & {
+                  nb_users?: number;
+                })[];
             };
-            responses: {
-                /** @description Redirects to the configure email confirmation redirect url */
-                301: {
-                    content: never;
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+          };
         };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/auth/send-email-confirmation": {
-        /** Send confirmation email */
-        post: {
-            requestBody: {
-                content: {
-                    "application/json": {
-                        email?: string;
-                    };
-                };
+    /** Create a role */
+    post: {
+      requestBody: components["requestBodies"]["Users-Permissions-RoleRequest"];
+      responses: {
+        /** @description Returns ok if the role was create */
+        200: {
+          content: {
+            "application/json": {
+              /** @enum {string} */
+              ok?: true;
             };
-            responses: {
-                /** @description Returns email and boolean to confirm email was sent */
-                200: {
-                    content: {
-                        "application/json": {
-                            email?: string;
-                            /** @enum {string} */
-                            sent?: true;
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+          };
         };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/users-permissions/permissions": {
-        /** Get default generated permissions */
-        get: {
-            responses: {
-                /** @description Returns the permissions tree */
-                200: {
-                    content: {
-                        "application/json": {
-                            permissions?: components["schemas"]["Users-Permissions-PermissionsTree"];
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/users-permissions/roles/{id}": {
+    /** Get a role */
+    get: {
+      parameters: {
+        path: {
+          /** @description role Id */
+          id: string;
         };
+      };
+      responses: {
+        /** @description Returns the role */
+        200: {
+          content: {
+            "application/json": {
+              role?: components["schemas"]["Users-Permissions-Role"];
+            };
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/users-permissions/roles": {
-        /** List roles */
-        get: {
-            responses: {
-                /** @description Returns list of roles */
-                200: {
-                    content: {
-                        "application/json": {
-                            roles?: (components["schemas"]["Users-Permissions-Role"] & {
-                                nb_users?: number;
-                            })[];
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/users-permissions/roles/{role}": {
+    /** Update a role */
+    put: {
+      parameters: {
+        path: {
+          /** @description role Id */
+          role: string;
         };
-        /** Create a role */
-        post: {
-            requestBody: components["requestBodies"]["Users-Permissions-RoleRequest"];
-            responses: {
-                /** @description Returns ok if the role was create */
-                200: {
-                    content: {
-                        "application/json": {
-                            /** @enum {string} */
-                            ok?: true;
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
+      };
+      requestBody: components["requestBodies"]["Users-Permissions-RoleRequest"];
+      responses: {
+        /** @description Returns ok if the role was udpated */
+        200: {
+          content: {
+            "application/json": {
+              /** @enum {string} */
+              ok?: true;
             };
+          };
         };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/users-permissions/roles/{id}": {
-        /** Get a role */
-        get: {
-            parameters: {
-                path: {
-                    /** @description role Id */
-                    id: string;
-                };
-            };
-            responses: {
-                /** @description Returns the role */
-                200: {
-                    content: {
-                        "application/json": {
-                            role?: components["schemas"]["Users-Permissions-Role"];
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+    /** Delete a role */
+    delete: {
+      parameters: {
+        path: {
+          /** @description role Id */
+          role: string;
         };
+      };
+      responses: {
+        /** @description Returns ok if the role was delete */
+        200: {
+          content: {
+            "application/json": {
+              /** @enum {string} */
+              ok?: true;
+            };
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/users-permissions/roles/{role}": {
-        /** Update a role */
-        put: {
-            parameters: {
-                path: {
-                    /** @description role Id */
-                    role: string;
-                };
-            };
-            requestBody: components["requestBodies"]["Users-Permissions-RoleRequest"];
-            responses: {
-                /** @description Returns ok if the role was udpated */
-                200: {
-                    content: {
-                        "application/json": {
-                            /** @enum {string} */
-                            ok?: true;
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/users": {
+    /** Get list of users */
+    get: {
+      responses: {
+        /** @description Returns an array of users */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-User"][];
+          };
         };
-        /** Delete a role */
-        delete: {
-            parameters: {
-                path: {
-                    /** @description role Id */
-                    role: string;
-                };
-            };
-            responses: {
-                /** @description Returns ok if the role was delete */
-                200: {
-                    content: {
-                        "application/json": {
-                            /** @enum {string} */
-                            ok?: true;
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
         };
+      };
     };
-    "/users": {
-        /** Get list of users */
-        get: {
-            responses: {
-                /** @description Returns an array of users */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-User"][];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+    /** Create a user */
+    post: {
+      requestBody: {
+        content: {
+          /**
+           * @example {
+           *   "username": "foo",
+           *   "email": "foo@strapi.io",
+           *   "password": "foo-password"
+           * }
+           */
+          "application/json": {
+            email: string;
+            username: string;
+            password: string;
+          };
         };
-        /** Create a user */
-        post: {
-            requestBody: {
-                content: {
-                    /**
-                     * @example {
-                     *   "username": "foo",
-                     *   "email": "foo@strapi.io",
-                     *   "password": "foo-password"
-                     * }
-                     */
-                    "application/json": {
-                        email: string;
-                        username: string;
-                        password: string;
-                    };
-                };
+      };
+      responses: {
+        /** @description Returns created user info */
+        201: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-User"] & {
+              role?: components["schemas"]["Users-Permissions-Role"];
             };
-            responses: {
-                /** @description Returns created user info */
-                201: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-User"] & {
-                            role?: components["schemas"]["Users-Permissions-Role"];
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+          };
         };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
-    "/users/{id}": {
-        /** Get a user */
-        get: {
-            parameters: {
-                path: {
-                    /** @description user Id */
-                    id: string;
-                };
-            };
-            responses: {
-                /** @description Returns a user */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-User"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+  };
+  "/users/{id}": {
+    /** Get a user */
+    get: {
+      parameters: {
+        path: {
+          /** @description user Id */
+          id: string;
         };
-        /** Update a user */
-        put: {
-            parameters: {
-                path: {
-                    /** @description user Id */
-                    id: string;
-                };
-            };
-            requestBody: {
-                content: {
-                    /**
-                     * @example {
-                     *   "username": "foo",
-                     *   "email": "foo@strapi.io",
-                     *   "password": "foo-password"
-                     * }
-                     */
-                    "application/json": {
-                        email: string;
-                        username: string;
-                        password: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Returns updated user info */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-User"] & {
-                            role?: components["schemas"]["Users-Permissions-Role"];
-                        };
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+      };
+      responses: {
+        /** @description Returns a user */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-User"];
+          };
         };
-        /** Delete a user */
-        delete: {
-            parameters: {
-                path: {
-                    /** @description user Id */
-                    id: string;
-                };
-            };
-            responses: {
-                /** @description Returns deleted user info */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-User"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
         };
+      };
     };
-    "/users/me": {
-        /** Get authenticated user info */
-        get: {
-            responses: {
-                /** @description Returns user info */
-                200: {
-                    content: {
-                        "application/json": components["schemas"]["Users-Permissions-User"];
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+    /** Update a user */
+    put: {
+      parameters: {
+        path: {
+          /** @description user Id */
+          id: string;
         };
-    };
-    "/users/count": {
-        /** Get user count */
-        get: {
-            responses: {
-                /** @description Returns a number */
-                200: {
-                    content: {
-                        "application/json": number;
-                    };
-                };
-                /** @description Error */
-                default: {
-                    content: {
-                        "application/json": components["schemas"]["Error"];
-                    };
-                };
-            };
+      };
+      requestBody: {
+        content: {
+          /**
+           * @example {
+           *   "username": "foo",
+           *   "email": "foo@strapi.io",
+           *   "password": "foo-password"
+           * }
+           */
+          "application/json": {
+            email: string;
+            username: string;
+            password: string;
+          };
         };
+      };
+      responses: {
+        /** @description Returns updated user info */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-User"] & {
+              role?: components["schemas"]["Users-Permissions-Role"];
+            };
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
     };
+    /** Delete a user */
+    delete: {
+      parameters: {
+        path: {
+          /** @description user Id */
+          id: string;
+        };
+      };
+      responses: {
+        /** @description Returns deleted user info */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-User"];
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
+    };
+  };
+  "/users/me": {
+    /** Get authenticated user info */
+    get: {
+      responses: {
+        /** @description Returns user info */
+        200: {
+          content: {
+            "application/json": components["schemas"]["Users-Permissions-User"];
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
+    };
+  };
+  "/users/count": {
+    /** Get user count */
+    get: {
+      responses: {
+        /** @description Returns a number */
+        200: {
+          content: {
+            "application/json": number;
+          };
+        };
+        /** @description Error */
+        default: {
+          content: {
+            "application/json": components["schemas"]["Error"];
+          };
+        };
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
 
 export interface components {
-    schemas: {
-        Error: {
-            data?: Record<string, never> | Record<string, never>[] | null;
-            error: {
-                status?: number;
-                name?: string;
-                message?: string;
-                details?: Record<string, never>;
+  schemas: {
+    Error: {
+      data?: Record<string, never> | Record<string, never>[] | null;
+      error: {
+        status?: number;
+        name?: string;
+        message?: string;
+        details?: Record<string, never>;
+      };
+    };
+    ArticleRequest: {
+      data: {
+        title?: string;
+        subtitle?: string;
+        /** @example string or id */
+        coverImage?: number | string;
+        /** Format: date */
+        datePublished?: string;
+        body?: unknown;
+        /** @example string or id */
+        author?: number | string;
+        slug?: string;
+      };
+    };
+    ArticleListResponseDataItem: {
+      id?: number;
+      attributes?: components["schemas"]["Article"];
+    };
+    ArticleListResponse: {
+      data?: components["schemas"]["ArticleListResponseDataItem"][];
+      meta?: {
+        pagination?: {
+          page?: number;
+          pageSize?: number;
+          pageCount?: number;
+          total?: number;
+        };
+      };
+    };
+    Article: {
+      title?: string;
+      subtitle?: string;
+      coverImage?: {
+        data?: {
+          id?: number;
+          attributes?: {
+            name?: string;
+            alternativeText?: string;
+            caption?: string;
+            width?: number;
+            height?: number;
+            formats?: unknown;
+            hash?: string;
+            ext?: string;
+            mime?: string;
+            /** Format: float */
+            size?: number;
+            url?: string;
+            previewUrl?: string;
+            provider?: string;
+            provider_metadata?: unknown;
+            related?: {
+              data?: {
+                  id?: number;
+                  attributes?: Record<string, never>;
+                }[];
             };
-        };
-        ArticleRequest: {
-            data: {
-                title?: string;
-                subtitle?: string;
-                /** @example string or id */
-                coverImage?: number | string;
-                /** Format: date */
-                datePublished?: string;
-                body?: unknown;
-                /** @example string or id */
-                author?: number | string;
-                slug?: string;
-            };
-        };
-        ArticleListResponseDataItem: {
-            id?: number;
-            attributes?: components["schemas"]["Article"];
-        };
-        ArticleListResponse: {
-            data?: components["schemas"]["ArticleListResponseDataItem"][];
-            meta?: {
-                pagination?: {
-                    page?: number;
-                    pageSize?: number;
-                    pageCount?: number;
-                    total?: number;
-                };
-            };
-        };
-        Article: {
-            title?: string;
-            subtitle?: string;
-            coverImage?: {
-                data?: {
-                    id?: number;
-                    attributes?: {
-                        name?: string;
-                        alternativeText?: string;
-                        caption?: string;
-                        width?: number;
-                        height?: number;
-                        formats?: unknown;
-                        hash?: string;
-                        ext?: string;
-                        mime?: string;
-                        /** Format: float */
-                        size?: number;
-                        url?: string;
-                        previewUrl?: string;
-                        provider?: string;
-                        provider_metadata?: unknown;
-                        related?: {
+            folder?: {
+              data?: {
+                id?: number;
+                attributes?: {
+                  name?: string;
+                  pathId?: number;
+                  parent?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
+                    };
+                  };
+                  children?: {
+                    data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      }[];
+                  };
+                  files?: {
+                    data?: {
+                        id?: number;
+                        attributes?: {
+                          name?: string;
+                          alternativeText?: string;
+                          caption?: string;
+                          width?: number;
+                          height?: number;
+                          formats?: unknown;
+                          hash?: string;
+                          ext?: string;
+                          mime?: string;
+                          /** Format: float */
+                          size?: number;
+                          url?: string;
+                          previewUrl?: string;
+                          provider?: string;
+                          provider_metadata?: unknown;
+                          related?: {
                             data?: {
                                 id?: number;
                                 attributes?: Record<string, never>;
-                            }[];
-                        };
-                        folder?: {
+                              }[];
+                          };
+                          folder?: {
                             data?: {
-                                id?: number;
-                                attributes?: {
-                                    name?: string;
-                                    pathId?: number;
-                                    parent?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
+                              id?: number;
+                              attributes?: Record<string, never>;
+                            };
+                          };
+                          folderPath?: string;
+                          /** Format: date-time */
+                          createdAt?: string;
+                          /** Format: date-time */
+                          updatedAt?: string;
+                          createdBy?: {
+                            data?: {
+                              id?: number;
+                              attributes?: {
+                                firstname?: string;
+                                lastname?: string;
+                                username?: string;
+                                /** Format: email */
+                                email?: string;
+                                resetPasswordToken?: string;
+                                registrationToken?: string;
+                                isActive?: boolean;
+                                roles?: {
+                                  data?: {
+                                      id?: number;
+                                      attributes?: {
+                                        name?: string;
+                                        code?: string;
+                                        description?: string;
+                                        users?: {
+                                          data?: {
+                                              id?: number;
+                                              attributes?: Record<string, never>;
+                                            }[];
                                         };
-                                    };
-                                    children?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        }[];
-                                    };
-                                    files?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: {
-                                                name?: string;
-                                                alternativeText?: string;
-                                                caption?: string;
-                                                width?: number;
-                                                height?: number;
-                                                formats?: unknown;
-                                                hash?: string;
-                                                ext?: string;
-                                                mime?: string;
-                                                /** Format: float */
-                                                size?: number;
-                                                url?: string;
-                                                previewUrl?: string;
-                                                provider?: string;
-                                                provider_metadata?: unknown;
-                                                related?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: Record<
-                                                            string,
-                                                            never
-                                                        >;
-                                                    }[];
+                                        permissions?: {
+                                          data?: {
+                                              id?: number;
+                                              attributes?: {
+                                                action?: string;
+                                                actionParameters?: unknown;
+                                                subject?: string;
+                                                properties?: unknown;
+                                                conditions?: unknown;
+                                                role?: {
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
                                                 };
-                                                folder?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: Record<
-                                                            string,
-                                                            never
-                                                        >;
-                                                    };
-                                                };
-                                                folderPath?: string;
                                                 /** Format: date-time */
                                                 createdAt?: string;
                                                 /** Format: date-time */
                                                 updatedAt?: string;
                                                 createdBy?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: {
-                                                            firstname?: string;
-                                                            lastname?: string;
-                                                            username?: string;
-                                                            /** Format: email */
-                                                            email?: string;
-                                                            resetPasswordToken?: string;
-                                                            registrationToken?: string;
-                                                            isActive?: boolean;
-                                                            roles?: {
-                                                                data?: {
-                                                                    id?: number;
-                                                                    attributes?: {
-                                                                        name?: string;
-                                                                        code?: string;
-                                                                        description?: string;
-                                                                        users?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: Record<
-                                                                                    string,
-                                                                                    never
-                                                                                >;
-                                                                            }[];
-                                                                        };
-                                                                        permissions?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: {
-                                                                                    action?: string;
-                                                                                    actionParameters?: unknown;
-                                                                                    subject?: string;
-                                                                                    properties?: unknown;
-                                                                                    conditions?: unknown;
-                                                                                    role?: {
-                                                                                        data?: {
-                                                                                            id?: number;
-                                                                                            attributes?: Record<
-                                                                                                string,
-                                                                                                never
-                                                                                            >;
-                                                                                        };
-                                                                                    };
-                                                                                    /** Format: date-time */
-                                                                                    createdAt?: string;
-                                                                                    /** Format: date-time */
-                                                                                    updatedAt?: string;
-                                                                                    createdBy?: {
-                                                                                        data?: {
-                                                                                            id?: number;
-                                                                                            attributes?: Record<
-                                                                                                string,
-                                                                                                never
-                                                                                            >;
-                                                                                        };
-                                                                                    };
-                                                                                    updatedBy?: {
-                                                                                        data?: {
-                                                                                            id?: number;
-                                                                                            attributes?: Record<
-                                                                                                string,
-                                                                                                never
-                                                                                            >;
-                                                                                        };
-                                                                                    };
-                                                                                };
-                                                                            }[];
-                                                                        };
-                                                                        /** Format: date-time */
-                                                                        createdAt?: string;
-                                                                        /** Format: date-time */
-                                                                        updatedAt?: string;
-                                                                        createdBy?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: Record<
-                                                                                    string,
-                                                                                    never
-                                                                                >;
-                                                                            };
-                                                                        };
-                                                                        updatedBy?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: Record<
-                                                                                    string,
-                                                                                    never
-                                                                                >;
-                                                                            };
-                                                                        };
-                                                                    };
-                                                                }[];
-                                                            };
-                                                            blocked?: boolean;
-                                                            preferedLanguage?: string;
-                                                            /** Format: date-time */
-                                                            createdAt?: string;
-                                                            /** Format: date-time */
-                                                            updatedAt?: string;
-                                                            createdBy?: {
-                                                                data?: {
-                                                                    id?: number;
-                                                                    attributes?: Record<
-                                                                        string,
-                                                                        never
-                                                                    >;
-                                                                };
-                                                            };
-                                                            updatedBy?: {
-                                                                data?: {
-                                                                    id?: number;
-                                                                    attributes?: Record<
-                                                                        string,
-                                                                        never
-                                                                    >;
-                                                                };
-                                                            };
-                                                        };
-                                                    };
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
                                                 };
                                                 updatedBy?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: Record<
-                                                            string,
-                                                            never
-                                                        >;
-                                                    };
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
                                                 };
-                                            };
-                                        }[];
-                                    };
-                                    path?: string;
-                                    /** Format: date-time */
-                                    createdAt?: string;
-                                    /** Format: date-time */
-                                    updatedAt?: string;
-                                    createdBy?: {
-                                        data?: {
+                                              };
+                                            }[];
+                                        };
+                                        /** Format: date-time */
+                                        createdAt?: string;
+                                        /** Format: date-time */
+                                        updatedAt?: string;
+                                        createdBy?: {
+                                          data?: {
                                             id?: number;
                                             attributes?: Record<string, never>;
+                                          };
                                         };
-                                    };
-                                    updatedBy?: {
-                                        data?: {
+                                        updatedBy?: {
+                                          data?: {
                                             id?: number;
                                             attributes?: Record<string, never>;
+                                          };
                                         };
-                                    };
+                                      };
+                                    }[];
                                 };
-                            };
-                        };
-                        folderPath?: string;
-                        /** Format: date-time */
-                        createdAt?: string;
-                        /** Format: date-time */
-                        updatedAt?: string;
-                        createdBy?: {
-                            data?: {
-                                id?: number;
-                                attributes?: Record<string, never>;
-                            };
-                        };
-                        updatedBy?: {
-                            data?: {
-                                id?: number;
-                                attributes?: Record<string, never>;
-                            };
-                        };
-                    };
-                };
-            };
-            /** Format: date */
-            datePublished?: string;
-            body?: unknown;
-            author?: {
-                data?: {
-                    id?: number;
-                    attributes?: {
-                        name?: string;
-                        avatar?: {
-                            data?: {
-                                id?: number;
-                                attributes?: {
-                                    name?: string;
-                                    alternativeText?: string;
-                                    caption?: string;
-                                    width?: number;
-                                    height?: number;
-                                    formats?: unknown;
-                                    hash?: string;
-                                    ext?: string;
-                                    mime?: string;
-                                    /** Format: float */
-                                    size?: number;
-                                    url?: string;
-                                    previewUrl?: string;
-                                    provider?: string;
-                                    provider_metadata?: unknown;
-                                    related?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        }[];
-                                    };
-                                    folder?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        };
-                                    };
-                                    folderPath?: string;
-                                    /** Format: date-time */
-                                    createdAt?: string;
-                                    /** Format: date-time */
-                                    updatedAt?: string;
-                                    createdBy?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        };
-                                    };
-                                    updatedBy?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        };
-                                    };
+                                blocked?: boolean;
+                                preferedLanguage?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                createdBy?: {
+                                  data?: {
+                                    id?: number;
+                                    attributes?: Record<string, never>;
+                                  };
                                 };
-                            }[];
-                        };
-                        /** Format: date-time */
-                        createdAt?: string;
-                        /** Format: date-time */
-                        updatedAt?: string;
-                        /** Format: date-time */
-                        publishedAt?: string;
-                        createdBy?: {
-                            data?: {
-                                id?: number;
-                                attributes?: Record<string, never>;
+                                updatedBy?: {
+                                  data?: {
+                                    id?: number;
+                                    attributes?: Record<string, never>;
+                                  };
+                                };
+                              };
                             };
-                        };
-                        updatedBy?: {
+                          };
+                          updatedBy?: {
                             data?: {
-                                id?: number;
-                                attributes?: Record<string, never>;
+                              id?: number;
+                              attributes?: Record<string, never>;
                             };
+                          };
                         };
+                      }[];
+                  };
+                  path?: string;
+                  /** Format: date-time */
+                  createdAt?: string;
+                  /** Format: date-time */
+                  updatedAt?: string;
+                  createdBy?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
                     };
+                  };
+                  updatedBy?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
+                    };
+                  };
                 };
+              };
             };
-            slug?: string;
+            folderPath?: string;
             /** Format: date-time */
             createdAt?: string;
             /** Format: date-time */
             updatedAt?: string;
-            /** Format: date-time */
-            publishedAt?: string;
             createdBy?: {
-                data?: {
-                    id?: number;
-                    attributes?: Record<string, never>;
-                };
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
             };
             updatedBy?: {
-                data?: {
-                    id?: number;
-                    attributes?: Record<string, never>;
-                };
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
             };
+          };
         };
-        ArticleResponseDataObject: {
-            id?: number;
-            attributes?: components["schemas"]["Article"];
-        };
-        ArticleResponse: {
-            data?: components["schemas"]["ArticleResponseDataObject"];
-            meta?: Record<string, never>;
-        };
-        AuthorRequest: {
-            data: {
-                name?: string;
-                avatar?: (number | string)[];
-            };
-        };
-        AuthorListResponseDataItem: {
-            id?: number;
-            attributes?: components["schemas"]["Author"];
-        };
-        AuthorListResponse: {
-            data?: components["schemas"]["AuthorListResponseDataItem"][];
-            meta?: {
-                pagination?: {
-                    page?: number;
-                    pageSize?: number;
-                    pageCount?: number;
-                    total?: number;
-                };
-            };
-        };
-        Author: {
+      };
+      /** Format: date */
+      datePublished?: string;
+      body?: unknown;
+      author?: {
+        data?: {
+          id?: number;
+          attributes?: {
             name?: string;
             avatar?: {
-                data?: {
-                    id?: number;
-                    attributes?: {
-                        name?: string;
-                        alternativeText?: string;
-                        caption?: string;
-                        width?: number;
-                        height?: number;
-                        formats?: unknown;
-                        hash?: string;
-                        ext?: string;
-                        mime?: string;
-                        /** Format: float */
-                        size?: number;
-                        url?: string;
-                        previewUrl?: string;
-                        provider?: string;
-                        provider_metadata?: unknown;
-                        related?: {
-                            data?: {
-                                id?: number;
-                                attributes?: Record<string, never>;
-                            }[];
-                        };
-                        folder?: {
-                            data?: {
-                                id?: number;
-                                attributes?: {
-                                    name?: string;
-                                    pathId?: number;
-                                    parent?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        };
-                                    };
-                                    children?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        }[];
-                                    };
-                                    files?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: {
-                                                name?: string;
-                                                alternativeText?: string;
-                                                caption?: string;
-                                                width?: number;
-                                                height?: number;
-                                                formats?: unknown;
-                                                hash?: string;
-                                                ext?: string;
-                                                mime?: string;
-                                                /** Format: float */
-                                                size?: number;
-                                                url?: string;
-                                                previewUrl?: string;
-                                                provider?: string;
-                                                provider_metadata?: unknown;
-                                                related?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: Record<
-                                                            string,
-                                                            never
-                                                        >;
-                                                    }[];
-                                                };
-                                                folder?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: Record<
-                                                            string,
-                                                            never
-                                                        >;
-                                                    };
-                                                };
-                                                folderPath?: string;
-                                                /** Format: date-time */
-                                                createdAt?: string;
-                                                /** Format: date-time */
-                                                updatedAt?: string;
-                                                createdBy?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: {
-                                                            firstname?: string;
-                                                            lastname?: string;
-                                                            username?: string;
-                                                            /** Format: email */
-                                                            email?: string;
-                                                            resetPasswordToken?: string;
-                                                            registrationToken?: string;
-                                                            isActive?: boolean;
-                                                            roles?: {
-                                                                data?: {
-                                                                    id?: number;
-                                                                    attributes?: {
-                                                                        name?: string;
-                                                                        code?: string;
-                                                                        description?: string;
-                                                                        users?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: Record<
-                                                                                    string,
-                                                                                    never
-                                                                                >;
-                                                                            }[];
-                                                                        };
-                                                                        permissions?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: {
-                                                                                    action?: string;
-                                                                                    actionParameters?: unknown;
-                                                                                    subject?: string;
-                                                                                    properties?: unknown;
-                                                                                    conditions?: unknown;
-                                                                                    role?: {
-                                                                                        data?: {
-                                                                                            id?: number;
-                                                                                            attributes?: Record<
-                                                                                                string,
-                                                                                                never
-                                                                                            >;
-                                                                                        };
-                                                                                    };
-                                                                                    /** Format: date-time */
-                                                                                    createdAt?: string;
-                                                                                    /** Format: date-time */
-                                                                                    updatedAt?: string;
-                                                                                    createdBy?: {
-                                                                                        data?: {
-                                                                                            id?: number;
-                                                                                            attributes?: Record<
-                                                                                                string,
-                                                                                                never
-                                                                                            >;
-                                                                                        };
-                                                                                    };
-                                                                                    updatedBy?: {
-                                                                                        data?: {
-                                                                                            id?: number;
-                                                                                            attributes?: Record<
-                                                                                                string,
-                                                                                                never
-                                                                                            >;
-                                                                                        };
-                                                                                    };
-                                                                                };
-                                                                            }[];
-                                                                        };
-                                                                        /** Format: date-time */
-                                                                        createdAt?: string;
-                                                                        /** Format: date-time */
-                                                                        updatedAt?: string;
-                                                                        createdBy?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: Record<
-                                                                                    string,
-                                                                                    never
-                                                                                >;
-                                                                            };
-                                                                        };
-                                                                        updatedBy?: {
-                                                                            data?: {
-                                                                                id?: number;
-                                                                                attributes?: Record<
-                                                                                    string,
-                                                                                    never
-                                                                                >;
-                                                                            };
-                                                                        };
-                                                                    };
-                                                                }[];
-                                                            };
-                                                            blocked?: boolean;
-                                                            preferedLanguage?: string;
-                                                            /** Format: date-time */
-                                                            createdAt?: string;
-                                                            /** Format: date-time */
-                                                            updatedAt?: string;
-                                                            createdBy?: {
-                                                                data?: {
-                                                                    id?: number;
-                                                                    attributes?: Record<
-                                                                        string,
-                                                                        never
-                                                                    >;
-                                                                };
-                                                            };
-                                                            updatedBy?: {
-                                                                data?: {
-                                                                    id?: number;
-                                                                    attributes?: Record<
-                                                                        string,
-                                                                        never
-                                                                    >;
-                                                                };
-                                                            };
-                                                        };
-                                                    };
-                                                };
-                                                updatedBy?: {
-                                                    data?: {
-                                                        id?: number;
-                                                        attributes?: Record<
-                                                            string,
-                                                            never
-                                                        >;
-                                                    };
-                                                };
-                                            };
-                                        }[];
-                                    };
-                                    path?: string;
-                                    /** Format: date-time */
-                                    createdAt?: string;
-                                    /** Format: date-time */
-                                    updatedAt?: string;
-                                    createdBy?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        };
-                                    };
-                                    updatedBy?: {
-                                        data?: {
-                                            id?: number;
-                                            attributes?: Record<string, never>;
-                                        };
-                                    };
-                                };
-                            };
-                        };
-                        folderPath?: string;
-                        /** Format: date-time */
-                        createdAt?: string;
-                        /** Format: date-time */
-                        updatedAt?: string;
-                        createdBy?: {
-                            data?: {
-                                id?: number;
-                                attributes?: Record<string, never>;
-                            };
-                        };
-                        updatedBy?: {
-                            data?: {
-                                id?: number;
-                                attributes?: Record<string, never>;
-                            };
-                        };
+              data?: {
+                  id?: number;
+                  attributes?: {
+                    name?: string;
+                    alternativeText?: string;
+                    caption?: string;
+                    width?: number;
+                    height?: number;
+                    formats?: unknown;
+                    hash?: string;
+                    ext?: string;
+                    mime?: string;
+                    /** Format: float */
+                    size?: number;
+                    url?: string;
+                    previewUrl?: string;
+                    provider?: string;
+                    provider_metadata?: unknown;
+                    related?: {
+                      data?: {
+                          id?: number;
+                          attributes?: Record<string, never>;
+                        }[];
                     };
+                    folder?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                    folderPath?: string;
+                    /** Format: date-time */
+                    createdAt?: string;
+                    /** Format: date-time */
+                    updatedAt?: string;
+                    createdBy?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                    updatedBy?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                  };
                 }[];
             };
             /** Format: date-time */
@@ -1436,136 +1099,1151 @@ export interface components {
             /** Format: date-time */
             publishedAt?: string;
             createdBy?: {
-                data?: {
-                    id?: number;
-                    attributes?: Record<string, never>;
-                };
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
             };
             updatedBy?: {
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
+            };
+          };
+        };
+      };
+      slug?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      /** Format: date-time */
+      publishedAt?: string;
+      createdBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
+        };
+      };
+      updatedBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
+        };
+      };
+    };
+    ArticleResponseDataObject: {
+      id?: number;
+      attributes?: components["schemas"]["Article"];
+    };
+    ArticleResponse: {
+      data?: components["schemas"]["ArticleResponseDataObject"];
+      meta?: Record<string, never>;
+    };
+    AuthorRequest: {
+      data: {
+        name?: string;
+        avatar?: (number | string)[];
+      };
+    };
+    AuthorListResponseDataItem: {
+      id?: number;
+      attributes?: components["schemas"]["Author"];
+    };
+    AuthorListResponse: {
+      data?: components["schemas"]["AuthorListResponseDataItem"][];
+      meta?: {
+        pagination?: {
+          page?: number;
+          pageSize?: number;
+          pageCount?: number;
+          total?: number;
+        };
+      };
+    };
+    Author: {
+      name?: string;
+      avatar?: {
+        data?: {
+            id?: number;
+            attributes?: {
+              name?: string;
+              alternativeText?: string;
+              caption?: string;
+              width?: number;
+              height?: number;
+              formats?: unknown;
+              hash?: string;
+              ext?: string;
+              mime?: string;
+              /** Format: float */
+              size?: number;
+              url?: string;
+              previewUrl?: string;
+              provider?: string;
+              provider_metadata?: unknown;
+              related?: {
                 data?: {
                     id?: number;
                     attributes?: Record<string, never>;
+                  }[];
+              };
+              folder?: {
+                data?: {
+                  id?: number;
+                  attributes?: {
+                    name?: string;
+                    pathId?: number;
+                    parent?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                    children?: {
+                      data?: {
+                          id?: number;
+                          attributes?: Record<string, never>;
+                        }[];
+                    };
+                    files?: {
+                      data?: {
+                          id?: number;
+                          attributes?: {
+                            name?: string;
+                            alternativeText?: string;
+                            caption?: string;
+                            width?: number;
+                            height?: number;
+                            formats?: unknown;
+                            hash?: string;
+                            ext?: string;
+                            mime?: string;
+                            /** Format: float */
+                            size?: number;
+                            url?: string;
+                            previewUrl?: string;
+                            provider?: string;
+                            provider_metadata?: unknown;
+                            related?: {
+                              data?: {
+                                  id?: number;
+                                  attributes?: Record<string, never>;
+                                }[];
+                            };
+                            folder?: {
+                              data?: {
+                                id?: number;
+                                attributes?: Record<string, never>;
+                              };
+                            };
+                            folderPath?: string;
+                            /** Format: date-time */
+                            createdAt?: string;
+                            /** Format: date-time */
+                            updatedAt?: string;
+                            createdBy?: {
+                              data?: {
+                                id?: number;
+                                attributes?: {
+                                  firstname?: string;
+                                  lastname?: string;
+                                  username?: string;
+                                  /** Format: email */
+                                  email?: string;
+                                  resetPasswordToken?: string;
+                                  registrationToken?: string;
+                                  isActive?: boolean;
+                                  roles?: {
+                                    data?: {
+                                        id?: number;
+                                        attributes?: {
+                                          name?: string;
+                                          code?: string;
+                                          description?: string;
+                                          users?: {
+                                            data?: {
+                                                id?: number;
+                                                attributes?: Record<string, never>;
+                                              }[];
+                                          };
+                                          permissions?: {
+                                            data?: {
+                                                id?: number;
+                                                attributes?: {
+                                                  action?: string;
+                                                  actionParameters?: unknown;
+                                                  subject?: string;
+                                                  properties?: unknown;
+                                                  conditions?: unknown;
+                                                  role?: {
+                                                    data?: {
+                                                      id?: number;
+                                                      attributes?: Record<string, never>;
+                                                    };
+                                                  };
+                                                  /** Format: date-time */
+                                                  createdAt?: string;
+                                                  /** Format: date-time */
+                                                  updatedAt?: string;
+                                                  createdBy?: {
+                                                    data?: {
+                                                      id?: number;
+                                                      attributes?: Record<string, never>;
+                                                    };
+                                                  };
+                                                  updatedBy?: {
+                                                    data?: {
+                                                      id?: number;
+                                                      attributes?: Record<string, never>;
+                                                    };
+                                                  };
+                                                };
+                                              }[];
+                                          };
+                                          /** Format: date-time */
+                                          createdAt?: string;
+                                          /** Format: date-time */
+                                          updatedAt?: string;
+                                          createdBy?: {
+                                            data?: {
+                                              id?: number;
+                                              attributes?: Record<string, never>;
+                                            };
+                                          };
+                                          updatedBy?: {
+                                            data?: {
+                                              id?: number;
+                                              attributes?: Record<string, never>;
+                                            };
+                                          };
+                                        };
+                                      }[];
+                                  };
+                                  blocked?: boolean;
+                                  preferedLanguage?: string;
+                                  /** Format: date-time */
+                                  createdAt?: string;
+                                  /** Format: date-time */
+                                  updatedAt?: string;
+                                  createdBy?: {
+                                    data?: {
+                                      id?: number;
+                                      attributes?: Record<string, never>;
+                                    };
+                                  };
+                                  updatedBy?: {
+                                    data?: {
+                                      id?: number;
+                                      attributes?: Record<string, never>;
+                                    };
+                                  };
+                                };
+                              };
+                            };
+                            updatedBy?: {
+                              data?: {
+                                id?: number;
+                                attributes?: Record<string, never>;
+                              };
+                            };
+                          };
+                        }[];
+                    };
+                    path?: string;
+                    /** Format: date-time */
+                    createdAt?: string;
+                    /** Format: date-time */
+                    updatedAt?: string;
+                    createdBy?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                    updatedBy?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                  };
                 };
+              };
+              folderPath?: string;
+              /** Format: date-time */
+              createdAt?: string;
+              /** Format: date-time */
+              updatedAt?: string;
+              createdBy?: {
+                data?: {
+                  id?: number;
+                  attributes?: Record<string, never>;
+                };
+              };
+              updatedBy?: {
+                data?: {
+                  id?: number;
+                  attributes?: Record<string, never>;
+                };
+              };
             };
+          }[];
+      };
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      /** Format: date-time */
+      publishedAt?: string;
+      createdBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
         };
-        AuthorResponseDataObject: {
-            id?: number;
-            attributes?: components["schemas"]["Author"];
+      };
+      updatedBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
         };
-        AuthorResponse: {
-            data?: components["schemas"]["AuthorResponseDataObject"];
-            meta?: Record<string, never>;
+      };
+    };
+    AuthorResponseDataObject: {
+      id?: number;
+      attributes?: components["schemas"]["Author"];
+    };
+    AuthorResponse: {
+      data?: components["schemas"]["AuthorResponseDataObject"];
+      meta?: Record<string, never>;
+    };
+    PartnerRequest: {
+      data: {
+        partnerName: string;
+        logoUrl?: string;
+        /** @example string or id */
+        logoImage?: number | string;
+        websiteUrl?: string;
+      };
+    };
+    PartnerListResponseDataItem: {
+      id?: number;
+      attributes?: components["schemas"]["Partner"];
+    };
+    PartnerListResponse: {
+      data?: components["schemas"]["PartnerListResponseDataItem"][];
+      meta?: {
+        pagination?: {
+          page?: number;
+          pageSize?: number;
+          pageCount?: number;
+          total?: number;
         };
-        UploadFile: {
-            id?: number;
+      };
+    };
+    Partner: {
+      partnerName: string;
+      logoUrl?: string;
+      logoImage?: {
+        data?: {
+          id?: number;
+          attributes?: {
             name?: string;
             alternativeText?: string;
             caption?: string;
-            /** Format: integer */
             width?: number;
-            /** Format: integer */
             height?: number;
-            formats?: number;
+            formats?: unknown;
             hash?: string;
             ext?: string;
             mime?: string;
-            /** Format: double */
+            /** Format: float */
             size?: number;
             url?: string;
             previewUrl?: string;
             provider?: string;
-            provider_metadata?: Record<string, never>;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        "Users-Permissions-Role": {
-            id?: number;
-            name?: string;
-            description?: string;
-            type?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        "Users-Permissions-User": {
-            /** @example 1 */
-            id?: number;
-            /** @example foo.bar */
-            username?: string;
-            /** @example foo.bar@strapi.io */
-            email?: string;
-            /** @example local */
-            provider?: string;
-            /** @example true */
-            confirmed?: boolean;
-            /** @example false */
-            blocked?: boolean;
-            /**
-             * Format: date-time
-             * @example 2022-06-02T08:32:06.258Z
-             */
-            createdAt?: string;
-            /**
-             * Format: date-time
-             * @example 2022-06-02T08:32:06.267Z
-             */
-            updatedAt?: string;
-        };
-        "Users-Permissions-UserRegistration": {
-            /** @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c */
-            jwt?: string;
-            user?: components["schemas"]["Users-Permissions-User"];
-        };
-        "Users-Permissions-PermissionsTree": {
-            [key: string]: {
-                /** @description every controller of the api */
-                controllers?: {
-                    [key: string]: {
-                        [key: string]: {
-                            enabled?: boolean;
-                            policy?: string;
-                        };
+            provider_metadata?: unknown;
+            related?: {
+              data?: {
+                  id?: number;
+                  attributes?: Record<string, never>;
+                }[];
+            };
+            folder?: {
+              data?: {
+                id?: number;
+                attributes?: {
+                  name?: string;
+                  pathId?: number;
+                  parent?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
                     };
+                  };
+                  children?: {
+                    data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      }[];
+                  };
+                  files?: {
+                    data?: {
+                        id?: number;
+                        attributes?: {
+                          name?: string;
+                          alternativeText?: string;
+                          caption?: string;
+                          width?: number;
+                          height?: number;
+                          formats?: unknown;
+                          hash?: string;
+                          ext?: string;
+                          mime?: string;
+                          /** Format: float */
+                          size?: number;
+                          url?: string;
+                          previewUrl?: string;
+                          provider?: string;
+                          provider_metadata?: unknown;
+                          related?: {
+                            data?: {
+                                id?: number;
+                                attributes?: Record<string, never>;
+                              }[];
+                          };
+                          folder?: {
+                            data?: {
+                              id?: number;
+                              attributes?: Record<string, never>;
+                            };
+                          };
+                          folderPath?: string;
+                          /** Format: date-time */
+                          createdAt?: string;
+                          /** Format: date-time */
+                          updatedAt?: string;
+                          createdBy?: {
+                            data?: {
+                              id?: number;
+                              attributes?: {
+                                firstname?: string;
+                                lastname?: string;
+                                username?: string;
+                                /** Format: email */
+                                email?: string;
+                                resetPasswordToken?: string;
+                                registrationToken?: string;
+                                isActive?: boolean;
+                                roles?: {
+                                  data?: {
+                                      id?: number;
+                                      attributes?: {
+                                        name?: string;
+                                        code?: string;
+                                        description?: string;
+                                        users?: {
+                                          data?: {
+                                              id?: number;
+                                              attributes?: Record<string, never>;
+                                            }[];
+                                        };
+                                        permissions?: {
+                                          data?: {
+                                              id?: number;
+                                              attributes?: {
+                                                action?: string;
+                                                actionParameters?: unknown;
+                                                subject?: string;
+                                                properties?: unknown;
+                                                conditions?: unknown;
+                                                role?: {
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
+                                                };
+                                                /** Format: date-time */
+                                                createdAt?: string;
+                                                /** Format: date-time */
+                                                updatedAt?: string;
+                                                createdBy?: {
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
+                                                };
+                                                updatedBy?: {
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
+                                                };
+                                              };
+                                            }[];
+                                        };
+                                        /** Format: date-time */
+                                        createdAt?: string;
+                                        /** Format: date-time */
+                                        updatedAt?: string;
+                                        createdBy?: {
+                                          data?: {
+                                            id?: number;
+                                            attributes?: Record<string, never>;
+                                          };
+                                        };
+                                        updatedBy?: {
+                                          data?: {
+                                            id?: number;
+                                            attributes?: Record<string, never>;
+                                          };
+                                        };
+                                      };
+                                    }[];
+                                };
+                                blocked?: boolean;
+                                preferedLanguage?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                createdBy?: {
+                                  data?: {
+                                    id?: number;
+                                    attributes?: Record<string, never>;
+                                  };
+                                };
+                                updatedBy?: {
+                                  data?: {
+                                    id?: number;
+                                    attributes?: Record<string, never>;
+                                  };
+                                };
+                              };
+                            };
+                          };
+                          updatedBy?: {
+                            data?: {
+                              id?: number;
+                              attributes?: Record<string, never>;
+                            };
+                          };
+                        };
+                      }[];
+                  };
+                  path?: string;
+                  /** Format: date-time */
+                  createdAt?: string;
+                  /** Format: date-time */
+                  updatedAt?: string;
+                  createdBy?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
+                    };
+                  };
+                  updatedBy?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
+                    };
+                  };
                 };
+              };
             };
+            folderPath?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            createdBy?: {
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
+            };
+            updatedBy?: {
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
+            };
+          };
         };
+      };
+      websiteUrl?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      /** Format: date-time */
+      publishedAt?: string;
+      createdBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
+        };
+      };
+      updatedBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
+        };
+      };
     };
-    responses: never;
-    parameters: never;
-    requestBodies: {
-        "Users-Permissions-RoleRequest": {
-            content: {
-                /**
-                 * @example {
-                 *   "name": "foo",
-                 *   "description": "role foo",
-                 *   "permissions": {
-                 *     "api::content-type.content-type": {
-                 *       "controllers": {
-                 *         "controllerA": {
-                 *           "find": {
-                 *             "enabled": true
-                 *           }
-                 *         }
-                 *       }
-                 *     }
-                 *   }
-                 * }
-                 */
-                "application/json": {
+    PartnerResponseDataObject: {
+      id?: number;
+      attributes?: components["schemas"]["Partner"];
+    };
+    PartnerResponse: {
+      data?: components["schemas"]["PartnerResponseDataObject"];
+      meta?: Record<string, never>;
+    };
+    PersonRequest: {
+      data: {
+        name: string;
+        workTitle?: string;
+        employeeLink?: string;
+        /** @example string or id */
+        profilePicture?: number | string;
+        profilePictureURL?: string;
+        /** @enum {string} */
+        role: "Researchers" | "PhD candidates" | "Engineers" | "Contact us";
+      };
+    };
+    PersonListResponseDataItem: {
+      id?: number;
+      attributes?: components["schemas"]["Person"];
+    };
+    PersonListResponse: {
+      data?: components["schemas"]["PersonListResponseDataItem"][];
+      meta?: {
+        pagination?: {
+          page?: number;
+          pageSize?: number;
+          pageCount?: number;
+          total?: number;
+        };
+      };
+    };
+    Person: {
+      name: string;
+      workTitle?: string;
+      employeeLink?: string;
+      profilePicture?: {
+        data?: {
+          id?: number;
+          attributes?: {
+            name?: string;
+            alternativeText?: string;
+            caption?: string;
+            width?: number;
+            height?: number;
+            formats?: unknown;
+            hash?: string;
+            ext?: string;
+            mime?: string;
+            /** Format: float */
+            size?: number;
+            url?: string;
+            previewUrl?: string;
+            provider?: string;
+            provider_metadata?: unknown;
+            related?: {
+              data?: {
+                  id?: number;
+                  attributes?: Record<string, never>;
+                }[];
+            };
+            folder?: {
+              data?: {
+                id?: number;
+                attributes?: {
+                  name?: string;
+                  pathId?: number;
+                  parent?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
+                    };
+                  };
+                  children?: {
+                    data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      }[];
+                  };
+                  files?: {
+                    data?: {
+                        id?: number;
+                        attributes?: {
+                          name?: string;
+                          alternativeText?: string;
+                          caption?: string;
+                          width?: number;
+                          height?: number;
+                          formats?: unknown;
+                          hash?: string;
+                          ext?: string;
+                          mime?: string;
+                          /** Format: float */
+                          size?: number;
+                          url?: string;
+                          previewUrl?: string;
+                          provider?: string;
+                          provider_metadata?: unknown;
+                          related?: {
+                            data?: {
+                                id?: number;
+                                attributes?: Record<string, never>;
+                              }[];
+                          };
+                          folder?: {
+                            data?: {
+                              id?: number;
+                              attributes?: Record<string, never>;
+                            };
+                          };
+                          folderPath?: string;
+                          /** Format: date-time */
+                          createdAt?: string;
+                          /** Format: date-time */
+                          updatedAt?: string;
+                          createdBy?: {
+                            data?: {
+                              id?: number;
+                              attributes?: {
+                                firstname?: string;
+                                lastname?: string;
+                                username?: string;
+                                /** Format: email */
+                                email?: string;
+                                resetPasswordToken?: string;
+                                registrationToken?: string;
+                                isActive?: boolean;
+                                roles?: {
+                                  data?: {
+                                      id?: number;
+                                      attributes?: {
+                                        name?: string;
+                                        code?: string;
+                                        description?: string;
+                                        users?: {
+                                          data?: {
+                                              id?: number;
+                                              attributes?: Record<string, never>;
+                                            }[];
+                                        };
+                                        permissions?: {
+                                          data?: {
+                                              id?: number;
+                                              attributes?: {
+                                                action?: string;
+                                                actionParameters?: unknown;
+                                                subject?: string;
+                                                properties?: unknown;
+                                                conditions?: unknown;
+                                                role?: {
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
+                                                };
+                                                /** Format: date-time */
+                                                createdAt?: string;
+                                                /** Format: date-time */
+                                                updatedAt?: string;
+                                                createdBy?: {
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
+                                                };
+                                                updatedBy?: {
+                                                  data?: {
+                                                    id?: number;
+                                                    attributes?: Record<string, never>;
+                                                  };
+                                                };
+                                              };
+                                            }[];
+                                        };
+                                        /** Format: date-time */
+                                        createdAt?: string;
+                                        /** Format: date-time */
+                                        updatedAt?: string;
+                                        createdBy?: {
+                                          data?: {
+                                            id?: number;
+                                            attributes?: Record<string, never>;
+                                          };
+                                        };
+                                        updatedBy?: {
+                                          data?: {
+                                            id?: number;
+                                            attributes?: Record<string, never>;
+                                          };
+                                        };
+                                      };
+                                    }[];
+                                };
+                                blocked?: boolean;
+                                preferedLanguage?: string;
+                                /** Format: date-time */
+                                createdAt?: string;
+                                /** Format: date-time */
+                                updatedAt?: string;
+                                createdBy?: {
+                                  data?: {
+                                    id?: number;
+                                    attributes?: Record<string, never>;
+                                  };
+                                };
+                                updatedBy?: {
+                                  data?: {
+                                    id?: number;
+                                    attributes?: Record<string, never>;
+                                  };
+                                };
+                              };
+                            };
+                          };
+                          updatedBy?: {
+                            data?: {
+                              id?: number;
+                              attributes?: Record<string, never>;
+                            };
+                          };
+                        };
+                      }[];
+                  };
+                  path?: string;
+                  /** Format: date-time */
+                  createdAt?: string;
+                  /** Format: date-time */
+                  updatedAt?: string;
+                  createdBy?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
+                    };
+                  };
+                  updatedBy?: {
+                    data?: {
+                      id?: number;
+                      attributes?: Record<string, never>;
+                    };
+                  };
+                };
+              };
+            };
+            folderPath?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            createdBy?: {
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
+            };
+            updatedBy?: {
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
+            };
+          };
+        };
+      };
+      profilePictureURL?: string;
+      /** @enum {string} */
+      role: "Researchers" | "PhD candidates" | "Engineers" | "Contact us";
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      /** Format: date-time */
+      publishedAt?: string;
+      createdBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
+        };
+      };
+      updatedBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
+        };
+      };
+    };
+    PersonResponseDataObject: {
+      id?: number;
+      attributes?: components["schemas"]["Person"];
+    };
+    PersonResponse: {
+      data?: components["schemas"]["PersonResponseDataObject"];
+      meta?: Record<string, never>;
+    };
+    PhDProjectRequest: {
+      data: {
+        name: string;
+        title?: string;
+        keywords?: string;
+      };
+    };
+    PhDProjectListResponseDataItem: {
+      id?: number;
+      attributes?: components["schemas"]["PhDProject"];
+    };
+    PhDProjectListResponse: {
+      data?: components["schemas"]["PhDProjectListResponseDataItem"][];
+      meta?: {
+        pagination?: {
+          page?: number;
+          pageSize?: number;
+          pageCount?: number;
+          total?: number;
+        };
+      };
+    };
+    PhDProject: {
+      name: string;
+      title?: string;
+      keywords?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      /** Format: date-time */
+      publishedAt?: string;
+      createdBy?: {
+        data?: {
+          id?: number;
+          attributes?: {
+            firstname?: string;
+            lastname?: string;
+            username?: string;
+            /** Format: email */
+            email?: string;
+            resetPasswordToken?: string;
+            registrationToken?: string;
+            isActive?: boolean;
+            roles?: {
+              data?: {
+                  id?: number;
+                  attributes?: {
                     name?: string;
+                    code?: string;
                     description?: string;
-                    type?: string;
-                    permissions?: components["schemas"]["Users-Permissions-PermissionsTree"];
-                };
+                    users?: {
+                      data?: {
+                          id?: number;
+                          attributes?: Record<string, never>;
+                        }[];
+                    };
+                    permissions?: {
+                      data?: {
+                          id?: number;
+                          attributes?: {
+                            action?: string;
+                            actionParameters?: unknown;
+                            subject?: string;
+                            properties?: unknown;
+                            conditions?: unknown;
+                            role?: {
+                              data?: {
+                                id?: number;
+                                attributes?: Record<string, never>;
+                              };
+                            };
+                            /** Format: date-time */
+                            createdAt?: string;
+                            /** Format: date-time */
+                            updatedAt?: string;
+                            createdBy?: {
+                              data?: {
+                                id?: number;
+                                attributes?: Record<string, never>;
+                              };
+                            };
+                            updatedBy?: {
+                              data?: {
+                                id?: number;
+                                attributes?: Record<string, never>;
+                              };
+                            };
+                          };
+                        }[];
+                    };
+                    /** Format: date-time */
+                    createdAt?: string;
+                    /** Format: date-time */
+                    updatedAt?: string;
+                    createdBy?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                    updatedBy?: {
+                      data?: {
+                        id?: number;
+                        attributes?: Record<string, never>;
+                      };
+                    };
+                  };
+                }[];
             };
+            blocked?: boolean;
+            preferedLanguage?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            createdBy?: {
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
+            };
+            updatedBy?: {
+              data?: {
+                id?: number;
+                attributes?: Record<string, never>;
+              };
+            };
+          };
         };
+      };
+      updatedBy?: {
+        data?: {
+          id?: number;
+          attributes?: Record<string, never>;
+        };
+      };
     };
-    headers: never;
-    pathItems: never;
+    PhDProjectResponseDataObject: {
+      id?: number;
+      attributes?: components["schemas"]["PhDProject"];
+    };
+    PhDProjectResponse: {
+      data?: components["schemas"]["PhDProjectResponseDataObject"];
+      meta?: Record<string, never>;
+    };
+    UploadFile: {
+      id?: number;
+      name?: string;
+      alternativeText?: string;
+      caption?: string;
+      /** Format: integer */
+      width?: number;
+      /** Format: integer */
+      height?: number;
+      formats?: number;
+      hash?: string;
+      ext?: string;
+      mime?: string;
+      /** Format: double */
+      size?: number;
+      url?: string;
+      previewUrl?: string;
+      provider?: string;
+      provider_metadata?: Record<string, never>;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+    };
+    "Users-Permissions-Role": {
+      id?: number;
+      name?: string;
+      description?: string;
+      type?: string;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+    };
+    "Users-Permissions-User": {
+      /** @example 1 */
+      id?: number;
+      /** @example foo.bar */
+      username?: string;
+      /** @example foo.bar@strapi.io */
+      email?: string;
+      /** @example local */
+      provider?: string;
+      /** @example true */
+      confirmed?: boolean;
+      /** @example false */
+      blocked?: boolean;
+      /**
+       * Format: date-time
+       * @example 2022-06-02T08:32:06.258Z
+       */
+      createdAt?: string;
+      /**
+       * Format: date-time
+       * @example 2022-06-02T08:32:06.267Z
+       */
+      updatedAt?: string;
+    };
+    "Users-Permissions-UserRegistration": {
+      /** @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c */
+      jwt?: string;
+      user?: components["schemas"]["Users-Permissions-User"];
+    };
+    "Users-Permissions-PermissionsTree": {
+      [key: string]: {
+        /** @description every controller of the api */
+        controllers?: {
+          [key: string]: {
+            [key: string]: {
+              enabled?: boolean;
+              policy?: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: {
+    "Users-Permissions-RoleRequest": {
+      content: {
+        /**
+         * @example {
+         *   "name": "foo",
+         *   "description": "role foo",
+         *   "permissions": {
+         *     "api::content-type.content-type": {
+         *       "controllers": {
+         *         "controllerA": {
+         *           "find": {
+         *             "enabled": true
+         *           }
+         *         }
+         *       }
+         *     }
+         *   }
+         * }
+         */
+        "application/json": {
+          name?: string;
+          description?: string;
+          type?: string;
+          permissions?: components["schemas"]["Users-Permissions-PermissionsTree"];
+        };
+      };
+    };
+  };
+  headers: never;
+  pathItems: never;
 }
 
 export type $defs = Record<string, never>;
@@ -1573,502 +2251,1250 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
-    "get/articles": {
-        parameters: {
-            query?: {
-                /** @description Sort by attributes ascending (asc) or descending (desc) */
-                sort?: string;
-                /** @description Return page/pageSize (default: true) */
-                "pagination[withCount]"?: boolean;
-                /** @description Page number (default: 0) */
-                "pagination[page]"?: number;
-                /** @description Page size (default: 25) */
-                "pagination[pageSize]"?: number;
-                /** @description Offset value (default: 0) */
-                "pagination[start]"?: number;
-                /** @description Number of entities to return (default: 25) */
-                "pagination[limit]"?: number;
-                /** @description Fields to return (ex: title,author) */
-                fields?: string;
-                /** @description Relations to return */
-                populate?: string;
-                /** @description Filters to apply */
-                filters?: Record<string, never>;
-                /** @description Locale to apply */
-                locale?: string;
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["ArticleListResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
+
+  "get/articles": {
+    parameters: {
+      query?: {
+        /** @description Sort by attributes ascending (asc) or descending (desc) */
+        sort?: string;
+        /** @description Return page/pageSize (default: true) */
+        "pagination[withCount]"?: boolean;
+        /** @description Page number (default: 0) */
+        "pagination[page]"?: number;
+        /** @description Page size (default: 25) */
+        "pagination[pageSize]"?: number;
+        /** @description Offset value (default: 0) */
+        "pagination[start]"?: number;
+        /** @description Number of entities to return (default: 25) */
+        "pagination[limit]"?: number;
+        /** @description Fields to return (ex: title,author) */
+        fields?: string;
+        /** @description Relations to return */
+        populate?: string;
+        /** @description Filters to apply */
+        filters?: Record<string, never>;
+        /** @description Locale to apply */
+        locale?: string;
+      };
     };
-    "post/articles": {
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ArticleRequest"];
-            };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ArticleListResponse"];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["ArticleResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
     };
-    "get/articles/{id}": {
-        parameters: {
-            path: {
-                id: number;
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["ArticleResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
+  };
+  "post/articles": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ArticleRequest"];
+      };
     };
-    "put/articles/{id}": {
-        parameters: {
-            path: {
-                id: number;
-            };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ArticleResponse"];
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ArticleRequest"];
-            };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["ArticleResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
         };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
     };
-    "delete/articles/{id}": {
-        parameters: {
-            path: {
-                id: number;
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": number;
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
+  };
+  "get/articles/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
     };
-    "get/authors": {
-        parameters: {
-            query?: {
-                /** @description Sort by attributes ascending (asc) or descending (desc) */
-                sort?: string;
-                /** @description Return page/pageSize (default: true) */
-                "pagination[withCount]"?: boolean;
-                /** @description Page number (default: 0) */
-                "pagination[page]"?: number;
-                /** @description Page size (default: 25) */
-                "pagination[pageSize]"?: number;
-                /** @description Offset value (default: 0) */
-                "pagination[start]"?: number;
-                /** @description Number of entities to return (default: 25) */
-                "pagination[limit]"?: number;
-                /** @description Fields to return (ex: title,author) */
-                fields?: string;
-                /** @description Relations to return */
-                populate?: string;
-                /** @description Filters to apply */
-                filters?: Record<string, never>;
-                /** @description Locale to apply */
-                locale?: string;
-            };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ArticleResponse"];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["AuthorListResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
     };
-    "post/authors": {
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AuthorRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["AuthorResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
+  };
+  "put/articles/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
     };
-    "get/authors/{id}": {
-        parameters: {
-            path: {
-                id: number;
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["AuthorResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ArticleRequest"];
+      };
     };
-    "put/authors/{id}": {
-        parameters: {
-            path: {
-                id: number;
-            };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ArticleResponse"];
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AuthorRequest"];
-            };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
         };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": components["schemas"]["AuthorResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
         };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
     };
-    "delete/authors/{id}": {
-        parameters: {
-            path: {
-                id: number;
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                content: {
-                    "application/json": number;
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Forbidden */
-            403: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                content: {
-                    "application/json": components["schemas"]["Error"];
-                };
-            };
-        };
+  };
+  "delete/articles/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
     };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": number;
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/authors": {
+    parameters: {
+      query?: {
+        /** @description Sort by attributes ascending (asc) or descending (desc) */
+        sort?: string;
+        /** @description Return page/pageSize (default: true) */
+        "pagination[withCount]"?: boolean;
+        /** @description Page number (default: 0) */
+        "pagination[page]"?: number;
+        /** @description Page size (default: 25) */
+        "pagination[pageSize]"?: number;
+        /** @description Offset value (default: 0) */
+        "pagination[start]"?: number;
+        /** @description Number of entities to return (default: 25) */
+        "pagination[limit]"?: number;
+        /** @description Fields to return (ex: title,author) */
+        fields?: string;
+        /** @description Relations to return */
+        populate?: string;
+        /** @description Filters to apply */
+        filters?: Record<string, never>;
+        /** @description Locale to apply */
+        locale?: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["AuthorListResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "post/authors": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["AuthorRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["AuthorResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/authors/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["AuthorResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "put/authors/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["AuthorRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["AuthorResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "delete/authors/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": number;
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/partners": {
+    parameters: {
+      query?: {
+        /** @description Sort by attributes ascending (asc) or descending (desc) */
+        sort?: string;
+        /** @description Return page/pageSize (default: true) */
+        "pagination[withCount]"?: boolean;
+        /** @description Page number (default: 0) */
+        "pagination[page]"?: number;
+        /** @description Page size (default: 25) */
+        "pagination[pageSize]"?: number;
+        /** @description Offset value (default: 0) */
+        "pagination[start]"?: number;
+        /** @description Number of entities to return (default: 25) */
+        "pagination[limit]"?: number;
+        /** @description Fields to return (ex: title,author) */
+        fields?: string;
+        /** @description Relations to return */
+        populate?: string;
+        /** @description Filters to apply */
+        filters?: Record<string, never>;
+        /** @description Locale to apply */
+        locale?: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PartnerListResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "post/partners": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PartnerRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PartnerResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/partners/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PartnerResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "put/partners/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PartnerRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PartnerResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "delete/partners/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": number;
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/people": {
+    parameters: {
+      query?: {
+        /** @description Sort by attributes ascending (asc) or descending (desc) */
+        sort?: string;
+        /** @description Return page/pageSize (default: true) */
+        "pagination[withCount]"?: boolean;
+        /** @description Page number (default: 0) */
+        "pagination[page]"?: number;
+        /** @description Page size (default: 25) */
+        "pagination[pageSize]"?: number;
+        /** @description Offset value (default: 0) */
+        "pagination[start]"?: number;
+        /** @description Number of entities to return (default: 25) */
+        "pagination[limit]"?: number;
+        /** @description Fields to return (ex: title,author) */
+        fields?: string;
+        /** @description Relations to return */
+        populate?: string;
+        /** @description Filters to apply */
+        filters?: Record<string, never>;
+        /** @description Locale to apply */
+        locale?: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PersonListResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "post/people": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PersonRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PersonResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/people/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PersonResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "put/people/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PersonRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PersonResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "delete/people/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": number;
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/ph-d-projects": {
+    parameters: {
+      query?: {
+        /** @description Sort by attributes ascending (asc) or descending (desc) */
+        sort?: string;
+        /** @description Return page/pageSize (default: true) */
+        "pagination[withCount]"?: boolean;
+        /** @description Page number (default: 0) */
+        "pagination[page]"?: number;
+        /** @description Page size (default: 25) */
+        "pagination[pageSize]"?: number;
+        /** @description Offset value (default: 0) */
+        "pagination[start]"?: number;
+        /** @description Number of entities to return (default: 25) */
+        "pagination[limit]"?: number;
+        /** @description Fields to return (ex: title,author) */
+        fields?: string;
+        /** @description Relations to return */
+        populate?: string;
+        /** @description Filters to apply */
+        filters?: Record<string, never>;
+        /** @description Locale to apply */
+        locale?: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PhDProjectListResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "post/ph-d-projects": {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PhDProjectRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PhDProjectResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "get/ph-d-projects/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PhDProjectResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "put/ph-d-projects/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PhDProjectRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": components["schemas"]["PhDProjectResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
+  "delete/ph-d-projects/{id}": {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "application/json": number;
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Forbidden */
+      403: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+      /** @description Internal Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["Error"];
+        };
+      };
+    };
+  };
 }
