@@ -9,18 +9,20 @@ import * as satellite from "satellite.js";
 // https://www.npmjs.com/package/satellite.js
 // https://www.npmjs.com/package/three
 
+// could possibly switch to https://www.npmjs.com/package/tle.js for TLE parsing, as it i mostly a wrapper around satellite.js
+
 const EARTH_RADIUS_KM = 6371; // km
-const SAT_SIZE = 500; // km
+const SAT_SIZE = 50; // km
 const TIME_STEP = 1 * 1000; // per frame
-const SATELLITE_AMOUNT = 100; // amount of satellites to display
+const SATELLITE_AMOUNT = 5000; // amount of satellites to display
 
 // Datasources
-// const EXAMPLE_DATA_TLE_URL = "../datasets/space-track-leo.txt"
+const EXAMPLE_DATA_TLE_URL = "../datasets/space-track-leo.txt";
 // Hypso 1 data
 const HYPSO1_TLE_URL =
     "https://celestrak.org/NORAD/elements/gp.php?NAME=HYPSO-1&FORMAT=TLE";
 
-const FETCHED_DATA_URL = HYPSO1_TLE_URL;
+const FETCHED_DATA_URL = EXAMPLE_DATA_TLE_URL;
 
 function mapRawDataToTleData(rawData: string): string[][] {
     return (
@@ -40,7 +42,11 @@ function mapRawDataToTleData(rawData: string): string[][] {
     );
 }
 
-export default function MyGlobe() {
+export default function MyGlobe({
+    satelliteUrls,
+}: {
+    satelliteUrls: string[];
+}) {
     const chart = React.useRef<HTMLDivElement>(null);
 
     const timeLogger = React.useRef<HTMLDivElement>(null);
@@ -63,10 +69,10 @@ export default function MyGlobe() {
             setTimeout(() => myGlobe.pointOfView({ altitude: 3.5 }));
 
             // Disable OrbitControls and enable auto-rotation
-            myGlobe.controls().autoRotate = true;
-            myGlobe.controls().enabled = false;
+            // myGlobe.controls().autoRotate = true;
+            // myGlobe.controls().enabled = false;
             // Invert rotation direction
-            myGlobe.controls().autoRotateSpeed *= -1;
+            // myGlobe.controls().autoRotateSpeed *= -1;
 
             // Make the satellite geometry using a sphere
             const satGeometry = new THREE.SphereGeometry(
@@ -84,6 +90,15 @@ export default function MyGlobe() {
             myGlobe.objectThreeObject(
                 () => new THREE.Mesh(satGeometry, satMaterial),
             );
+
+            // Fetch every registered satellites data
+            let responses: Promise<String>[] = [];
+            // Map all satelliteUrls to satellite data
+            satelliteUrls.forEach((url) => {
+                responses.push(fetch(url).then((r) => r.text()));
+            });
+
+            const data = await Promise.all(responses);           
 
             // Currently using example data from the example
             fetch(FETCHED_DATA_URL)
@@ -142,8 +157,14 @@ export default function MyGlobe() {
 
     return (
         <>
-            <div id="chart" ref={chart}></div>
-            <div id="time-log" ref={timeLogger}></div>
+            <div className="relative">
+                <div id="chart" ref={chart}></div>
+                <div
+                    id="time-log"
+                    ref={timeLogger}
+                    className="absolute top-0 bottom-0"
+                ></div>
+            </div>
         </>
     );
 }

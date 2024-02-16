@@ -989,6 +989,39 @@ export interface ApiPhDProjectPhDProject extends Schema.CollectionType {
   };
 }
 
+export interface ApiSatelliteSatellite extends Schema.CollectionType {
+  collectionName: 'satellites';
+  info: {
+    singularName: 'satellite';
+    pluralName: 'satellites';
+    displayName: 'Satellite';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    celestrakURL: Attribute.String;
+    name: Attribute.String;
+    description: Attribute.Blocks;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::satellite.satellite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::satellite.satellite',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1013,6 +1046,7 @@ declare module '@strapi/types' {
       'api::partner.partner': ApiPartnerPartner;
       'api::person.person': ApiPersonPerson;
       'api::ph-d-project.ph-d-project': ApiPhDProjectPhDProject;
+      'api::satellite.satellite': ApiSatelliteSatellite;
     }
   }
 }

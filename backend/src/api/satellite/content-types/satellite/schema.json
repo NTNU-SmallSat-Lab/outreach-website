@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "satellites",
+  "info": {
+    "singularName": "satellite",
+    "pluralName": "satellites",
+    "displayName": "Satellite",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "celestrakURL": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    }
+  }
+}
