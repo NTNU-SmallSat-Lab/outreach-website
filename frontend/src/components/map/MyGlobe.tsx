@@ -4,10 +4,14 @@ import * as THREE from "three";
 import React, { useEffect } from "react";
 import * as satellite from "satellite.js";
 
+// made with the following packages:
+// https://www.npmjs.com/package/globe.gl
+// https://www.npmjs.com/package/satellite.js
+// https://www.npmjs.com/package/three
+
 const EARTH_RADIUS_KM = 6371; // km
 const SAT_SIZE = 500; // km
 const TIME_STEP = 1 * 1000; // per frame
-
 const SATELLITE_AMOUNT = 100; // amount of satellites to display
 
 // Datasources
@@ -89,9 +93,9 @@ export default function MyGlobe() {
                     const satData = tleData
                         .map(([name, ...tle]) => ({
                             satrec: satellite.twoline2satrec(
-                                ...(tle as [string, string]),
+                                ...(tle as [string, string]), // spread the array as arguments to the function
                             ),
-                            name: name.trim().replace(/^0 /, ""),
+                            name: name.trim().replace(/^0 /, ""), // remove leading 0 from name
                         }))
                         // exclude those that can't be propagated
                         .filter(
