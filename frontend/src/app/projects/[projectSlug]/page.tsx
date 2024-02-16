@@ -31,8 +31,7 @@ query Projects($projectFilters: ProjectFiltersInput) {
         }
       }
     }
-  }`
-);
+  }`);
 
 export default async function Page({
     params,
@@ -42,7 +41,7 @@ export default async function Page({
     const graphqlData = await getClient().query({
         query: GET_PROJECT_BY_SLUG,
         variables: {
-          projectFilters: {
+            projectFilters: {
                 slug: { eq: params.projectSlug },
             },
         },
@@ -59,10 +58,7 @@ export default async function Page({
 
     const projects = graphqlData.data.projects?.data[0];
 
-
-    let projectTitle =
-    projects?.attributes?.slug
-
+    let projectTitle = projects?.attributes?.slug;
 
     if (HOST_URL && projectTitle != undefined) {
         projectTitle = HOST_URL + projectTitle;

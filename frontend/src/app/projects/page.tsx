@@ -3,7 +3,7 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
 
- const GET_PROJECTS = gql(`
+const GET_PROJECTS = gql(`
  query GET_PROJECTS {
     projects {
       data {
@@ -16,8 +16,7 @@ import Link from "next/link";
     }
   }`);
 
-
-export default async  function ProjectsPage() {
+export default async function ProjectsPage() {
     const graphqlData = await getClient().query({
         query: GET_PROJECTS,
     });
@@ -36,20 +35,21 @@ export default async  function ProjectsPage() {
             <h1>Projects</h1>
             {/* map projects from strapi to component */}
             {}
-            {graphqlData.data.projects.data.map((project: any) => ( // TODO: fix any
-                <div key={project.attributes.title}>
-                    <Link
-                        className="hover:underline"
-                        href={
-                            "/projects/" + project?.attributes?.slug
-                        }
-                    >
-                    {project.attributes.title}</Link>
-                    <p>{project.attributes.description}</p>
-                </div>)
-                )
-            }
-
+            {graphqlData.data.projects.data.map(
+                (
+                    project: any, // TODO: fix any
+                ) => (
+                    <div key={project.attributes.title}>
+                        <Link
+                            className="hover:underline"
+                            href={"/projects/" + project?.attributes?.slug}
+                        >
+                            {project.attributes.title}
+                        </Link>
+                        <p>{project.attributes.description}</p>
+                    </div>
+                ),
+            )}
         </div>
     );
 }
