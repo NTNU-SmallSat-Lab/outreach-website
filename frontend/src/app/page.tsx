@@ -12,6 +12,7 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 // Dyanmic import for fixing leaflet ssr problem with next.js
 import dynamic from "next/dynamic";
+import MyGlobe from "@/components/map/MyGlobe";
 const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
 });
@@ -44,7 +45,9 @@ export default function Home() {
 
     return (
         <main>
-            <MyCustomMap />
+            <MyGlobe />
+
+            {/* <MyCustomMap /> */}
 
             <Hero
                 id="intro-hero"
