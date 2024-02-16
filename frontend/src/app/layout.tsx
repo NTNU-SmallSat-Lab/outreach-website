@@ -28,9 +28,10 @@ export default function RootLayout({
                         attribute="class"
                         defaultTheme="system"
                         enableSystem
+                        disableTransitionOnChange
                     >
                         <Navbar />
-                        <main className="flex-grow p-5">{children}</main>
+                        <main className="flex-grow">{children}</main>
                         <Footer />
                     </ThemeProvider>
                 </ApolloWrapper>
