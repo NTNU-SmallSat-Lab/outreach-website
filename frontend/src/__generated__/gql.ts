@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\nquery GET_PEOPLE {\n    people {\n        data {\n          attributes {\n            createdAt\n            employeeLink\n            name\n            profilePicture {\n              data {\n                attributes {\n                  alternativeText\n                  previewUrl\n                  url\n                }\n                id\n              }\n            }\n            workTitle\n          }\n        }\n      }\n  }\n": types.Get_PeopleDocument,
     "\nquery GET_STRUCTURE {\n    infrastructure {\n      data {\n        attributes {\n          Content\n        }\n      }\n    }\n  }\n": types.Get_StructureDocument,
     "\nquery GET_PARTNERS {\n    partners {\n      data {\n        attributes {\n          partnerName\n          logoUrl\n          websiteUrl\n          logoImage {\n            data {\n              attributes {\n                url\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n": types.Get_PartnersDocument,
     "\nquery PhDProjects {\n    phDProjects {\n    data {\n        attributes {\n        name\n        title\n        keywords\n        }\n        id\n    }\n    }\n}\n": types.PhDProjectsDocument,
@@ -35,6 +36,10 @@ const documents = {
  */
 export function gql(source: string): unknown;
 
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery GET_PEOPLE {\n    people {\n        data {\n          attributes {\n            createdAt\n            employeeLink\n            name\n            profilePicture {\n              data {\n                attributes {\n                  alternativeText\n                  previewUrl\n                  url\n                }\n                id\n              }\n            }\n            workTitle\n          }\n        }\n      }\n  }\n"): (typeof documents)["\nquery GET_PEOPLE {\n    people {\n        data {\n          attributes {\n            createdAt\n            employeeLink\n            name\n            profilePicture {\n              data {\n                attributes {\n                  alternativeText\n                  previewUrl\n                  url\n                }\n                id\n              }\n            }\n            workTitle\n          }\n        }\n      }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
+import { ExternalLink } from "./ExternalLink";
 import {
     Card,
     CardContent,
@@ -13,11 +13,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 
 type ContactCardProps = {
-    name: string;
-    role: string;
-    imageUrl: string;
+    name?: string;
+    role: string | null | undefined;
+    imageUrl?: string;
     externalUrl: string;
-    handleClick: () => void; // Adjust the type if your event handler has a different signature
 };
 
 export function ContactCard({
@@ -25,7 +24,6 @@ export function ContactCard({
     role,
     imageUrl,
     externalUrl,
-    handleClick,
 }: ContactCardProps) {
     return (
         <Card className="w-[350px] m-2">
@@ -38,13 +36,10 @@ export function ContactCard({
                 <Label>{role}</Label>
             </CardHeader>
             <CardContent>
-                <a href={externalUrl} className="hover:underline blue">
-                    NTNU
-                </a>
+                <ExternalLink href={externalUrl} children={"NTNU"}></ExternalLink>
             </CardContent>
 
             <CardFooter className="flex justify-between">
-                <Button onClick={handleClick}>Contact</Button>
             </CardFooter>
         </Card>
     );

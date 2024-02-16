@@ -1,167 +1,54 @@
-"use client";
-import { useState } from "react";
+export const runtime = "edge";
 import { ContactCard } from "@/components/ContactCard";
 import { Separator } from "@/components/ui/separator";
-export default function ContactPage() {
-    const people = [
-        {
-            name: "Roger Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-        {
-            name: "Yooooo Birkeland",
-            role: "Researcher, Phd",
-            img: "https://backends.it.ntnu.no/user-profile-service/rest/files/e0510fd5-0b1f-3620-8d31-087e1f3ebb58",
-            mail: "roger@mail.no",
-            phone: "+47 12343390",
-            externalUrl: "https://www.ntnu.edu/employees/roger.birkeland",
-        },
-    ];
+import { getClient } from "@/lib/ApolloClient";
+import { gql } from "@/__generated__/gql";
 
-    const [selectedPerson, setSelectedPerson] = useState(people[0]);
+
+const GET_PEOPLE = gql(`
+query GET_PEOPLE {
+    people {
+        data {
+          attributes {
+            createdAt
+            employeeLink
+            name
+            profilePicture {
+              data {
+                attributes {
+                  alternativeText
+                  previewUrl
+                  url
+                }
+                id
+              }
+            }
+            workTitle
+          }
+        }
+      }
+  }
+`);
+
+export default async function ContactPage() {
+    const people = await getClient().query({
+        query: GET_PEOPLE,
+    });
+    
+    const content = people?.data?.people?.data ?? [];
+
+    
 
     return (
-        <div className="flex flex-col md:flex-row h-screen">
-            <div className="w-full md:w-1/2 flex justify-center items-center">
-                <div>
-                    <p>
-                        <strong>Name:</strong> {selectedPerson.name}
-                    </p>
-                    <p>
-                        <strong>Email:</strong> {selectedPerson.mail}
-                    </p>
-                    <p>
-                        <strong>Phone:</strong> {selectedPerson.phone}
-                    </p>
-                    <Separator />
-                </div>
-            </div>
-
-            <div className="w-full md:w-1/2 flex flex-wrap justify-center items-start h-full overflow-y-auto">
-                {people.map((person, index) => (
+        <div className="flex justify-center items-start h-full">
+            <div className="flex flex-wrap justify-center items-start h-full max-w-7xl mx-auto">
+                {content.map((person, index) => (
                     <ContactCard
                         key={index}
-                        imageUrl={person.img}
-                        name={person.name}
-                        role={person.role}
-                        externalUrl={person.externalUrl}
-                        handleClick={() => setSelectedPerson(person)}
+                        imageUrl={process.env.HOST_URL + (person?.attributes?.profilePicture?.data?.attributes?.url ?? '')}
+                        name={person.attributes?.name}
+                        role={person.attributes?.workTitle}
+                        externalUrl={person.attributes?.employeeLink as string}
                     />
                 ))}
             </div>
