@@ -12,17 +12,9 @@ import * as satellite from "satellite.js";
 // could possibly switch to https://www.npmjs.com/package/tle.js for TLE parsing, as it i mostly a wrapper around satellite.js
 
 const EARTH_RADIUS_KM = 6371; // km
-const SAT_SIZE = 50; // km
+const SAT_SIZE = 500; // km
 const TIME_STEP = 1 * 1000; // per frame
 const SATELLITE_AMOUNT = 5000; // amount of satellites to display
-
-// Datasources
-const EXAMPLE_DATA_TLE_URL = "../datasets/space-track-leo.txt";
-// Hypso 1 data
-const HYPSO1_TLE_URL =
-    "https://celestrak.org/NORAD/elements/gp.php?NAME=HYPSO-1&FORMAT=TLE";
-
-const FETCHED_DATA_URL = EXAMPLE_DATA_TLE_URL;
 
 function mapRawDataToTleData(rawData: string): string[][] {
     return (
@@ -43,9 +35,9 @@ function mapRawDataToTleData(rawData: string): string[][] {
 }
 
 export default function MyGlobe({
-    satelliteUrls,
+    satelliteDatas: satelliteDatas,
 }: {
-    satelliteUrls: string[];
+    satelliteDatas: String[]; // Expects an array of TLE strings such as the example files in the datasets folder
 }) {
     const chart = React.useRef<HTMLDivElement>(null);
 
@@ -91,67 +83,49 @@ export default function MyGlobe({
                 () => new THREE.Mesh(satGeometry, satMaterial),
             );
 
-            // Fetch every registered satellites data
-            let responses: Promise<String>[] = [];
-            // Map all satelliteUrls to satellite data
-            satelliteUrls.forEach((url) => {
-                responses.push(fetch(url).then((r) => r.text()));
-            });
+            let combinedSatelliteDatas = satelliteDatas.join("\n");
 
-            const data = await Promise.all(responses);           
+            const tleData = mapRawDataToTleData(combinedSatelliteDatas);
+            const satData = tleData
+                .map(([name, ...tle]) => ({
+                    satrec: satellite.twoline2satrec(
+                        ...(tle as [string, string]), // spread the array as arguments to the function
+                    ),
+                    name: name.trim().replace(/^0 /, ""), // remove leading 0 from name
+                }))
+                // exclude those that can't be propagated
+                .filter(
+                    (d) => !!satellite.propagate(d.satrec, new Date()).position,
+                )
+                .slice(0, SATELLITE_AMOUNT);
 
-            // Currently using example data from the example
-            fetch(FETCHED_DATA_URL)
-                .then((r) => r.text())
-                .then((rawData) => {
-                    const tleData = mapRawDataToTleData(rawData);
-                    const satData = tleData
-                        .map(([name, ...tle]) => ({
-                            satrec: satellite.twoline2satrec(
-                                ...(tle as [string, string]), // spread the array as arguments to the function
-                            ),
-                            name: name.trim().replace(/^0 /, ""), // remove leading 0 from name
-                        }))
-                        // exclude those that can't be propagated
-                        .filter(
-                            (d) =>
-                                !!satellite.propagate(d.satrec, new Date())
-                                    .position,
-                        )
-                        .slice(0, SATELLITE_AMOUNT);
+            // time ticker
+            let time = new Date();
+            (function frameTicker() {
+                requestAnimationFrame(frameTicker);
 
-                    // time ticker
-                    let time = new Date();
-                    (function frameTicker() {
-                        requestAnimationFrame(frameTicker);
+                time = new Date(+time + TIME_STEP);
+                if (timeLogger.current) {
+                    timeLogger.current.innerText = time.toString();
+                }
 
-                        time = new Date(+time + TIME_STEP);
-                        if (timeLogger.current) {
-                            timeLogger.current.innerText = time.toString();
-                        }
-
-                        // Update satellite positions
-                        const gmst = satellite.gstime(time);
-                        satData.forEach((d: any) => {
-                            const eci = satellite.propagate(d.satrec, time);
-                            if (eci.position) {
-                                const gdPos = satellite.eciToGeodetic(
-                                    eci.position as satellite.EciVec3<number>,
-                                    gmst,
-                                );
-                                d.lat = THREE.MathUtils.radToDeg(
-                                    gdPos.latitude,
-                                );
-                                d.lng = THREE.MathUtils.radToDeg(
-                                    gdPos.longitude,
-                                );
-                                d.alt = gdPos.height / EARTH_RADIUS_KM;
-                            }
-                        });
-
-                        myGlobe.objectsData(satData);
-                    })();
+                // Update satellite positions
+                const gmst = satellite.gstime(time);
+                satData.forEach((d: any) => {
+                    const eci = satellite.propagate(d.satrec, time);
+                    if (eci.position) {
+                        const gdPos = satellite.eciToGeodetic(
+                            eci.position as satellite.EciVec3<number>,
+                            gmst,
+                        );
+                        d.lat = THREE.MathUtils.radToDeg(gdPos.latitude);
+                        d.lng = THREE.MathUtils.radToDeg(gdPos.longitude);
+                        d.alt = gdPos.height / EARTH_RADIUS_KM;
+                    }
                 });
+
+                myGlobe.objectsData(satData);
+            })();
         }
     }, []);
 
