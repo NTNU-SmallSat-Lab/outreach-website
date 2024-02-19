@@ -6,7 +6,7 @@ type ExternalLinkProps = {
 
 export function ExternalLink({ href, children }: ExternalLinkProps) {
     return (
-        <a href={href} className="visited:red">
+        <a href={href} className="visited:blue">
             <p className="">{children}</p>
         </a>
     );
