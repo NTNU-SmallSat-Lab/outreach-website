@@ -14,7 +14,7 @@ import * as satellite from "satellite.js";
 const EARTH_RADIUS_KM = 6371; // km
 const SAT_SIZE = 500; // km
 const TIME_STEP = 1 * 1000; // per frame
-const SATELLITE_AMOUNT = 5000; // amount of satellites to display
+const SATELLITE_AMOUNT = 100; // amount of satellites to display
 
 function mapRawDataToTleData(rawData: string): string[][] {
     return (
@@ -37,10 +37,9 @@ function mapRawDataToTleData(rawData: string): string[][] {
 export default function MyGlobe({
     satelliteDatas: satelliteDatas,
 }: {
-    satelliteDatas: String[]; // Expects an array of TLE strings such as the example files in the datasets folder
+    satelliteDatas: string; // Expects a string of TLE strings such as the example files in the datasets folder
 }) {
     const chart = React.useRef<HTMLDivElement>(null);
-
     const timeLogger = React.useRef<HTMLDivElement>(null);
 
     // useEffect is used because we want to run the code only once when the component is mounted
@@ -83,9 +82,7 @@ export default function MyGlobe({
                 () => new THREE.Mesh(satGeometry, satMaterial),
             );
 
-            let combinedSatelliteDatas = satelliteDatas.join("\n");
-
-            const tleData = mapRawDataToTleData(combinedSatelliteDatas);
+            const tleData = mapRawDataToTleData(satelliteDatas);
             const satData = tleData
                 .map(([name, ...tle]) => ({
                     satrec: satellite.twoline2satrec(
@@ -127,17 +124,17 @@ export default function MyGlobe({
                 myGlobe.objectsData(satData);
             })();
         }
-    }, []);
+    }, [satelliteDatas]);
 
     return (
         <>
             <div className="relative">
-                <div id="chart" ref={chart}></div>
                 <div
                     id="time-log"
                     ref={timeLogger}
-                    className="absolute top-0 bottom-0"
+                    className="absolute top-0 bottom-0 z-50"
                 ></div>
+                <div id="chart" ref={chart}></div>
             </div>
         </>
     );
