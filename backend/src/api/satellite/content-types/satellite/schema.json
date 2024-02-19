@@ -4,7 +4,8 @@
   "info": {
     "singularName": "satellite",
     "pluralName": "satellites",
-    "displayName": "Satellite"
+    "displayName": "Satellite",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,9 @@
       "relation": "manyToMany",
       "target": "api::project.project",
       "mappedBy": "satellites"
+    },
+    "celestrakURL": {
+      "type": "string"
     }
   }
 }
