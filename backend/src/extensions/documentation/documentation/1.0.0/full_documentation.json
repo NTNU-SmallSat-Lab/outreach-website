@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-02-17T10:22:14.020Z"
+    "x-generation-date": "2024-02-19T13:27:50.982Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -4283,13 +4283,13 @@
           "data": {
             "type": "object",
             "properties": {
-              "celestrakURL": {
-                "type": "string"
-              },
               "name": {
                 "type": "string"
               },
-              "description": {}
+              "description": {},
+              "celestrakURL": {
+                "type": "string"
+              }
             }
           }
         }
@@ -4343,13 +4343,13 @@
       "Satellite": {
         "type": "object",
         "properties": {
-          "celestrakURL": {
-            "type": "string"
-          },
           "name": {
             "type": "string"
           },
           "description": {},
+          "celestrakURL": {
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"

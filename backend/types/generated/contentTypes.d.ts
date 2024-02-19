@@ -1001,9 +1001,9 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    celestrakURL: Attribute.String;
     name: Attribute.String;
     description: Attribute.Blocks;
+    celestrakURL: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -12,14 +12,14 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "celestrakURL": {
-      "type": "string"
-    },
     "name": {
       "type": "string"
     },
     "description": {
       "type": "blocks"
+    },
+    "celestrakURL": {
+      "type": "string"
     }
   }
 }
