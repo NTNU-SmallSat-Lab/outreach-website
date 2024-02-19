@@ -57,7 +57,7 @@ export default async function ProjectsPage() {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="text-4xl font-extrabold ">SmallSat Lab's Projects</h1>
+      <h1 className="text-4xl font-extrabold ">Our Projects</h1>
       <p className="text-sm text-muted-foreground">
         Information about our various projects are shown here.
       </p>
