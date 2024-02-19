@@ -46,7 +46,7 @@ export default async function ContactPage() {
                             (person?.attributes?.profilePicture?.data
                                 ?.attributes?.url ?? "")
                         }
-                        name={person.attributes?.name}
+                        name={person?.attributes?.name}
                         role={person.attributes?.workTitle}
                         externalUrl={person.attributes?.employeeLink as string}
                     />

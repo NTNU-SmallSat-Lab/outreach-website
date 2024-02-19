@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { ExternalLink } from "./ExternalLink";
 import {
     Card,
@@ -9,7 +8,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import Helpers from "@/lib/helpers";
 import { Label } from "@/components/ui/label";
 
 type ContactCardProps = {
@@ -20,7 +19,7 @@ type ContactCardProps = {
 };
 
 export function ContactCard({
-    name,
+    name = "",
     role,
     imageUrl,
     externalUrl,
@@ -30,7 +29,9 @@ export function ContactCard({
             <CardHeader>
                 <Avatar>
                     <AvatarImage src={imageUrl} alt={name} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>
+                        {Helpers.fullNameToInitials(name)}
+                    </AvatarFallback>
                 </Avatar>
                 <CardTitle>{name}</CardTitle>
                 <Label>{role}</Label>
@@ -38,7 +39,6 @@ export function ContactCard({
             <CardContent>
                 <ExternalLink href={externalUrl}>NTNU</ExternalLink>
             </CardContent>
-
             <CardFooter className="flex justify-between"></CardFooter>
         </Card>
     );
