@@ -1,10 +1,8 @@
 export const runtime = "edge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import {
-    BlocksRenderer,
-    type BlocksContent,
-} from "@strapi/blocks-react-renderer";
+import { BlocksContent } from "@strapi/blocks-react-renderer";
+import BlockRendererClient from "@/components/BlockRendererClient";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 const HOST_URL = process.env.HOST_URL;
@@ -82,6 +80,7 @@ export default async function Page({
 
     const authorName = article?.attributes?.author?.data?.attributes?.name;
     const datePublished = article?.attributes?.datePublished;
+    const content: BlocksContent = article?.attributes?.body ?? [];
 
     return (
         <>
@@ -89,28 +88,29 @@ export default async function Page({
                 <h1 className="text-4xl font-extrabold">
                     {article?.attributes?.title}
                 </h1>
-                <p className="text-sm text-muted-foreground">
-                    {article?.attributes?.subtitle}{" "}
-                </p>
-                <BlocksRenderer
-                    content={article?.attributes?.body as BlocksContent}
-                />
-
                 <div className="flex flex-row justify-center gap-1 items-center">
-                    <Avatar className="">
-                        <AvatarImage src={avatarURL} />
-                        <AvatarFallback>
-                            {// Get initials from author name
-                            authorName
-                                ?.split(" ")
-                                .map((name) => name[0])
-                                .join("")}
-                        </AvatarFallback>
-                    </Avatar>
+                    {avatarURL && (
+                        <Avatar className="">
+                            <AvatarImage src={avatarURL} />
+                            <AvatarFallback>
+                                {// Get initials from author name
+                                authorName
+                                    ?.split(" ")
+                                    .map((name) => name[0])
+                                    .join("")}
+                            </AvatarFallback>
+                        </Avatar>
+                    )}
                     <div className="flex flex-col justify-center">
                         <p>{authorName}</p>
                         <p>{datePublished}</p>
                     </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                    {article?.attributes?.subtitle}{" "}
+                </p>
+                <div className="w-1/2">
+                    <BlockRendererClient content={content} />
                 </div>
             </div>
         </>
