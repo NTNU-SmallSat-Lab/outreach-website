@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 type ExternalLinkProps = {
     href: string;
-    children: string;
+    children: ReactNode;
 };
 
 export function ExternalLink({ href, children }: ExternalLinkProps) {

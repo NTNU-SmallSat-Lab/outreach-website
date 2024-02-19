@@ -38,8 +38,7 @@ export function ContactCard({
             <CardContent>
                 <ExternalLink
                     href={externalUrl}
-                    children={"NTNU"}
-                ></ExternalLink>
+                >NTNU</ExternalLink>
             </CardContent>
 
             <CardFooter className="flex justify-between"></CardFooter>

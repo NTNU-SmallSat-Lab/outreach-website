@@ -1,6 +1,5 @@
 export const runtime = "edge";
 import { ContactCard } from "@/components/ContactCard";
-import { Separator } from "@/components/ui/separator";
 import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
 
