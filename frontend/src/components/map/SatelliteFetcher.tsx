@@ -1,7 +1,12 @@
 export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
-import MyGlobe from "./MyGlobe";
+
+// Dynamic import because of leaflet and globe.gl ssr problem with next.js
+import dynamic from "next/dynamic";
+const MyGlobe = dynamic(() => import("@/components/map/MyGlobe"), {
+    ssr: false,
+});
 
 // Example Datasources
 // eslint-disable-next-line no-unused-vars
