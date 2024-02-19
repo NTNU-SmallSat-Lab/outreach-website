@@ -854,36 +854,6 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
-export interface ApiInfrastructureInfrastructure extends Schema.SingleType {
-  collectionName: 'infrastructures';
-  info: {
-    singularName: 'infrastructure';
-    pluralName: 'infrastructures';
-    displayName: 'Infrastructure';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Content: Attribute.Blocks;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::infrastructure.infrastructure',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::infrastructure.infrastructure',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiPartnerPartner extends Schema.CollectionType {
   collectionName: 'partners';
   info: {
@@ -989,21 +959,62 @@ export interface ApiPhDProjectPhDProject extends Schema.CollectionType {
   };
 }
 
-export interface ApiSatelliteSatellite extends Schema.CollectionType {
-  collectionName: 'satellites';
+export interface ApiProjectProject extends Schema.CollectionType {
+  collectionName: 'projects';
   info: {
-    singularName: 'satellite';
-    pluralName: 'satellites';
-    displayName: 'Satellite';
+    singularName: 'project';
+    pluralName: 'projects';
+    displayName: 'Project';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String;
-    description: Attribute.Blocks;
-    celestrakURL: Attribute.String;
+    title: Attribute.String;
+    description: Attribute.Text;
+    article: Attribute.Blocks;
+    satellites: Attribute.Relation<
+      'api::project.project',
+      'manyToMany',
+      'api::satellite.satellite'
+    >;
+    slug: Attribute.UID;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSatelliteSatellite extends Schema.CollectionType {
+  collectionName: 'satellites';
+  info: {
+    singularName: 'satellite';
+    pluralName: 'satellites';
+    displayName: 'Satellite';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    catalogNumberNORAD: Attribute.String;
+    projects: Attribute.Relation<
+      'api::satellite.satellite',
+      'manyToMany',
+      'api::project.project'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1042,10 +1053,10 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
-      'api::infrastructure.infrastructure': ApiInfrastructureInfrastructure;
       'api::partner.partner': ApiPartnerPartner;
       'api::person.person': ApiPersonPerson;
       'api::ph-d-project.ph-d-project': ApiPhDProjectPhDProject;
+      'api::project.project': ApiProjectProject;
       'api::satellite.satellite': ApiSatelliteSatellite;
     }
   }

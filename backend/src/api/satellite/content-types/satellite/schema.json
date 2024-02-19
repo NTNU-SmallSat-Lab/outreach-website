@@ -4,22 +4,21 @@
   "info": {
     "singularName": "satellite",
     "pluralName": "satellites",
-    "displayName": "Satellite",
-    "description": ""
+    "displayName": "Satellite"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "catalogNumberNORAD": {
       "type": "string"
     },
-    "description": {
-      "type": "blocks"
-    },
-    "celestrakURL": {
-      "type": "string"
+    "projects": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::project.project",
+      "mappedBy": "satellites"
     }
   }
 }

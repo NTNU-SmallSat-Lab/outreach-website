@@ -70,9 +70,11 @@
     * {
         @apply border-border;
     }
+
     body {
         @apply bg-background text-foreground;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow-x: hidden;
+        /* Prevent horizontal scrolling */
         width: 100%;
     }
 }

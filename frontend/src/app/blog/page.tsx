@@ -2,16 +2,17 @@ export const runtime = "edge";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { BlocksContent } from "@strapi/blocks-react-renderer";
+import BlockRendererClient from "@/components/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
+import Image from "next/image";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_ARTICLES = gql(`
@@ -69,13 +70,13 @@ export default async function BlogPage() {
     }
 
     return (
-        <div>
-            <h1 className="text-4xl font-extrabold">Blog</h1>
+        <div className="flex flex-col justify-center items-center">
+            <h1 className="text-4xl font-extrabold ">Blog</h1>
             <p className="text-sm text-muted-foreground">
                 News and other short stories about our activities are shown
                 here.
             </p>
-            <div className="flex flex-col gap-4 mt-4">
+            <div className="flex flex-col gap-4 mt-4 justify-center items-center">
                 {graphqlData.data.articles.data.map((article) => {
                     let avatarURL =
                         article?.attributes?.author?.data?.attributes?.avatar
@@ -88,8 +89,22 @@ export default async function BlogPage() {
                     const authorName =
                         article?.attributes?.author?.data?.attributes?.name;
                     const datePublished = article?.attributes?.datePublished;
+                    let coverImage =
+                        article?.attributes?.coverImage?.data?.attributes?.url;
+                    if (HOST_URL && coverImage != undefined) {
+                        coverImage = HOST_URL + coverImage;
+                    }
+                    let content: BlocksContent =
+                        article?.attributes?.body ?? [];
+
+                    for (const block of content) {
+                        if (block.type === "paragraph") {
+                            content = [block];
+                            break;
+                        }
+                    }
                     return (
-                        <Card key={article.id}>
+                        <Card className="w-1/2" key={article.id}>
                             <CardHeader>
                                 <CardTitle>
                                     <Link
@@ -101,30 +116,32 @@ export default async function BlogPage() {
                                         {article?.attributes?.title}
                                     </Link>
                                 </CardTitle>
-                                <CardDescription>
-                                    {article?.attributes?.subtitle}
-                                </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <BlocksRenderer
-                                    content={
-                                        article?.attributes
-                                            ?.body as BlocksContent
-                                    }
-                                />
+                                {coverImage && (
+                                    <Image
+                                        src={coverImage}
+                                        alt={coverImage}
+                                        width={500}
+                                        height={0} // Set height to 0 to maintain aspect ratio
+                                    />
+                                )}
+                                <BlockRendererClient content={content} />
                             </CardContent>
                             <CardFooter>
                                 <div className="flex flex-row justify-center gap-1 items-center">
-                                    <Avatar className="">
-                                        <AvatarImage src={avatarURL} />
-                                        <AvatarFallback>
-                                            {// Get initials from author name
-                                            authorName
-                                                ?.split(" ")
-                                                .map((name) => name[0])
-                                                .join("")}
-                                        </AvatarFallback>
-                                    </Avatar>
+                                    {avatarURL && (
+                                        <Avatar className="">
+                                            <AvatarImage src={avatarURL} />
+                                            <AvatarFallback>
+                                                {// Get initials from author name
+                                                authorName
+                                                    ?.split(" ")
+                                                    .map((name) => name[0])
+                                                    .join("")}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    )}
                                     <div className="flex flex-col justify-center">
                                         <p>{authorName}</p>
                                         <p>{datePublished}</p>
