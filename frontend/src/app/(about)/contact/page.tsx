@@ -4,7 +4,6 @@ import { Separator } from "@/components/ui/separator";
 import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
 
-
 const GET_PEOPLE = gql(`
 query GET_PEOPLE {
     people {
@@ -34,10 +33,8 @@ export default async function ContactPage() {
     const people = await getClient().query({
         query: GET_PEOPLE,
     });
-    
-    const content = people?.data?.people?.data ?? [];
 
-    
+    const content = people?.data?.people?.data ?? [];
 
     return (
         <div className="flex justify-center items-start h-full">
@@ -45,7 +42,11 @@ export default async function ContactPage() {
                 {content.map((person, index) => (
                     <ContactCard
                         key={index}
-                        imageUrl={process.env.HOST_URL + (person?.attributes?.profilePicture?.data?.attributes?.url ?? '')}
+                        imageUrl={
+                            process.env.HOST_URL +
+                            (person?.attributes?.profilePicture?.data
+                                ?.attributes?.url ?? "")
+                        }
                         name={person.attributes?.name}
                         role={person.attributes?.workTitle}
                         externalUrl={person.attributes?.employeeLink as string}

@@ -36,11 +36,13 @@ export function ContactCard({
                 <Label>{role}</Label>
             </CardHeader>
             <CardContent>
-                <ExternalLink href={externalUrl} children={"NTNU"}></ExternalLink>
+                <ExternalLink
+                    href={externalUrl}
+                    children={"NTNU"}
+                ></ExternalLink>
             </CardContent>
 
-            <CardFooter className="flex justify-between">
-            </CardFooter>
+            <CardFooter className="flex justify-between"></CardFooter>
         </Card>
     );
 }
