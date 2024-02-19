@@ -8,7 +8,6 @@ import Image from "next/image";
 import BlockRendererClient from "@/components/BlockRendererClient";
 const HOST_URL = process.env.HOST_URL;
 
-
 const GET_PROJECTS = gql(`
  query GET_PROJECTS {
     projects(sort: ["publishedAt:desc"]) {
@@ -42,29 +41,28 @@ const GET_PROJECTS = gql(`
   }`);
 
 export default async function ProjectsPage() {
-  const graphqlData = await getClient().query({
-    query: GET_PROJECTS,
-  });
+    const graphqlData = await getClient().query({
+        query: GET_PROJECTS,
+    });
 
-  if (
-    graphqlData.data === null ||
-    graphqlData.data === undefined ||
-    graphqlData.data.projects === undefined ||
-    graphqlData.data.projects === null
-  ) {
-    return <div>There are no projects to show.</div>;
-  }
+    if (
+        graphqlData.data === null ||
+        graphqlData.data === undefined ||
+        graphqlData.data.projects === undefined ||
+        graphqlData.data.projects === null
+    ) {
+        return <div>There are no projects to show.</div>;
+    }
 
-  return (
-    <div className="flex flex-col justify-center items-center">
-      <h1 className="text-4xl font-extrabold ">Our Projects</h1>
-      <p className="text-sm text-muted-foreground">
-        Information about our various projects are shown here.
-      </p>
+    return (
+        <div className="flex flex-col justify-center items-center">
+            <h1 className="text-4xl font-extrabold ">Our Projects</h1>
+            <p className="text-sm text-muted-foreground">
+                Information about our various projects are shown here.
+            </p>
 
-      <div className="flex flex-col gap-4 mt-4 justify-center items-center">
+            <div className="flex flex-col gap-4 mt-4 justify-center items-center">
                 {graphqlData.data.projects.data.map((project) => {
-
                     let coverImage =
                         project?.attributes?.coverImage?.data?.attributes?.url;
 
@@ -87,7 +85,8 @@ export default async function ProjectsPage() {
                                     <Link
                                         className="hover:underline"
                                         href={
-                                            "/projects/" + project?.attributes?.slug
+                                            "/projects/" +
+                                            project?.attributes?.slug
                                         }
                                     >
                                         {project?.attributes?.title}
@@ -109,6 +108,6 @@ export default async function ProjectsPage() {
                     );
                 })}
             </div>
-    </div>
-  );
+        </div>
+    );
 }

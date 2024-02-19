@@ -77,12 +77,12 @@ export default async function Page({
     }
 
     return (
-      <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col gap-4 items-center">
             <h1 className="text-4xl font-extrabold">
-              {projects?.attributes?.title}
+                {projects?.attributes?.title}
             </h1>
             <div className="w-1/2">
-              <BlockRendererClient content={content} />
+                <BlockRendererClient content={content} />
             </div>
         </div>
     );
