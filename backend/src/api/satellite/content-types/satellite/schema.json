@@ -20,6 +20,9 @@
       "relation": "manyToMany",
       "target": "api::project.project",
       "mappedBy": "satellites"
+    },
+    "satelliteName": {
+      "type": "string"
     }
   }
 }
