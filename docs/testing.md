@@ -2,7 +2,11 @@
 
 Playwright Test was created specifically to accommodate the needs of end-to-end testing. Playwright supports all modern rendering engines including Chromium, WebKit, and Firefox. Test on Windows, Linux, and macOS, locally or on CI, headless or headed with native mobile emulation of Google Chrome for Android and Mobile Safari.
 
-This project uses Playwright Test for both end-to-end testing and component testing.
+This project uses Playwright Test for both end-to-end testing and component testing. The test files can be found in this folder:
+```
+IT2901-SmallSatLab-Hypso\frontend\tests
+``` 
+
 
 ### Download Browsers
 
@@ -16,9 +20,10 @@ npx playwright install
 
 By default tests will be run on all 3 browsers, chromium, firefox and webkit using 3 workers. This can be configured in the playwright.config file. Tests are run in headless mode meaning no browser will open up when running the tests. Results of the tests and test logs will be shown in the terminal.
 
-Run the tests
+Move to the frontend folder and run the tests.
 
 ```
+cd frontend
 npm run test
 ```
 
