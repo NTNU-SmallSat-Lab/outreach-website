@@ -15,7 +15,7 @@ const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
 export default function Home() {
     return (
         <main>
-            <SatelliteFetcher useExampleData={false} />
+            <SatelliteFetcher useExampleData={true} />
 
             <MyCustomMap />
 
