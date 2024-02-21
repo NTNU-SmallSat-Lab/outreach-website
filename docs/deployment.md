@@ -11,19 +11,13 @@ We use [`pm2`](https://www.npmjs.com/package/pm2) as our process manager to run 
 ### After pulling on server
 
 `cd frontend/`
-
+then
 `pm2 start npm --name "nextfrontend" -- start`
 
 Go back up
-
 `cd ..`
-
 `cd backend/`
-
+build with
 `NODE_ENV=production npm run build`
-
-`NODE_ENV=production pm2 start npm --name "strapibackend" -- start`
-
-
-
+and run using
 `NODE_ENV=production pm2 start server.js --name "strapibackend"`
