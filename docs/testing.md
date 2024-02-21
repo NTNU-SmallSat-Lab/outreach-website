@@ -4,6 +4,14 @@ Playwright Test was created specifically to accommodate the needs of end-to-end 
 
 This project uses Playwright Test for both end-to-end testing and component testing.
 
+### Download Browsers
+
+Download the necessary browsers to run the tests.
+
+```
+npx playwright install
+```
+
 ### Running tests
 
 By default tests will be run on all 3 browsers, chromium, firefox and webkit using 3 workers. This can be configured in the playwright.config file. Tests are run in headless mode meaning no browser will open up when running the tests. Results of the tests and test logs will be shown in the terminal.
