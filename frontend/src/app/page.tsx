@@ -89,7 +89,7 @@ export default function Home() {
                     </div>
                 </div>
             </ColoredSection>
-            <h1 className="text-3xl">TEST HEADER</h1>
+            <h1 className="text-3xl">TEST HEADER SECOND TEST</h1>
         </main>
     );
 }
