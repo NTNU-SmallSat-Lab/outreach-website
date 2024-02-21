@@ -21,7 +21,6 @@ jobs:
             - run: npm ci
             - run: npm run build
             - run: pm2 restart nextfrontend
-            
 
     backend-build:
         strategy:
@@ -40,4 +39,4 @@ jobs:
                   cache: "npm"
             - run: npm ci
             - run: npm run build
-            - run: pm2 restart strapibackend
+            - run: NODE_ENV=production pm2 restart strapibackend
