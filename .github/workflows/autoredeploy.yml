@@ -1,7 +1,7 @@
 name: Server auto deploy
 on:
     push:
-        branches: ["main"]
+        branches: ["main", "95-autoredeploy-on-main-change"]
 
 jobs:
     frontend-build:

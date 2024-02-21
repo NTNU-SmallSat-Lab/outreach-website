@@ -20,6 +20,8 @@ Go back up
 
 `cd backend/`
 
+`NODE_ENV=production npm run build`
+
 `NODE_ENV=production pm2 start npm --name "strapibackend" -- start`
 
 
