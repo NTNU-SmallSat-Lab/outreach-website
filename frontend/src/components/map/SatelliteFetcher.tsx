@@ -15,12 +15,12 @@ import { exampleData } from "./exampleSatData";
 const HYPSO1_TLE_URL =
     "https://celestrak.org/NORAD/elements/gp.php?NAME=HYPSO-1&FORMAT=TLE";
 
-const GET_ALL_SATELLITE_DATA = gql(`query Attributes {
+const GET_ALL_SATELLITE_DATA = gql(`query Satellites {
     satellites {
       data {
         attributes {
-          catalogNumberNORAD
           celestrakURL
+          catalogNumberNORAD
         }
       }
     }
