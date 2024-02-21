@@ -1,0 +1,43 @@
+name: Node.js CI
+on:
+    push:
+        branches: ["main"]
+
+jobs:
+    frontend-build:
+        strategy:
+            matrix:
+                node-version: [20.x]
+        defaults:
+            run:
+                working-directory: ./frontend
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm ci
+            - run: npm run build
+            - run: pm2 restart nextfrontend
+            
+
+    backend-build:
+        strategy:
+            matrix:
+                node-version: [20.x]
+        defaults:
+            run:
+                working-directory: ./backend
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: "npm"
+            - run: npm ci
+            - run: npm run build
+            - run: pm2 restart strapibackend
