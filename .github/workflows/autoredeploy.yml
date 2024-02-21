@@ -5,6 +5,7 @@ on:
 
 jobs:
     frontend-build:
+        needs: backend-build
         strategy:
             matrix:
                 node-version: [20.x]
