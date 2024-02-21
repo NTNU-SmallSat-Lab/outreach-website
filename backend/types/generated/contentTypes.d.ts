@@ -892,7 +892,7 @@ export interface ApiPersonPerson extends Schema.CollectionType {
   info: {
     singularName: 'person';
     pluralName: 'people';
-    displayName: 'person';
+    displayName: 'Person';
     description: '';
   };
   options: {
