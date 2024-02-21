@@ -980,6 +980,7 @@ export interface ApiProjectProject extends Schema.CollectionType {
       'api::satellite.satellite'
     >;
     slug: Attribute.UID;
+    coverImage: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1004,6 +1005,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     singularName: 'satellite';
     pluralName: 'satellites';
     displayName: 'Satellite';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1015,6 +1017,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'manyToMany',
       'api::project.project'
     >;
+    satelliteName: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

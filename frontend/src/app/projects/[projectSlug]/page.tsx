@@ -1,6 +1,8 @@
 export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
+import BlockRendererClient from "@/components/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
+import { BlocksContent } from "@strapi/blocks-react-renderer";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECT_BY_SLUG = gql(`
@@ -28,6 +30,15 @@ query Projects($projectFilters: ProjectFiltersInput) {
             }
           }
           slug
+          publishedAt
+          coverImage {
+            data {
+              id
+              attributes {
+                url
+              }
+            }
+          }
         }
       }
     }
@@ -57,6 +68,7 @@ export default async function Page({
     }
 
     const projects = graphqlData.data.projects?.data[0];
+    const content: BlocksContent = projects?.attributes?.article ?? [];
 
     let projectTitle = projects?.attributes?.slug;
 
@@ -64,13 +76,14 @@ export default async function Page({
         projectTitle = HOST_URL + projectTitle;
     }
 
-    const projectName = projects?.attributes?.title;
-    const projectDescription = projects?.attributes?.description;
-
     return (
-        <div>
-            <h1>{projectName}</h1>
-            <p>{projectDescription}</p>
+        <div className="flex flex-col gap-4 items-center">
+            <h1 className="text-4xl font-extrabold">
+                {projects?.attributes?.title}
+            </h1>
+            <div className="w-1/2">
+                <BlockRendererClient content={content} />
+            </div>
         </div>
     );
 }

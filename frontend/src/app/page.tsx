@@ -1,60 +1,23 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
-import Hero from "@/components/ui/hero";
+
 import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+// Dynamic import because of leaflet and globe.gl ssr problem with next.js
+import dynamic from "next/dynamic";
+import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
+    ssr: false,
+});
 
 export default function Home() {
-    useGSAP(() => {
-        gsap.fromTo(
-            "#rocket",
-            { y: 100, rotation: 45, zIndex: 1 },
-            {
-                y: -200,
-                x: 300,
-                opacity: 1,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: "#rocket",
-                    start: "top center",
-                    end: "bottom top",
-                    scrub: true,
-                },
-            },
-        );
-    });
-
-    function handleClick(): void {
-        gsap.to(window, { duration: 1, scrollTo: "#about-us" });
-    }
-
     return (
         <main>
-            <Hero
-                id="intro-hero"
-                title={"SmallSatLab"}
-                description={"We launch satellites 🚀"}
-                buttonText={"About us"}
-                buttonLink=""
-                className="min-h-[calc(100vh-72px)] flex flex-col justify-center z-10"
-                handleClick={handleClick}
-            >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    id="rocket"
-                    src="/images/rocketLaunch.gif"
-                    alt="rocket launching"
-                    className=""
-                />
-            </Hero>
+            <SatelliteFetcher useExampleData={true} />
+
+            <MyCustomMap />
 
             <ColoredSection
                 id="about-us"
