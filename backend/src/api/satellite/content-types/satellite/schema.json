@@ -20,9 +20,6 @@
       "relation": "manyToMany",
       "target": "api::project.project",
       "mappedBy": "satellites"
-    },
-    "celestrakURL": {
-      "type": "string"
     }
   }
 }

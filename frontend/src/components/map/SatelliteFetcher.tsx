@@ -15,15 +15,15 @@ import { exampleData } from "./exampleSatData";
 const HYPSO1_TLE_URL =
     "https://celestrak.org/NORAD/elements/gp.php?NAME=HYPSO-1&FORMAT=TLE";
 
-const GET_ALL_SATELLITE_URLS = gql(`query AllSatellites {
-    satellites {
-      data {
-        attributes {
-          celestrakURL
-        }
+const GET_ALL_SATELLITE_URLS = gql(`query Satellites {
+  satellites {
+    data {
+      attributes {
+        catalogNumberNORAD
       }
     }
   }
+}
   `);
 
 export default async function SatelliteFetcher({
@@ -42,7 +42,11 @@ export default async function SatelliteFetcher({
 
         const satelliteUrls = graphqlData?.data?.satellites?.data.map(
             (satEntity) => {
-                return satEntity?.attributes?.celestrakURL;
+                return (
+                    "https://celestrak.org/NORAD/elements/gp.php?CATNR=" +
+                    satEntity?.attributes?.catalogNumberNORAD +
+                    "&FORMAT=TLE"
+                );
             },
         ) as string[];
 
