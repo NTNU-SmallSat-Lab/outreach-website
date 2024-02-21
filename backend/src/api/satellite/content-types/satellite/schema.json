@@ -21,7 +21,7 @@
       "target": "api::project.project",
       "mappedBy": "satellites"
     },
-    "satelliteName": {
+    "celestrakURL": {
       "type": "string"
     }
   }
