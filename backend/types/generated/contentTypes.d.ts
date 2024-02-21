@@ -1017,7 +1017,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'manyToMany',
       'api::project.project'
     >;
-    celestrakURL: Attribute.String;
+    satelliteName: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
