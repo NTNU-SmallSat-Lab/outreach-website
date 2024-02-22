@@ -19,8 +19,8 @@ const GET_ALL_SATELLITE_DATA = gql(`query Satellites {
     satellites {
       data {
         attributes {
+          celestrakURL
           catalogNumberNORAD
-          satelliteName
         }
       }
     }
@@ -43,16 +43,13 @@ export default async function SatelliteFetcher({
 
         const satelliteUrls = graphqlData?.data?.satellites?.data.map(
             (satEntity) => {
-                if (satEntity?.attributes?.catalogNumberNORAD) {
-                    return (
-                        "https://celestrak.org/NORAD/elements/gp.php?CATNR=" +
-                        satEntity?.attributes?.catalogNumberNORAD +
-                        "&FORMAT=TLE"
-                    );
+                const celestrakURL = satEntity?.attributes?.celestrakURL;
+                if (celestrakURL) {
+                    return celestrakURL;
                 }
                 return (
-                    "https://celestrak.org/NORAD/elements/gp.php?NAME=" +
-                    satEntity?.attributes?.satelliteName +
+                    "https://celestrak.org/NORAD/elements/gp.php?CATNR=" +
+                    satEntity?.attributes?.catalogNumberNORAD +
                     "&FORMAT=TLE"
                 );
             },
