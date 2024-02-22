@@ -16,7 +16,6 @@ import {
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import countries from "./files/globe-data-min.json";
 import { useEffect } from "react";
-import { render } from "react-dom";
 var renderer: WebGLRenderer;
 var camera: PerspectiveCamera;
 var scene: Scene;
@@ -24,6 +23,7 @@ var controls: OrbitControls;
 var Globe: ThreeGlobe;
 var myCanvas: HTMLCanvasElement;
 var viewportDimensions: DOMRect;
+import { createGlowMesh, defaultOptions } from "./three-glow-mesh";
 
 // SECTION Initializing core ThreeJS elements
 function init() {

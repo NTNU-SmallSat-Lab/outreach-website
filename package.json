@@ -9,6 +9,7 @@
     "author": "",
     "license": "",
     "dependencies": {
-        "openapi-typescript": "^6.7.4"
+        "openapi-typescript": "^6.7.4",
+        "three-glow-mesh": "^0.1.2"
     }
 }
