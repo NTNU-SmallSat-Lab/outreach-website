@@ -4,11 +4,15 @@
     "description": "## General Information Project Code: P.01 Country: 🇳🇴 Norway Customer: NTNU SmallSat Lab Platform: Web Framework: React Period: Spring 2024 Status: In Progress",
     "main": "index.js",
     "scripts": {
-        "generateTypes": "npx openapi-typescript backend/src/extensions/documentation/documentation/1.0.0/full_documentation.json --output frontend/src/types/strapi.ts"
+        "generateTypes": "npx openapi-typescript backend/src/extensions/documentation/documentation/1.0.0/full_documentation.json --output frontend/src/types/strapi.ts",
+        "client": "cd frontend && npm run dev",
+        "server": "cd backend && npm run develop",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "author": "",
     "license": "",
     "dependencies": {
+        "concurrently": "^8.2.2",
         "openapi-typescript": "^6.7.4",
         "three-glow-mesh": "^0.1.2"
     }
