@@ -28,4 +28,4 @@ jobs:
       - name: Docker build
         run: sudo docker-compose build
       - name: Docker up
-        run: sudo docker-compose up
+        run: sudo docker-compose up -d
