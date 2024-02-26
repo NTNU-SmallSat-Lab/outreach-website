@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { exampleData } from "../map/exampleSatData";
-import {
-    SatelliteData,
-    mapRawDataToSatData,
-} from "@/lib/mapHelpers";
+import { SatelliteData, mapRawDataToSatData } from "@/lib/mapHelpers";
 import {
     Table,
     TableBody,
@@ -15,8 +12,9 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import * as satellite from "satellite.js";
+import { PolyUtil } from "node-geometry-library";
 
-const satellitesShown = 10; // Satellites in data shown
+const satellitesShown = 100; // Satellites in data shown
 const timeInterval = 1; // Interval between updates in milliseconds
 
 interface SatelliteDataWithPosition extends SatelliteData {
@@ -99,17 +97,36 @@ export default function SatelliteDataTable() {
                         <TableHead>Latitude</TableHead>
                         <TableHead>Longitude</TableHead>
                         <TableHead>Altitude</TableHead>
+                        <TableHead>Country</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {satData.map((data, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{data.name}</TableCell>
-                            <TableCell>{data.latitudeDeg}</TableCell>
-                            <TableCell>{data.longitudeDeg}</TableCell>
-                            <TableCell>{data.altitude}</TableCell>
-                        </TableRow>
-                    ))}
+                    {satData.map((data, index) => {
+                        let containsSatellite = PolyUtil.containsLocation(
+                            {
+                                lat: Number(data.latitudeDeg),
+                                lng: Number(data.longitudeDeg),
+                            },
+                            [
+                                { lat: 0, lng: 0 },
+                                { lat: 90, lng: 0 },
+                                { lat: 90, lng: 90 },
+                                { lat: 0, lng: 90 },
+                            ],
+                        );
+
+                        return (
+                            <TableRow key={index}>
+                                <TableCell>{data.name}</TableCell>
+                                <TableCell>{data.latitudeDeg}°</TableCell>
+                                <TableCell>{data.longitudeDeg}°</TableCell>
+                                <TableCell>{data.altitude} km</TableCell>
+                                <TableCell>
+                                    {containsSatellite ? "Norway" : "Ocean"}
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })}
                 </TableBody>
             </Table>
         </div>
