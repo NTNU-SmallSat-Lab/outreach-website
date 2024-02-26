@@ -34,7 +34,6 @@
 
         --radius: 0.5rem;
 
-
         /* NTNU colors */
         --background: 150, 7%, 6%; /* 0E100F */
         --foreground: 0, 0%, 100%; /* FFFFFF */
@@ -48,7 +47,6 @@
         --ntnuLightblue: 47, 94%, 73%; /* 9DB7E1 */
         --ntnuPink: 319, 44%, 61%; /* C871AC */
         --ntnuBrown: 40, 44%, 78%; /* E0D0AF */
-
     }
 
     .dark {
