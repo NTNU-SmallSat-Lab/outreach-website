@@ -27,8 +27,6 @@ export default async function SatelliteInfoPage({
 }: {
     params: { satelliteSlug: string };
 }) {
-    console.log(params.satelliteSlug);
-
     const filters = {
         catalogNumberNORAD: {
             contains: params.satelliteSlug,
@@ -41,7 +39,6 @@ export default async function SatelliteInfoPage({
                 filters: filters,
             },
         });
-        console.log(graphqlData);
         return (
             <div>
                 {graphqlData?.data?.satellites?.data.map((satellite) => (
