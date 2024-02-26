@@ -59,7 +59,7 @@ export default function Home() {
                 <div className="prose dark:prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
-                        The SmallSat Lab team is part of a variety of projects,
+                        TEST The SmallSat Lab team is part of a variety of projects,
                         a selection listed below. The main effort is on our two
                         satellites; HYPSO-1 (launched January 2022) and HYPSO-2
                         (expected to launch June 2024) - which you can read more
