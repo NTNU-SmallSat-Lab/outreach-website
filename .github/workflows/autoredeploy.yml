@@ -1,43 +1,31 @@
 name: Server auto deploy
 on:
-    push:
-        branches: ["main", "95-autoredeploy-on-main-change"]
+  push:
+    branches: ["main", "95-autoredeploy-on-main-change"]
 
 jobs:
-    frontend-build:
-        needs: backend-build
-        strategy:
-            matrix:
-                node-version: [20.x]
-        defaults:
-            run:
-                working-directory: ./frontend
-        runs-on: self-hosted
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - run: npm ci
-            - run: npm run build
-            - run: pm2 restart nextfrontend
-
-    backend-build:
-        strategy:
-            matrix:
-                node-version: [20.x]
-        defaults:
-            run:
-                working-directory: ./backend
-        runs-on: self-hosted
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: "npm"
-            - run: npm ci
-            - run: npm run build
-            - run: NODE_ENV=production pm2 restart strapibackend
+  docker-build:
+    strategy:
+      matrix:
+        node-version: [20.x]
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create .env files
+        run: |
+          # Create .env with all variables except HOST_URL Backend
+          echo "HOST=${{ vars.HOST }}" >> .env
+          echo "PORT=${{ vars.PORT }}" >> .env
+          echo "DATABASE_CLIENT=${{ vars.DATABASE_CLIENT }}" >> .env
+          echo "DATABASE_FILENAME=${{ vars.DATABASE_FILENAME }}" >> .env
+          echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> .env
+          echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> .env
+          echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
+          # Create .env.production with HOST_URL Frontend
+          echo "HOST_URL=${{ vars.HOST_URL }}" >> .env.production
+      - name: Docker build
+        run: sudo docker-compose build
+      - name: Docker up
+        run: sudo docker-compose up -d
