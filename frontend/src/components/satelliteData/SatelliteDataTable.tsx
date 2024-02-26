@@ -4,14 +4,12 @@ import { exampleData } from "../map/exampleSatData";
 import {
     SatelliteData,
     mapRawDataToSatData,
-    mapRawDataToTleData,
 } from "@/lib/mapHelpers";
 import {
     Table,
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
@@ -24,7 +22,7 @@ const timeInterval = 1; // Interval between updates in milliseconds
 interface SatelliteDataWithPosition extends SatelliteData {
     latitudeDeg: string;
     longitudeDeg: string;
-    altitude: number;
+    altitude: string;
 }
 
 export default function SatelliteDataTable() {
