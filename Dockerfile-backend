@@ -1,7 +1,6 @@
 FROM node:latest
 WORKDIR /usr/src/app
 COPY backend /usr/src/app/backend
-COPY .env /usr/src/app/backend/.env
 WORKDIR /usr/src/app/backend/
 RUN npm install
 RUN NODE_ENV=production npm run build
