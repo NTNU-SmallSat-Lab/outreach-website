@@ -1,0 +1,7 @@
+FROM node:latest
+WORKDIR /usr/src/app/frontend
+COPY frontend /usr/src/app/frontend
+RUN npm i
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start"]
