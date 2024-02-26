@@ -1,5 +1,6 @@
 ### Strapi (backend)
 
+See the following docs for more info about strapi deployment:
 [https://docs.strapi.io/dev-docs/deployment](https://docs.strapi.io/dev-docs/deployment)
 
 We use [`pm2`](https://www.npmjs.com/package/pm2) as our process manager to run our node.js frontend and backend.
