@@ -36,31 +36,34 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="flex justify-center grid grid-cols-1">
-                {graphqlData?.data?.satellites?.data?.map((satellite) => (
-                    <Card className="w-1/2" key={satellite.id}>
-                        <CardHeader>
-                            <CardTitle>
-                                <Link
-                                    className="hover:underline"
-                                    href={
-                                        "/satellites/" +
-                                        satellite?.attributes
-                                            ?.catalogNumberNORAD
-                                    }
-                                >
-                                    {satellite?.attributes?.catalogNumberNORAD}
-                                </Link>
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <BlockRendererClient
-                                content={satellite?.attributes?.content}
-                            />
-                        </CardContent>
-                        <CardFooter>
-                            <div className="flex flex-row justify-center gap-1 items-center">
-                                <div className="flex flex-col justify-center">
+            <div className="flex justify-center">
+                <div className="grid grid-cols-3 gap-4">
+                    {graphqlData?.data?.satellites?.data?.map((satellite) => (
+                        <Card key={satellite.id}>
+                            <CardHeader>
+                                <CardTitle>
+                                    <Link
+                                        href={
+                                            "/satellites/" +
+                                            satellite?.attributes
+                                                ?.catalogNumberNORAD
+                                        }
+                                        className="hover:underline"
+                                    >
+                                        {
+                                            satellite?.attributes
+                                                ?.catalogNumberNORAD
+                                        }
+                                    </Link>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <BlockRendererClient
+                                    content={satellite?.attributes?.content}
+                                />
+                            </CardContent>
+                            <CardFooter>
+                                <div>
                                     <p>
                                         Catalog Number:{" "}
                                         {
@@ -73,10 +76,10 @@ export default async function Satellites() {
                                         {satellite?.attributes?.celestrakURL}
                                     </p>
                                 </div>
-                            </div>
-                        </CardFooter>
-                    </Card>
-                ))}
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </div>
             </div>
         );
     } catch (error) {
