@@ -33,6 +33,22 @@
         --ring: 222.2 84% 4.9%;
 
         --radius: 0.5rem;
+
+
+        /* NTNU colors */
+        --background: 150, 7%, 6%; /* 0E100F */
+        --foreground: 0, 0%, 100%; /* FFFFFF */
+        --accent: 182, 41%, 71%; /* 97D2D4 */
+        --primary: 210, 100%, 31%; /* 00509E */
+        --ntnuBlue: 210, 100%, 31%; /* 00509E */
+        --ntnuCyan: 182, 41%, 71%; /* 97D2D4 */
+        --ntnuPurple: 271, 23%, 50%; /* 7F619C */
+        --ntnuOrange: 29, 87%, 68%; /* F4AC67 */
+        --ntnuYellow: 251, 223, 123; /* FBDF7B */
+        --ntnuLightblue: 47, 94%, 73%; /* 9DB7E1 */
+        --ntnuPink: 319, 44%, 61%; /* C871AC */
+        --ntnuBrown: 40, 44%, 78%; /* E0D0AF */
+
     }
 
     .dark {
