@@ -83,6 +83,8 @@ export default function MyGlobe({
             );
 
             const tleData = mapRawDataToTleData(satelliteDatas);
+            console.log(tleData);
+            console.log(satelliteDatas);
             const satData = tleData
                 .map(([name, ...tle]) => ({
                     satrec: satellite.twoline2satrec(
@@ -95,7 +97,7 @@ export default function MyGlobe({
                     (d) => !!satellite.propagate(d.satrec, new Date()).position,
                 )
                 .slice(0, SATELLITE_AMOUNT);
-
+            console.log(satData);
             // time ticker
             let time = new Date();
             (function frameTicker() {
