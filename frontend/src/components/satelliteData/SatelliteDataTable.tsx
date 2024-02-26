@@ -24,6 +24,7 @@ const timeInterval = 1; // Interval between updates in milliseconds
 interface SatelliteDataWithPosition extends SatelliteData {
     latitudeDeg: string;
     longitudeDeg: string;
+    altitude: number;
 }
 
 export default function SatelliteDataTable() {
@@ -57,17 +58,20 @@ export default function SatelliteDataTable() {
                         const longitudeDeg = satellite.degreesLong(
                             positionGd.longitude,
                         );
+                        const altitude = positionGd.height;
 
                         return {
                             ...data,
                             latitudeDeg: latitudeDeg.toFixed(2),
                             longitudeDeg: longitudeDeg.toFixed(2),
+                            altitude: altitude.toFixed(2),
                         };
                     } else {
                         return {
                             ...data,
                             latitudeDeg: "N/A",
                             longitudeDeg: "N/A",
+                            altitude: "N/A",
                         };
                     }
                 });
@@ -96,6 +100,7 @@ export default function SatelliteDataTable() {
                         <TableHead>Satellite</TableHead>
                         <TableHead>Latitude</TableHead>
                         <TableHead>Longitude</TableHead>
+                        <TableHead>Altitude</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -104,6 +109,7 @@ export default function SatelliteDataTable() {
                             <TableCell>{data.name}</TableCell>
                             <TableCell>{data.latitudeDeg}</TableCell>
                             <TableCell>{data.longitudeDeg}</TableCell>
+                            <TableCell>{data.altitude}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
