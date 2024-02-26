@@ -1,5 +1,3 @@
-### Strapi (backend)
-
 See the following docs for more info about strapi deployment:
 [https://docs.strapi.io/dev-docs/deployment](https://docs.strapi.io/dev-docs/deployment)
 
