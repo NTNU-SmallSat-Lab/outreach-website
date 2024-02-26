@@ -854,6 +854,37 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
+export interface ApiHomepageCardHomepageCard extends Schema.CollectionType {
+  collectionName: 'homepage_cards';
+  info: {
+    singularName: 'homepage-card';
+    pluralName: 'homepage-cards';
+    displayName: 'HomepageCard';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String;
+    coverImage: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::homepage-card.homepage-card',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::homepage-card.homepage-card',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiPartnerPartner extends Schema.CollectionType {
   collectionName: 'partners';
   info: {
@@ -1057,6 +1088,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::homepage-card.homepage-card': ApiHomepageCardHomepageCard;
       'api::partner.partner': ApiPartnerPartner;
       'api::person.person': ApiPersonPerson;
       'api::ph-d-project.ph-d-project': ApiPhDProjectPhDProject;

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "homepage_cards",
+  "info": {
+    "singularName": "homepage-card",
+    "pluralName": "homepage-cards",
+    "displayName": "HomepageCard"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "coverImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
