@@ -1018,6 +1018,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'api::project.project'
     >;
     celestrakURL: Attribute.String;
+    content: Attribute.Blocks;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

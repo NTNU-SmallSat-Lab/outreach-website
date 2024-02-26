@@ -23,6 +23,9 @@
     },
     "celestrakURL": {
       "type": "string"
+    },
+    "content": {
+      "type": "blocks"
     }
   }
 }
