@@ -7,11 +7,12 @@ const GET_SATELLITE_INFO =
     gql(`query GET_SATELLITE_INFO($filters: SatelliteFiltersInput) {
   satellites(filters: $filters) {
     data {
-      attributes {
-        celestrakURL
-        catalogNumberNORAD
-        content
-      }
+        id
+        attributes {
+            celestrakURL
+            catalogNumberNORAD
+            content
+        }
     }
   }
 }
@@ -23,8 +24,8 @@ export default async function SatelliteInfoPage({
     params: { satelliteSlug: string };
 }) {
     const filters = {
-        catalogNumberNORAD: {
-            contains: params.satelliteSlug,
+        satelliteName: {
+            eq: params.satelliteSlug,
         },
     };
     try {
@@ -37,7 +38,7 @@ export default async function SatelliteInfoPage({
         return (
             <div>
                 {graphqlData?.data?.satellites?.data.map((satellite) => (
-                    <div key={satellite?.attributes?.catalogNumberNORAD}>
+                    <div key={satellite.id}>
                         <p>
                             Celestrak URL: {satellite?.attributes?.celestrakURL}
                         </p>

@@ -13,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "catalogNumberNORAD": {
-      "type": "string"
+      "type": "string",
+      "unique": true
     },
     "projects": {
       "type": "relation",
@@ -22,10 +23,27 @@
       "mappedBy": "satellites"
     },
     "celestrakURL": {
-      "type": "string"
+      "type": "string",
+      "unique": true
     },
     "content": {
       "type": "blocks"
+    },
+    "previewImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "satelliteName": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }

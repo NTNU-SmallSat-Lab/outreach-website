@@ -1011,14 +1011,16 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    catalogNumberNORAD: Attribute.String;
+    catalogNumberNORAD: Attribute.String & Attribute.Unique;
     projects: Attribute.Relation<
       'api::satellite.satellite',
       'manyToMany',
       'api::project.project'
     >;
-    celestrakURL: Attribute.String;
+    celestrakURL: Attribute.String & Attribute.Unique;
     content: Attribute.Blocks;
+    previewImage: Attribute.Media;
+    satelliteName: Attribute.String & Attribute.Required & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
