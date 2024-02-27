@@ -72,7 +72,7 @@ export default async function Home() {
                                     <CardContent className="flex justify-center items-center">
                                         {coverImage !== "" ? (
                                             <Image
-                                                className="rounded-full w-full h-full object-cover w-36 h-36 md:w-48 md:h-48 lg:w-48 lf:h-48"
+                                                className="rounded-full object-cover w-36 h-36 md:w-48 md:h-48 lg:w-48 lf:h-48"
                                                 src={coverImage}
                                                 alt={title}
                                                 width={500}
@@ -85,7 +85,7 @@ export default async function Home() {
                                             </h1>
                                         )}
                                     </CardContent>
-                                </Card>
+                                </Card><
                             </div>
                         </Link>
                     );
