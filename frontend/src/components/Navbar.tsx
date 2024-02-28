@@ -38,7 +38,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="flex items-center justify-between p-4 bg-slate-700 text-white w-full">
+        <nav className="flex items-center justify-between p-4 w-full bg-background border-b border-x-neutral-600 text-foreground">
             <div className="flex-1">
                 <Link href="/">
                     <h1 className="text-3xl font-bold flex flex-row">
@@ -48,7 +48,7 @@ export default function Navbar() {
                             height="36"
                             className="mr-2"
                         />
-                        <span className="transition duration-300 underline decoration-transparent hover:decoration-white">
+                        <span className="transition duration-300 underline decoration-transparent hover:decoration-white ">
                             SmallSatLab
                         </span>
                     </h1>
@@ -68,7 +68,11 @@ export default function Navbar() {
                             Projects
                         </Button>
                     </Link>
-
+                    <Link href="/satellites">
+                        <Button variant={getButtonVariant("/satellites")}>
+                            Satellites
+                        </Button>
+                    </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant={getButtonVariant("/about")}>

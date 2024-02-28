@@ -1,18 +1,11 @@
-import Image from "next/image";
+import NTNULogo from "./ntnu/NTNULogo";
 
 export default function Footer() {
     return (
-        <footer className="p-4 bg-slate-700 text-white flex flex-col items-center">
+        <footer className="p-4 bg-background text-foreground flex flex-col items-center">
             <div className="flex flex-row items-center justify-between w-full">
                 <div className="flex-1 flex justify-start">
-                    <Image
-                        src={
-                            "https://www.ntnu.edu/o/ntnu-theme/images/logo_ntnu_tag_english.svg"
-                        }
-                        alt={"NTNU"}
-                        width={200}
-                        height={50}
-                    />
+                    <NTNULogo />
                 </div>
 
                 <div className="flex-1 flex justify-center">
@@ -37,10 +30,8 @@ export default function Footer() {
 
                 <div className="flex-1 flex justify-end">
                     <div className="flex flex-col text-right">
-                        <span className="text-white">
-                            NTNU Small Satellite Lab
-                        </span>
-                        <span className="text-white">Trondheim, Norway</span>
+                        <span className="">NTNU Small Satellite Lab</span>
+                        <span className="">Trondheim, Norway</span>
                     </div>
                 </div>
             </div>

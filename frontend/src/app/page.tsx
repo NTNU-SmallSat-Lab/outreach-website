@@ -26,7 +26,7 @@ export default function Home() {
                 id="about-us"
                 className="flex flex-col items-center py-12 px-8"
             >
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl bg-ntnuBlue">
+                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
                     <h1>
                         Empowering Space Exploration One Satellite at a Time
                     </h1>

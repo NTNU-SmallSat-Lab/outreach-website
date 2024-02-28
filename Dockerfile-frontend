@@ -1,0 +1,8 @@
+FROM node:20
+WORKDIR /usr/src/app/frontend
+COPY frontend /usr/src/app/frontend
+COPY .env.production /usr/src/app/frontend/.env.production
+RUN npm i
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start"]
