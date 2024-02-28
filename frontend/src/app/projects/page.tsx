@@ -5,7 +5,6 @@ import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
-import BlockRendererClient from "@/components/BlockRendererClient";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECTS = gql(`
