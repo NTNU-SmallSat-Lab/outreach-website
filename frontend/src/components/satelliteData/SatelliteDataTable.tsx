@@ -1,3 +1,4 @@
+// This component displays a table of satellite data including position and country
 "use client";
 import React, { useEffect, useState } from "react";
 import { exampleData } from "../map/exampleSatData";
@@ -15,9 +16,10 @@ import * as satellite from "satellite.js";
 import { PolyUtil } from "node-geometry-library";
 import globeData from "@components/map/githubglobe/files/globe-data.json";
 
-const satellitesShown = 10; // Satellites in data shown
-const timeInterval = 1; // Interval between updates in milliseconds
+const satellitesShown = 20; // Maximum number of satellites to display
+const timeInterval = 10; // Time interval for updating satellite positions in milliseconds
 
+// Extends SatelliteData with calculated position properties
 interface SatelliteDataWithPosition extends SatelliteData {
     latitudeDeg: string;
     longitudeDeg: string;
@@ -28,7 +30,7 @@ export default function SatelliteDataTable() {
     const [satData, setSatData] = useState<SatelliteDataWithPosition[]>([]);
 
     useEffect(() => {
-        // Function to update satellite positions
+        // Updates satellite positions at specified intervals
         const updateSatellitePositions = () => {
             const updatedData = mapRawDataToSatData(exampleData)
                 .slice(0, satellitesShown)
@@ -42,13 +44,13 @@ export default function SatelliteDataTable() {
                         positionAndVelocity.position &&
                         typeof positionAndVelocity.position !== "boolean"
                     ) {
-                        const gmst = satellite.gstime(new Date()); // Greenwich Mean Sidereal Time
+                        const gmst = satellite.gstime(new Date()); // Calculates Greenwich Mean Sidereal Time
                         const positionGd = satellite.eciToGeodetic(
                             positionAndVelocity.position,
                             gmst,
                         );
 
-                        // Convert radians to degrees for latitude and longitude
+                        // Converts geodetic position to readable format
                         const latitudeDeg = satellite.degreesLat(
                             positionGd.latitude,
                         );
@@ -76,15 +78,13 @@ export default function SatelliteDataTable() {
             setSatData(updatedData);
         };
 
-        // Initial update
+        // Performs an initial update and sets the interval for further updates
         updateSatellitePositions();
-
-        // Set interval for periodic updates
         const intervalId = setInterval(() => {
             updateSatellitePositions();
         }, timeInterval);
 
-        // Cleanup interval on component unmount
+        // Cleans up the interval when the component unmounts
         return () => clearInterval(intervalId);
     }, []);
 
@@ -94,17 +94,18 @@ export default function SatelliteDataTable() {
                 <TableCaption>Satellite Data</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Satellite</TableHead>
-                        <TableHead>Latitude</TableHead>
-                        <TableHead>Longitude</TableHead>
-                        <TableHead>Altitude</TableHead>
-                        <TableHead>Country</TableHead>
+                        <TableHead className="w-1/5">Satellite</TableHead>
+                        <TableHead className="w-1/5">Latitude</TableHead>
+                        <TableHead className="w-1/5">Longitude</TableHead>
+                        <TableHead className="w-1/5">Altitude</TableHead>
+                        <TableHead className="w-1/5">Country</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {satData.map((data, index) => {
-                        let country = "Ocean";
+                        let country = "Ocean"; // Default country
                         globeData.features.forEach((countryFeature) => {
+                            // Checks if the satellite is within a country's bounding box
                             const boundingBoxPoints = [
                                 {
                                     lat: countryFeature.bbox[1],
@@ -133,14 +134,33 @@ export default function SatelliteDataTable() {
                                     boundingBoxPoints,
                                 )
                             ) {
+                                // Handles different geometries to accurately find the country
                                 if (countryFeature.geometry.type == "Polygon") {
                                     let boundingPolygon =
                                         countryFeature.geometry.coordinates[0].map(
                                             (coordinate) => ({
-                                                lat: coordinate[1],
-                                                lng: coordinate[0],
+                                                lat: Number(coordinate[1]),
+                                                lng: Number(coordinate[0]),
                                             }),
                                         );
+
+                                    if (
+                                        PolyUtil.containsLocation(
+                                            {
+                                                lat: Number(data.latitudeDeg),
+                                                lng: Number(data.longitudeDeg),
+                                            },
+                                            boundingPolygon,
+                                        )
+                                    ) {
+                                        country =
+                                            countryFeature.properties.ADMIN; // Assigns the country name
+                                    }
+                                } else if (
+                                    countryFeature.geometry.type ==
+                                    "MultiPolygon"
+                                ) {
+                                    // Loop through each polygon array in the MultiPolygon
                                 }
                             }
                         });
@@ -148,9 +168,12 @@ export default function SatelliteDataTable() {
                         return (
                             <TableRow key={index}>
                                 <TableCell>{data.name}</TableCell>
-                                <TableCell>{data.latitudeDeg}°</TableCell>
-                                <TableCell>{data.longitudeDeg}°</TableCell>
-                                <TableCell>{data.altitude} km</TableCell>
+                                <TableCell>{data.latitudeDeg}° N</TableCell>
+                                <TableCell>{data.longitudeDeg}° E</TableCell>
+                                <TableCell>
+                                    {(Number(data.altitude) * 10).toFixed(0)}{" "}
+                                    moh
+                                </TableCell>
                                 <TableCell>{country}</TableCell>
                             </TableRow>
                         );
