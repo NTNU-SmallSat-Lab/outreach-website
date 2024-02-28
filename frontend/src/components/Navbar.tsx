@@ -68,7 +68,11 @@ export default function Navbar() {
                             Projects
                         </Button>
                     </Link>
-
+                    <Link href="/satellites">
+                        <Button variant={getButtonVariant("/satellites")}>
+                            Satellites
+                        </Button>
+                    </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant={getButtonVariant("/about")}>
