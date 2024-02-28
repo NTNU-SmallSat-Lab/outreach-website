@@ -1,7 +1,7 @@
+export const runtime = "edge";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 
