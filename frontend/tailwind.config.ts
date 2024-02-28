@@ -19,6 +19,7 @@ const config = {
         },
         extend: {
             colors: {
+                // These should all be defined in the global CSS file and used with the var(--color) syntax. Preferably using hsl
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
@@ -46,7 +47,10 @@ const config = {
                 // Small Satellite Lab Hypso colors
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
-                primary: "hsl(var(--ntnuBlue))",
+                primary: {
+                    DEFAULT: "hsl(var(--ntnuBlue))",
+                    foreground: "hsl(var(--ntnuBlue-foreground))",
+                },
                 accent: "hsl(var(--accent))",
                 ntnuBlue: "hsl(var(--ntnuBlue))",
                 ntnuCyan: "hsl(var(--ntnuCyan))",

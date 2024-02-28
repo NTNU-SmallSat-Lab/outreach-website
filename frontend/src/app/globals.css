@@ -13,7 +13,7 @@
         --secondary: 210 40% 96.1%;
         --secondary-foreground: 222.2 47.4% 11.2%;
 
-        --muted: 210 40% 96.1%;
+        --muted: 0 0% 96.08%;
         --muted-foreground: 215.4 16.3% 46.9%;
 
         --destructive: 0 84.2% 60.2%;
@@ -25,24 +25,26 @@
 
         --radius: 0.5rem;
 
+        --background: 0 0% 100%; /* FFFFFF */
+        --foreground: 0 0% 0%; /* 000000 */
+        --accent: 210 40% 96.1%; /* f1f5f9 */
+
         /* NTNU colors */
-        --background: 150, 7%, 6%; /* 0E100F */
-        --foreground: 0, 0%, 100%; /* FFFFFF */
-        --accent: 182, 41%, 71%; /* 97D2D4 */
-        --primary: 210, 100%, 31%; /* 00509E */
-        --ntnuBlue: 210, 100%, 31%; /* 00509E */
-        --ntnuCyan: 182, 41%, 71%; /* 97D2D4 */
-        --ntnuPurple: 271, 23%, 50%; /* 7F619C */
-        --ntnuOrange: 29, 87%, 68%; /* F4AC67 */
-        --ntnuYellow: 251, 223, 123; /* FBDF7B */
-        --ntnuLightblue: 47, 94%, 73%; /* 9DB7E1 */
-        --ntnuPink: 319, 44%, 61%; /* C871AC */
-        --ntnuBrown: 40, 44%, 78%; /* E0D0AF */
+        --primary: 210 100% 31%; /* 00509E */
+        --ntnuBlue: 210 100% 31%; /* 00509E */
+        --ntnuBlue-foreground: 0 0% 100%; /* FFFFFF */
+        --ntnuCyan: 182 41% 71%; /* 97D2D4 */
+        --ntnuPurple: 271 23% 50%; /* 7F619C */
+        --ntnuOrange: 29 87% 68%; /* F4AC67 */
+        --ntnuYellow: 251 223 123; /* FBDF7B */
+        --ntnuLightblue: 47 94% 73%; /* 9DB7E1 */
+        --ntnuPink: 319 44% 61%; /* C871AC */
+        --ntnuBrown: 40 44% 78%; /* E0D0AF */
     }
 
     .dark {
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
+        --background: 150 7% 6%; /* 0e100f */
+        --foreground: 54 100% 94%; /* fffce1 */
 
         --card: 222.2 84% 4.9%;
         --card-foreground: 210 40% 98%;
@@ -56,7 +58,7 @@
         --secondary: 217.2 32.6% 17.5%;
         --secondary-foreground: 210 40% 98%;
 
-        --muted: 217.2 32.6% 17.5%;
+        --muted: 0 0% 2%;
         --muted-foreground: 215 20.2% 65.1%;
 
         --accent: 217.2 32.6% 17.5%;
