@@ -52,6 +52,7 @@ export default function SolarData() {
                     if (!acc[tag]) {
                         acc[tag] = [];
                     }
+                    // Convert date to timestamp and parse Kp value
                     const timestamp = DateTime.fromSQL(data[0]).toMillis();
                     acc[tag].push({ x: timestamp, y: parseFloat(data[1]) });
                     return acc;
@@ -100,7 +101,7 @@ export default function SolarData() {
                         x: {
                             type: "time",
                             time: {
-                                unit: "day", // Or another appropriate unit for your data
+                                unit: "day",
                                 tooltipFormat: "MMM D",
                                 displayFormats: {
                                     day: "MMM D",
