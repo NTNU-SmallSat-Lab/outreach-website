@@ -10,7 +10,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
@@ -21,7 +20,6 @@ query GET_SATELLITES {
         attributes {
           celestrakURL
           catalogNumberNORAD
-          content
           satelliteName
           previewImage {
             data {
@@ -45,16 +43,6 @@ export default async function Satellites() {
         return (
             <div className="grid grid-cols-3 gap-4">
                 {graphqlData?.data?.satellites?.data?.map((satellite) => {
-                    let content: BlocksContent =
-                        satellite?.attributes?.content ?? [];
-
-                    for (const block of content) {
-                        if (block.type === "paragraph") {
-                            content = [block];
-                            break;
-                        }
-                    }
-
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
                             ?.url;
@@ -77,22 +65,21 @@ export default async function Satellites() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col items-center">
-                                <div className="flex flex-row items-center">
-                                    <div className="flex flex-col">
-                                        <h1>Altitude:</h1>
-                                        <h1>Speed:</h1>
-                                    </div>
-
-                                    {previewImage && (
-                                        <Image
-                                            src={previewImage}
-                                            alt={previewImage}
-                                            width={200}
-                                            height={0} // Set height to 0 to maintain aspect ratio
-                                        />
-                                    )}
+                                <div className="flex flex-row gap-1">
+                                    <h1>Altitude: {"1234"}km</h1>
+                                    <h1>Speed: {"1223"}km/s</h1>
+                                    <h1>Latitude: {"24.65"}°</h1>
+                                    <h1>Longitude: {"26.12"}°</h1>
                                 </div>
-                                <BlockRendererClient content={content} />
+
+                                {previewImage && (
+                                    <Image
+                                        src={previewImage}
+                                        alt={previewImage}
+                                        width={200}
+                                        height={0}
+                                    />
+                                )}
                             </CardContent>
                             <CardFooter></CardFooter>
                         </Card>
