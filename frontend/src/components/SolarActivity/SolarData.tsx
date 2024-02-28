@@ -23,7 +23,7 @@ async function getSolarData(): Promise<SolarData> {
     return res.json();
 }
 
-export default function SolarData() {
+export default function SolarDataComponent() {
     const [solarData, setSolarData] = useState<SolarData | null>(null);
     const chartRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -116,7 +116,7 @@ export default function SolarData() {
                             title: {
                                 display: true,
                                 text: "Kp value",
-                            }
+                            },
                         },
                     },
                     plugins: {

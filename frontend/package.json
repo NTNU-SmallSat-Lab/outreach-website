@@ -53,6 +53,7 @@
         "@iconify/react": "^4.1.1",
         "@playwright/test": "^1.41.2",
         "@tailwindcss/typography": "^0.5.10",
+        "@types/chart.js": "^2.9.41",
         "@types/luxon": "^3.4.2",
         "@types/node": "^20",
         "@types/ol-ext": "npm:@siedlerchr/types-ol-ext@^3.2.4",

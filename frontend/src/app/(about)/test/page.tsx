@@ -1,10 +1,10 @@
 "use client";
-import SolarData from "@/components/SolarActivity/SolarData";
+import SolarDataComponent from "@/components/SolarActivity/SolarData";
 
 export default function Page() {
     return (
         <div className="m-10 flex flex-col space-y-10">
-            <SolarData />
+            <SolarDataComponent />
         </div>
     );
 }
