@@ -17,7 +17,7 @@ export default function Home() {
     return (
         <main>
             <SatelliteDataTable />
-            
+
             <SatelliteFetcher useExampleData={true} />
 
             <MyCustomMap />
