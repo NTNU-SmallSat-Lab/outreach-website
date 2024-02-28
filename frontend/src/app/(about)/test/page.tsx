@@ -1,7 +1,5 @@
 "use client";
 import SolarData from "@/components/SolarActivity/SolarData";
-import { useEffect, useRef } from "react";
-import { Chart } from "chart.js";
 
 export default function Page() {
     return (

@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart, registerables } from "chart.js";
 
 interface SolarDataEntry {
-    [0]: string;
-    [1]: string;
+    [0]: string; // Date
+    [1]: string; // Kp value
+    [2]: "predicted" | "estimated" | "observed"; // Tag
 }
 
 type SolarData = SolarDataEntry[];
 
+// Fetch solar activity data
 async function getSolarData(): Promise<SolarData> {
     const res = await fetch(
         "https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json",
@@ -24,12 +26,14 @@ export default function SolarData() {
     const [solarData, setSolarData] = useState<SolarData | null>(null);
     const chartRef = useRef<HTMLCanvasElement | null>(null);
 
+    // Fetch data when component mounts
     useEffect(() => {
         getSolarData()
             .then((data) => setSolarData(data))
             .catch((err) => console.error(err));
     }, []);
 
+    // Create chart when data is fetched
     useEffect(() => {
         const solarDataChart = chartRef.current;
 
@@ -40,19 +44,53 @@ export default function SolarData() {
         ) {
             Chart.register(...registerables);
 
+            // Group solarData by tag
+            const groupedData = solarData.reduce(
+                (acc, data) => {
+                    const tag = data[2];
+                    if (!acc[tag]) {
+                        acc[tag] = [];
+                    }
+                    acc[tag].push({ x: data[0], y: data[1] });
+                    return acc;
+                },
+                {} as Record<string, { x: string; y: string }[]>,
+            );
+
+            // Connect last 'observed' to first 'estimated' and last 'estimated' to first 'predicted'
+            if (groupedData["observed"] && groupedData["estimated"]) {
+                const lastObserved =
+                    groupedData["observed"][groupedData["observed"].length - 1];
+                groupedData["estimated"].unshift(lastObserved);
+            }
+            if (groupedData["estimated"] && groupedData["predicted"]) {
+                const lastEstimated =
+                    groupedData["estimated"][
+                        groupedData["estimated"].length - 1
+                    ];
+                groupedData["predicted"].unshift(lastEstimated);
+            }
+
+            // Create datasets from the grouped and adjusted data
+            const datasets = Object.keys(groupedData).map((tag) => ({
+                label: tag.charAt(0).toUpperCase() + tag.slice(1),
+                data: groupedData[tag],
+                fill: false,
+                borderColor:
+                    tag === "predicted"
+                        ? "rgb(255, 99, 132)"
+                        : tag === "estimated"
+                          ? "rgb(54, 162, 235)"
+                          : "rgb(75, 192, 192)",
+                borderDash: tag === "predicted" ? [5, 5] : [],
+                tension: 0.3,
+            }));
+
+            // Create chart
             const chart = new Chart(solarDataChart, {
                 type: "line",
                 data: {
-                    labels: solarData.map((data) => data[0]),
-                    datasets: [
-                        {
-                            label: "Kp Index",
-                            data: solarData.map((data) => +data[1]),
-                            fill: false,
-                            borderColor: "rgb(75, 192, 192)",
-                            tension: 0.1,
-                        },
-                    ],
+                    datasets,
                 },
             });
 
