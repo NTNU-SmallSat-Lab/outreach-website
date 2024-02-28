@@ -13,8 +13,9 @@ import {
 } from "@/components/ui/table";
 import * as satellite from "satellite.js";
 import { PolyUtil } from "node-geometry-library";
+import globeData from "@components/map/githubglobe/files/globe-data.json";
 
-const satellitesShown = 100; // Satellites in data shown
+const satellitesShown = 10; // Satellites in data shown
 const timeInterval = 1; // Interval between updates in milliseconds
 
 interface SatelliteDataWithPosition extends SatelliteData {
@@ -102,18 +103,47 @@ export default function SatelliteDataTable() {
                 </TableHeader>
                 <TableBody>
                     {satData.map((data, index) => {
-                        let containsSatellite = PolyUtil.containsLocation(
-                            {
-                                lat: Number(data.latitudeDeg),
-                                lng: Number(data.longitudeDeg),
-                            },
-                            [
-                                { lat: 0, lng: 0 },
-                                { lat: 90, lng: 0 },
-                                { lat: 90, lng: 90 },
-                                { lat: 0, lng: 90 },
-                            ],
-                        );
+                        let country = "Ocean";
+                        globeData.features.forEach((countryFeature) => {
+                            const boundingBoxPoints = [
+                                {
+                                    lat: countryFeature.bbox[1],
+                                    lng: countryFeature.bbox[0],
+                                },
+                                {
+                                    lat: countryFeature.bbox[3],
+                                    lng: countryFeature.bbox[0],
+                                },
+                                {
+                                    lat: countryFeature.bbox[3],
+                                    lng: countryFeature.bbox[2],
+                                },
+                                {
+                                    lat: countryFeature.bbox[1],
+                                    lng: countryFeature.bbox[2],
+                                },
+                            ];
+
+                            if (
+                                PolyUtil.containsLocation(
+                                    {
+                                        lat: Number(data.latitudeDeg),
+                                        lng: Number(data.longitudeDeg),
+                                    },
+                                    boundingBoxPoints,
+                                )
+                            ) {
+                                if (countryFeature.geometry.type == "Polygon") {
+                                    let boundingPolygon =
+                                        countryFeature.geometry.coordinates[0].map(
+                                            (coordinate) => ({
+                                                lat: coordinate[1],
+                                                lng: coordinate[0],
+                                            }),
+                                        );
+                                }
+                            }
+                        });
 
                         return (
                             <TableRow key={index}>
@@ -121,9 +151,7 @@ export default function SatelliteDataTable() {
                                 <TableCell>{data.latitudeDeg}°</TableCell>
                                 <TableCell>{data.longitudeDeg}°</TableCell>
                                 <TableCell>{data.altitude} km</TableCell>
-                                <TableCell>
-                                    {containsSatellite ? "Norway" : "Ocean"}
-                                </TableCell>
+                                <TableCell>{country}</TableCell>
                             </TableRow>
                         );
                     })}
