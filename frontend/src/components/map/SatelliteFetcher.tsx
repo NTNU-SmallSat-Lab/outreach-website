@@ -45,12 +45,11 @@ export default async function SatelliteFetcher({
             (satEntity) => {
                 const celestrakURL = satEntity?.attributes?.celestrakURL;
                 if (celestrakURL) {
-                    return celestrakURL;
+                    return celestrakURL.replace(/FORMAT=[^&]*/, "FORMAT=TLE");
                 }
                 return (
                     "https://celestrak.org/NORAD/elements/gp.php?CATNR=" +
-                    satEntity?.attributes?.catalogNumberNORAD +
-                    "&FORMAT=TLE"
+                    satEntity?.attributes?.catalogNumberNORAD
                 );
             },
         ) as string[];
