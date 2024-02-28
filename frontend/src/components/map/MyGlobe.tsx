@@ -3,6 +3,7 @@ import Globe, { GlobeInstance } from "globe.gl";
 import * as THREE from "three";
 import React, { useEffect } from "react";
 import * as satellite from "satellite.js";
+import { SatelliteData } from "@/lib/mapHelpers";
 
 // made with the following packages:
 // https://www.npmjs.com/package/globe.gl
@@ -16,7 +17,7 @@ const SAT_SIZE = 500; // km
 const TIME_STEP = 1 * 1000; // per frame
 const SATELLITE_AMOUNT = 100; // amount of satellites to display
 
-function mapRawDataToTleData(rawData: string): string[][] {
+export function mapRawDataToTleData(rawData: string): string[][] {
     return (
         rawData
             // Remove any carriage returns
@@ -34,16 +35,27 @@ function mapRawDataToTleData(rawData: string): string[][] {
     );
 }
 
+
+interface MyGlobeProps {
+    satelliteDatas: SatelliteData[]; // Existing prop: a string of TLE strings
+    selectedSatellite?: string
+}
+
+
 export default function MyGlobe({
-    satelliteDatas: satelliteDatas,
-}: {
-    satelliteDatas: string; // Expects a string of TLE strings such as the example files in the datasets folder
-}) {
+    satelliteDatas,
+    selectedSatellite,
+}: MyGlobeProps) {
+    
+    
     const chart = React.useRef<HTMLDivElement>(null);
     const timeLogger = React.useRef<HTMLDivElement>(null);
 
     // useEffect is used because we want to run the code only once when the component is mounted
     useEffect(() => {
+
+
+        
         if (chart.current) {
             let myGlobe: GlobeInstance;
             myGlobe = Globe()(chart.current)
@@ -55,9 +67,31 @@ export default function MyGlobe({
                 .objectAltitude("alt")
                 .objectFacesSurface(false)
                 .objectLabel("name");
+            const controls = myGlobe.controls();
+            controls.enabled = false;
 
             // Set initial camera distance
             setTimeout(() => myGlobe.pointOfView({ altitude: 3.5 }));
+
+
+            const handleResize = () => {
+                //Making it responsive like this
+                
+
+                if(window.innerWidth <= 768){
+                    myGlobe.width(window.innerWidth)
+                    myGlobe.height(window.innerHeight/2)
+                }else{
+                    myGlobe.width(window.innerWidth/2)
+                    myGlobe.height(window.innerHeight/2)
+                }
+              };
+              handleResize();
+              window.addEventListener('resize', handleResize);
+
+
+
+
 
             // Disable OrbitControls and enable auto-rotation
             // myGlobe.controls().autoRotate = true;
@@ -81,21 +115,10 @@ export default function MyGlobe({
             myGlobe.objectThreeObject(
                 () => new THREE.Mesh(satGeometry, satMaterial),
             );
+            const satData = satelliteDatas
 
-            const tleData = mapRawDataToTleData(satelliteDatas);
-            const satData = tleData
-                .map(([name, ...tle]) => ({
-                    satrec: satellite.twoline2satrec(
-                        ...(tle as [string, string]), // spread the array as arguments to the function
-                    ),
-                    name: name.trim().replace(/^0 /, ""), // remove leading 0 from name
-                }))
-                // exclude those that can't be propagated
-                .filter(
-                    (d) => !!satellite.propagate(d.satrec, new Date()).position,
-                )
-                .slice(0, SATELLITE_AMOUNT);
-
+           
+            
             // time ticker
             let time = new Date();
             (function frameTicker() {
@@ -107,6 +130,8 @@ export default function MyGlobe({
                 }
 
                 // Update satellite positions
+                
+                
                 const gmst = satellite.gstime(time);
                 satData.forEach((d: any) => {
                     const eci = satellite.propagate(d.satrec, time);
@@ -115,16 +140,24 @@ export default function MyGlobe({
                             eci.position as satellite.EciVec3<number>,
                             gmst,
                         );
+                        
+                        
                         d.lat = THREE.MathUtils.radToDeg(gdPos.latitude);
                         d.lng = THREE.MathUtils.radToDeg(gdPos.longitude);
                         d.alt = gdPos.height / EARTH_RADIUS_KM;
+                        
+                        if(d.name == selectedSatellite) {
+                            myGlobe.pointOfView({lat: d.lat, lng: d.lng, altitude: 2 }, 0);
+                        }
+                        
+                       
                     }
                 });
 
                 myGlobe.objectsData(satData);
             })();
         }
-    }, [satelliteDatas]);
+    }, [selectedSatellite, satelliteDatas]);
 
     return (
         <>

@@ -1,12 +1,10 @@
-export const runtime = "edge";
+"use server"
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 
 // Dynamic import because of leaflet and globe.gl ssr problem with next.js
 import dynamic from "next/dynamic";
-const MyGlobe = dynamic(() => import("@/components/map/MyGlobe"), {
-    ssr: false,
-});
+
 
 // Example Datasources
 import { exampleData } from "./exampleSatData";
@@ -28,16 +26,21 @@ const GET_ALL_SATELLITE_DATA =
   }
   `);
 
-export default async function SatelliteFetcher({
+
+  interface SatelliteFetcherInterface {
+    useExampleData: boolean,
+    filterList?: string[],
+}
+
+export async function fetchSatelliteData({
     useExampleData,
     filterList = [],
-}: {
-    useExampleData: boolean;
-    filterList?: string[];
-}) {
-    // Fetch the data, either from the example file or from strapi then celestrak
+}: SatelliteFetcherInterface): Promise<string> {
+    console.log("Yo");
     if (useExampleData) {
-        return <MyGlobe satelliteDatas={exampleData}></MyGlobe>;
+        
+        
+        return exampleData;
     } else {
         let graphqlData;
 
@@ -60,42 +63,24 @@ export default async function SatelliteFetcher({
             });
         }
 
-        const satelliteUrls = graphqlData?.data?.satellites?.data.map(
-            (satEntity) => {
-                const celestrakURL = satEntity?.attributes?.celestrakURL;
-                if (celestrakURL) {
-                    return celestrakURL.replace(/FORMAT=[^&]*/, "FORMAT=TLE");
-                }
-                return (
-                    "https://celestrak.org/NORAD/elements/gp.php?CATNR=" +
-                    satEntity?.attributes?.catalogNumberNORAD
-                );
-            },
-        ) as string[];
+        const satelliteUrls = graphqlData?.data?.satellites?.data.map(satEntity => {
+            const celestrakURL = satEntity?.attributes?.celestrakURL;
+            return celestrakURL ? celestrakURL.replace(/FORMAT=[^&]*/, "FORMAT=TLE") :
+                `https://celestrak.org/NORAD/elements/gp.php?CATNR=${satEntity?.attributes?.catalogNumberNORAD}`;
+        }) as string[];
 
-        // Fetch every satellite's data from celestrak
-        let responses: Promise<String>[] = [];
-        satelliteUrls.forEach((url) => {
-            responses.push(
-                fetch(url, {
-                    next: {
-                        revalidate: 10800, // 3 hours
-                    },
-                }).then((r) => {
-                    if (r.ok) {
-                        return r.text();
-                    }
-                    throw new Error("Failed to fetch data from Celestrak");
-                }),
-            );
-        });
-        // Wait for all the responses to come back
+        let responses = satelliteUrls.map(url =>
+            fetch(url).then(r => r.ok ? r.text() : Promise.reject("Failed to fetch data from Celestrak"))
+        );
+
         const data = await Promise.all(responses);
 
         console.log(data);
+        
 
         let combinedSatelliteDatas = data.join("\n");
 
-        return <MyGlobe satelliteDatas={combinedSatelliteDatas}></MyGlobe>;
+
+        return combinedSatelliteDatas;
     }
 }
