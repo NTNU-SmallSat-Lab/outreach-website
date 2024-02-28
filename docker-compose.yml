@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  backend-app:
+    volumes:
+      - type: bind
+        source: /var/data/
+        target: /var/data/
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    ports:
+      - "1337:1337"
+    environment:
+      - NODE_ENV=production
+
+  frontend-app:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    ports:
+      - "3000:3000"
