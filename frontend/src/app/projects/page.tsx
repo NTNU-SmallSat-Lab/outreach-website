@@ -61,7 +61,7 @@ export default async function ProjectsPage() {
                 Information about our various projects are shown here.
             </p>
 
-            <div className="flex flex-col gap-4 mt-4 justify-center items-center">
+            <div className="flex flex-wrap justify-center gap-4 mt-4">
                 {graphqlData.data.projects.data.map((project) => {
                     let coverImage =
                         project?.attributes?.coverImage?.data?.attributes?.url;
@@ -72,39 +72,47 @@ export default async function ProjectsPage() {
                     let content: BlocksContent =
                         project?.attributes?.article ?? [];
 
+                    let text = "";
+
                     for (const block of content) {
                         if (block.type === "paragraph") {
-                            content = [block];
+                            const paragraphBlock = block as {
+                                type: "paragraph";
+                                children: { type: "text"; text: string }[];
+                            };
+
+                            text =
+                                paragraphBlock.children[0].text.slice(0, 100) +
+                                "...";
+
                             break;
                         }
                     }
                     return (
-                        <Card className="w-1/2" key={project.id}>
-                            <CardHeader>
-                                <CardTitle>
-                                    <Link
-                                        className="hover:underline"
-                                        href={
-                                            "/projects/" +
-                                            project?.attributes?.slug
-                                        }
-                                    >
+                        <Link
+                            className="m-1 sm:m-4 hover:transform hover:scale-110 transition-transform duration-300 ease-in-out"
+                            href={"/projects/" + project?.attributes?.slug}
+                            key={project.id}
+                        >
+                            <Card className="w-64 md:w-68 lg:w-72 flex flex-col h-full">
+                                <CardHeader></CardHeader>
+                                <CardContent>
+                                    {coverImage && (
+                                        <Image
+                                            className="h-36"
+                                            src={coverImage}
+                                            alt={coverImage}
+                                            width={500}
+                                            height={0}
+                                        />
+                                    )}
+                                    <CardTitle className="mb-2 mt-2 text-xl font-bold">
                                         {project?.attributes?.title}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {coverImage && (
-                                    <Image
-                                        src={coverImage}
-                                        alt={coverImage}
-                                        width={500}
-                                        height={0} // Set height to 0 to maintain aspect ratio
-                                    />
-                                )}
-                                <BlockRendererClient content={content} />
-                            </CardContent>
-                        </Card>
+                                    </CardTitle>
+                                    <p className="break-words">{text}</p>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     );
                 })}
             </div>
