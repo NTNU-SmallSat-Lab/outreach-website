@@ -42,6 +42,7 @@ export default async function Home() {
             <SatelliteFetcher useExampleData={true} />
 
             <MyCustomMap />
+
             <h1 className="text-gray-500 text-center text-3xl font-bold mb-4">
                 Small Satellite Lab
             </h1>
