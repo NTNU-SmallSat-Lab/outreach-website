@@ -23,7 +23,7 @@ export default function Home() {
                 id="about-us"
                 className="flex flex-col items-center py-12 px-8"
             >
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl bg-ntnuBlue">
                     <h1>
                         Empowering Space Exploration One Satellite at a Time
                     </h1>
@@ -36,7 +36,7 @@ export default function Home() {
                             layout="fill"
                         />
                     </div>
-                    <div className="flex flex-col gap-4 items-center col-span-2 lg:col-span-2">
+                    <div className="flex flex-col gap-4 items-center col-span-2 lg:col-span-2 ">
                         <div className=" self-center">
                             <p>
                                 NTNU Small Satellite Lab is an initiative to

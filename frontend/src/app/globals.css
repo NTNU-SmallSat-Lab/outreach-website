@@ -4,26 +4,17 @@
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
-
         --card: 0 0% 100%;
         --card-foreground: 222.2 84% 4.9%;
 
         --popover: 0 0% 100%;
         --popover-foreground: 222.2 84% 4.9%;
 
-        --primary: 222.2 47.4% 11.2%;
-        --primary-foreground: 210 40% 98%;
-
         --secondary: 210 40% 96.1%;
         --secondary-foreground: 222.2 47.4% 11.2%;
 
         --muted: 210 40% 96.1%;
         --muted-foreground: 215.4 16.3% 46.9%;
-
-        --accent: 210 40% 96.1%;
-        --accent-foreground: 222.2 47.4% 11.2%;
 
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 210 40% 98%;
@@ -33,6 +24,20 @@
         --ring: 222.2 84% 4.9%;
 
         --radius: 0.5rem;
+
+        /* NTNU colors */
+        --background: 150, 7%, 6%; /* 0E100F */
+        --foreground: 0, 0%, 100%; /* FFFFFF */
+        --accent: 182, 41%, 71%; /* 97D2D4 */
+        --primary: 210, 100%, 31%; /* 00509E */
+        --ntnuBlue: 210, 100%, 31%; /* 00509E */
+        --ntnuCyan: 182, 41%, 71%; /* 97D2D4 */
+        --ntnuPurple: 271, 23%, 50%; /* 7F619C */
+        --ntnuOrange: 29, 87%, 68%; /* F4AC67 */
+        --ntnuYellow: 251, 223, 123; /* FBDF7B */
+        --ntnuLightblue: 47, 94%, 73%; /* 9DB7E1 */
+        --ntnuPink: 319, 44%, 61%; /* C871AC */
+        --ntnuBrown: 40, 44%, 78%; /* E0D0AF */
     }
 
     .dark {
