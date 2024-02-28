@@ -2,7 +2,6 @@ export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
-import BlockRendererClient from "@/components/BlockRendererClient";
 import {
     Card,
     CardContent,
