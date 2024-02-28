@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Chart, registerables } from "chart.js";
+import { DateTime } from "luxon";
+import "chartjs-adapter-luxon";
 
 interface SolarDataEntry {
     [0]: string; // Date
     [1]: string; // Kp value
     [2]: "predicted" | "estimated" | "observed"; // Tag
 }
-
 type SolarData = SolarDataEntry[];
 
 // Fetch solar activity data
@@ -51,11 +52,13 @@ export default function SolarData() {
                     if (!acc[tag]) {
                         acc[tag] = [];
                     }
-                    acc[tag].push({ x: data[0], y: data[1] });
+                    const timestamp = DateTime.fromSQL(data[0]).toMillis();
+                    acc[tag].push({ x: timestamp, y: parseFloat(data[1]) });
                     return acc;
                 },
-                {} as Record<string, { x: string; y: string }[]>,
+                {} as Record<string, { x: number; y: number }[]>,
             );
+            console.log(groupedData);
 
             // Connect last 'observed' to first 'estimated' and last 'estimated' to first 'predicted'
             if (groupedData["observed"] && groupedData["estimated"]) {
@@ -92,6 +95,35 @@ export default function SolarData() {
                 data: {
                     datasets,
                 },
+                options: {
+                    scales: {
+                        x: {
+                            type: "time",
+                            time: {
+                                unit: "day", // Or another appropriate unit for your data
+                                tooltipFormat: "MMM D",
+                                displayFormats: {
+                                    day: "MMM D",
+                                },
+                            },
+                            ticks: {
+                                source: "auto",
+                            },
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "Kp value",
+                            }
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                        },
+                    },
+                },
             });
 
             return () => {
@@ -102,10 +134,7 @@ export default function SolarData() {
 
     return (
         <div>
-            <h2>Solar Activity Data</h2>
             <canvas ref={chartRef}></canvas>
-            <hr />
-            <pre>{JSON.stringify(solarData, null, 2)}</pre>
         </div>
     );
 }
