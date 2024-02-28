@@ -83,7 +83,7 @@ export default async function Home() {
                                             </h1>
                                         )}
                                     </CardContent>
-                                </Card><
+                                </Card>
                             </div>
                         </Link>
                     );
