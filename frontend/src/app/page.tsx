@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,9 +39,9 @@ export default async function Home() {
     const cardsData = graphqlData?.data?.homepageCards?.data || [];
     return (
         <main>
-            {/* <SatelliteFetcher useExampleData={true} />
+            <SatelliteFetcher useExampleData={true} />
 
-            <MyCustomMap /> */}
+            <MyCustomMap />
             <h1 className="text-gray-500 text-center text-3xl font-bold mb-4">
                 Small Satellite Lab
             </h1>
