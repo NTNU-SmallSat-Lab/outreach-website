@@ -54,7 +54,7 @@ export default function BlockRendererClient({
 
                 paragraph: ({ children }) => (
                     <>
-                        <p className="">{children}</p>
+                        <p className="break-words">{children}</p>
                         <br />
                     </>
                 ),
