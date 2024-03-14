@@ -16,14 +16,15 @@ import * as satellite from "satellite.js";
 import { PolyUtil } from "node-geometry-library";
 import globeData from "@components/map/githubglobe/files/globe-data.json";
 
-const satellitesShown = 20; // Maximum number of satellites to display
-const timeInterval = 10; // Time interval for updating satellite positions in milliseconds
+const satellitesShown = 10; // Maximum number of satellites to display
+const timeInterval = 1000; // Time interval for updating satellite positions in milliseconds
 
 // Extends SatelliteData with calculated position properties
 interface SatelliteDataWithPosition extends SatelliteData {
     latitudeDeg: string;
     longitudeDeg: string;
     altitude: string;
+    velocity: string;
 }
 
 export default function SatelliteDataTable() {
@@ -50,6 +51,24 @@ export default function SatelliteDataTable() {
                             gmst,
                         );
 
+                        // Extracts velocity from positionAndVelocity if it is not false
+                        var velocityEci = positionAndVelocity.velocity;
+
+                        if (typeof velocityEci !== "boolean") {
+                            // Calculate the magnitude of the velocity vector if velocityEci is not false
+                            var velocityMagnitude = Math.sqrt(
+                                velocityEci.x * velocityEci.x +
+                                    velocityEci.y * velocityEci.y +
+                                    velocityEci.z * velocityEci.z,
+                            );
+
+                            // Convert velocity from kilometers per second (km/s) to kilometers per hour (km/h)
+                            velocityMagnitude = velocityMagnitude * 3600;
+                        } else {
+                            // Set velocityMagnitude to NaN if velocityEci is false
+                            velocityMagnitude = NaN;
+                        }
+
                         // Converts geodetic position to readable format
                         const latitudeDeg = satellite.degreesLat(
                             positionGd.latitude,
@@ -64,6 +83,7 @@ export default function SatelliteDataTable() {
                             latitudeDeg: latitudeDeg.toFixed(2),
                             longitudeDeg: longitudeDeg.toFixed(2),
                             altitude: altitude.toFixed(2),
+                            velocity: velocityMagnitude.toFixed(0),
                         };
                     } else {
                         return {
@@ -71,6 +91,7 @@ export default function SatelliteDataTable() {
                             latitudeDeg: "N/A",
                             longitudeDeg: "N/A",
                             altitude: "N/A",
+                            velocity: "N/A",
                         };
                     }
                 });
@@ -94,18 +115,19 @@ export default function SatelliteDataTable() {
                 <TableCaption>Satellite Data</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-1/5">Satellite</TableHead>
-                        <TableHead className="w-1/5">Latitude</TableHead>
-                        <TableHead className="w-1/5">Longitude</TableHead>
-                        <TableHead className="w-1/5">Altitude</TableHead>
-                        <TableHead className="w-1/5">Country</TableHead>
+                        <TableHead className="w-1/6">Satellite</TableHead>
+                        <TableHead className="w-1/6">Latitude</TableHead>
+                        <TableHead className="w-1/6">Longitude</TableHead>
+                        <TableHead className="w-1/6">Altitude</TableHead>
+                        <TableHead className="w-1/6">Velocity</TableHead>
+                        <TableHead className="w-1/6">Country</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {satData.map((data, index) => {
-                        let country = "Ocean"; // Default country
+                        let country = "Ocean"; // Default to Ocean if no country is found
                         globeData.features.forEach((countryFeature) => {
-                            // Checks if the satellite is within a country's bounding box
+                            // Checks if the satellite is within a country's bounding box to reduce the number of polygons to check
                             const boundingBoxPoints = [
                                 {
                                     lat: countryFeature.bbox[1],
@@ -134,7 +156,7 @@ export default function SatelliteDataTable() {
                                     boundingBoxPoints,
                                 )
                             ) {
-                                // Handles different geometries to accurately find the country
+                                // Handles polygons to accurately find the country
                                 if (countryFeature.geometry.type == "Polygon") {
                                     let boundingPolygon =
                                         countryFeature.geometry.coordinates[0].map(
@@ -154,13 +176,40 @@ export default function SatelliteDataTable() {
                                         )
                                     ) {
                                         country =
-                                            countryFeature.properties.ADMIN; // Assigns the country name
+                                            countryFeature.properties.ADMIN;
                                     }
                                 } else if (
                                     countryFeature.geometry.type ==
                                     "MultiPolygon"
                                 ) {
                                     // Loop through each polygon array in the MultiPolygon
+                                    const multiPolygon = countryFeature.geometry
+                                        .coordinates as number[][][][];
+                                    multiPolygon.forEach((polygon) => {
+                                        let boundingPolygon = polygon[0].map(
+                                            (coordinate) => ({
+                                                lat: Number(coordinate[1]),
+                                                lng: Number(coordinate[0]),
+                                            }),
+                                        );
+
+                                        if (
+                                            PolyUtil.containsLocation(
+                                                {
+                                                    lat: Number(
+                                                        data.latitudeDeg,
+                                                    ),
+                                                    lng: Number(
+                                                        data.longitudeDeg,
+                                                    ),
+                                                },
+                                                boundingPolygon,
+                                            )
+                                        ) {
+                                            country =
+                                                countryFeature.properties.ADMIN;
+                                        }
+                                    });
                                 }
                             }
                         });
@@ -174,6 +223,7 @@ export default function SatelliteDataTable() {
                                     {(Number(data.altitude) * 10).toFixed(0)}{" "}
                                     moh
                                 </TableCell>
+                                <TableCell>{data.velocity} km/h</TableCell>
                                 <TableCell>{country}</TableCell>
                             </TableRow>
                         );
