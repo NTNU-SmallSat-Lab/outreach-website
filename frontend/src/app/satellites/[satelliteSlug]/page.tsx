@@ -49,7 +49,7 @@ export default async function SatelliteInfoPage({
 
                 {graphqlData?.data?.satellites?.data.map((satellite) => (
                     <div key={satellite.id} className="w-1/2 text-center">
-                        <h1 className="text-4xl mb-4">
+                        <h1 className="mb-4 text-4xl">
                             {satellite?.attributes?.satelliteName}
                         </h1>
                         <div className="gap-1">

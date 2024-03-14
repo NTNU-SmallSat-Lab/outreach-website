@@ -34,10 +34,10 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h1 className=" font-bold tracking-tighter text-6xl">
+                        <h1 className=" text-6xl font-bold tracking-tighter">
                             {title}
                         </h1>
-                        <p className="mx-auto max-w-[700px] text-gray-500 text-xl dark:text-gray-400">
+                        <p className="mx-auto max-w-[700px] text-xl text-gray-500 dark:text-gray-400">
                             {description}
                         </p>
                     </div>

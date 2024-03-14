@@ -50,7 +50,7 @@ export default async function Satellites() {
                     }
                     return (
                         <Card key={satellite.id}>
-                            <CardHeader className="flex flex-col justify-center items-center">
+                            <CardHeader className="flex flex-col items-center justify-center">
                                 <CardTitle>
                                     <Link
                                         href={
