@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
 
+import { gql } from "@/__generated__/gql";
+import { getClient } from "@/lib/ApolloClient";
+
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,11 +12,46 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 
+
 const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
 });
 
-export default function Home() {
+const GET_MOST_RECENT_IMAGE = gql(`
+query MostRecentImages {
+    mostRecentImages(sort[0]: ["publishedAt:desc"]) {
+      data {
+        attributes {
+          mostRecentImage {
+            data {
+                attributes {
+                    url
+                }
+            }
+          }
+          satellites {
+            data {
+              attributes {
+                catalogNumberNORAD
+                }
+              }
+            }
+          }
+        }
+        createdAt
+        updatedAt
+        publishedAt
+      }
+    }
+}`);
+
+export default async function Home() {
+    const graphqlData = await getClient().query({
+        query: GET_MOST_RECENT_IMAGE,
+    });
+
+    const mostRecentImageURL = graphqlData.data.mostRecentImages[0].data.attributes.mostRecentImage.attributes.url
+
     return (
         <main>
             <SatelliteFetcher useExampleData={true} />
@@ -81,7 +120,7 @@ export default function Home() {
                     <div className="relative w-[300px] h-[300px]">
                         <Image
                             alt="Satellite image of city"
-                            src="/images/recent-image.jpg"
+                            src={mostRecentImage}
                             className="m-0"
                             layout="fill"
                             objectFit="cover"

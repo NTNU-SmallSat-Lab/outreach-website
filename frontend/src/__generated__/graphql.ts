@@ -354,7 +354,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | Partner | Person | PhDProject | Project | Satellite | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Article | Author | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | MostRecentImage | Partner | Person | PhDProject | Project | Satellite | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -467,6 +467,49 @@ export type JsonFilterInput = {
   startsWith?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type MostRecentImage = {
+  __typename?: 'MostRecentImage';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  mostRecentImage: UploadFileEntityResponse;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  satellite?: Maybe<SatelliteEntityResponse>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type MostRecentImageEntity = {
+  __typename?: 'MostRecentImageEntity';
+  attributes?: Maybe<MostRecentImage>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type MostRecentImageEntityResponse = {
+  __typename?: 'MostRecentImageEntityResponse';
+  data?: Maybe<MostRecentImageEntity>;
+};
+
+export type MostRecentImageEntityResponseCollection = {
+  __typename?: 'MostRecentImageEntityResponseCollection';
+  data: Array<MostRecentImageEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type MostRecentImageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<MostRecentImageFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<MostRecentImageFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<MostRecentImageFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  satellite?: InputMaybe<SatelliteFiltersInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type MostRecentImageInput = {
+  mostRecentImage?: InputMaybe<Scalars['ID']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  satellite?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
@@ -475,6 +518,7 @@ export type Mutation = {
   createAuthor?: Maybe<AuthorEntityResponse>;
   createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  createMostRecentImage?: Maybe<MostRecentImageEntityResponse>;
   createPartner?: Maybe<PartnerEntityResponse>;
   createPerson?: Maybe<PersonEntityResponse>;
   createPhDProject?: Maybe<PhDProjectEntityResponse>;
@@ -490,6 +534,7 @@ export type Mutation = {
   deleteAuthor?: Maybe<AuthorEntityResponse>;
   deleteContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   deleteContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  deleteMostRecentImage?: Maybe<MostRecentImageEntityResponse>;
   deletePartner?: Maybe<PartnerEntityResponse>;
   deletePerson?: Maybe<PersonEntityResponse>;
   deletePhDProject?: Maybe<PhDProjectEntityResponse>;
@@ -517,6 +562,7 @@ export type Mutation = {
   updateContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updateMostRecentImage?: Maybe<MostRecentImageEntityResponse>;
   updatePartner?: Maybe<PartnerEntityResponse>;
   updatePerson?: Maybe<PersonEntityResponse>;
   updatePhDProject?: Maybe<PhDProjectEntityResponse>;
@@ -556,6 +602,11 @@ export type MutationCreateContentReleasesReleaseArgs = {
 
 export type MutationCreateContentReleasesReleaseActionArgs = {
   data: ContentReleasesReleaseActionInput;
+};
+
+
+export type MutationCreateMostRecentImageArgs = {
+  data: MostRecentImageInput;
 };
 
 
@@ -620,6 +671,11 @@ export type MutationDeleteContentReleasesReleaseArgs = {
 
 
 export type MutationDeleteContentReleasesReleaseActionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteMostRecentImageArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -736,6 +792,12 @@ export type MutationUpdateContentReleasesReleaseActionArgs = {
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info?: InputMaybe<FileInfoInput>;
+};
+
+
+export type MutationUpdateMostRecentImageArgs = {
+  data: MostRecentImageInput;
+  id: Scalars['ID']['input'];
 };
 
 
@@ -1053,6 +1115,8 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  mostRecentImage?: Maybe<MostRecentImageEntityResponse>;
+  mostRecentImages?: Maybe<MostRecentImageEntityResponseCollection>;
   partner?: Maybe<PartnerEntityResponse>;
   partners?: Maybe<PartnerEntityResponseCollection>;
   people?: Maybe<PersonEntityResponseCollection>;
@@ -1132,6 +1196,19 @@ export type QueryI18NLocaleArgs = {
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryMostRecentImageArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryMostRecentImagesArgs = {
+  filters?: InputMaybe<MostRecentImageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
