@@ -58,7 +58,7 @@ const MyCustomMap = () => {
         <>
             <div
                 ref={mapContainer}
-                className="relative aspect-square w-full dark:bg-neutral-700 bg-neutral-600"
+                className="relative aspect-square w-full bg-neutral-600 dark:bg-neutral-700"
             ></div>
         </>
     );

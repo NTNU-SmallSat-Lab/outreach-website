@@ -38,24 +38,24 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="flex items-center justify-between p-4 w-full bg-background border-b border-x-neutral-600 text-foreground">
+        <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div className="flex-1">
                 <Link href="/">
-                    <h1 className="text-3xl font-bold flex flex-row">
+                    <h1 className="flex flex-row text-3xl font-bold">
                         <Icon
                             icon="twemoji:satellite"
                             width="36"
                             height="36"
                             className="mr-2"
                         />
-                        <span className="transition duration-300 underline decoration-transparent hover:decoration-white ">
+                        <span className="underline decoration-transparent transition duration-300 hover:decoration-white ">
                             SmallSatLab
                         </span>
                     </h1>
                 </Link>
             </div>
 
-            <div className="flex-1 flex justify-center">
+            <div className="flex flex-1 justify-center">
                 <div className="flex items-center gap-8">
                     <Link href="/blog">
                         <Button variant={getButtonVariant("/blog")}>
@@ -104,7 +104,7 @@ export default function Navbar() {
                 </div>
             </div>
 
-            <div className="flex-1 flex justify-end">
+            <div className="flex flex-1 justify-end">
                 <Button onClick={toggleTheme} variant={"ghost"}>
                     {isLightTheme ? (
                         <Icon

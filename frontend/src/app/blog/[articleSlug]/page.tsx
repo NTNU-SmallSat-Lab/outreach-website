@@ -84,11 +84,11 @@ export default async function Page({
 
     return (
         <>
-            <div className="flex flex-col gap-4 items-center">
+            <div className="flex flex-col items-center gap-4">
                 <h1 className="text-4xl font-extrabold">
                     {article?.attributes?.title}
                 </h1>
-                <div className="flex flex-row justify-center gap-1 items-center">
+                <div className="flex flex-row items-center justify-center gap-1">
                     {avatarURL && (
                         <Avatar className="">
                             <AvatarImage src={avatarURL} />

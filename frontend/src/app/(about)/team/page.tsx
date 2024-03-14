@@ -78,7 +78,7 @@ export default async function TeamPage() {
                 <div>There are no team members to show.</div>
             ) : (
                 <div>
-                    <h1 className="col-span-full text-3xl font-bold mb-10 mt-5">
+                    <h1 className="col-span-full mb-10 mt-5 text-3xl font-bold">
                         MEET THE TEAM
                     </h1>
                     {[
@@ -90,11 +90,11 @@ export default async function TeamPage() {
                         <div key={index} className="mb-8">
                             {" "}
                             {/* Add margin bottom */}
-                            <h1 className="mb-2 col-span-full text-xl font-bold">
+                            <h1 className="col-span-full mb-2 text-xl font-bold">
                                 {role}
                             </h1>{" "}
                             {/* Increase margin bottom and adjust font size */}
-                            <div className="grid grid-cols-2 gap-4 lg:max-w-4xl lg:mx-auto">
+                            <div className="grid grid-cols-2 gap-4 lg:mx-auto lg:max-w-4xl">
                                 {filterPeopleByRole(role || "").map(
                                     (person, index) => {
                                         const name =
@@ -113,16 +113,16 @@ export default async function TeamPage() {
                                                 href={employeeLink}
                                                 target="_blank"
                                                 key={name + index}
-                                                className="hover:transform hover:scale-105 transition-transform duration-300 ease-in-out"
+                                                className="transition-transform duration-300 ease-in-out hover:scale-105 hover:transform"
                                             >
-                                                <Card className="bg-neutral-50 w-full">
+                                                <Card className="w-full bg-neutral-50">
                                                     <CardHeader>
                                                         <CardTitle className="text-black">
                                                             <p>{name}</p>
                                                         </CardTitle>
                                                     </CardHeader>
                                                     <CardContent className="flex items-center">
-                                                        <Avatar className="w-16 h-16 mr-4">
+                                                        <Avatar className="mr-4 h-16 w-16">
                                                             <AvatarImage
                                                                 src={
                                                                     profilePictureURL
@@ -152,10 +152,10 @@ export default async function TeamPage() {
                 <div>There are no projects to show.</div>
             ) : (
                 <div className="overflow-x-auto">
-                    <h1 className="text-3xl font-bold mb-10 mt-5">
+                    <h1 className="mb-10 mt-5 text-3xl font-bold">
                         Ongoing PhD Projects
                     </h1>
-                    <Table className="w-full border border-collapse border-gray-400">
+                    <Table className="w-full border-collapse border border-gray-400">
                         <TableCaption>Ongoing PhD Projects</TableCaption>
                         <TableHeader>
                             <TableRow className="border-b">
