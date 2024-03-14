@@ -6,28 +6,28 @@ export default function Loading() {
     return (
         <div>
             {/* Full width div, split into two equal portions */}
-            <div className="w-full md:h-[calc(100vh-73px)] flex flex-col-reverse md:flex-row gap-2 p-4">
+            <div className="flex w-full flex-col-reverse gap-2 p-4 md:h-[calc(100vh-73px)] md:flex-row">
                 {/* Square */}
-                <div className="w-full h-full flex flex-col gap-2">
-                    <Skeleton className="w-full h-24" />
+                <div className="flex h-full w-full flex-col gap-2">
+                    <Skeleton className="h-24 w-full" />
                     <div className="flex flex-row gap-2">
-                        <Skeleton className="w-full h-24" />
-                        <Skeleton className="w-full h-24" />
+                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-24 w-full" />
                     </div>
                     <div className="flex flex-row gap-2">
-                        <Skeleton className="w-full h-24" />
-                        <Skeleton className="w-full h-24" />
+                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-24 w-full" />
                     </div>
                     <div className="flex flex-row gap-2">
-                        <Skeleton className="w-full h-24" />
-                        <Skeleton className="w-full h-24" />
+                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-24 w-full" />
                     </div>
-                    <Skeleton className="w-full h-48" />
-                    <Skeleton className="w-full h-48" />
+                    <Skeleton className="h-48 w-full" />
+                    <Skeleton className="h-48 w-full" />
                 </div>
-                <div className="w-full h-full">
+                <div className="h-full w-full">
                     {/* Circle */}
-                    <Skeleton className="w-full aspect-square rounded-full" />
+                    <Skeleton className="aspect-square w-full rounded-full" />
                 </div>
             </div>
             <SkeleteonHero />
@@ -55,7 +55,7 @@ function SkeleteonHero() {
     return (
         <div className="w-full py-64">
             <div className="px-4">
-                <div className="flex flex-col items-center space-y-4 justify-center">
+                <div className="flex flex-col items-center justify-center space-y-4">
                     {/* Large Hero Text */}
                     <Skeleton className="h-48 w-2/3" />
                     {/* Small sub text */}
