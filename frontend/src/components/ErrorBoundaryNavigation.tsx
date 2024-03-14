@@ -11,7 +11,7 @@ export default function ErrorBoundaryNavigation({
     return (
         <ErrorBoundary
             fallback={
-                <div className="h-[calc(100vh-36px)] flex justify-center items-center">
+                <div className="flex h-[calc(100vh-36px)] items-center justify-center">
                     Something went wrong loading this page.
                 </div>
             }
