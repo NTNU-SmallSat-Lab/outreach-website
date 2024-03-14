@@ -54,13 +54,15 @@ export default async function ProjectsPage() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-extrabold ">Our Projects</h1>
-            <p className="text-sm text-muted-foreground">
-                Information about our various projects are shown here.
-            </p>
+        <div>
+            <div className="flex flex-col justify-center items-center">
+                <h1 className="text-4xl font-extrabold ">Our Projects</h1>
+                <p className="text-sm text-muted-foreground">
+                    Information about our various projects are shown here.
+                </p>
+            </div>
 
-            <div className="flex flex-wrap justify-center gap-4 mt-4">
+            <div className="flex flex-wrap justify-center gap-4 mt-4 md:justify-start mx-10">
                 {graphqlData.data.projects.data.map((project) => {
                     let coverImage =
                         project?.attributes?.coverImage?.data?.attributes?.url;
