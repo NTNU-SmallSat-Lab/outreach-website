@@ -238,7 +238,7 @@ export default function GHGlobe({ satDatas }: { satDatas: SatelliteData[] }) {
         <div>
             <canvas
                 id="gh-globe-canvas"
-                className="w-full min-h-[calc(100vh-72px)]"
+                className="min-h-[calc(100vh-72px)] w-full"
             ></canvas>
             <Tooltip id="tooltip-globe">TEST</Tooltip>
         </div>
