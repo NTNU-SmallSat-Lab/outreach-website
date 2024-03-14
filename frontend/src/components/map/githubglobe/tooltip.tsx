@@ -11,7 +11,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
             ref={ref}
             {...props}
             className={cn(
-                "absolute block z-50 p-2 bg-black bg-opacity-50 rounded-lg shadow-md text-sm",
+                "absolute z-50 block rounded-lg bg-black bg-opacity-50 p-2 text-sm shadow-md",
                 className,
             )}
         >

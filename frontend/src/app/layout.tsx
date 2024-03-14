@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={cn("flex flex-col min-h-screen", inter.className)}>
+            <body className={cn("flex min-h-screen flex-col", inter.className)}>
                 <ApolloWrapper>
                     <ThemeProvider
                         attribute="class"

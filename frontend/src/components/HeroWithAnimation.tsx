@@ -39,7 +39,7 @@ export default function HeroWithAnimation() {
             description={"We launch satellites 🚀"}
             buttonText={"About us"}
             buttonLink=""
-            className="min-h-[calc(100vh-72px)] flex flex-col justify-center z-10"
+            className="z-10 flex min-h-[calc(100vh-72px)] flex-col justify-center"
             handleClick={handleClick}
         >
             {/* eslint-disable-next-line @next/next/no-img-element */}

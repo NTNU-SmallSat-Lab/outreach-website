@@ -25,7 +25,7 @@ export function ContactCard({
     externalUrl,
 }: ContactCardProps) {
     return (
-        <Card className="w-[350px] m-2">
+        <Card className="m-2 w-[350px]">
             <CardHeader>
                 <Avatar>
                     <AvatarImage src={imageUrl} alt={name} />
