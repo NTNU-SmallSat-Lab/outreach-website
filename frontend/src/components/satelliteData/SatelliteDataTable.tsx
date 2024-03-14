@@ -110,7 +110,7 @@ export default function SatelliteDataTable() {
     }, []);
 
     return (
-        <div className="flex flex-col justify-center items-center m-10 w-full">
+        <div className="m-10 flex w-full flex-col items-center justify-center">
             <Table className="w-1/2">
                 <TableCaption>Satellite Data</TableCaption>
                 <TableHeader>
