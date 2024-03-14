@@ -49,6 +49,7 @@ export default function Navbar() {
     const { theme, setTheme } = useTheme();
     const isLightTheme = theme === "light";
 
+    // eslint-disable-next-line no-unused-vars
     const toggleTheme = () => {
         setTheme(isLightTheme ? "dark" : "light");
     };
@@ -64,9 +65,7 @@ export default function Navbar() {
                             height="36"
                             className="mr-2"
                         />
-                        <span className="transition duration-300 underline decoration-transparent hover:decoration-white ">
-                            SmallSatLab
-                        </span>
+                        <img src="/images/ntnu-white-logo.svg" alt="logo" className="h-10 w-10" />
                     </h1>
                 </Link>
             </div>
@@ -131,8 +130,9 @@ export default function Navbar() {
                     </DropdownMenu>
                 </div>
             </div>
+            {/* Disable dark and light mode */}
 
-            <div className="flex-1 flex justify-end">
+            {/* <div className="flex-1 flex justify-end">
                 <Button onClick={toggleTheme} variant={"ghost"}>
                     {isLightTheme ? (
                         <Icon
@@ -148,7 +148,7 @@ export default function Navbar() {
                         />
                     )}
                 </Button>
-            </div>
+            </div> */}
         </nav>
     );
 }

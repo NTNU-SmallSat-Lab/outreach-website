@@ -7,10 +7,12 @@ import { cn } from "@/lib/utils";
 
 const Drawer = ({
     shouldScaleBackground = true,
+    direction = "bottom",
     ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
     <DrawerPrimitive.Root
         shouldScaleBackground={shouldScaleBackground}
+        direction={direction}
         {...props}
     />
 );
