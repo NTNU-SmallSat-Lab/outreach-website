@@ -3,7 +3,7 @@ import ColoredSection from "@/components/ui/coloredSection";
 
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
-
+const HOST_URL = process.env.HOST_URL;
 
 import Image from "next/image";
 import Link from "next/link";
@@ -12,14 +12,13 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 
-
 const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
 });
 
 const GET_MOST_RECENT_IMAGE = gql(`
 query MostRecentImages {
-    mostRecentImages(sort[0]: ["publishedAt:desc"]) {
+    mostRecentImages(sort: ["publishedAt:desc"]) {
       data {
         attributes {
           mostRecentImage {
@@ -29,28 +28,37 @@ query MostRecentImages {
                 }
             }
           }
-          satellites {
+          satellite {
             data {
               attributes {
                 catalogNumberNORAD
                 }
               }
             }
+            createdAt
+            updatedAt
+            publishedAt
           }
         }
-        createdAt
-        updatedAt
-        publishedAt
-      }
     }
-}`);
+}
+
+`);
 
 export default async function Home() {
     const graphqlData = await getClient().query({
         query: GET_MOST_RECENT_IMAGE,
     });
 
-    const mostRecentImageURL = graphqlData.data.mostRecentImages[0].data.attributes.mostRecentImage.attributes.url
+    let mostRecentImageURL =
+        graphqlData.data.mostRecentImages?.data[0]?.attributes?.mostRecentImage
+            ?.data?.attributes?.url;
+
+    if (HOST_URL && mostRecentImageURL != undefined) {
+        mostRecentImageURL = HOST_URL + mostRecentImageURL;
+    } else {
+        mostRecentImageURL = "";
+    }
 
     return (
         <main>
@@ -119,8 +127,8 @@ export default async function Home() {
                     <h1 className="">Most recent picture</h1>
                     <div className="relative w-[300px] h-[300px]">
                         <Image
-                            alt="Satellite image of city"
-                            src={mostRecentImage}
+                            alt="Most recent satellite image"
+                            src={mostRecentImageURL}
                             className="m-0"
                             layout="fill"
                             objectFit="cover"
