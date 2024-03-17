@@ -2,14 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
-import { Icon } from "@iconify/react";
 import {
     Drawer,
     DrawerClose,
@@ -58,30 +51,30 @@ export default function Navbar() {
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div className="flex-1">
                 <Link href="/">
-                    <h1 className="flex flex-row text-3xl font-bold">
-                        <Icon
-                            icon="twemoji:satellite"
-                            width="36"
-                            height="36"
-                            className="mr-2"
-                        />
-                        <img src="/images/ntnu-white-logo.svg" alt="logo" className="h-10 w-10" />
-                    </h1>
+                    <img src="/images/ntnu-white-logo.svg" alt="logo" className="min-w-64 w-64" />
                 </Link>
             </div>
             <Drawer>
             <DrawerTrigger  className="sm:hidden flex justify-end"><IconParkHamburgerButton /></DrawerTrigger>
             <DrawerContent>
-                <DrawerHeader>
-                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                <DrawerDescription>This action cannot be undone.</DrawerDescription>
-                </DrawerHeader>
-                <DrawerFooter>
-                <Button>Submit</Button>
-                <DrawerClose>
-                    <Button variant="outline">Cancel</Button>
-                </DrawerClose>
-                </DrawerFooter>
+                <div className="flex flex-col items-center gap-8 justify-center align-center">
+                    <Link href="/blog">
+                        <Button variant={getButtonVariant("/blog")}>
+                            Blog
+                        </Button>
+                    </Link>
+
+                    <Link href="/projects">
+                        <Button variant={getButtonVariant("/projects")}>
+                            Projects
+                        </Button>
+                    </Link>
+                    <Link href="/satellites">
+                        <Button variant={getButtonVariant("/satellites")}>
+                            Satellites
+                        </Button>
+                    </Link>
+                </div>
             </DrawerContent>
             </Drawer>
 
@@ -104,34 +97,6 @@ export default function Navbar() {
                             Satellites
                         </Button>
                     </Link>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant={getButtonVariant("/about")}>
-                                About
-                                <Icon
-                                    icon="raphael:arrowdown"
-                                    className="ml-1 size-5"
-                                />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <Link href="/team" passHref>
-                                <DropdownMenuItem className="hover:cursor-pointer">
-                                    Team
-                                </DropdownMenuItem>
-                            </Link>
-                            <Link href="/partners" passHref>
-                                <DropdownMenuItem className="hover:cursor-pointer">
-                                    Partners
-                                </DropdownMenuItem>
-                            </Link>
-                            <Link href="/contact" passHref>
-                                <DropdownMenuItem className="hover:cursor-pointer">
-                                    Contact
-                                </DropdownMenuItem>
-                            </Link>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
                 </div>
             </div>
             {/* Disable dark and light mode */}
