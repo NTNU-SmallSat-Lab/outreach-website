@@ -512,6 +512,12 @@ export interface PluginContentReleasesRelease extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required;
     releasedAt: Attribute.DateTime;
+    scheduledAt: Attribute.DateTime;
+    timezone: Attribute.String;
+    status: Attribute.Enumeration<
+      ['ready', 'blocked', 'failed', 'done', 'empty']
+    > &
+      Attribute.Required;
     actions: Attribute.Relation<
       'plugin::content-releases.release',
       'oneToMany',
@@ -566,6 +572,7 @@ export interface PluginContentReleasesReleaseAction
       'manyToOne',
       'plugin::content-releases.release'
     >;
+    isEntryValid: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -576,53 +583,6 @@ export interface PluginContentReleasesReleaseAction
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::content-releases.release-action',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -781,293 +741,46 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiArticleArticle extends Schema.CollectionType {
-  collectionName: 'articles';
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
   info: {
-    singularName: 'article';
-    pluralName: 'articles';
-    displayName: 'Article';
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
   };
   attributes: {
-    title: Attribute.String;
-    subtitle: Attribute.String;
-    coverImage: Attribute.Media;
-    datePublished: Attribute.Date;
-    body: Attribute.Blocks;
-    author: Attribute.Relation<
-      'api::article.article',
-      'oneToOne',
-      'api::author.author'
-    >;
-    slug: Attribute.UID;
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::article.article',
+      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::article.article',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiAuthorAuthor extends Schema.CollectionType {
-  collectionName: 'authors';
-  info: {
-    singularName: 'author';
-    pluralName: 'authors';
-    displayName: 'Author';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String;
-    avatar: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::author.author',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::author.author',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiMostRecentImageMostRecentImage
-  extends Schema.CollectionType {
-  collectionName: 'most_recent_images';
-  info: {
-    singularName: 'most-recent-image';
-    pluralName: 'most-recent-images';
-    displayName: 'Most Recent Image';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    mostRecentImage: Attribute.Media & Attribute.Required;
-    satellite: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
-      'oneToOne',
-      'api::satellite.satellite'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPartnerPartner extends Schema.CollectionType {
-  collectionName: 'partners';
-  info: {
-    singularName: 'partner';
-    pluralName: 'partners';
-    displayName: 'Partner';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    partnerName: Attribute.String & Attribute.Required;
-    logoUrl: Attribute.String;
-    logoImage: Attribute.Media;
-    websiteUrl: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::partner.partner',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::partner.partner',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPersonPerson extends Schema.CollectionType {
-  collectionName: 'people';
-  info: {
-    singularName: 'person';
-    pluralName: 'people';
-    displayName: 'Person';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    workTitle: Attribute.String;
-    employeeLink: Attribute.String;
-    profilePicture: Attribute.Media;
-    profilePictureURL: Attribute.String;
-    role: Attribute.Enumeration<
-      ['Researchers', 'PhD candidates', 'Engineers', 'Contact us']
-    > &
-      Attribute.Required;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::person.person',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::person.person',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPhDProjectPhDProject extends Schema.CollectionType {
-  collectionName: 'ph_d_projects';
-  info: {
-    singularName: 'ph-d-project';
-    pluralName: 'ph-d-projects';
-    displayName: 'PhD Project';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    title: Attribute.String;
-    keywords: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::ph-d-project.ph-d-project',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::ph-d-project.ph-d-project',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProjectProject extends Schema.CollectionType {
-  collectionName: 'projects';
-  info: {
-    singularName: 'project';
-    pluralName: 'projects';
-    displayName: 'Project';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    title: Attribute.String;
-    description: Attribute.Text;
-    article: Attribute.Blocks;
-    satellites: Attribute.Relation<
-      'api::project.project',
-      'manyToMany',
-      'api::satellite.satellite'
-    >;
-    slug: Attribute.UID;
-    coverImage: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::project.project',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::project.project',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiSatelliteSatellite extends Schema.CollectionType {
-  collectionName: 'satellites';
-  info: {
-    singularName: 'satellite';
-    pluralName: 'satellites';
-    displayName: 'Satellite';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    catalogNumberNORAD: Attribute.String & Attribute.Unique;
-    projects: Attribute.Relation<
-      'api::satellite.satellite',
-      'manyToMany',
-      'api::project.project'
-    >;
-    celestrakURL: Attribute.String & Attribute.Unique;
-    content: Attribute.Blocks;
-    previewImage: Attribute.Media;
-    satelliteName: Attribute.String & Attribute.Required & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::satellite.satellite',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::satellite.satellite',
+      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -1089,18 +802,10 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
-      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::article.article': ApiArticleArticle;
-      'api::author.author': ApiAuthorAuthor;
-      'api::most-recent-image.most-recent-image': ApiMostRecentImageMostRecentImage;
-      'api::partner.partner': ApiPartnerPartner;
-      'api::person.person': ApiPersonPerson;
-      'api::ph-d-project.ph-d-project': ApiPhDProjectPhDProject;
-      'api::project.project': ApiProjectProject;
-      'api::satellite.satellite': ApiSatelliteSatellite;
+      'plugin::i18n.locale': PluginI18NLocale;
     }
   }
 }
