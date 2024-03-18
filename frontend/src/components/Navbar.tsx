@@ -49,7 +49,6 @@ export default function Navbar() {
         return pathname === path ? "secondary" : "ghost";
     };
 
-
     return (
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div className="flex-1">
