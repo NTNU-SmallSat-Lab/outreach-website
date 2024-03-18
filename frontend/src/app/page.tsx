@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
 
+import { gql } from "@/__generated__/gql";
+import { getClient } from "@/lib/ApolloClient";
+const HOST_URL = process.env.HOST_URL;
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +16,50 @@ const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
 });
 
-export default function Home() {
+const GET_MOST_RECENT_IMAGE = gql(`
+query MostRecentImages {
+    mostRecentImages(sort: ["publishedAt:desc"]) {
+      data {
+        attributes {
+          mostRecentImage {
+            data {
+                attributes {
+                    url
+                }
+            }
+          }
+          satellite {
+            data {
+              attributes {
+                catalogNumberNORAD
+                }
+              }
+            }
+            createdAt
+            updatedAt
+            publishedAt
+          }
+        }
+    }
+}
+
+`);
+
+export default async function Home() {
+    const graphqlData = await getClient().query({
+        query: GET_MOST_RECENT_IMAGE,
+    });
+
+    let mostRecentImageURL =
+        graphqlData.data.mostRecentImages?.data[0]?.attributes?.mostRecentImage
+            ?.data?.attributes?.url;
+
+    if (HOST_URL && mostRecentImageURL != undefined) {
+        mostRecentImageURL = HOST_URL + mostRecentImageURL;
+    } else {
+        mostRecentImageURL = "";
+    }
+
     return (
         <main>
             <SatelliteFetcher useExampleData={true} />
@@ -80,8 +127,8 @@ export default function Home() {
                     <h1 className="">Most recent picture</h1>
                     <div className="relative h-[300px] w-[300px]">
                         <Image
-                            alt="Satellite image of city"
-                            src="/images/recent-image.jpg"
+                            alt="Most recent satellite image"
+                            src={mostRecentImageURL}
                             className="m-0"
                             layout="fill"
                             objectFit="cover"
