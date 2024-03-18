@@ -13,10 +13,7 @@
   "attributes": {
     "mostRecentImage": {
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ],
       "type": "media",
       "multiple": false,
@@ -24,8 +21,9 @@
     },
     "satellite": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::satellite.satellite"
+      "relation": "manyToOne",
+      "target": "api::satellite.satellite",
+      "inversedBy": "most_recent_images"
     }
   }
 }
