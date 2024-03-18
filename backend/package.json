@@ -12,6 +12,7 @@
   "dependencies": {
     "@creazy231/strapi-plugin-apollo-sandbox": "^0.0.13",
     "@strapi/plugin-cloud": "4.20.5",
+    "@strapi/plugin-graphql": "4.20.5",
     "@strapi/plugin-i18n": "4.20.5",
     "@strapi/plugin-users-permissions": "4.20.5",
     "@strapi/strapi": "4.20.5",
