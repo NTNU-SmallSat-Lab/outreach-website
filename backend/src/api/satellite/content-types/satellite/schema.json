@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "satellites",
+  "info": {
+    "singularName": "satellite",
+    "pluralName": "satellites",
+    "displayName": "Satellite"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "celestrakURL": {
+      "type": "string",
+      "unique": true
+    },
+    "catalogNumberNORAD": {
+      "type": "string",
+      "unique": true
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "previewImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "projects": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::project.project",
+      "mappedBy": "satellites"
+    }
+  }
+}
