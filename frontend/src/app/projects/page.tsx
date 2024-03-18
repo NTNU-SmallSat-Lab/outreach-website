@@ -54,17 +54,15 @@ export default async function ProjectsPage() {
     }
 
     return (
-
         <div>
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center justify-center">
                 <h1 className="text-4xl font-extrabold ">Our Projects</h1>
                 <p className="text-sm text-muted-foreground">
                     Information about our various projects are shown here.
                 </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 mt-4 md:justify-start mx-10">
-
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData.data.projects.data.map((project) => {
                     let coverImage =
                         project?.attributes?.coverImage?.data?.attributes?.url;
@@ -93,11 +91,11 @@ export default async function ProjectsPage() {
                     }
                     return (
                         <Link
-                            className="m-1 sm:m-4 hover:transform hover:scale-110 transition-transform duration-300 ease-in-out"
+                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
                         >
-                            <Card className="w-64 md:w-68 lg:w-72 flex flex-col h-full">
+                            <Card className="md:w-68 flex h-full w-64 flex-col lg:w-72">
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     {coverImage && (
