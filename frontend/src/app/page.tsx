@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
 
+import { gql } from "@/__generated__/gql";
+import { getClient } from "@/lib/ApolloClient";
+const HOST_URL = process.env.HOST_URL;
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +16,50 @@ const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
 });
 
-export default function Home() {
+const GET_MOST_RECENT_IMAGE = gql(`
+query MostRecentImages {
+    mostRecentImages(sort: ["publishedAt:desc"]) {
+      data {
+        attributes {
+          mostRecentImage {
+            data {
+                attributes {
+                    url
+                }
+            }
+          }
+          satellite {
+            data {
+              attributes {
+                catalogNumberNORAD
+                }
+              }
+            }
+            createdAt
+            updatedAt
+            publishedAt
+          }
+        }
+    }
+}
+
+`);
+
+export default async function Home() {
+    const graphqlData = await getClient().query({
+        query: GET_MOST_RECENT_IMAGE,
+    });
+
+    let mostRecentImageURL =
+        graphqlData.data.mostRecentImages?.data[0]?.attributes?.mostRecentImage
+            ?.data?.attributes?.url;
+
+    if (HOST_URL && mostRecentImageURL != undefined) {
+        mostRecentImageURL = HOST_URL + mostRecentImageURL;
+    } else {
+        mostRecentImageURL = "";
+    }
+
     return (
         <main>
             <SatelliteFetcher useExampleData={true} />
@@ -21,14 +68,14 @@ export default function Home() {
 
             <ColoredSection
                 id="about-us"
-                className="flex flex-col items-center py-12 px-8"
+                className="flex flex-col items-center px-8 py-12"
             >
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+                <div className="prose flex flex-col items-center text-center dark:prose-invert prose-img:rounded-xl">
                     <h1>
                         Empowering Space Exploration One Satellite at a Time
                     </h1>
 
-                    <div className="relative w-[300px] h-[300px]">
+                    <div className="relative h-[300px] w-[300px]">
                         <Image
                             alt="Satellite in orbit"
                             src="/images/satellite.jpg"
@@ -36,7 +83,7 @@ export default function Home() {
                             layout="fill"
                         />
                     </div>
-                    <div className="flex flex-col gap-4 items-center col-span-2 lg:col-span-2 ">
+                    <div className="col-span-2 flex flex-col items-center gap-4 lg:col-span-2 ">
                         <div className=" self-center">
                             <p>
                                 NTNU Small Satellite Lab is an initiative to
@@ -55,7 +102,7 @@ export default function Home() {
                     </div>
                 </div>
             </ColoredSection>
-            <div className="pt-8 items-center text-center flex flex-col py-12 px-8">
+            <div className="flex flex-col items-center px-8 py-12 pt-8 text-center">
                 <div className="prose dark:prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
@@ -75,13 +122,13 @@ export default function Home() {
                     </Link>
                 </div>
             </div>
-            <ColoredSection className="flex flex-col items-center py-12 px-8">
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+            <ColoredSection className="flex flex-col items-center px-8 py-12">
+                <div className="prose flex flex-col items-center text-center dark:prose-invert prose-img:rounded-xl">
                     <h1 className="">Most recent picture</h1>
-                    <div className="relative w-[300px] h-[300px]">
+                    <div className="relative h-[300px] w-[300px]">
                         <Image
-                            alt="Satellite image of city"
-                            src="/images/recent-image.jpg"
+                            alt="Most recent satellite image"
+                            src={mostRecentImageURL}
                             className="m-0"
                             layout="fill"
                             objectFit="cover"

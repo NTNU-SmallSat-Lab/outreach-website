@@ -854,6 +854,42 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
+export interface ApiMostRecentImageMostRecentImage
+  extends Schema.CollectionType {
+  collectionName: 'most_recent_images';
+  info: {
+    singularName: 'most-recent-image';
+    pluralName: 'most-recent-images';
+    displayName: 'Most Recent Image';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    mostRecentImage: Attribute.Media & Attribute.Required;
+    satellite: Attribute.Relation<
+      'api::most-recent-image.most-recent-image',
+      'oneToOne',
+      'api::satellite.satellite'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::most-recent-image.most-recent-image',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::most-recent-image.most-recent-image',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiPartnerPartner extends Schema.CollectionType {
   collectionName: 'partners';
   info: {
@@ -1011,13 +1047,16 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    catalogNumberNORAD: Attribute.String;
+    catalogNumberNORAD: Attribute.String & Attribute.Unique;
     projects: Attribute.Relation<
       'api::satellite.satellite',
       'manyToMany',
       'api::project.project'
     >;
-    celestrakURL: Attribute.String;
+    celestrakURL: Attribute.String & Attribute.Unique;
+    content: Attribute.Blocks;
+    previewImage: Attribute.Media;
+    satelliteName: Attribute.String & Attribute.Required & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1056,6 +1095,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::most-recent-image.most-recent-image': ApiMostRecentImageMostRecentImage;
       'api::partner.partner': ApiPartnerPartner;
       'api::person.person': ApiPersonPerson;
       'api::ph-d-project.ph-d-project': ApiPhDProjectPhDProject;

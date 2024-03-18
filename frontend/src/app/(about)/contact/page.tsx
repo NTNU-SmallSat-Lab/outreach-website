@@ -36,8 +36,8 @@ export default async function ContactPage() {
     const content = people?.data?.people?.data ?? [];
 
     return (
-        <div className="flex justify-center items-start h-full">
-            <div className="flex flex-wrap justify-center items-start h-full max-w-7xl mx-auto">
+        <div className="flex h-full items-start justify-center">
+            <div className="mx-auto flex h-full max-w-7xl flex-wrap items-start justify-center">
                 {content.map((person, index) => (
                     <ContactCard
                         key={index}
