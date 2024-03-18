@@ -1,3 +1,11 @@
+# Dev Setup
+
+Copy the `.env.example` file and paste it as a `.env`. Now edit all the example `toBeModified` values to random strings.
+
+The random strings should be generated using `openssl rand -base64 32` on macos and linux to ensure security as specified [here](https://docs.strapi.io/dev-docs/migration/v4/migration-guide-4.0.6-to-4.1.8#setting-secrets-for-non-development-environments).
+
+Now continue with the guide underneath.
+
 # 🚀 Getting started with Strapi
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
