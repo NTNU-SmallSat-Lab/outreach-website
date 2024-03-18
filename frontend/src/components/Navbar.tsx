@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "next-themes";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 import type { SVGProps } from "react";
@@ -50,13 +49,6 @@ export default function Navbar() {
         return pathname === path ? "secondary" : "ghost";
     };
 
-    const { theme, setTheme } = useTheme();
-    const isLightTheme = theme === "light";
-
-    // eslint-disable-next-line no-unused-vars
-    const toggleTheme = () => {
-        setTheme(isLightTheme ? "dark" : "light");
-    };
 
     return (
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
@@ -115,25 +107,6 @@ export default function Navbar() {
                     </Link>
                 </div>
             </div>
-            {/* Disable dark and light mode */}
-
-            {/* <div className="flex flex-1 justify-end">
-                <Button onClick={toggleTheme} variant={"ghost"}>
-                    {isLightTheme ? (
-                        <Icon
-                            icon="material-symbols:dark-mode"
-                            width="32"
-                            height="32"
-                        />
-                    ) : (
-                        <Icon
-                            icon="material-symbols:light-mode"
-                            width="32"
-                            height="32"
-                        />
-                    )}
-                </Button>
-            </div> */}
         </nav>
     );
 }
