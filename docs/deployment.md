@@ -34,7 +34,11 @@ Setup a self hosted GitHub runner for the repository.
 
 `sudo useradd outreach-github-runner`
 
+`sudo usermod -a -G docker outreach-github-runner`
+
 `cd /actions-runner/`
+
+`RUNNER_ALLOW_RUNASROOT=1 ./config.sh --url https://github.com/NTNU-SmallSat-Lab/outreach-website --token XXXXXXXXXXXXXXXXXXXX`
 
 `./svc.sh install outreach-github-runner`
 
