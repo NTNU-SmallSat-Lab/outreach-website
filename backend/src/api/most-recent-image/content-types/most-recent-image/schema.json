@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "most_recent_images",
+  "info": {
+    "singularName": "most-recent-image",
+    "pluralName": "most-recent-images",
+    "displayName": "Most Recent Image"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "mostRecentImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "satellite": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::satellite.satellite",
+      "inversedBy": "most_recent_images"
+    }
+  }
+}

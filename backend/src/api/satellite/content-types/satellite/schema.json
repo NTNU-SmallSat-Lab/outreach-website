@@ -4,25 +4,23 @@
   "info": {
     "singularName": "satellite",
     "pluralName": "satellites",
-    "displayName": "Satellite",
-    "description": ""
+    "displayName": "Satellite"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "catalogNumberNORAD": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "celestrakURL": {
       "type": "string",
       "unique": true
     },
-    "projects": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::project.project",
-      "mappedBy": "satellites"
-    },
-    "celestrakURL": {
+    "catalogNumberNORAD": {
       "type": "string",
       "unique": true
     },
@@ -30,20 +28,23 @@
       "type": "blocks"
     },
     "previewImage": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     },
-    "satelliteName": {
-      "type": "string",
-      "required": true,
-      "unique": true
+    "projects": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::project.project",
+      "mappedBy": "satellites"
+    },
+    "most_recent_images": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::most-recent-image.most-recent-image",
+      "mappedBy": "satellite"
     }
   }
 }
