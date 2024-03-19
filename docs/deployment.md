@@ -32,6 +32,16 @@ Also make sure to install `pm2`
 
 Setup a self hosted GitHub runner for the repository.
 
+`sudo useradd -r -s /bin/nologin outreach-github-runner`
+
+`cd /actions-runner/`
+
+`./svc.sh install outreach-github-runner`
+
+`sudo ./svc.sh start`
+
+`sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
+
 ###### Secrets and variables
 
 The secrets should all be filled in and generated using `openssl rand -base64 32`
@@ -46,8 +56,8 @@ The GitHub repo should define the following secrets:
 
 And the following variables:
 
-- DATABASE_CLIENT=sqlite
-- DATABASE_FILENAME=/var/data/strapi.db
-- HOST=0.0.0.0
-- HOST_URL=http://backend-app:1337
-- PORT=1337
+-   DATABASE_CLIENT=sqlite
+-   DATABASE_FILENAME=/var/data/strapi.db
+-   HOST=0.0.0.0
+-   HOST_URL=http://backend-app:1337
+-   PORT=1337
