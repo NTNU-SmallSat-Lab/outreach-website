@@ -25,11 +25,11 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={cn("flex min-h-screen flex-col", inter.className)}>
                 <ApolloWrapper>
-                        <Navbar />
-                        <ErrorBoundaryNavigation>
-                            <main className="flex-grow">{children}</main>
-                        </ErrorBoundaryNavigation>
-                        <Footer />
+                    <Navbar />
+                    <ErrorBoundaryNavigation>
+                        <main className="flex-grow">{children}</main>
+                    </ErrorBoundaryNavigation>
+                    <Footer />
                 </ApolloWrapper>
             </body>
         </html>
