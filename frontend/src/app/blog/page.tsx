@@ -1,18 +1,18 @@
 export const runtime = "edge";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
 import Image from "next/image";
+import {
+    BlogCard,
+    BlogCardContent,
+    BlogCardHeader,
+    BlogCardTitle,
+} from "@/components/ui/blogCard";
+import BlogpageButtons from "@/components/BlogpageButtons";
+
 const HOST_URL = process.env.HOST_URL;
 
 const GET_ARTICLES = gql(`
@@ -49,6 +49,7 @@ query GET_ARTICLES {
                 publishedAt
                 slug
                 subtitle
+                Tag
             }
         }
     }
@@ -71,16 +72,11 @@ export default async function BlogPage() {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <h1 className="text-4xl font-extrabold ">Blog</h1>
-            <p className="text-sm text-muted-foreground">
-                News and other short stories about our activities are shown
-                here.
-            </p>
-            <div className="mt-4 flex flex-col items-center justify-center gap-4">
+            <BlogpageButtons />
+            <div className="flex flex-row flex-wrap items-center justify-center">
                 {graphqlData.data.articles.data.map((article) => {
                     let avatarURL =
-                        article?.attributes?.author?.data?.attributes?.avatar
-                            ?.data?.[0]?.attributes?.url;
+                        article?.attributes?.author?.data?.attributes?.avatar?.data?.attributes?.url
 
                     if (HOST_URL && avatarURL != undefined) {
                         avatarURL = HOST_URL + avatarURL;
@@ -88,6 +84,7 @@ export default async function BlogPage() {
 
                     const authorName =
                         article?.attributes?.author?.data?.attributes?.name;
+                    const tag = article?.attributes?.Tag;
                     const datePublished = article?.attributes?.datePublished;
                     let coverImage =
                         article?.attributes?.coverImage?.data?.attributes?.url;
@@ -103,52 +100,50 @@ export default async function BlogPage() {
                             break;
                         }
                     }
+
                     return (
-                        <Card className="w-1/2" key={article.id}>
-                            <CardHeader>
-                                <CardTitle>
-                                    <Link
-                                        className="hover:underline"
-                                        href={
-                                            "/blog/" + article?.attributes?.slug
-                                        }
-                                    >
-                                        {article?.attributes?.title}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {coverImage && (
-                                    <Image
-                                        src={coverImage}
-                                        alt={coverImage}
-                                        width={500}
-                                        height={0} // Set height to 0 to maintain aspect ratio
-                                    />
-                                )}
-                                <BlockRendererClient content={content} />
-                            </CardContent>
-                            <CardFooter>
-                                <div className="flex flex-row items-center justify-center gap-1">
-                                    {avatarURL && (
-                                        <Avatar className="">
-                                            <AvatarImage src={avatarURL} />
-                                            <AvatarFallback>
-                                                {// Get initials from author name
-                                                authorName
-                                                    ?.split(" ")
-                                                    .map((name) => name[0])
-                                                    .join("")}
-                                            </AvatarFallback>
-                                        </Avatar>
+                        <BlogCard
+                            className="m-3 w-1/4 min-w-80"
+                            key={article.id}
+                        >
+                            <BlogCardHeader>
+                                <BlogCardContent>
+                                    {coverImage && (
+                                        <Image
+                                            src={coverImage}
+                                            alt={coverImage}
+                                            width={800}
+                                            height={400}
+                                            className="m-0 aspect-video w-full object-cover p-0"
+                                        />
                                     )}
-                                    <div className="flex flex-col justify-center">
-                                        <p>{authorName}</p>
-                                        <p>{datePublished}</p>
+                                    <div className="m-5">
+                                        <div className="flex">
+                                            <p className="w-fit rounded-md bg-ntnuBlue p-2 text-center text-xs text-white">
+                                                {tag ? tag : "No tag"}
+                                            </p>
+                                            <p className="w-fit p-2 text-center text-xs text-white">
+                                                {datePublished} by {authorName}
+                                            </p>
+                                        </div>
+                                        <BlogCardTitle className="my-2">
+                                            <Link
+                                                className="hover:underline"
+                                                href={
+                                                    "/blog/" +
+                                                    article?.attributes?.slug
+                                                }
+                                            >
+                                                {article?.attributes?.title}
+                                            </Link>
+                                        </BlogCardTitle>
+                                        <BlockRendererClient
+                                            content={content}
+                                        />
                                     </div>
-                                </div>
-                            </CardFooter>
-                        </Card>
+                                </BlogCardContent>
+                            </BlogCardHeader>
+                        </BlogCard>
                     );
                 })}
             </div>
