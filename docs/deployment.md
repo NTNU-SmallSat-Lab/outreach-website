@@ -44,6 +44,8 @@ Setup a self hosted GitHub runner for the repository.
 
 `sudo chown outreach-github-runner /actions-runner/ -R`
 
+`sudo chown outreach-github-runner /home/outreach-github-runner/ -R`
+
 ###### Secrets and variables
 
 The secrets should all be filled in and generated using `openssl rand -base64 32`
