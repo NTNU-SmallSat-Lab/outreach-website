@@ -42,6 +42,8 @@ Setup a self hosted GitHub runner for the repository.
 
 `sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
 
+`sudo chown outreach-github-runner /actions-runner/ -R`
+
 ###### Secrets and variables
 
 The secrets should all be filled in and generated using `openssl rand -base64 32`
