@@ -11,6 +11,7 @@ import Link from "next/link";
 // Dynamic import because of leaflet and globe.gl ssr problem with next.js
 import dynamic from "next/dynamic";
 import SatelliteFetcher from "@/components/map/SatelliteFetcher";
+import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
 
 const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
@@ -62,6 +63,8 @@ export default async function Home() {
 
     return (
         <main>
+            <SatelliteDataTable />
+
             <SatelliteFetcher useExampleData={true} />
 
             <MyCustomMap />
