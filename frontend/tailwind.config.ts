@@ -23,6 +23,12 @@ const config = {
                 border: "var(--border)",
                 input: "var(--input)",
                 ring: "var(--ring)",
+                background: "var(--background)",
+                foreground: "var(--foreground)",
+                primary: {
+                    DEFAULT: "var(--primary)",
+                    foreground: "var(--primary-foreground)",
+                },
                 secondary: {
                     DEFAULT: "var(--secondary)",
                     foreground: "var(--secondary-foreground)",
@@ -35,6 +41,10 @@ const config = {
                     DEFAULT: "var(--muted)",
                     foreground: "var(--muted-foreground)",
                 },
+                accent: {
+                    DEFAULT: "var(--accent)",
+                    foreground: "var(--accent-foreground)",
+                },
                 popover: {
                     DEFAULT: "var(--popover)",
                     foreground: "var(--popover-foreground)",
@@ -43,23 +53,6 @@ const config = {
                     DEFAULT: "var(--card)",
                     foreground: "var(--card-foreground)",
                 },
-
-                // Small Satellite Lab Hypso colors
-                background: "var(--background)",
-                foreground: "var(--foreground)",
-                primary: {
-                    DEFAULT: "var(--ntnuBlue)",
-                    foreground: "var(--ntnuBlue-foreground)",
-                },
-                accent: "var(--accent)",
-                ntnuBlue: "var(--ntnuBlue)",
-                ntnuCyan: "var(--ntnuCyan)",
-                ntnuPurple: "var(--ntnuPurple)",
-                ntnuOrange: "var(--ntnuOrange)",
-                ntnuYellow: "var(--ntnuYellow)",
-                ntnuLightblue: "var(--ntnuLightblue)",
-                ntnuPink: "var(--ntnuPink)",
-                ntnuBrown: "var(--ntnuBrown)",
             },
             borderRadius: {
                 lg: "var(--radius)",
