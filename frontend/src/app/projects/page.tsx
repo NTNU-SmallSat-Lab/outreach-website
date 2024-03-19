@@ -72,15 +72,17 @@ export default async function ProjectsPage() {
                     }
                     let content: BlocksContent =
                         project?.attributes?.article ?? [];
-
                     let text = "";
-
                     for (const block of content) {
                         if (block.type === "paragraph") {
                             const paragraphBlock = block as {
                                 type: "paragraph";
                                 children: { type: "text"; text: string }[];
                             };
+
+                            if (paragraphBlock.children[0].text == "") {
+                                continue;
+                            }
 
                             text =
                                 paragraphBlock.children[0].text.slice(0, 100) +
@@ -100,7 +102,7 @@ export default async function ProjectsPage() {
                                 <CardContent>
                                     {coverImage && (
                                         <Image
-                                            className="h-36"
+                                            className="h-36 object-fill"
                                             src={coverImage}
                                             alt={coverImage}
                                             width={500}
