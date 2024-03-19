@@ -4,7 +4,7 @@ module.exports = ({ env }) => ({
   connection: {
     client: "sqlite",
     connection: {
-      filename: path.join(env("DATABASE_FILENAME", "/tmp/outreach-strapi.db")),
+      filename: env("DATABASE_FILENAME", "/tmp/outreach-strapi.db"),
     },
     useNullAsDefault: true,
   },
