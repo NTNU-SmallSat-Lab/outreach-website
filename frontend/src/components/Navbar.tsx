@@ -31,22 +31,12 @@ export function IconParkHamburgerButton(props: SVGProps<SVGSVGElement>) {
 }
 
 export default function Navbar() {
-    const dropdownPaths = [
-        "/team",
-        "/partners",
-        "/contact",
-        "/positions",
-        "/infrastructure",
-    ];
-    const isPathInDropdown = () => dropdownPaths.includes(pathname);
-
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {
-        if (path === "/about" && isPathInDropdown()) {
-            return "secondary";
+        if (path === pathname) {
+            return;
         }
-
-        return pathname === path ? "secondary" : "ghost";
+        return "ghost";
     };
 
     return (
@@ -61,7 +51,7 @@ export default function Navbar() {
                 </Link>
             </div>
             <Drawer>
-                <DrawerTrigger className="flex justify-end sm:hidden">
+                <DrawerTrigger className="flex justify-end md:hidden">
                     <IconParkHamburgerButton />
                 </DrawerTrigger>
                 <DrawerContent>
@@ -86,7 +76,7 @@ export default function Navbar() {
                 </DrawerContent>
             </Drawer>
 
-            <div className="hidden flex-1 justify-center sm:flex">
+            <div className="hidden flex-1 justify-center md:flex">
                 <div className="flex items-center gap-8">
                     <Link href="/blog">
                         <Button variant={getButtonVariant("/blog")}>
