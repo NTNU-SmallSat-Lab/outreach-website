@@ -38,8 +38,6 @@ Setup a self hosted GitHub runner for the repository.
 
 `cd /actions-runner/`
 
-`RUNNER_ALLOW_RUNASROOT=1 ./config.sh --url https://github.com/NTNU-SmallSat-Lab/outreach-website --token XXXXXXXXXXXXXXXXXXXX`
-
 `./svc.sh install outreach-github-runner`
 
 `sudo ./svc.sh start`
