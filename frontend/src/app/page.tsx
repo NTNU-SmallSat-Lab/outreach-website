@@ -75,8 +75,8 @@ export default async function Home() {
             >
                 <div className="prose flex flex-col items-center text-center dark:prose-invert prose-img:rounded-xl">
                     <h1>
-                        TEST Empowering Space Exploration One Satellite at a
-                        Time
+                        TEST NUMBER 2 Empowering Space Exploration One Satellite
+                        at a Time
                     </h1>
 
                     <div className="relative h-[300px] w-[300px]">

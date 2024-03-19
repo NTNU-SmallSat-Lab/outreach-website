@@ -32,7 +32,7 @@ Also make sure to install `pm2`
 
 Setup a self hosted GitHub runner for the repository.
 
-`sudo useradd -r -s /bin/nologin outreach-github-runner`
+`sudo useradd outreach-github-runner`
 
 `cd /actions-runner/`
 
