@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
 import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
 
@@ -26,18 +25,11 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={cn("flex min-h-screen flex-col", inter.className)}>
                 <ApolloWrapper>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
                         <Navbar />
                         <ErrorBoundaryNavigation>
                             <main className="flex-grow">{children}</main>
                         </ErrorBoundaryNavigation>
                         <Footer />
-                    </ThemeProvider>
                 </ApolloWrapper>
             </body>
         </html>
