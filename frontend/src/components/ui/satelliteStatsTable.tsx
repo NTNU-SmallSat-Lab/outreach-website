@@ -4,16 +4,16 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 export default function satelliteStatsTable() {
     return (
-        <Table className="w-1/2 mx-auto border border-collapse">
+        <Table className="mx-auto w-1/2 border-collapse border">
             <TableBody>
                 <TableRow>
-                    <TableCell className="text-left">
+                    <TableCell className="text-left" colSpan={2}>
                         <p>{"In Orbit"}</p>
                         <p className="">{"Mission Status"}</p>
                     </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell className="border p-2 w-1/2">
+                    <TableCell className="w-1/2 border p-2">
                         <p>{134237 + " Km/h"}</p>
                         <p className="">{"Speed"}</p>
                     </TableCell>
@@ -33,7 +33,7 @@ export default function satelliteStatsTable() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell className="text-left">
+                    <TableCell className="text-left" colSpan={2}>
                         <p className="text-m">{"Norway"}</p>
                         <p>{"Above Country"}</p>
                     </TableCell>

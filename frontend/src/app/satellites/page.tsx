@@ -35,7 +35,7 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="grid grid-cols-2 justify-items-center gap-4">
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData?.data?.satellites?.data?.map((satellite) => {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
@@ -44,7 +44,7 @@ export default async function Satellites() {
                         previewImage = HOST_URL + previewImage;
                     }
                     return (
-                        <Card key={satellite.id} className="w-3/4">
+                        <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
                             <CardHeader className="flex flex-col items-center justify-center">
                                 <CardTitle>
                                     <Link
