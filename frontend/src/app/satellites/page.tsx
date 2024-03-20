@@ -2,13 +2,8 @@ export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SatelliteStatsTable from "@/components/ui/satelliteStatsTable";
 import Image from "next/image";
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
@@ -40,7 +35,7 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="grid grid-cols-3 gap-4">
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData?.data?.satellites?.data?.map((satellite) => {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
@@ -49,7 +44,7 @@ export default async function Satellites() {
                         previewImage = HOST_URL + previewImage;
                     }
                     return (
-                        <Card key={satellite.id}>
+                        <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
                             <CardHeader className="flex flex-col items-center justify-center">
                                 <CardTitle>
                                     <Link
@@ -64,23 +59,17 @@ export default async function Satellites() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col items-center">
-                                <div className="flex flex-row gap-1">
-                                    <h1>Altitude: {"1234"}km</h1>
-                                    <h1>Speed: {"1223"}km/s</h1>
-                                    <h1>Latitude: {"24.65"}°</h1>
-                                    <h1>Longitude: {"26.12"}°</h1>
-                                </div>
-
+                                <SatelliteStatsTable />
                                 {previewImage && (
                                     <Image
                                         src={previewImage}
                                         alt={previewImage}
                                         width={200}
                                         height={0}
+                                        className="margin p-2"
                                     />
                                 )}
                             </CardContent>
-                            <CardFooter></CardFooter>
                         </Card>
                     );
                 })}
