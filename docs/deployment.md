@@ -1,8 +1,6 @@
 See the following docs for more info about strapi deployment:
 [https://docs.strapi.io/dev-docs/deployment](https://docs.strapi.io/dev-docs/deployment)
 
-We use [`pm2`](https://www.npmjs.com/package/pm2) as our process manager to run our node.js frontend and backend.
-
 ### Setting up ntnu halfadministrated server
 
 ###### SSH
@@ -26,27 +24,38 @@ Make sure docker compose is installed on the server.
 
 Can be checked by running `docker compose version`
 
-Also make sure to install `pm2`
-
 ###### Github Runner
 
 Setup a self hosted GitHub runner for the repository.
 
-`sudo useradd outreach-github-runner`
+> Ansible (our current configuration system) will manage users and groups with UID/GID above 300. If you need to create local system users or groups, use free UID/GID between 100 and 299.
 
+Create a user with UID 200:  
+`sudo useradd -u 200 outreach-github-runner`  
+Add it to the docker group so it can run docker commands without sudo:  
 `sudo usermod -a -G docker outreach-github-runner`
 
-`cd /actions-runner/`
+Now follow the official guide on github to add the runner to a repository, but only do theese steps
+
+-   Create the folder
+-   Download latest runner package
+-   Validate the hash
+-   Extract the installer
+-   Create the runner and start config experience. Just press enter for all options.
+
+No need to run it manually. We will install it as a service running as the user we created previously.
 
 `./svc.sh install outreach-github-runner`
 
 `sudo ./svc.sh start`
 
-`sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
-
 `sudo chown outreach-github-runner /actions-runner/ -R`
 
 `sudo chown outreach-github-runner /home/outreach-github-runner/ -R`
+
+##### Logs and errors
+
+`sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
 
 ###### Secrets and variables
 
