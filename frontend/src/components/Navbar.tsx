@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import Image from "next/image";
 
 import type { SVGProps } from "react";
 
@@ -53,7 +54,9 @@ export default function Navbar() {
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div className="flex-1">
                 <Link href="/">
-                    <img
+                    <Image
+                        width={256}
+                        height={0}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
                         className="w-64 min-w-64"
