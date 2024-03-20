@@ -67,10 +67,9 @@ export default async function Page({
     ) {
         return <div>Article not found</div>;
     }
-
     let avatarURL =
         graphqlData.data.articles?.data[0]?.attributes?.author?.data?.attributes
-            ?.avatar?.data[0]?.attributes?.url;
+            ?.avatar?.data?.attributes?.url;
 
     if (HOST_URL && avatarURL != undefined) {
         avatarURL = HOST_URL + avatarURL;

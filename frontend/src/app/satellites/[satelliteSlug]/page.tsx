@@ -13,7 +13,7 @@ const GET_SATELLITE_INFO =
             celestrakURL
             catalogNumberNORAD
             content
-            satelliteName
+            name
         }
     }
   }
@@ -26,7 +26,7 @@ export default async function SatelliteInfoPage({
     params: { satelliteSlug: string };
 }) {
     const filters = {
-        satelliteName: {
+        name: {
             eq: params.satelliteSlug,
         },
     };
@@ -43,14 +43,14 @@ export default async function SatelliteInfoPage({
                     useExampleData={true}
                     filterList={[
                         graphqlData?.data?.satellites?.data[0].attributes
-                            ?.satelliteName || "",
+                            ?.name || "",
                     ]}
                 />
 
                 {graphqlData?.data?.satellites?.data.map((satellite) => (
                     <div key={satellite.id} className="w-1/2 text-center">
                         <h1 className="mb-4 text-4xl">
-                            {satellite?.attributes?.satelliteName}
+                            {satellite?.attributes?.name}
                         </h1>
                         <div className="gap-1">
                             <h1>Altitude: {"1234"}km</h1>

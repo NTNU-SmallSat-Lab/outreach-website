@@ -43,7 +43,7 @@ export default async function SatelliteFetcher({
 
         if (filterList.length > 0) {
             const filters = {
-                satelliteName: {
+                name: {
                     in: filterList,
                 },
             };

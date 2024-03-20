@@ -9,8 +9,8 @@
         "lint": "next lint",
         "prettierWrite": "npx prettier . --write",
         "prettierCheck": "npx prettier . --check",
-        "compile": "graphql-codegen",
-        "watch": " graphql-codegen -w"
+        "compileTypes": "graphql-codegen",
+        "watchTypes": " graphql-codegen -w"
     },
     "dependencies": {
         "@apollo/client": "^3.9.0-alpha.5",
@@ -33,6 +33,7 @@
         "luxon": "^3.4.4",
         "next": "14.1.0",
         "next-themes": "^0.2.1",
+        "node-geometry-library": "^1.2.6",
         "ol": "^8.2.0",
         "ol-ext": "^4.0.14",
         "ol-mapbox-style": "^12.2.0",
