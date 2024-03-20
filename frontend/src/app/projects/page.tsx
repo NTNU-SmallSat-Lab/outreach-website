@@ -100,15 +100,17 @@ export default async function ProjectsPage() {
                             <Card className="md:w-68 flex h-full w-64 flex-col lg:w-72">
                                 <CardHeader></CardHeader>
                                 <CardContent>
-                                    {coverImage && (
-                                        <Image
-                                            className="h-36 object-fill"
-                                            src={coverImage}
-                                            alt={coverImage}
-                                            width={500}
-                                            height={0}
-                                        />
-                                    )}
+                                    <div className="h-64">
+                                        {coverImage && (
+                                            <Image
+                                                className="max-h-full max-w-full object-contain"
+                                                src={coverImage}
+                                                alt={coverImage}
+                                                width={500}
+                                                height={0}
+                                            />
+                                        )}
+                                    </div>
                                     <CardTitle className="mb-2 mt-2 text-xl font-bold">
                                         {project?.attributes?.title}
                                     </CardTitle>

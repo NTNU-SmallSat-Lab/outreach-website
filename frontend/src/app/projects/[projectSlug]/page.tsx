@@ -110,15 +110,17 @@ export default async function Page({
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        {coverImage && (
-                                            <Image
-                                                className="h-36"
-                                                src={coverImage}
-                                                alt={coverImage}
-                                                width={500}
-                                                height={0}
-                                            />
-                                        )}
+                                        <div className="h-48">
+                                            {coverImage && (
+                                                <Image
+                                                    className="max-h-full max-w-full object-contain"
+                                                    src={coverImage}
+                                                    alt={coverImage}
+                                                    width={500}
+                                                    height={0}
+                                                />
+                                            )}
+                                        </div>
                                     </CardContent>
                                 </Card>
                             </Link>
