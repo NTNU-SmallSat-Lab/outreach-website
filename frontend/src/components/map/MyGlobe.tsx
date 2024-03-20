@@ -15,7 +15,7 @@ import { SatelliteData } from "@/lib/mapHelpers";
 const EARTH_RADIUS_KM = 6371; // km
 const SAT_SIZE = 500; // km
 const TIME_STEP = 1 * 1000; // per frame
-const SATELLITE_AMOUNT = 100; // amount of satellites to display
+//const SATELLITE_AMOUNT = 100; // amount of satellites to display
 
 export function mapRawDataToTleData(rawData: string): string[][] {
     return (
@@ -46,6 +46,7 @@ export default function MyGlobe({
     satelliteDatas,
     selectedSatellite,
 }: MyGlobeProps) {
+
     
     
     const chart = React.useRef<HTMLDivElement>(null);

@@ -3,8 +3,6 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 
 // Dynamic import because of leaflet and globe.gl ssr problem with next.js
-import dynamic from "next/dynamic";
-
 
 // Example Datasources
 import { exampleData } from "./exampleSatData";
@@ -32,7 +30,7 @@ const GET_ALL_SATELLITE_DATA =
     filterList?: string[],
 }
 
-export async function fetchSatelliteData({
+export default async function fetchSatelliteData({
     useExampleData,
     filterList = [],
 }: SatelliteFetcherInterface): Promise<string> {

@@ -2,13 +2,14 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { Combobox } from '../ComboBox';
+import { Combobox } from '../Combobox';
 import { mapRawDataToTleData, mapTleToSatData } from '@/lib/mapHelpers';
 import { SatelliteData } from '@/lib/mapHelpers';
 const MyGlobe = dynamic(() => import('@/components/map/MyGlobe'), { ssr: false });
 
 
 interface ClientOnlyComponentProps {
+    // eslint-disable-next-line no-unused-vars
     fetchSatelliteData: ({ useExampleData }: { useExampleData: boolean; filterList?: string[]; }) => Promise<string>;
   }
 
@@ -18,9 +19,9 @@ const ClientOnlyComponent: React.FC<ClientOnlyComponentProps> = ({ fetchSatellit
   const [selectedSatellite, setSelectedSatellite] = useState<string | undefined>(undefined)
 
   const onSelectSatellite = (selectedValue: string) => {
-    console.log(selectedValue);
-    
-    setSelectedSatellite(selectedValue);
+    if (selectedValue !== selectedSatellite) {
+      setSelectedSatellite(selectedValue);
+    }
   }
   
 

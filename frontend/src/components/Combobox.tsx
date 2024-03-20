@@ -23,6 +23,7 @@ interface Framework {
   
   interface ComboboxDemoProps {
     data: Framework[];
+    // eslint-disable-next-line no-unused-vars
     onSelect: (selectedValue: string) => void; // Define how you want to handle the selected value
   }
   
