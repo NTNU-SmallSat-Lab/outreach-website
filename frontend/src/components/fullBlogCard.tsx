@@ -55,7 +55,7 @@ export default function FullBlogCard(article: BlogPost) {
                     )}
                     <div className="m-5">
                         <div className="flex">
-                            <p className="w-fit rounded-md bg-ntnuBlue p-2 text-center text-xs text-white">
+                            <p className="bg-ntnuBlue w-fit rounded-md p-2 text-center text-xs text-white">
                                 {article.tag ? article.tag : "General"}
                             </p>
                             <p className="w-fit p-2 text-center text-xs text-white">
@@ -74,7 +74,7 @@ export default function FullBlogCard(article: BlogPost) {
                     </div>
                 </BlogCardContent>
             </BlogCardHeader>
-            <Link href={"/blog/" + article.slug} className="m-5 text-ntnuBlue">
+            <Link href={"/blog/" + article.slug} className="text-ntnuBlue m-5">
                 Read more →
             </Link>
         </BlogCard>
