@@ -50,7 +50,7 @@ export default function FullBlogCard(article: BlogPost) {
                         <img
                             src={article.coverImage}
                             alt={article.coverImage}
-                            className="m-0 aspect-video w-full object-cover p-0 max-h[40%]"
+                            className="m-0 aspect-video max-h-[250px] w-full object-cover p-0"
                         />
                     )}
                     <div className="m-5">
