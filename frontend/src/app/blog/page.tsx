@@ -70,17 +70,17 @@ export default async function BlogPage() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center">
             <h1 className="text-4xl font-extrabold ">Blog</h1>
             <p className="text-sm text-muted-foreground">
                 News and other short stories about our activities are shown
                 here.
             </p>
-            <div className="flex flex-col gap-4 mt-4 justify-center items-center">
+            <div className="mt-4 flex flex-col items-center justify-center gap-4">
                 {graphqlData.data.articles.data.map((article) => {
                     let avatarURL =
                         article?.attributes?.author?.data?.attributes?.avatar
-                            ?.data?.[0]?.attributes?.url;
+                            ?.data?.attributes?.url;
 
                     if (HOST_URL && avatarURL != undefined) {
                         avatarURL = HOST_URL + avatarURL;
@@ -129,7 +129,7 @@ export default async function BlogPage() {
                                 <BlockRendererClient content={content} />
                             </CardContent>
                             <CardFooter>
-                                <div className="flex flex-row justify-center gap-1 items-center">
+                                <div className="flex flex-row items-center justify-center gap-1">
                                     {avatarURL && (
                                         <Avatar className="">
                                             <AvatarImage src={avatarURL} />

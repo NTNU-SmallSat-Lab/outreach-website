@@ -14,7 +14,7 @@ query GET_SATELLITES {
         attributes {
           celestrakURL
           catalogNumberNORAD
-          satelliteName
+          name
           previewImage {
             data {
               attributes {
@@ -35,7 +35,7 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="grid grid-cols-2 gap-4 justify-items-center">
+            <div className="grid grid-cols-2 justify-items-center gap-4">
                 {graphqlData?.data?.satellites?.data?.map((satellite) => {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
@@ -45,16 +45,16 @@ export default async function Satellites() {
                     }
                     return (
                         <Card key={satellite.id} className="w-3/4">
-                            <CardHeader className="flex flex-col justify-center items-center">
+                            <CardHeader className="flex flex-col items-center justify-center">
                                 <CardTitle>
                                     <Link
                                         href={
                                             "/satellites/" +
-                                            satellite?.attributes?.satelliteName
+                                            satellite?.attributes?.name
                                         }
                                         className="hover:underline"
                                     >
-                                        {satellite?.attributes?.satelliteName}
+                                        {satellite?.attributes?.name}
                                     </Link>
                                 </CardTitle>
                             </CardHeader>

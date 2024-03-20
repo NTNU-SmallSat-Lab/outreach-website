@@ -20,46 +20,39 @@ const config = {
         extend: {
             colors: {
                 // These should all be defined in the global CSS file and used with the var(--color) syntax. Preferably using hsl
-                border: "hsl(var(--border))",
-                input: "hsl(var(--input))",
-                ring: "hsl(var(--ring))",
+                border: "var(--border)",
+                input: "var(--input)",
+                ring: "var(--ring)",
+                background: "var(--background)",
+                foreground: "var(--foreground)",
+                primary: {
+                    DEFAULT: "var(--primary)",
+                    foreground: "var(--primary-foreground)",
+                },
                 secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
-                    foreground: "hsl(var(--secondary-foreground))",
+                    DEFAULT: "var(--secondary)",
+                    foreground: "var(--secondary-foreground)",
                 },
                 destructive: {
-                    DEFAULT: "hsl(var(--destructive))",
-                    foreground: "hsl(var(--destructive-foreground))",
+                    DEFAULT: "var(--destructive)",
+                    foreground: "var(--destructive-foreground)",
                 },
                 muted: {
-                    DEFAULT: "hsl(var(--muted))",
-                    foreground: "hsl(var(--muted-foreground))",
+                    DEFAULT: "var(--muted)",
+                    foreground: "var(--muted-foreground)",
+                },
+                accent: {
+                    DEFAULT: "var(--accent)",
+                    foreground: "var(--accent-foreground)",
                 },
                 popover: {
-                    DEFAULT: "hsl(var(--popover))",
-                    foreground: "hsl(var(--popover-foreground))",
+                    DEFAULT: "var(--popover)",
+                    foreground: "var(--popover-foreground)",
                 },
                 card: {
-                    DEFAULT: "hsl(var(--card))",
-                    foreground: "hsl(var(--card-foreground))",
+                    DEFAULT: "var(--card)",
+                    foreground: "var(--card-foreground)",
                 },
-
-                // Small Satellite Lab Hypso colors
-                background: "hsl(var(--background))",
-                foreground: "hsl(var(--foreground))",
-                primary: {
-                    DEFAULT: "hsl(var(--ntnuBlue))",
-                    foreground: "hsl(var(--ntnuBlue-foreground))",
-                },
-                accent: "hsl(var(--accent))",
-                ntnuBlue: "hsl(var(--ntnuBlue))",
-                ntnuCyan: "hsl(var(--ntnuCyan))",
-                ntnuPurple: "hsl(var(--ntnuPurple))",
-                ntnuOrange: "hsl(var(--ntnuOrange))",
-                ntnuYellow: "hsl(var(--ntnuYellow))",
-                ntnuLightblue: "hsl(var(--ntnuLightblue))",
-                ntnuPink: "hsl(var(--ntnuPink))",
-                ntnuBrown: "hsl(var(--ntnuBrown))",
             },
             borderRadius: {
                 lg: "var(--radius)",

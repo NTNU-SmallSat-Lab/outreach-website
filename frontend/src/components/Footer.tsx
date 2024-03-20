@@ -2,13 +2,13 @@ import NTNULogo from "./ntnu/NTNULogo";
 
 export default function Footer() {
     return (
-        <footer className="p-4 bg-background text-foreground flex flex-col items-center">
-            <div className="flex flex-row items-center justify-between w-full">
-                <div className="flex-1 flex justify-start">
+        <footer className="flex flex-col items-center border-t bg-background p-4 text-foreground">
+            <div className="flex w-full flex-col items-center justify-between gap-12 lg:flex-row">
+                <div className="flex flex-1 justify-start">
                     <NTNULogo />
                 </div>
 
-                <div className="flex-1 flex justify-center">
+                <div className="flex flex-1 justify-center">
                     <div className="flex flex-col text-center">
                         <div className="flex flex-row gap-4">
                             <a href="#" className="hover:underline">
@@ -28,15 +28,13 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="flex-1 flex justify-end">
+                <div className="flex flex-1 justify-end">
                     <div className="flex flex-col text-right">
                         <span className="">NTNU Small Satellite Lab</span>
                         <span className="">Trondheim, Norway</span>
                     </div>
                 </div>
             </div>
-
-            <hr className="my-4 w-full" />
 
             <div className="text-center">
                 <p>Norwegian University of Science and Technology</p>
