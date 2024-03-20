@@ -4,6 +4,7 @@ import {
     BlogCardHeader,
     BlogCardTitle,
 } from "@/components/ui/blogCard";
+
 import BlockRendererClient from "./BlockRendererClient";
 import { Enum_Article_Tag } from "@/__generated__/graphql";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
@@ -11,6 +12,7 @@ import Link from "next/link";
 
 interface BlogPost {
     key: string | null | undefined;
+    firstArticle?: boolean | null | undefined;
     title: string | undefined;
     content: BlocksContent; // Or a more appropriate type if your content is structured
     coverImage?: string; // Optional cover image
@@ -23,24 +25,41 @@ interface BlogPost {
 }
 
 export default function FullBlogCard(article: BlogPost) {
+    function formatDate(dateString: string) {
+        const date = new Date(dateString);
+        const options: Intl.DateTimeFormatOptions = {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+        };
+        return date.toLocaleDateString("en-US", options);
+    }
+
     return (
-        <BlogCard className="m-3 w-1/4 min-w-80" key={article.key}>
+        <BlogCard
+            className={
+                article.firstArticle
+                    ? "m-3 mt-10 w-full pb-5"
+                    : "m-[1%] mb-5 min-w-80 max-w-[30%] grow pb-5"
+            }
+            key={article.key}
+        >
             <BlogCardHeader>
                 <BlogCardContent>
                     {article.coverImage && (
                         <img
                             src={article.coverImage}
                             alt={article.coverImage}
-                            className="m-0 aspect-video w-full object-cover p-0"
+                            className="m-0 aspect-video w-full object-cover p-0 max-h[40%]"
                         />
                     )}
                     <div className="m-5">
                         <div className="flex">
                             <p className="w-fit rounded-md bg-ntnuBlue p-2 text-center text-xs text-white">
-                                {article.tag ? article.tag : "No tag"}
+                                {article.tag ? article.tag : "General"}
                             </p>
                             <p className="w-fit p-2 text-center text-xs text-white">
-                                {article.datePublished} by {article.authorName}
+                                {formatDate(article.datePublished)}
                             </p>
                         </div>
                         <BlogCardTitle className="my-2">
@@ -55,6 +74,9 @@ export default function FullBlogCard(article: BlogPost) {
                     </div>
                 </BlogCardContent>
             </BlogCardHeader>
+            <Link href={"/blog/" + article.slug} className="m-5 text-ntnuBlue">
+                Read more →
+            </Link>
         </BlogCard>
     );
 }
