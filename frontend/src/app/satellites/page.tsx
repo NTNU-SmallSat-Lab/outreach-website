@@ -19,7 +19,7 @@ query GET_SATELLITES {
         attributes {
           celestrakURL
           catalogNumberNORAD
-          satelliteName
+          name
           previewImage {
             data {
               attributes {
@@ -55,11 +55,11 @@ export default async function Satellites() {
                                     <Link
                                         href={
                                             "/satellites/" +
-                                            satellite?.attributes?.satelliteName
+                                            satellite?.attributes?.name
                                         }
                                         className="hover:underline"
                                     >
-                                        {satellite?.attributes?.satelliteName}
+                                        {satellite?.attributes?.name}
                                     </Link>
                                 </CardTitle>
                             </CardHeader>
