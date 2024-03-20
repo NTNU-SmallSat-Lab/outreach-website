@@ -80,7 +80,8 @@ export default async function Page({
             <div className="prose prose-invert w-1/2 lg:prose-xl">
                 <BlockRendererClient content={content} />
             </div>
-            {graphqlData.data.projects?.data && (
+            {graphqlData.data.projects?.data[0].attributes?.satellites?.data
+                .length != 0 && (
                 <h1 className="mb-2 mt-2 text-xl font-bold">
                     Related Satellites
                 </h1>
