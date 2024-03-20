@@ -80,7 +80,7 @@ export default async function BlogPage() {
                 {graphqlData.data.articles.data.map((article) => {
                     let avatarURL =
                         article?.attributes?.author?.data?.attributes?.avatar
-                            ?.data?.[0]?.attributes?.url;
+                            ?.data?.attributes?.url;
 
                     if (HOST_URL && avatarURL != undefined) {
                         avatarURL = HOST_URL + avatarURL;
