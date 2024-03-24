@@ -4,7 +4,16 @@ import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
 import FullBlogCard from "@/components/fullBlogCard";
 import BlogpageButtons from "@/components/BlogpageButtons";
-import { JSX } from "react";
+import { JSX, useState } from "react";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const HOST_URL = process.env.HOST_URL;
 
@@ -50,6 +59,7 @@ query GET_ARTICLES {
 `);
 
 export default async function BlogPage() {
+    let currentPage = 1;
     const graphqlData = await getClient().query({
         query: GET_ARTICLES,
     });
@@ -143,6 +153,36 @@ export default async function BlogPage() {
                     return article;
                 })}
             </div>
+            <Pagination>
+                <PaginationContent>
+                    <PaginationItem>
+                        <PaginationPrevious href={"#" + (currentPage - 1)} />
+                    </PaginationItem>
+                    {currentPage > 1 ? (
+                        <PaginationItem>
+                            <PaginationLink href={"#" + (currentPage + 1)}>
+                                {currentPage - 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    ) : null}
+                    <PaginationItem>
+                        <PaginationLink href={"#" + currentPage} isActive>
+                            {currentPage}
+                        </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                        <PaginationLink href={"#" + (currentPage + 1)}>
+                            {currentPage + 1}
+                        </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                        <PaginationEllipsis />
+                    </PaginationItem>
+                    <PaginationItem>
+                        <PaginationNext href={"#" + (currentPage + 1)} />
+                    </PaginationItem>
+                </PaginationContent>
+            </Pagination>
         </div>
     );
 }
