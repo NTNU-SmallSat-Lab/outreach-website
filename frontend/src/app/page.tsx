@@ -73,10 +73,10 @@ export default async function Home() {
                 id="about-us"
                 className="flex flex-col items-center px-8 py-12"
             >
-                <div className="prose flex flex-col items-center text-center dark:prose-invert prose-img:rounded-xl">
+                <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1>
-                        TEST Empowering Space Exploration One Satellite at a
-                        Time
+                        TEST NUMBER 3 Empowering Space Exploration One Satellite
+                        at a Time
                     </h1>
 
                     <div className="relative h-[300px] w-[300px]">
@@ -107,7 +107,7 @@ export default async function Home() {
                 </div>
             </ColoredSection>
             <div className="flex flex-col items-center px-8 py-12 pt-8 text-center">
-                <div className="prose dark:prose-invert">
+                <div className="prose prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
                         The SmallSat Lab team is part of a variety of projects,
@@ -127,7 +127,7 @@ export default async function Home() {
                 </div>
             </div>
             <ColoredSection className="flex flex-col items-center px-8 py-12">
-                <div className="prose flex flex-col items-center text-center dark:prose-invert prose-img:rounded-xl">
+                <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1 className="">Most recent picture</h1>
                     <div className="relative h-[300px] w-[300px]">
                         <Image

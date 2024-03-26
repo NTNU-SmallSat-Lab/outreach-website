@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import NextImage from "next/image";
 
 import {
     BlocksRenderer,
@@ -17,11 +17,11 @@ export default function BlockRendererClient({
             content={content}
             blocks={{
                 image: ({ image }) => {
-                    console.log(image);
                     return (
-                        <Image
+                        <NextImage
                             src={image.url}
-                            width={500}
+                            width={image.width}
+                            className="object-contain"
                             height={image.height}
                             alt={image.alternativeText || ""}
                         />
@@ -30,34 +30,60 @@ export default function BlockRendererClient({
                 heading: ({ children, level }) => {
                     switch (level) {
                         case 1:
-                            return (
-                                <h1 className="mb-4 text-4xl">{children}</h1>
-                            );
+                            return <h1>{children}</h1>;
                         case 2:
-                            return (
-                                <h2 className="mb-2 text-3xl">{children}</h2>
-                            );
+                            return <h2>{children}</h2>;
                         case 3:
-                            return (
-                                <h3 className="mb-2 text-2xl">{children}</h3>
-                            );
+                            return <h3>{children}</h3>;
                         case 4:
-                            return <h4 className="mb-2 text-xl">{children}</h4>;
+                            return <h4>{children}</h4>;
                         case 5:
-                            return <h5 className="mb-2 text-lg">{children}</h5>;
+                            return <h5>{children}</h5>;
                         default:
-                            return (
-                                <h1 className="mb-4 text-4xl">{children}</h1>
-                            );
+                            return <h1>{children}</h1>;
                     }
                 },
 
-                paragraph: ({ children }) => (
-                    <>
-                        <p className="break-words">{children}</p>
-                        <br />
-                    </>
-                ),
+                paragraph: ({ children }) => {
+                    const child = children as {
+                        props: {
+                            type: "text";
+                            text: string;
+                            italic: boolean;
+                        };
+                    }[];
+
+                    const italic = child[0]?.props.italic;
+                    if (italic) {
+                        return <p className="text-sm">{children}</p>;
+                    }
+                    return <p>{children}</p>;
+                },
+
+                link: ({ url, children }) => {
+                    // Check if the URL is a valid YouTube video link
+                    const isYouTubeVideo = url.includes("youtube.com");
+                    // Render the iframe only if it's a YouTube video link
+                    if (isYouTubeVideo) {
+                        return (
+                            <div className="flex w-full items-center">
+                                <iframe
+                                    width={"100%"}
+                                    className="aspect-video"
+                                    src={url}
+                                    title="YouTube video"
+                                ></iframe>
+                            </div>
+                        );
+                    } else {
+                        // If it's not a video link, return an anchor with the href
+                        return (
+                            <a href={url} target="_blank">
+                                {children}
+                            </a>
+                        );
+                    }
+                },
             }}
         />
     );

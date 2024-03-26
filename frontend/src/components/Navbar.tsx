@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import Image from "next/image";
 
 import type { SVGProps } from "react";
 
@@ -31,29 +32,21 @@ export function IconParkHamburgerButton(props: SVGProps<SVGSVGElement>) {
 }
 
 export default function Navbar() {
-    const dropdownPaths = [
-        "/team",
-        "/partners",
-        "/contact",
-        "/positions",
-        "/infrastructure",
-    ];
-    const isPathInDropdown = () => dropdownPaths.includes(pathname);
-
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {
-        if (path === "/about" && isPathInDropdown()) {
-            return "secondary";
+        if (path === pathname) {
+            return;
         }
-
-        return pathname === path ? "secondary" : "ghost";
+        return "ghost";
     };
 
     return (
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div className="flex-1">
                 <Link href="/">
-                    <img
+                    <Image
+                        width={256}
+                        height={0}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
                         className="w-64 min-w-64"
@@ -61,7 +54,7 @@ export default function Navbar() {
                 </Link>
             </div>
             <Drawer>
-                <DrawerTrigger className="flex justify-end sm:hidden">
+                <DrawerTrigger className="flex justify-end md:hidden">
                     <IconParkHamburgerButton />
                 </DrawerTrigger>
                 <DrawerContent>
@@ -86,7 +79,7 @@ export default function Navbar() {
                 </DrawerContent>
             </Drawer>
 
-            <div className="hidden flex-1 justify-center sm:flex">
+            <div className="hidden flex-1 justify-center md:flex">
                 <div className="flex items-center gap-8">
                     <Link href="/blog">
                         <Button variant={getButtonVariant("/blog")}>
