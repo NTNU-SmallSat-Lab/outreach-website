@@ -1,4 +1,3 @@
-// This component displays a table of satellite data including position and country
 "use client";
 import React, { useEffect, useState } from "react";
 import { exampleData } from "../map/exampleSatData";
@@ -15,6 +14,7 @@ import {
 import * as satellite from "satellite.js";
 import { PolyUtil } from "node-geometry-library";
 import globeData from "@components/map/githubglobe/files/globe-data.json";
+import { loader } from "@/app/loaders/satelliteData";
 
 const satellitesShown = 10; // Maximum number of satellites to display
 const timeInterval = 1000; // Time interval for updating satellite positions in milliseconds
@@ -31,6 +31,7 @@ export default function SatelliteDataTable() {
     const [satData, setSatData] = useState<SatelliteDataWithPosition[]>([]);
 
     useEffect(() => {
+        loader("Hypso");
         // Updates satellite positions at specified intervals
         const updateSatellitePositions = () => {
             const updatedData = mapRawDataToSatData(exampleData)
