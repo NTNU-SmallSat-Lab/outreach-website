@@ -40,7 +40,7 @@ function mapTleToSatData(tleString: string): SatelliteData[] {
 // Check if cached data is stale
 function isStale(timestamp: Date): boolean {
     const now = new Date();
-    return now.getTime() - timestamp.getTime() > 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    return now.getTime() - timestamp.getTime() > 24 * 60 * 60 * 1000;
 }
 
 export async function loader(satName: string): Promise<SatelliteData[]> {
@@ -58,3 +58,5 @@ export async function loader(satName: string): Promise<SatelliteData[]> {
 
     return newData;
 }
+
+export type { SatelliteData };
