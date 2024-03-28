@@ -14,7 +14,6 @@ import {
 import * as satellite from "satellite.js";
 import { PolyUtil } from "node-geometry-library";
 import globeData from "@components/map/githubglobe/files/globe-data.json";
-import { useSatelliteStore } from "@/lib/store";
 
 const satellitesShown = 10; // Maximum number of satellites to display
 const timeInterval = 1000; // Time interval for updating satellite positions in milliseconds
@@ -29,7 +28,6 @@ interface SatelliteDataWithPosition extends SatelliteData {
 
 export default function SatelliteDataTable() {
     const [satData, setSatData] = useState<SatelliteDataWithPosition[]>([]);
-    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
 
     useEffect(() => {
         // Updates satellite positions at specified intervals
