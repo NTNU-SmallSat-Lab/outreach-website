@@ -1,16 +1,19 @@
 import { twoline2satrec } from "satellite.js";
 import { SatRec } from "satellite.js";
 
+// Satellite data interface
 interface SatelliteData {
     satrec: SatRec;
     name: string;
 }
 
+// Cache the satellite data
 let cachedData: {
     data: SatelliteData[];
     timestamp: Date;
 } | null = null;
 
+// Fetch satellite data from Celestrak by satellite name
 async function fetchSatelliteData(satName: string): Promise<any> {
     const response = await fetch(
         `https://celestrak.org/NORAD/elements/gp.php?NAME=${satName}&FORMAT=TLE`,
@@ -24,6 +27,7 @@ async function fetchSatelliteData(satName: string): Promise<any> {
     return mapTleToSatData(data);
 }
 
+// Map TLE data to satellite data
 function mapTleToSatData(tleString: string): SatelliteData[] {
     const lines = tleString.trim().split("\n");
     const satellites: SatelliteData[] = [];
@@ -43,7 +47,7 @@ function isStale(timestamp: Date): boolean {
     return now.getTime() - timestamp.getTime() > 24 * 60 * 60 * 1000;
 }
 
-export async function loader(satName: string): Promise<SatelliteData[]> {
+export async function satLoader(satName: string): Promise<SatelliteData[]> {
     if (cachedData && !isStale(cachedData.timestamp)) {
         return cachedData.data;
     }
@@ -53,8 +57,6 @@ export async function loader(satName: string): Promise<SatelliteData[]> {
         data: newData,
         timestamp: new Date(),
     };
-
-    console.log(newData);
 
     return newData;
 }

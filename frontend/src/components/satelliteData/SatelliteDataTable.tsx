@@ -32,11 +32,6 @@ export default function SatelliteDataTable() {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
 
     useEffect(() => {
-        fetchAndSetSatelliteData("ISS");
-        console.log(satelliteData);
-    }, [fetchAndSetSatelliteData]);
-
-    useEffect(() => {
         // Updates satellite positions at specified intervals
         const updateSatellitePositions = () => {
             const updatedData = mapRawDataToSatData(exampleData)
@@ -117,14 +112,6 @@ export default function SatelliteDataTable() {
 
     return (
         <div className="m-10 flex w-full flex-col items-center justify-center">
-            <div className="m-10 bg-white text-black">
-                <h1>Satellite Data</h1>
-                <ul>
-                    {satelliteData.map((sat, index) => (
-                        <li key={index}>{sat.name}</li>
-                    ))}
-                </ul>
-            </div>
             <Table className="w-1/2">
                 <TableCaption>Satellite Data</TableCaption>
                 <TableHeader>
