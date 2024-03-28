@@ -49,8 +49,6 @@ const findCountry = (latitudeDeg: number, longitudeDeg: number): string => {
                 }
             } else if (geometry.type === "MultiPolygon") {
                 const multiPolygons = geometry.coordinates as number[][][][];
-                console.log(feature.properties.ADMIN);
-                console.log(multiPolygons);
                 for (const multiPolygon of multiPolygons) {
                     for (const polygon of multiPolygon) {
                         let boundingPolygon = polygon.map((coordinate) => {
@@ -71,20 +69,8 @@ const findCountry = (latitudeDeg: number, longitudeDeg: number): string => {
         }
     }
 
-    return "Ocean"; // Default to "Ocean" if no country is found
-};
-
-const checkPolygonContainsPoint = (polygons: number[][][][], latitudeDeg: number, longitudeDeg: number): boolean => {
-    for (const polygon of polygons) {
-        let boundingPolygon = polygon[0].map(coordinate => ({
-            lat: coordinate[1],
-            lng: coordinate[0],
-        }));
-        if (PolyUtil.containsLocation({ lat: latitudeDeg, lng: longitudeDeg }, boundingPolygon)) {
-            return true;
-        }
-    }
-    return false;
+    // Default to "Ocean" if no country is found
+    return "Ocean";
 };
 
 // Convert satellite record to satellite info, including latitude, longitude, altitude, velocity, and country

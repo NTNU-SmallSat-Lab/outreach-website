@@ -7,7 +7,9 @@ const updateInterval = 100000;
 
 export default function SatelliteDataInfo() {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
-    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(null);
+    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
+        null,
+    );
 
     // Fetch satellite data on component mount
     useEffect(() => {
@@ -18,7 +20,10 @@ export default function SatelliteDataInfo() {
     useEffect(() => {
         const updateSatelliteInfo = () => {
             if (satelliteData.length > 0) {
-                const updatedInfo = convertSatrec(satelliteData[0].satrec, satelliteData[0].name);
+                const updatedInfo = convertSatrec(
+                    satelliteData[0].satrec,
+                    satelliteData[0].name,
+                );
                 setSatelliteInfo(updatedInfo);
             }
         };
