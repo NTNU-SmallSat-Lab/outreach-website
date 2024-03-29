@@ -14,27 +14,22 @@ export default function SatelliteDataTable({ satName }: { satName: string }) {
     // Fetch satellite data on component mount
     useEffect(() => {
         fetchAndSetSatelliteData(satName);
-    }, [fetchAndSetSatelliteData]);
+    }, [fetchAndSetSatelliteData, satName]);
 
-    // Update satellite info every 10ms
+    // Update satellite info every `updateInterval` ms
     useEffect(() => {
-        const updateSatelliteInfo = () => {
-            if (satelliteData.length > 0) {
-                const updatedInfo = convertSatrec(
-                    satelliteData[0].satrec,
-                    satelliteData[0].name,
-                );
+        const intervalId = setInterval(() => {
+            // Access satellite data by name
+            const satData = satelliteData[satName];
+            if (satData) {
+                const updatedInfo = convertSatrec(satData.satrec, satData.name);
                 setSatelliteInfo(updatedInfo);
             }
-        };
-
-        // Update immediately and then set an interval
-        updateSatelliteInfo();
-        const intervalId = setInterval(updateSatelliteInfo, updateInterval);
+        }, updateInterval);
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData]);
+    }, [satelliteData, satName]);
 
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {

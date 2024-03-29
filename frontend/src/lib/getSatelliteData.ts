@@ -5,13 +5,17 @@ import { SatRec } from "satellite.js";
 interface SatelliteData {
     satrec: SatRec;
     name: string;
+    timestamp: Date;
 }
 
 // Cache the satellite data
 let cachedData: {
-    data: SatelliteData[];
+    data: Record<string, SatelliteData>;
     timestamp: Date;
-} | null = null;
+} = {
+    data: {},
+    timestamp: new Date(0)
+};
 
 // Fetch satellite data from Celestrak by satellite name
 async function fetchSatelliteData(satName: string): Promise<any> {
@@ -36,10 +40,12 @@ function mapTleToSatData(tleString: string): SatelliteData[] {
         const line1 = lines[i + 1].trim();
         const line2 = lines[i + 2].trim();
         const satrec = twoline2satrec(line1, line2);
-        satellites.push({ satrec, name });
+        const timestamp = new Date(); // Set the current timestamp
+        satellites.push({ satrec, name, timestamp }); // Include timestamp here
     }
     return satellites;
 }
+
 
 // Check if cached data is stale
 function isStale(timestamp: Date): boolean {
@@ -47,18 +53,25 @@ function isStale(timestamp: Date): boolean {
     return now.getTime() - timestamp.getTime() > 24 * 60 * 60 * 1000;
 }
 
-export async function satLoader(satName: string): Promise<SatelliteData[]> {
-    if (cachedData && !isStale(cachedData.timestamp)) {
-        return cachedData.data;
+
+export async function satLoader(satName: string): Promise<SatelliteData> {
+    // The logic to check if data is stale and needs to be fetched
+    if (!cachedData || isStale(cachedData.timestamp) || !(satName in cachedData.data)) {
+        // Fetch the data and update the cache
+        const newDataArray = await fetchSatelliteData(satName);
+        const newData = newDataArray[0]; // Assuming we only care about the first record
+        
+        // Here, you should update the cache properly.
+        // This might mean replacing the entire cache or just updating the specific satellite's data.
+        // For the sake of this example, let's assume we're just updating one satellite's data:
+        cachedData = {
+            data: { ...cachedData.data, [satName]: newData },
+            timestamp: new Date()
+        };
     }
 
-    const newData = await fetchSatelliteData(satName);
-    cachedData = {
-        data: newData,
-        timestamp: new Date(),
-    };
-
-    return newData;
+    // At this point, we can be sure that cachedData is not null and contains the data for satName
+    return cachedData.data[satName];
 }
 
 export type { SatelliteData };
