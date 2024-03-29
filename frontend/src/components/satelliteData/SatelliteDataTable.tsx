@@ -1,234 +1,83 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { exampleData } from "../map/exampleSatData";
-import { SatelliteData, mapRawDataToSatData } from "@/lib/mapHelpers";
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import * as satellite from "satellite.js";
-import { PolyUtil } from "node-geometry-library";
-import globeData from "@components/map/githubglobe/files/globe-data.json";
+import { useState, useEffect } from "react";
+import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
+import { useSatelliteStore } from "@/lib/store";
 
-const satellitesShown = 10; // Maximum number of satellites to display
-const timeInterval = 1000; // Time interval for updating satellite positions in milliseconds
+const updateInterval = 10;
 
-// Extends SatelliteData with calculated position properties
-interface SatelliteDataWithPosition extends SatelliteData {
-    latitudeDeg: string;
-    longitudeDeg: string;
-    altitude: string;
-    velocity: string;
-}
+export default function SatelliteDataTable({ satName }: { satName: string }) {
+    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
+    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
+        null,
+    );
 
-export default function SatelliteDataTable() {
-    const [satData, setSatData] = useState<SatelliteDataWithPosition[]>([]);
-
+    // Fetch satellite data on component mount
     useEffect(() => {
-        // Updates satellite positions at specified intervals
-        const updateSatellitePositions = () => {
-            const updatedData = mapRawDataToSatData(exampleData)
-                .slice(0, satellitesShown)
-                .map((data) => {
-                    const positionAndVelocity = satellite.propagate(
-                        data.satrec,
-                        new Date(),
-                    );
+        fetchAndSetSatelliteData(satName);
+    }, [fetchAndSetSatelliteData]);
 
-                    if (
-                        positionAndVelocity.position &&
-                        typeof positionAndVelocity.position !== "boolean"
-                    ) {
-                        const gmst = satellite.gstime(new Date()); // Calculates Greenwich Mean Sidereal Time
-                        const positionGd = satellite.eciToGeodetic(
-                            positionAndVelocity.position,
-                            gmst,
-                        );
-
-                        // Extracts velocity from positionAndVelocity if it is not false
-                        var velocityEci = positionAndVelocity.velocity;
-
-                        if (typeof velocityEci !== "boolean") {
-                            // Calculate the magnitude of the velocity vector if velocityEci is not false
-                            var velocityMagnitude = Math.sqrt(
-                                velocityEci.x * velocityEci.x +
-                                    velocityEci.y * velocityEci.y +
-                                    velocityEci.z * velocityEci.z,
-                            );
-
-                            // Convert velocity from kilometers per second (km/s) to kilometers per hour (km/h)
-                            velocityMagnitude = velocityMagnitude * 3600;
-                        } else {
-                            // Set velocityMagnitude to NaN if velocityEci is false
-                            velocityMagnitude = NaN;
-                        }
-
-                        // Converts geodetic position to readable format
-                        const latitudeDeg = satellite.degreesLat(
-                            positionGd.latitude,
-                        );
-                        const longitudeDeg = satellite.degreesLong(
-                            positionGd.longitude,
-                        );
-                        const altitude = positionGd.height;
-
-                        return {
-                            ...data,
-                            latitudeDeg: latitudeDeg.toFixed(2),
-                            longitudeDeg: longitudeDeg.toFixed(2),
-                            altitude: altitude.toFixed(2),
-                            velocity: velocityMagnitude.toFixed(0),
-                        };
-                    } else {
-                        return {
-                            ...data,
-                            latitudeDeg: "N/A",
-                            longitudeDeg: "N/A",
-                            altitude: "N/A",
-                            velocity: "N/A",
-                        };
-                    }
-                });
-
-            setSatData(updatedData);
+    // Update satellite info every 10ms
+    useEffect(() => {
+        const updateSatelliteInfo = () => {
+            if (satelliteData.length > 0) {
+                const updatedInfo = convertSatrec(
+                    satelliteData[0].satrec,
+                    satelliteData[0].name,
+                );
+                setSatelliteInfo(updatedInfo);
+            }
         };
 
-        // Performs an initial update and sets the interval for further updates
-        updateSatellitePositions();
-        const intervalId = setInterval(() => {
-            updateSatellitePositions();
-        }, timeInterval);
+        // Update immediately and then set an interval
+        updateSatelliteInfo();
+        const intervalId = setInterval(updateSatelliteInfo, updateInterval);
 
-        // Cleans up the interval when the component unmounts
+        // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, []);
+    }, [satelliteData]);
+
+    // Display loading message if satellite info is not available
+    if (!satelliteInfo) {
+        return (
+            <div className="m-20">
+                <h1>Loading...</h1>
+            </div>
+        );
+    }
 
     return (
-        <div className="m-10 flex w-full flex-col items-center justify-center">
-            <Table className="w-1/2">
-                <TableCaption>Satellite Data</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="w-1/6">Satellite</TableHead>
-                        <TableHead className="w-1/6">Latitude</TableHead>
-                        <TableHead className="w-1/6">Longitude</TableHead>
-                        <TableHead className="w-1/6">Altitude</TableHead>
-                        <TableHead className="w-1/6">Velocity</TableHead>
-                        <TableHead className="w-1/6">Country</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {satData.map((data, index) => {
-                        let country = "Ocean"; // Default to Ocean if no country is found
-                        globeData.features.forEach((countryFeature) => {
-                            // Checks if the satellite is within a country's bounding box to reduce the number of polygons to check
-                            const boundingBoxPoints = [
-                                {
-                                    lat: countryFeature.bbox[1],
-                                    lng: countryFeature.bbox[0],
-                                },
-                                {
-                                    lat: countryFeature.bbox[3],
-                                    lng: countryFeature.bbox[0],
-                                },
-                                {
-                                    lat: countryFeature.bbox[3],
-                                    lng: countryFeature.bbox[2],
-                                },
-                                {
-                                    lat: countryFeature.bbox[1],
-                                    lng: countryFeature.bbox[2],
-                                },
-                            ];
+        <div className="m-20 rounded-lg bg-gray-800 p-6 text-white shadow-lg">
+            <div className="mb-4 flex items-center justify-between">
+                <h1 className="text-4xl font-bold">{satelliteInfo.name}</h1>
+                <div>{/* Include the dropdown arrow icon here */}</div>
+            </div>
+            <p className="mb-2 text-sm">Our first satellite launched in 2022</p>
 
-                            if (
-                                PolyUtil.containsLocation(
-                                    {
-                                        lat: Number(data.latitudeDeg),
-                                        lng: Number(data.longitudeDeg),
-                                    },
-                                    boundingBoxPoints,
-                                )
-                            ) {
-                                // Handles polygons to accurately find the country
-                                if (countryFeature.geometry.type == "Polygon") {
-                                    let boundingPolygon =
-                                        countryFeature.geometry.coordinates[0].map(
-                                            (coordinate) => ({
-                                                lat: Number(coordinate[1]),
-                                                lng: Number(coordinate[0]),
-                                            }),
-                                        );
+            <div className="grid grid-cols-2 gap-4">
+                <div className="rounded bg-gray-700 p-4">
+                    <p className="text-xl">{satelliteInfo.velocity} Km/h</p>
+                    <p className="text-gray-400">Speed</p>
+                </div>
+                <div className="rounded bg-gray-700 p-4">
+                    <p className="text-xl">{satelliteInfo.altitude} km</p>
+                    <p className="text-gray-400">Altitude</p>
+                </div>
+                <div className="rounded bg-gray-700 p-4">
+                    <p className="text-xl">{satelliteInfo.latitudeDeg}° N</p>
+                    <p className="text-gray-400">Latitude</p>
+                </div>
+                <div className="rounded bg-gray-700 p-4">
+                    <p className="text-xl">{satelliteInfo.longitudeDeg}° E</p>
+                    <p className="text-gray-400">Longitude</p>
+                </div>
+            </div>
 
-                                    if (
-                                        PolyUtil.containsLocation(
-                                            {
-                                                lat: Number(data.latitudeDeg),
-                                                lng: Number(data.longitudeDeg),
-                                            },
-                                            boundingPolygon,
-                                        )
-                                    ) {
-                                        country =
-                                            countryFeature.properties.ADMIN;
-                                    }
-                                } else if (
-                                    countryFeature.geometry.type ==
-                                    "MultiPolygon"
-                                ) {
-                                    // Loop through each polygon array in the MultiPolygon
-                                    const multiPolygon = countryFeature.geometry
-                                        .coordinates as number[][][][];
-                                    multiPolygon.forEach((polygon) => {
-                                        let boundingPolygon = polygon[0].map(
-                                            (coordinate) => ({
-                                                lat: Number(coordinate[1]),
-                                                lng: Number(coordinate[0]),
-                                            }),
-                                        );
-
-                                        if (
-                                            PolyUtil.containsLocation(
-                                                {
-                                                    lat: Number(
-                                                        data.latitudeDeg,
-                                                    ),
-                                                    lng: Number(
-                                                        data.longitudeDeg,
-                                                    ),
-                                                },
-                                                boundingPolygon,
-                                            )
-                                        ) {
-                                            country =
-                                                countryFeature.properties.ADMIN;
-                                        }
-                                    });
-                                }
-                            }
-                        });
-
-                        return (
-                            <TableRow key={index}>
-                                <TableCell>{data.name}</TableCell>
-                                <TableCell>{data.latitudeDeg}° N</TableCell>
-                                <TableCell>{data.longitudeDeg}° E</TableCell>
-                                <TableCell>
-                                    {(Number(data.altitude) * 10).toFixed(0)}{" "}
-                                    MASL
-                                </TableCell>
-                                <TableCell>{data.velocity} km/h</TableCell>
-                                <TableCell>{country}</TableCell>
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
+            <div className="mt-4 flex items-center">
+                <div className="flex-1 rounded bg-gray-700 p-4">
+                    <p className="text-xl">Above {satelliteInfo.country}</p>
+                </div>
+                <div className="ml-4">{/* Include the flag icon here */}</div>
+            </div>
         </div>
     );
 }

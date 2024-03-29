@@ -12,7 +12,6 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
-import SatelliteDataInfo from "@/components/satelliteData/SatelliteDataInfo";
 
 const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
@@ -64,8 +63,9 @@ export default async function Home() {
 
     return (
         <main>
-            <SatelliteDataInfo />
-            <SatelliteDataTable />
+            <div className="grid grid-cols-2">
+                <SatelliteDataTable satName="Hypso-1" />
+            </div>
 
             <SatelliteFetcher useExampleData={true} />
 
