@@ -64,11 +64,11 @@ export default async function Home() {
     return (
         <main>
             <div className="grid grid-cols-2">
-            <SatelliteDataTable satName="Hypso-1" />
-                <SatelliteDataTable satName="ISS" />
-                <SatelliteDataTable satName="starlink" />
-                <SatelliteDataTable satName="vanguard" />
-                <SatelliteDataTable satName="test" />
+            <SatelliteDataTable satName="HYPSO-1" />
+                <SatelliteDataTable satName="UME (ISS)" />
+                <SatelliteDataTable satName="STARLINK-1007" />
+                <SatelliteDataTable satName="VANGUARD 1" />
+                <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
                 <SatelliteDataTable satName="huh" />
             </div>
 

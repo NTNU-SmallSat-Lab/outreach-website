@@ -41,17 +41,16 @@ export default function SatelliteDataTable({ satName }: { satName: string }) {
     }
 
     return (
-        <div className="m-20 rounded-lg bg-gray-800 p-6 text-white shadow-lg">
+        <div className="m-5 rounded-lg bg-gray-800 p-6 text-white shadow-lg">
             <div className="mb-4 flex items-center justify-between">
                 <h1 className="text-4xl font-bold">{satelliteInfo.name}</h1>
                 <div>{/* Include the dropdown arrow icon here */}</div>
             </div>
-            <p className="mb-2 text-sm">Our first satellite launched in 2022</p>
 
             <div className="grid grid-cols-2 gap-4">
                 <div className="rounded bg-gray-700 p-4">
-                    <p className="text-xl">{satelliteInfo.velocity} Km/h</p>
-                    <p className="text-gray-400">Speed</p>
+                    <p className="text-xl">{satelliteInfo.velocity} km/s</p>
+                    <p className="text-gray-400">Velocity</p>
                 </div>
                 <div className="rounded bg-gray-700 p-4">
                     <p className="text-xl">{satelliteInfo.altitude} km</p>
@@ -61,17 +60,17 @@ export default function SatelliteDataTable({ satName }: { satName: string }) {
                     <p className="text-xl">{satelliteInfo.latitudeDeg}° N</p>
                     <p className="text-gray-400">Latitude</p>
                 </div>
-                <div className="rounded bg-gray-700 p-4">
+                <div className="ounded bg-gray-700 p-4">
                     <p className="text-xl">{satelliteInfo.longitudeDeg}° E</p>
                     <p className="text-gray-400">Longitude</p>
                 </div>
             </div>
 
-            <div className="mt-4 flex items-center">
-                <div className="flex-1 rounded bg-gray-700 p-4">
-                    <p className="text-xl">Above {satelliteInfo.country}</p>
-                </div>
-                <div className="ml-4">{/* Include the flag icon here */}</div>
+            <div className="mt-4 rounded bg-gray-700 p-4">
+                <p className="text-xl">Above {satelliteInfo.country}</p>
+            </div>
+            <div className="ml-4">
+                {/* Include the flag icon here */}
             </div>
         </div>
     );
