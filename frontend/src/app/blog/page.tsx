@@ -4,22 +4,14 @@ import { getClient } from "@/lib/ApolloClient";
 import { gql } from "@/__generated__/gql";
 import FullBlogCard from "@/components/fullBlogCard";
 import BlogpageButtons from "@/components/BlogpageButtons";
-import { JSX, useState } from "react";
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination";
+import { JSX } from "react";
+import BlogPaginator from "@/components/BlogPaginator";
 
 const HOST_URL = process.env.HOST_URL;
 
 const GET_ARTICLES = gql(`
-query GET_ARTICLES {
-    articles(sort: ["datePublished:desc"]) {
+query GET_ARTICLES($pagination: PaginationArg) {
+    articles(sort: ["datePublished:desc"], pagination: $pagination) {
         data {
             id
             attributes {
@@ -58,10 +50,18 @@ query GET_ARTICLES {
 }
 `);
 
-export default async function BlogPage() {
-    let currentPage = 1;
+export default async function Page() {
+    const currentPage = 1; // Initial page
+    const pageSize = 1; // Items per page
+
     const graphqlData = await getClient().query({
         query: GET_ARTICLES,
+        variables: {
+            pagination: {
+                pageSize,
+                currentPage,
+            },
+        },
     });
 
     if (
@@ -78,7 +78,7 @@ export default async function BlogPage() {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            {graphqlData.data.articles.data.map((article) => {
+            {graphqlData.data.articles.data.map((article: any) => {
                 let avatarURL =
                     article?.attributes?.author?.data?.attributes?.avatar?.data
                         ?.attributes?.url;
@@ -153,36 +153,7 @@ export default async function BlogPage() {
                     return article;
                 })}
             </div>
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious href={"#" + (currentPage - 1)} />
-                    </PaginationItem>
-                    {currentPage > 1 ? (
-                        <PaginationItem>
-                            <PaginationLink href={"#" + (currentPage + 1)}>
-                                {currentPage - 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    ) : null}
-                    <PaginationItem>
-                        <PaginationLink href={"#" + currentPage} isActive>
-                            {currentPage}
-                        </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href={"#" + (currentPage + 1)}>
-                            {currentPage + 1}
-                        </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationNext href={"#" + (currentPage + 1)} />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
+            <BlogPaginator />
         </div>
     );
 }
