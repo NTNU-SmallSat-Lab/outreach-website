@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { create } from "zustand";
 import type { SatelliteData } from "@/lib/getSatelliteData";
 import { satLoader } from "@/lib/getSatelliteData";

@@ -64,7 +64,7 @@ export default async function Home() {
     return (
         <main>
             <div className="grid grid-cols-2">
-            <SatelliteDataTable satName="HYPSO-1" />
+                <SatelliteDataTable satName="HYPSO-1" />
                 <SatelliteDataTable satName="UME (ISS)" />
                 <SatelliteDataTable satName="STARLINK-1007" />
                 <SatelliteDataTable satName="VANGUARD 1" />

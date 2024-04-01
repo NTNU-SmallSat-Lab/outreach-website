@@ -69,9 +69,7 @@ export default function SatelliteDataTable({ satName }: { satName: string }) {
             <div className="mt-4 rounded bg-gray-700 p-4">
                 <p className="text-xl">Above {satelliteInfo.country}</p>
             </div>
-            <div className="ml-4">
-                {/* Include the flag icon here */}
-            </div>
+            <div className="ml-4">{/* Include the flag icon here */}</div>
         </div>
     );
 }
