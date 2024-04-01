@@ -12,6 +12,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
+import Map2d from "@/components/2dmap/Map2d";
 
 const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
     ssr: false,
@@ -63,13 +64,17 @@ export default async function Home() {
 
     return (
         <main>
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-6">
                 <SatelliteDataTable satName="HYPSO-1" />
                 <SatelliteDataTable satName="UME (ISS)" />
                 <SatelliteDataTable satName="STARLINK-1007" />
                 <SatelliteDataTable satName="VANGUARD 1" />
                 <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
                 <SatelliteDataTable satName="huh" />
+            </div>
+
+            <div className="my-10 flex w-full justify-center">
+                <Map2d />
             </div>
 
             <SatelliteFetcher useExampleData={true} />
