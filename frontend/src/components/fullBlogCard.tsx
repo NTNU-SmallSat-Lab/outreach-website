@@ -55,7 +55,7 @@ export default function FullBlogCard(article: BlogPost) {
                     )}
                     <div className="m-5">
                         <div className="flex">
-                            <p className="w-fit rounded-md bg-primary p-2 text-center text-xs text-white">
+                            <p className="ww-fit rounded-md bg-primary p-2 text-center text-xs text-white">
                                 {article.tag ? article.tag : "General"}
                             </p>
                             <p className="w-fit p-2 text-center text-xs text-white">

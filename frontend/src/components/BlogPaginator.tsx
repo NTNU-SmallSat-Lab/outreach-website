@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
     Pagination,
     PaginationContent,
@@ -11,8 +10,18 @@ import {
     PaginationPrevious,
 } from "./ui/pagination";
 
-export default function BlogPaginator() {
-    const [currentPage, setCurrentPage] = useState(1); // Initial page
+interface BlogPaginatorProps {
+    currentPage: number;
+    onPageChange: (newPage: number) => void;
+}
+
+export default function BlogPaginator({
+    currentPage,
+    onPageChange,
+}: BlogPaginatorProps) {
+    const handlePageChange = (newPage: number) => {
+        onPageChange(newPage);
+    };
 
     return (
         <Pagination>
@@ -21,18 +30,18 @@ export default function BlogPaginator() {
                     {currentPage > 1 ? (
                         <PaginationPrevious
                             href={"#" + currentPage}
-                            onClick={() => setCurrentPage(currentPage - 1)}
+                            onClick={() => handlePageChange(currentPage - 1)}
                         />
                     ) : (
                         <PaginationPrevious
                             href={"#" + currentPage}
-                            onClick={() => setCurrentPage(currentPage)}
+                            onClick={() => handlePageChange(currentPage)}
                         />
                     )}
                 </PaginationItem>
                 {currentPage > 1 ? (
                     <PaginationItem
-                        onClick={() => setCurrentPage(currentPage - 1)}
+                        onClick={() => handlePageChange(currentPage - 1)}
                     >
                         <PaginationLink href={"#" + currentPage}>
                             {currentPage - 1}
@@ -44,7 +53,9 @@ export default function BlogPaginator() {
                         {currentPage}
                     </PaginationLink>
                 </PaginationItem>
-                <PaginationItem onClick={() => setCurrentPage(currentPage + 1)}>
+                <PaginationItem
+                    onClick={() => handlePageChange(currentPage + 1)}
+                >
                     <PaginationLink href={"#" + currentPage}>
                         {currentPage + 1}
                     </PaginationLink>
@@ -55,7 +66,7 @@ export default function BlogPaginator() {
                 <PaginationItem>
                     <PaginationNext
                         href={"#" + currentPage}
-                        onClick={() => setCurrentPage(currentPage + 1)}
+                        onClick={() => handlePageChange(currentPage + 1)}
                     />
                 </PaginationItem>
             </PaginationContent>
