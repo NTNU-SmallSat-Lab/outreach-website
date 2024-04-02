@@ -17,7 +17,7 @@ export default async function BlogDataCards({
     }
 
     return (
-        <div className="flex flex-row flex-wrap items-center justify-center w-3/4 self-center">
+        <div className="flex w-3/4 flex-row flex-wrap items-center justify-center self-center">
             {articles.map((article: any) => {
                 return (
                     <div

@@ -59,11 +59,11 @@ export default async function fetchArticlePages({
     const graphqlData = await getClient().query({
         query: GET_ARTICLES,
         variables: {
-            "pagination": {
-                "pageSize": pageSize,
-                "page": currentPage
+            pagination: {
+                pageSize: pageSize,
+                page: currentPage,
+            },
         },
-    },
     });
 
     if (
@@ -76,54 +76,52 @@ export default async function fetchArticlePages({
     }
     let articleList: BlogPost[] = [];
 
-    graphqlData.data.articles.data.forEach(
-        (article: any) => {
-            let avatarURL: string | undefined =
-                article?.attributes?.author?.data?.attributes?.avatar?.data
-                    ?.attributes?.url;
+    graphqlData.data.articles.data.forEach((article: any) => {
+        let avatarURL: string | undefined =
+            article?.attributes?.author?.data?.attributes?.avatar?.data
+                ?.attributes?.url;
 
-            if (HOST_URL && avatarURL != undefined) {
-                avatarURL = HOST_URL + avatarURL;
+        if (HOST_URL && avatarURL != undefined) {
+            avatarURL = HOST_URL + avatarURL;
+        }
+
+        const authorName: string | undefined =
+            article?.attributes?.author?.data?.attributes?.name;
+        const tag: Enum_Article_Tag | null | undefined =
+            article?.attributes?.Tag;
+        const datePublished: any = article?.attributes?.datePublished;
+        let coverImage: string | undefined =
+            article?.attributes?.coverImage?.data?.attributes?.url;
+        if (HOST_URL && coverImage != undefined) {
+            coverImage = HOST_URL + coverImage;
+        }
+        let content: BlocksContent = article?.attributes?.body ?? [];
+
+        const title: string | undefined = article?.attributes?.title;
+
+        for (const block of content) {
+            if (block.type === "paragraph") {
+                content = [block];
+                break;
             }
+        }
 
-            const authorName: string | undefined =
-                article?.attributes?.author?.data?.attributes?.name;
-            const tag: Enum_Article_Tag | null | undefined =
-                article?.attributes?.Tag;
-            const datePublished: any = article?.attributes?.datePublished;
-            let coverImage: string | undefined =
-                article?.attributes?.coverImage?.data?.attributes?.url;
-            if (HOST_URL && coverImage != undefined) {
-                coverImage = HOST_URL + coverImage;
-            }
-            let content: BlocksContent = article?.attributes?.body ?? [];
+        articleList.push({
+            key: article.id,
+            firstArticle: firstArticle,
+            title,
+            content,
+            coverImage,
+            datePublished,
+            tag,
+            HOST_URL,
+            authorName,
+            avatarURL,
+            slug: article.attributes.slug,
+        });
 
-            const title: string | undefined = article?.attributes?.title;
-
-            for (const block of content) {
-                if (block.type === "paragraph") {
-                    content = [block];
-                    break;
-                }
-            }
-
-            articleList.push({
-                key: article.id,
-                firstArticle: firstArticle,
-                title,
-                content,
-                coverImage,
-                datePublished,
-                tag,
-                HOST_URL,
-                authorName,
-                avatarURL,
-                slug: article.attributes.slug,
-            });
-
-            firstArticle = false;
-        },
-    );
+        firstArticle = false;
+    });
 
     return articleList;
 }
