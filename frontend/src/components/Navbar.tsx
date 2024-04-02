@@ -79,7 +79,7 @@ export default function Navbar() {
                 </DrawerContent>
             </Drawer>
 
-            <div className="hidden flex-1 justify-center md:flex">
+            <div className="hidden flex-1 justify-end md:flex">
                 <div className="flex items-center gap-8">
                     <Link href="/blog">
                         <Button variant={getButtonVariant("/blog")}>
