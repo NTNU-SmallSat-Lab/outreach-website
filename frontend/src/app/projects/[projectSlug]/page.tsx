@@ -14,8 +14,7 @@ query Projects($projectFilters: ProjectFiltersInput) {
     data {
       attributes {
         title
-        description
-        article
+        content
         satellites {
           data {
             id
@@ -32,7 +31,7 @@ query Projects($projectFilters: ProjectFiltersInput) {
           }
         }
         slug
-        coverImage {
+        previewImage {
           data {
             id
             attributes {
@@ -68,7 +67,7 @@ export default async function Page({
     }
 
     const projects = graphqlData.data.projects?.data[0];
-    const content: BlocksContent = projects?.attributes?.article ?? [];
+    const content: BlocksContent = projects?.attributes?.content ?? [];
 
     let projectTitle = projects?.attributes?.slug;
 

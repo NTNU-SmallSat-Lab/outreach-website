@@ -22,7 +22,7 @@ const GET_SATELLITE_INFO =
                   data {
                     attributes {
                       title
-                      coverImage {
+                      previewImage {
                         data {
                           attributes {
                             url
@@ -96,8 +96,8 @@ export default async function SatelliteInfoPage({
                     {graphqlData.data.satellites?.data[0].attributes?.projects?.data.map(
                         (project) => {
                             let coverImage =
-                                project.attributes?.coverImage?.data?.attributes
-                                    ?.url;
+                                project.attributes?.previewImage?.data
+                                    ?.attributes?.url;
 
                             if (HOST_URL && coverImage != undefined) {
                                 coverImage = HOST_URL + coverImage;

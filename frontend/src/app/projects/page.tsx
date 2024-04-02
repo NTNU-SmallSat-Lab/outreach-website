@@ -14,7 +14,7 @@ const GET_PROJECTS = gql(`
           id
           attributes {
             title
-            article
+            content
             satellites {
               data {
                 attributes {
@@ -23,17 +23,13 @@ const GET_PROJECTS = gql(`
               }
             }
             slug
-            coverImage {
+            previewImage {
               data {
                 attributes {
                   url
                 }
               }
             }
-            updatedAt
-            publishedAt
-            createdAt
-            description
           }
         }
       }
@@ -64,11 +60,12 @@ export default async function ProjectsPage() {
 
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData.data.projects.data.map((project) => {
-                    let coverImage =
-                        project?.attributes?.coverImage?.data?.attributes?.url;
+                    let previewImage =
+                        project?.attributes?.previewImage?.data?.attributes
+                            ?.url;
 
-                    if (HOST_URL && coverImage != undefined) {
-                        coverImage = HOST_URL + coverImage;
+                    if (HOST_URL && previewImage != undefined) {
+                        previewImage = HOST_URL + previewImage;
                     }
                     return (
                         <Link
@@ -80,11 +77,11 @@ export default async function ProjectsPage() {
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="h-64">
-                                        {coverImage && (
+                                        {previewImage && (
                                             <Image
                                                 className="max-h-full max-w-full object-contain"
-                                                src={coverImage}
-                                                alt={coverImage}
+                                                src={previewImage}
+                                                alt={previewImage}
                                                 width={500}
                                                 height={0}
                                             />
@@ -95,7 +92,7 @@ export default async function ProjectsPage() {
                                     </CardTitle>
                                     <p className="break-words">
                                         {SlicePreviewText(
-                                            project?.attributes?.article ?? [],
+                                            project?.attributes?.content ?? [],
                                         )}
                                     </p>
                                 </CardContent>
