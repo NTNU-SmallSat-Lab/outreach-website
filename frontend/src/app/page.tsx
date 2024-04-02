@@ -8,14 +8,8 @@ const HOST_URL = process.env.HOST_URL;
 import Image from "next/image";
 import Link from "next/link";
 
-// Dynamic import because of leaflet and globe.gl ssr problem with next.js
-import dynamic from "next/dynamic";
 import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
-
-const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
-    ssr: false,
-});
 
 const GET_MOST_RECENT_IMAGE = gql(`
 query MostRecentImages {
@@ -62,19 +56,19 @@ export default async function Home() {
     }
 
     return (
-        <main>
+        <>
             <div className="grid grid-cols-2">
-                <SatelliteDataTable satName="HYPSO-1" />
-                <SatelliteDataTable satName="UME (ISS)" />
-                <SatelliteDataTable satName="STARLINK-1007" />
-                <SatelliteDataTable satName="VANGUARD 1" />
-                <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
-                <SatelliteDataTable satName="huh" />
+                <div className="grid grid-cols-2">
+                    <SatelliteDataTable satName="HYPSO-1" />
+                    <SatelliteDataTable satName="UME (ISS)" />
+                    <SatelliteDataTable satName="STARLINK-1007" />
+                    <SatelliteDataTable satName="VANGUARD 1" />
+                    <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
+                    <SatelliteDataTable satName="huh" />
+                </div>
+
+                <SatelliteFetcher useExampleData={true} />
             </div>
-
-            <SatelliteFetcher useExampleData={true} />
-
-            <MyCustomMap />
 
             <ColoredSection
                 id="about-us"
@@ -113,7 +107,7 @@ export default async function Home() {
                     </div>
                 </div>
             </ColoredSection>
-            <div className="flex flex-col items-center px-8 py-12 pt-8 text-center">
+            <div className="flex flex-col items-center px-8 py-24 text-center">
                 <div className="prose prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
@@ -133,6 +127,7 @@ export default async function Home() {
                     </Link>
                 </div>
             </div>
+
             <ColoredSection className="flex flex-col items-center px-8 py-12">
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1 className="">Most recent picture</h1>
@@ -147,6 +142,6 @@ export default async function Home() {
                     </div>
                 </div>
             </ColoredSection>
-        </main>
+        </>
     );
 }
