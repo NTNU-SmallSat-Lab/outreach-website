@@ -46,34 +46,30 @@ export default async function Satellites() {
                     }
                     return (
                         <Link
-                                        href={
-                                            "/satellites/" +
-                                            satellite?.attributes?.name
-                                        }
-                                        className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
-                                        key={satellite.id}
-                                    >
-                        <Card className="w-1/1.5 md:w-1/3 ">
-                            <CardHeader className="flex flex-col items-center justify-center">
-                                <CardTitle>
-                                    
+                            href={"/satellites/" + satellite?.attributes?.name}
+                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                            key={satellite.id}
+                        >
+                            <Card className="w-1/1.5 md:w-1/3 ">
+                                <CardHeader className="flex flex-col items-center justify-center">
+                                    <CardTitle>
                                         {satellite?.attributes?.name}
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col items-center">
-                                <SatelliteStatsTable />
-                                {previewImage && (
-                                    <Image
-                                        src={previewImage}
-                                        alt={previewImage}
-                                        width={200}
-                                        height={0}
-                                        className="margin p-2"
-                                    />
-                                )}
-                            </CardContent>
-                        </Card>
-                    </Link>
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex flex-col items-center">
+                                    <SatelliteStatsTable />
+                                    {previewImage && (
+                                        <Image
+                                            src={previewImage}
+                                            alt={previewImage}
+                                            width={200}
+                                            height={0}
+                                            className="margin p-2"
+                                        />
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </Link>
                     );
                 })}
             </div>
