@@ -70,7 +70,8 @@ export default async function fetchSatelliteInfo({
 
     satelliteInfo = {
         name: graphqlData?.data?.satellites?.data[0]?.attributes?.name ?? "",
-        content: graphqlData?.data?.satellites?.data[0]?.attributes?.content ?? "",
+        content:
+            graphqlData?.data?.satellites?.data[0]?.attributes?.content ?? "",
         relatedProjects: projects ?? [],
     };
 
