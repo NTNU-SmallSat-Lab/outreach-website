@@ -95,7 +95,7 @@ export default async function Page({
                                 {// Get initials from author name
                                 authorName
                                     ?.split(" ")
-                                    .map((name) => name[0])
+                                    .map((name : any) => name[0])
                                     .join("")}
                             </AvatarFallback>
                         </Avatar>
