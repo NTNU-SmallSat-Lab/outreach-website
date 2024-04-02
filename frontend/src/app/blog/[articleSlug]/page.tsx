@@ -96,7 +96,7 @@ export default async function Page({
                                 authorName
                                     ?.split(" ")
                                     .map((name: any) => name[0])
-@                                    .join("")}
+                                    .join("")}
                             </AvatarFallback>
                         </Avatar>
                     )}
