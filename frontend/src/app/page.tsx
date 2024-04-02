@@ -5,55 +5,19 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 const HOST_URL = process.env.HOST_URL;
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
 
-const GET_MOST_RECENT_IMAGE = gql(`
-query MostRecentImages {
-    mostRecentImages(sort: ["publishedAt:desc"]) {
-      data {
-        attributes {
-          mostRecentImage {
-            data {
-                attributes {
-                    url
-                }
-            }
-          }
-          satellite {
-            data {
-              attributes {
-                catalogNumberNORAD
-                }
-              }
-            }
-            createdAt
-            updatedAt
-            publishedAt
-          }
-        }
-    }
-}
+import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
-`);
 
 export default async function Home() {
-    const graphqlData = await getClient().query({
-        query: GET_MOST_RECENT_IMAGE,
-    });
 
-    let mostRecentImageURL =
-        graphqlData.data.mostRecentImages?.data[0]?.attributes?.mostRecentImage
-            ?.data?.attributes?.url;
-
-    if (HOST_URL && mostRecentImageURL != undefined) {
-        mostRecentImageURL = HOST_URL + mostRecentImageURL;
-    } else {
-        mostRecentImageURL = "";
-    }
+    const mostRecentImageURL = await fetchMostRecentImage()
 
     return (
         <>
@@ -131,15 +95,7 @@ export default async function Home() {
             <ColoredSection className="flex flex-col items-center px-8 py-12">
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1 className="">Most recent picture</h1>
-                    <div className="relative h-[300px] w-[300px]">
-                        <Image
-                            alt="Most recent satellite image"
-                            src={mostRecentImageURL}
-                            className="m-0"
-                            layout="fill"
-                            objectFit="cover"
-                        />
-                    </div>
+                    {mostRecentImageURL}
                 </div>
             </ColoredSection>
         </>
