@@ -113,7 +113,7 @@ export default async function Home() {
                     </div>
                 </div>
             </ColoredSection>
-            <div className="flex flex-col items-center px-8 py-12 pt-8 text-center">
+            <div className="flex flex-col items-center px-8 py-24 text-center">
                 <div className="prose prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
@@ -133,6 +133,7 @@ export default async function Home() {
                     </Link>
                 </div>
             </div>
+
             <ColoredSection className="flex flex-col items-center px-8 py-12">
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1 className="">Most recent picture</h1>
