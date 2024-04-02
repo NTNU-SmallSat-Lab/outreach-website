@@ -6,6 +6,7 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import Starfield from "@/components/starBackground/Starfield";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECT_BY_SLUG = gql(`
@@ -77,6 +78,7 @@ export default async function Page({
     }
     return (
         <div className="flex flex-col items-center gap-4">
+            <Starfield />
             <div className="prose prose-invert w-1/2 lg:prose-xl">
                 <BlockRendererClient content={content} />
             </div>

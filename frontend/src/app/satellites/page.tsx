@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SatelliteStatsTable from "@/components/ui/satelliteStatsTable";
 import Image from "next/image";
+import Starfield from "@/components/starBackground/Starfield";
+
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
@@ -36,6 +38,7 @@ export default async function Satellites() {
 
         return (
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                <Starfield />
                 {graphqlData?.data?.satellites?.data?.map((satellite) => {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
