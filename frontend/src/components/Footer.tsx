@@ -11,16 +11,28 @@ export default function Footer() {
                 <div className="flex flex-1 justify-center">
                     <div className="flex flex-col text-center">
                         <div className="flex flex-row gap-4">
-                            <a href="#" className="hover:underline">
+                            <a
+                                href="https://www.x.com/NTNU"
+                                className="hover:underline"
+                            >
                                 Twitter
                             </a>
-                            <a href="#" className="hover:underline">
+                            <a
+                                href="https://www.facebook.com/ntnu.no"
+                                className="hover:underline"
+                            >
                                 Facebook
                             </a>
-                            <a href="#" className="hover:underline">
+                            <a
+                                href="https://www.instagram.com/ntnu"
+                                className="hover:underline"
+                            >
                                 Instagram
                             </a>
-                            <a href="#" className="hover:underline">
+                            <a
+                                href="https://www.youtube.com/user/ntnuinfo"
+                                className="hover:underline"
+                            >
                                 Youtube
                             </a>
                         </div>
@@ -38,21 +50,6 @@ export default function Footer() {
 
             <div className="text-center">
                 <p>Norwegian University of Science and Technology</p>
-            </div>
-
-            <div className="mt-4 flex flex-col text-center">
-                <a href="#" className="hover:underline">
-                    Use of cookies
-                </a>
-                <a href="#" className="hover:underline">
-                    Accessibility statement (in Norwegian)
-                </a>
-                <a href="#" className="hover:underline">
-                    Privacy policy
-                </a>
-                <a href="#" className="hover:underline">
-                    Editorial responsibility
-                </a>
             </div>
         </footer>
     );
