@@ -39,7 +39,6 @@ export default async function fetchSatelliteInfo({
 }: {
     params: { satelliteSlug: string };
 }) {
-
     let satelliteInfo: SatelliteInfo;
 
     const filters = {
@@ -47,7 +46,7 @@ export default async function fetchSatelliteInfo({
             eq: params.satelliteSlug,
         },
     };
-    
+
     const graphqlData = await getClient().query({
         query: GET_SATELLITE_INFO,
         variables: {
@@ -56,23 +55,24 @@ export default async function fetchSatelliteInfo({
     });
 
     let projects: Projects[] = [];
-    
-    graphqlData?.data?.satellites?.data[0]?.attributes?.projects?.data.map((project: any) => {
-        projects.push({
-            id: project.id,
-            title: project.attributes?.title,
-            coverImage: project.attributes?.coverImage?.data?.attributes?.url,
-            slug: project.attributes?.slug,
-        });
-    }
+
+    graphqlData?.data?.satellites?.data[0]?.attributes?.projects?.data.map(
+        (project: any) => {
+            projects.push({
+                id: project.id,
+                title: project.attributes?.title,
+                coverImage:
+                    project.attributes?.coverImage?.data?.attributes?.url,
+                slug: project.attributes?.slug,
+            });
+        },
     );
 
     satelliteInfo = {
         name: graphqlData?.data?.satellites?.data[0]?.attributes?.name,
         content: graphqlData?.data?.satellites?.data[0]?.attributes?.content,
         relatedProjects: projects,
-    }
-    
-    return satelliteInfo;
+    };
 
+    return satelliteInfo;
 }
