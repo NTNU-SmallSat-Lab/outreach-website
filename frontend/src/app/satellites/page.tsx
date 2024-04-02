@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SatelliteStatsTable from "@/components/ui/satelliteStatsTable";
 import Image from "next/image";
+import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
 
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
@@ -44,6 +45,10 @@ export default async function Satellites() {
                     if (HOST_URL && previewImage != undefined) {
                         previewImage = HOST_URL + previewImage;
                     }
+                    let satelliteName = satellite?.attributes?.name
+                    if(satelliteName == undefined){
+                        satelliteName = ""
+                    }
                     return (
                         <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
                             <CardHeader className="flex flex-col items-center justify-center">
@@ -51,16 +56,16 @@ export default async function Satellites() {
                                     <Link
                                         href={
                                             "/satellites/" +
-                                            satellite?.attributes?.name
+                                            satelliteName
                                         }
                                         className="hover:underline"
                                     >
-                                        {satellite?.attributes?.name}
+                                        {satelliteName}
                                     </Link>
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col items-center">
-                                <SatelliteStatsTable />
+                                <SatelliteDataTable satName={satelliteName}/>
                                 {previewImage && (
                                     <Image
                                         src={previewImage}
