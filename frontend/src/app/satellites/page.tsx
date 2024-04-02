@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SatelliteStatsTable from "@/components/ui/satelliteStatsTable";
 import Image from "next/image";
+
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
