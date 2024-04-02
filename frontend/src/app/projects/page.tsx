@@ -5,6 +5,7 @@ import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
+import { SlicePreviewText } from "@/components/SlicePreviewText";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECTS = gql(`
@@ -70,27 +71,6 @@ export default async function ProjectsPage() {
                     if (HOST_URL && coverImage != undefined) {
                         coverImage = HOST_URL + coverImage;
                     }
-                    let content: BlocksContent =
-                        project?.attributes?.article ?? [];
-                    let text = "";
-                    for (const block of content) {
-                        if (block.type === "paragraph") {
-                            const paragraphBlock = block as {
-                                type: "paragraph";
-                                children: { type: "text"; text: string }[];
-                            };
-
-                            if (paragraphBlock.children[0].text == "") {
-                                continue;
-                            }
-
-                            text =
-                                paragraphBlock.children[0].text.slice(0, 100) +
-                                "...";
-
-                            break;
-                        }
-                    }
                     return (
                         <Link
                             className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
@@ -114,7 +94,11 @@ export default async function ProjectsPage() {
                                     <CardTitle className="mb-2 mt-2 text-xl font-bold">
                                         {project?.attributes?.title}
                                     </CardTitle>
-                                    <p className="break-words">{text}</p>
+                                    <p className="break-words">
+                                        {SlicePreviewText(
+                                            project?.attributes?.article ?? [],
+                                        )}
+                                    </p>
                                 </CardContent>
                             </Card>
                         </Link>

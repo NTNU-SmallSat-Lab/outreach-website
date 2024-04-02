@@ -8,13 +8,13 @@ export interface BlogPost {
     key: string | null | undefined;
     firstArticle?: boolean | null | undefined;
     title: string | undefined;
-    content: BlocksContent; // Or a more appropriate type if your content is structured
-    coverImage?: string; // Optional cover image
+    content: BlocksContent;
+    coverImage?: string;
     datePublished: any;
-    tag?: Enum_Article_Tag | null | undefined; // Optional tag
-    HOST_URL?: string; // It's common to keep the host URL separate from post data
+    tag?: Enum_Article_Tag | null | undefined;
+    HOST_URL?: string;
     authorName?: string;
-    avatarURL?: string; // Optional avatar URL
+    avatarURL?: string;
     slug: string | undefined;
 }
 
