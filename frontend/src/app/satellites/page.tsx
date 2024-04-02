@@ -50,7 +50,7 @@ export default async function Satellites() {
                             className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
                             key={satellite.id}
                         >
-                            <Card className="w-1/1.5 md:w-1/3 ">
+                            <Card className="md:w-76 flex h-full w-72 flex-col">
                                 <CardHeader className="flex flex-col items-center justify-center">
                                     <CardTitle>
                                         {satellite?.attributes?.name}
