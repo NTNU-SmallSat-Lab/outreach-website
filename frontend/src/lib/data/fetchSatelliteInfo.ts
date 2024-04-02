@@ -79,7 +79,7 @@ export default async function fetchSatelliteInfo({
 
     let previewImage =
         graphqlData?.data?.satellites?.data[0]?.attributes?.previewImage.data
-            .attributes.url;
+            .attributes.url ?? "";
     if (HOST_URL && previewImage != undefined) {
         previewImage = HOST_URL + previewImage;
     }
@@ -88,7 +88,7 @@ export default async function fetchSatelliteInfo({
         name: graphqlData?.data?.satellites?.data[0]?.attributes?.name ?? "",
         content:
             graphqlData?.data?.satellites?.data[0]?.attributes?.content ?? "",
-        imageURL: previewImage ?? "",
+        imageURL: previewImage,
         relatedProjects: projects ?? [],
     };
 
