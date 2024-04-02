@@ -37,7 +37,7 @@ export default async function Satellites() {
 
         return (
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData?.data?.satellites?.data?.map((satellite : any) => {
+                {graphqlData?.data?.satellites?.data?.map((satellite: any) => {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
                             ?.url;

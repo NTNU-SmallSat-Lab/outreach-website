@@ -63,7 +63,7 @@ export default async function ProjectsPage() {
             </div>
 
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData.data.projects.data.map((project : any) => {
+                {graphqlData.data.projects.data.map((project: any) => {
                     let coverImage =
                         project?.attributes?.coverImage?.data?.attributes?.url;
 

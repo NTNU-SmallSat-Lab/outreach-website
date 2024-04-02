@@ -61,7 +61,7 @@ export default async function SatelliteFetcher({
         }
 
         const satelliteUrls = graphqlData?.data?.satellites?.data.map(
-            (satEntity : any) => {
+            (satEntity: any) => {
                 const celestrakURL = satEntity?.attributes?.celestrakURL;
                 if (celestrakURL) {
                     return celestrakURL.replace(/FORMAT=[^&]*/, "FORMAT=TLE");
