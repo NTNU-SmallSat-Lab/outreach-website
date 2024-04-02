@@ -1,0 +1,23 @@
+version: "3.3"
+services:
+    backend:
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /var/data/
+              target: /var/data/
+        build:
+            context: .
+            dockerfile: Dockerfile-backend
+        ports:
+            - "1337:1337"
+        environment:
+            - NODE_ENV=production
+
+    frontend:
+        restart: unless-stopped
+        build:
+            context: .
+            dockerfile: Dockerfile-frontend
+        ports:
+            - "3000:3000"

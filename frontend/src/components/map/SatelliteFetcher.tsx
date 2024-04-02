@@ -15,11 +15,13 @@ import { exampleData } from "./exampleSatData";
 const HYPSO1_TLE_URL =
     "https://celestrak.org/NORAD/elements/gp.php?NAME=HYPSO-1&FORMAT=TLE";
 
-const GET_ALL_SATELLITE_URLS = gql(`query AllSatellites {
-    satellites {
+const GET_ALL_SATELLITE_DATA =
+    gql(`query Satellites($filters: SatelliteFiltersInput) {
+    satellites(filters: $filters) {
       data {
         attributes {
           celestrakURL
+          catalogNumberNORAD
         }
       }
     }
@@ -28,21 +30,46 @@ const GET_ALL_SATELLITE_URLS = gql(`query AllSatellites {
 
 export default async function SatelliteFetcher({
     useExampleData,
+    filterList = [],
 }: {
     useExampleData: boolean;
+    filterList?: string[];
 }) {
     // Fetch the data, either from the example file or from strapi then celestrak
     if (useExampleData) {
         return <MyGlobe satelliteDatas={exampleData}></MyGlobe>;
     } else {
-        // Fetch the satellite urls from strapi
-        const graphqlData = await getClient().query({
-            query: GET_ALL_SATELLITE_URLS,
-        });
+        let graphqlData;
+
+        if (filterList.length > 0) {
+            const filters = {
+                name: {
+                    in: filterList,
+                },
+            };
+
+            graphqlData = await getClient().query({
+                query: GET_ALL_SATELLITE_DATA,
+                variables: {
+                    filters,
+                },
+            });
+        } else {
+            graphqlData = await getClient().query({
+                query: GET_ALL_SATELLITE_DATA,
+            });
+        }
 
         const satelliteUrls = graphqlData?.data?.satellites?.data.map(
             (satEntity) => {
-                return satEntity?.attributes?.celestrakURL;
+                const celestrakURL = satEntity?.attributes?.celestrakURL;
+                if (celestrakURL) {
+                    return celestrakURL.replace(/FORMAT=[^&]*/, "FORMAT=TLE");
+                }
+                return (
+                    "https://celestrak.org/NORAD/elements/gp.php?CATNR=" +
+                    satEntity?.attributes?.catalogNumberNORAD
+                );
             },
         ) as string[];
 

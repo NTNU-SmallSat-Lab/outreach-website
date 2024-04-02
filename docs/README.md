@@ -1,5 +1,7 @@
 # Documentation Folder
 
+See `deployment.md` for info regarding deployment.
+
 ## Overview
 Welcome to the `docs/` directory! This folder is an essential part of the Hypso Outreach Portal project. It serves as a central repository for all our documentation-related materials.
 

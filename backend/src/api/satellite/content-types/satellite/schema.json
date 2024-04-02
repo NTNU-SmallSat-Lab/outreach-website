@@ -4,16 +4,35 @@
   "info": {
     "singularName": "satellite",
     "pluralName": "satellites",
-    "displayName": "Satellite",
-    "description": ""
+    "displayName": "Satellite"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "celestrakURL": {
+      "type": "string",
+      "unique": true
+    },
     "catalogNumberNORAD": {
-      "type": "string"
+      "type": "string",
+      "unique": true
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "previewImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     },
     "projects": {
       "type": "relation",
@@ -21,8 +40,11 @@
       "target": "api::project.project",
       "mappedBy": "satellites"
     },
-    "celestrakURL": {
-      "type": "string"
+    "most_recent_images": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::most-recent-image.most-recent-image",
+      "mappedBy": "satellite"
     }
   }
 }

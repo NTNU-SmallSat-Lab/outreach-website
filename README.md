@@ -1,13 +1,13 @@
 # Hypso Outreach Portal
 
-## General Information
-Project Code: P.01
-Country: 🇳🇴 Norway
-Customer: NTNU SmallSat Lab
-Platform: Web
-Framework: React
-Period: Spring 2024
-Status: In Progress
+## General Information  
+Project Code: P.01  
+Country: 🇳🇴 Norway  
+Customer: NTNU SmallSat Lab  
+Platform: Web  
+Framework: React  
+Period: Spring 2024  
+Status: In Progress  
 
 ## Project Title
 Hypso Outreach Portal

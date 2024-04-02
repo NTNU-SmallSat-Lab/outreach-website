@@ -132,7 +132,7 @@ export default function MyGlobe({
                 <div
                     id="time-log"
                     ref={timeLogger}
-                    className="absolute top-0 bottom-0 z-50"
+                    className="absolute bottom-0 top-0 z-50 text-white text-opacity-75"
                 ></div>
                 <div id="chart" ref={chart}></div>
             </div>
