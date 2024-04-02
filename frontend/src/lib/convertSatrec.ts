@@ -1,5 +1,5 @@
-import { SatRec } from "satellite.js";
 import * as satellite from "satellite.js";
+import { SatRec } from "satellite.js";
 import { PolyUtil } from "node-geometry-library";
 import globeData from "@components/map/githubglobe/files/globe-data.json";
 

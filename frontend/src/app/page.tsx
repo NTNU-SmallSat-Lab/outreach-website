@@ -79,8 +79,6 @@ export default async function Home() {
 
             <SatelliteFetcher useExampleData={true} />
 
-            <MyCustomMap />
-
             <ColoredSection
                 id="about-us"
                 className="flex flex-col items-center px-8 py-12"
