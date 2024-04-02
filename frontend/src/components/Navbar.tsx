@@ -42,7 +42,7 @@ export default function Navbar() {
 
     return (
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
-            <div className="flex-1">
+            <div>
                 <Link href="/">
                     <Image
                         width={256}

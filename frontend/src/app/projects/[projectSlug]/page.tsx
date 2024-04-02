@@ -3,9 +3,8 @@ import { gql } from "@/__generated__/gql";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
+import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECT_BY_SLUG = gql(`
@@ -87,43 +86,21 @@ export default async function Page({
             )}
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
-                    (satellite) => {
-                        let coverImage =
-                            satellite.attributes?.previewImage?.data?.attributes
-                                ?.url;
-
-                        if (HOST_URL && coverImage != undefined) {
-                            coverImage = HOST_URL + coverImage;
-                        }
+                    (satellite: any) => {
+                        const satelliteObject: ProjectOrSatellite = {
+                            id: satellite.id,
+                            title: satellite.attributes.name,
+                            previewImage:
+                                satellite.attributes.previewImage.data
+                                    .attributes.url,
+                            slug: satellite.attributes.name,
+                            isProject: false,
+                        };
                         return (
-                            <Link
-                                className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
-                                href={
-                                    "/satellites/" + satellite?.attributes?.name
-                                }
+                            <RelatedProjectsAndSatellites
+                                project={satelliteObject}
                                 key={satellite.id}
-                            >
-                                <Card className="md:w-68 flex h-full w-64 flex-col lg:w-72">
-                                    <CardHeader>
-                                        <CardTitle className="mb-2 mt-2 text-center text-xl font-bold">
-                                            {satellite?.attributes?.name}
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="h-48">
-                                            {coverImage && (
-                                                <Image
-                                                    className="max-h-full max-w-full object-contain"
-                                                    src={coverImage}
-                                                    alt={coverImage}
-                                                    width={500}
-                                                    height={0}
-                                                />
-                                            )}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </Link>
+                            />
                         );
                     },
                 )}
