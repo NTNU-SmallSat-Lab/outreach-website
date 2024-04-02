@@ -45,18 +45,19 @@ export default async function Satellites() {
                         previewImage = HOST_URL + previewImage;
                     }
                     return (
-                        <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
-                            <CardHeader className="flex flex-col items-center justify-center">
-                                <CardTitle>
-                                    <Link
+                        <Link
                                         href={
                                             "/satellites/" +
                                             satellite?.attributes?.name
                                         }
-                                        className="hover:underline"
+                                        className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                                        key={satellite.id}
                                     >
+                        <Card className="w-1/1.5 md:w-1/3 ">
+                            <CardHeader className="flex flex-col items-center justify-center">
+                                <CardTitle>
+                                    
                                         {satellite?.attributes?.name}
-                                    </Link>
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col items-center">
@@ -72,6 +73,7 @@ export default async function Satellites() {
                                 )}
                             </CardContent>
                         </Card>
+                    </Link>
                     );
                 })}
             </div>
