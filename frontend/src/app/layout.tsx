@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 };
 
 import ErrorBoundaryNavigation from "@/components/ErrorBoundaryNavigation";
+import Starfield from "@/components/starBackground/Starfield";
 
 export default function RootLayout({
     children,
@@ -27,7 +28,10 @@ export default function RootLayout({
                 <ApolloWrapper>
                     <Navbar />
                     <ErrorBoundaryNavigation>
-                        <main className="flex-grow">{children}</main>
+                        <main className="flex-grow">
+                            <Starfield />
+                            {children}
+                        </main>
                     </ErrorBoundaryNavigation>
                     <Footer />
                 </ApolloWrapper>

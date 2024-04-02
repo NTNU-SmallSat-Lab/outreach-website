@@ -7,7 +7,6 @@ const HOST_URL = process.env.HOST_URL;
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Starfield from "@/components/starBackground/Starfield";
 
 const GET_SATELLITE_INFO =
     gql(`query GET_SATELLITE_INFO($filters: SatelliteFiltersInput) {
@@ -64,7 +63,6 @@ export default async function SatelliteInfoPage({
 
         return (
             <div className="flex flex-col items-center">
-                <Starfield />
                 <SatelliteFetcher
                     useExampleData={true}
                     filterList={[

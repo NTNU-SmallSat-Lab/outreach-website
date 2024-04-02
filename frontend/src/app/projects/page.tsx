@@ -5,7 +5,6 @@ import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
-import Starfield from "@/components/starBackground/Starfield";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECTS = gql(`
@@ -56,7 +55,6 @@ export default async function ProjectsPage() {
 
     return (
         <div>
-            <Starfield />
             <div className="flex flex-col items-center justify-center">
                 <h1 className="text-4xl font-extrabold ">Our Projects</h1>
                 <p className="text-sm text-muted-foreground">
