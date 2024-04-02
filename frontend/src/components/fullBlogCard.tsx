@@ -35,6 +35,8 @@ export default function FullBlogCard(article: BlogPost) {
                         <Image
                             src={article.coverImage}
                             alt={article.coverImage}
+                            width={500}
+                            height={0}
                             className="m-0 aspect-video max-h-[250px] w-full object-cover p-0"
                         />
                     )}
