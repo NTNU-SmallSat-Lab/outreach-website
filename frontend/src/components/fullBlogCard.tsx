@@ -4,10 +4,10 @@ import {
     BlogCardHeader,
     BlogCardTitle,
 } from "@/components/ui/blogCard";
-
 import Link from "next/link";
 import { SlicePreviewText } from "./SlicePreviewText";
 import { BlogPost } from "@/app/blog/page";
+import Image from "next/image";
 
 export default function FullBlogCard(article: BlogPost) {
     function formatDate(dateString: string) {
@@ -32,7 +32,7 @@ export default function FullBlogCard(article: BlogPost) {
             <BlogCardHeader>
                 <BlogCardContent>
                     {article.coverImage && (
-                        <img
+                        <Image
                             src={article.coverImage}
                             alt={article.coverImage}
                             className="m-0 aspect-video max-h-[250px] w-full object-cover p-0"

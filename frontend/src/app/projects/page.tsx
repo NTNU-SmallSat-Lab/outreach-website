@@ -2,7 +2,6 @@ export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getClient } from "@/lib/ApolloClient";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
 import { SlicePreviewText } from "@/components/SlicePreviewText";
