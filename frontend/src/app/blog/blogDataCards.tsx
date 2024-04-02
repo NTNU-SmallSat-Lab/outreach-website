@@ -2,23 +2,31 @@ export const runtime = "edge";
 import FullBlogCard from "@/components/fullBlogCard";
 import BlogpageButtons from "@/components/BlogpageButtons";
 import { BlogPost } from "./page";
-import fetchArticlePages from "@/lib/data/fetchArticleInfo";
 
 export default async function BlogDataCards({
     articles,
 }: {
     articles: BlogPost[] | null;
 }) {
-
-    const test : BlogPost[] = fetchArticlePages({currentPage: 1, pageSize: 1})
+    if (articles === null || articles === undefined) {
+        return (
+            <div>
+                <h1>There are no articles to display</h1>
+            </div>
+        );
+    }
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            {test.map((article: any) => {
+        <div className="flex flex-row flex-wrap items-center justify-center w-3/4 self-center">
+            {articles.map((article: any) => {
                 return (
                     <div
                         key={article.id}
-                        className="flex w-3/4 flex-col items-center justify-center"
+                        className={
+                            article.firstArticle
+                                ? "flex w-full flex-col items-center justify-center"
+                                : "flex w-1/3 flex-col items-center justify-center"
+                        }
                     >
                         <FullBlogCard
                             key={article.id} // A unique ID for each blog post

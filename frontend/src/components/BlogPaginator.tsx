@@ -9,54 +9,39 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "./ui/pagination";
+import { useSearchParams } from "next/navigation";
 
-interface BlogPaginatorProps {
-    currentPage: number;
-    onPageChange: (newPage: number) => void;
-}
+export default function BlogPaginator() {
+    const searchParams = useSearchParams();
 
-export default function BlogPaginator({
-    currentPage,
-    onPageChange,
-}: BlogPaginatorProps) {
-    const handlePageChange = (newPage: number) => {
-        onPageChange(newPage);
-    };
+    const page = searchParams.get("page");
+    let currentPage = parseInt(page ?? "1", 10);
+    currentPage = currentPage > 1 ? currentPage : 1;
 
     return (
-        <Pagination>
+        <Pagination className="my-4">
             <PaginationContent>
                 <PaginationItem>
-                    {currentPage > 1 ? (
-                        <PaginationPrevious
-                            href={"#" + currentPage}
-                            onClick={() => handlePageChange(currentPage - 1)}
-                        />
-                    ) : (
-                        <PaginationPrevious
-                            href={"#" + currentPage}
-                            onClick={() => handlePageChange(currentPage)}
-                        />
-                    )}
+                    <PaginationPrevious
+                        href={
+                            "?page=" + (currentPage > 1 ? currentPage - 1 : 1)
+                        }
+                    />
                 </PaginationItem>
                 {currentPage > 1 ? (
-                    <PaginationItem
-                        onClick={() => handlePageChange(currentPage - 1)}
-                    >
-                        <PaginationLink href={"#" + currentPage}>
+                    <PaginationItem>
+                        <PaginationLink href={"?page=" + (currentPage - 1)}>
                             {currentPage - 1}
                         </PaginationLink>
                     </PaginationItem>
                 ) : null}
                 <PaginationItem>
-                    <PaginationLink href={"#" + currentPage} isActive>
+                    <PaginationLink href={"?page=" + currentPage} isActive>
                         {currentPage}
                     </PaginationLink>
                 </PaginationItem>
-                <PaginationItem
-                    onClick={() => handlePageChange(currentPage + 1)}
-                >
-                    <PaginationLink href={"#" + currentPage}>
+                <PaginationItem>
+                    <PaginationLink href={"?page=" + (currentPage + 1)}>
                         {currentPage + 1}
                     </PaginationLink>
                 </PaginationItem>
@@ -64,10 +49,7 @@ export default function BlogPaginator({
                     <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationNext
-                        href={"#" + currentPage}
-                        onClick={() => handlePageChange(currentPage + 1)}
-                    />
+                    <PaginationNext href={"?page=" + (currentPage + 1)} />
                 </PaginationItem>
             </PaginationContent>
         </Pagination>

@@ -59,11 +59,11 @@ export default async function fetchArticlePages({
     const graphqlData = await getClient().query({
         query: GET_ARTICLES,
         variables: {
-            pagination: {
-                pageSize,
-                currentPage,
-            },
+            "pagination": {
+                "pageSize": pageSize,
+                "page": currentPage
         },
+    },
     });
 
     if (
@@ -77,40 +77,7 @@ export default async function fetchArticlePages({
     let articleList: BlogPost[] = [];
 
     graphqlData.data.articles.data.forEach(
-        (article: {
-            id: string;
-            attributes: {
-                author: {
-                    data: {
-                        attributes: {
-                            name: string;
-                            avatar: {
-                                data: {
-                                    attributes: {
-                                        url: string;
-                                    };
-                                };
-                            };
-                        };
-                    };
-                };
-                title: string;
-                datePublished: any;
-                body: BlocksContent;
-                coverImage: {
-                    data: {
-                        attributes: {
-                            url: string;
-                        };
-                    };
-                };
-                createdAt: any;
-                publishedAt: any;
-                slug: string;
-                subtitle: string;
-                Tag: Enum_Article_Tag;
-            };
-        }) => {
+        (article: any) => {
             let avatarURL: string | undefined =
                 article?.attributes?.author?.data?.attributes?.avatar?.data
                     ?.attributes?.url;

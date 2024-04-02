@@ -1,8 +1,8 @@
-
 import BlogPaginator from "@/components/BlogPaginator";
 import BlogDataCards from "./blogDataCards";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import { Enum_Article_Tag } from "@/__generated__/graphql";
+import fetchArticlePages from "@/lib/data/fetchArticleInfo";
 
 export interface BlogPost {
     key: string | null | undefined;
@@ -18,34 +18,24 @@ export interface BlogPost {
     slug: string | undefined;
 }
 
-// Dictionary to cache articles
-// const articleCache: Record<number, BlogPost[]> = {};
+export default async function BlogPage({
+    searchParams,
+}: {
+    searchParams?: { [key: string]: string | undefined };
+}) {
+    const page = searchParams?.page;
+    const currentPage = parseInt(page ?? "1", 10);
 
-export default function BlogPage() {
-    let currentPage = 1;
-    // const test : BlogPost[] = fetchArticlePages({currentPage: 1, pageSize: 1})
-
-    // useEffect(() => {
-    //     if (articleCache[currentPage] === undefined) {
-    //         articleCache[currentPage] = fetchArticlePages({
-    //             currentPage,
-    //             pageSize: 2,
-    //         });
-    //     }
-    // }, [currentPage]);
-
-    const handlePageChange = (newPage: number) => {
-        currentPage = newPage;
-    };
+    const articles = (await fetchArticlePages({
+        currentPage: currentPage,
+        pageSize: 7,
+    })) as BlogPost[];
 
     return (
-        <div>
+        <div className="just flex flex-col content-center justify-center">
             {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
-            <BlogDataCards articles={null} />
-            <BlogPaginator
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-            />
+            <BlogDataCards articles={articles} />
+            <BlogPaginator />
         </div>
     );
 }
