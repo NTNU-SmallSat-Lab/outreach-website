@@ -38,7 +38,7 @@ export default async function Satellites() {
 
         return (
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData?.data?.satellites?.data?.map((satellite) => {
+                {graphqlData?.data?.satellites?.data?.map((satellite: any) => {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
                             ?.url;
@@ -49,33 +49,31 @@ export default async function Satellites() {
                     let missionStatus =
                         satellite?.attributes?.missionStatus ?? "";
                     return (
-                        <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
-                            <CardHeader className="flex flex-col items-center justify-center">
-                                <CardTitle>
-                                    <Link
-                                        href={"/satellites/" + satelliteName}
-                                        className="hover:underline"
-                                    >
-                                        {satelliteName}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col items-center">
-                                <SatelliteStatsTable
-                                    satName={satelliteName}
-                                    missionStatus={missionStatus}
-                                />
-                                {previewImage && (
-                                    <Image
-                                        src={previewImage}
-                                        alt={previewImage}
-                                        width={200}
-                                        height={0}
-                                        className="margin p-2"
-                                    />
-                                )}
-                            </CardContent>
-                        </Card>
+                        <Link
+                            href={"/satellites/" + satellite?.attributes?.name}
+                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                            key={satellite.id}
+                        >
+                            <Card className="md:w-76 flex h-full w-72 flex-col">
+                                <CardHeader className="flex flex-col items-center justify-center">
+                                    <CardTitle>
+                                        {satellite?.attributes?.name}
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex flex-col items-center">
+                                    <SatelliteStatsTable satName={satelliteName} missionStatus={missionStatus}/>
+                                    {previewImage && (
+                                        <Image
+                                            src={previewImage}
+                                            alt={previewImage}
+                                            width={200}
+                                            height={0}
+                                            className="margin p-2"
+                                        />
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </Link>
                     );
                 })}
             </div>
