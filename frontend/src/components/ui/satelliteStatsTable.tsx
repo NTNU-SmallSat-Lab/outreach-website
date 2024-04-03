@@ -6,7 +6,13 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 const updateInterval = 10;
 
-export default function SatelliteStatsTable({ satName, missionStatus }: { satName: string, missionStatus: string }) {
+export default function SatelliteStatsTable({
+    satName,
+    missionStatus,
+}: {
+    satName: string;
+    missionStatus: string;
+}) {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
@@ -46,7 +52,7 @@ export default function SatelliteStatsTable({ satName, missionStatus }: { satNam
                 <TableRow>
                     <TableCell className="text-left" colSpan={2}>
                         <p>{missionStatus}</p>
-                        <p className="">{"Mission Status"}</p>   
+                        <p className="">{"Mission Status"}</p>
                     </TableCell>
                 </TableRow>
                 <TableRow>
@@ -71,8 +77,9 @@ export default function SatelliteStatsTable({ satName, missionStatus }: { satNam
                 </TableRow>
                 <TableRow>
                     <TableCell className="text-left" colSpan={2}>
-                        <p className="text-m">{"Above " + satelliteInfo.country}</p>
-
+                        <p className="text-m">
+                            {"Above " + satelliteInfo.country}
+                        </p>
                     </TableCell>
                 </TableRow>
             </TableBody>

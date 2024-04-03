@@ -45,17 +45,15 @@ export default async function Satellites() {
                     if (HOST_URL && previewImage != undefined) {
                         previewImage = HOST_URL + previewImage;
                     }
-                    let satelliteName = satellite?.attributes?.name ?? ""
-                    let missionStatus = satellite?.attributes?.missionStatus ?? ""
+                    let satelliteName = satellite?.attributes?.name ?? "";
+                    let missionStatus =
+                        satellite?.attributes?.missionStatus ?? "";
                     return (
                         <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
                             <CardHeader className="flex flex-col items-center justify-center">
                                 <CardTitle>
                                     <Link
-                                        href={
-                                            "/satellites/" +
-                                            satelliteName
-                                        }
+                                        href={"/satellites/" + satelliteName}
                                         className="hover:underline"
                                     >
                                         {satelliteName}
@@ -63,7 +61,10 @@ export default async function Satellites() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col items-center">
-                                <SatelliteStatsTable satName={satelliteName} missionStatus={missionStatus}/>
+                                <SatelliteStatsTable
+                                    satName={satelliteName}
+                                    missionStatus={missionStatus}
+                                />
                                 {previewImage && (
                                     <Image
                                         src={previewImage}
