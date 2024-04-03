@@ -11,8 +11,7 @@ export default function BlogpageButtons() {
 
     const handleParameterChange = (tag: string) => {
         setActiveButton(tag);
-        if (tag === "All Posts")
-            router.replace(`/blog?page=${currentPage}`);
+        if (tag === "All Posts") router.replace(`/blog?page=${currentPage}`);
         else {
             router.replace(`/blog?page=${currentPage}&tag=${tag}`);
         }
