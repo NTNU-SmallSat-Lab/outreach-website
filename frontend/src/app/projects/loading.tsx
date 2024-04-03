@@ -10,8 +10,11 @@ export default function Loading() {
     ));
 
     return (
-        <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
-            {skeletons}
+        <div className="flex w-full origin-center flex-col justify-center">
+            <Skeleton className="my-10 h-24 w-1/3 self-center" />
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
+                {skeletons}
+            </div>
         </div>
     );
 }
