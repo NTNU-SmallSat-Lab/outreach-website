@@ -50,7 +50,6 @@ export default function MyGlobe({
     
     
     const chart = React.useRef<HTMLDivElement>(null);
-    const timeLogger = React.useRef<HTMLDivElement>(null);
 
     // useEffect is used because we want to run the code only once when the component is mounted
     useEffect(() => {
@@ -67,9 +66,9 @@ export default function MyGlobe({
                 .objectLng("lng")
                 .objectAltitude("alt")
                 .objectFacesSurface(false)
+                .backgroundColor("rgba(0,0,0,0)")
                 .objectLabel("name");
-            const controls = myGlobe.controls();
-            controls.enabled = false;
+                
 
             // Set initial camera distance
             setTimeout(() => myGlobe.pointOfView({ altitude: 3.5 }));
@@ -96,7 +95,9 @@ export default function MyGlobe({
 
             // Disable OrbitControls and enable auto-rotation
             // myGlobe.controls().autoRotate = true;
-            // myGlobe.controls().enabled = false;
+            myGlobe.controls().enabled = true;
+            // Disable zooming
+            myGlobe.controls().enableZoom = false;
             // Invert rotation direction
             // myGlobe.controls().autoRotateSpeed *= -1;
 
@@ -126,9 +127,6 @@ export default function MyGlobe({
                 requestAnimationFrame(frameTicker);
 
                 time = new Date(+time + TIME_STEP);
-                if (timeLogger.current) {
-                    timeLogger.current.innerText = time.toString();
-                }
 
                 // Update satellite positions
                 
@@ -162,14 +160,7 @@ export default function MyGlobe({
 
     return (
         <>
-            <div className="relative">
-                <div
-                    id="time-log"
-                    ref={timeLogger}
-                    className="absolute top-0 bottom-0 z-50 text-white text-opacity-75"
-                ></div>
-                <div id="chart" ref={chart}></div>
-            </div>
+            <div id="chart" className="" ref={chart}></div>
         </>
     );
 }

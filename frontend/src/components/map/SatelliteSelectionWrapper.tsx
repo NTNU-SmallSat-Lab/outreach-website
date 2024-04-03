@@ -35,6 +35,8 @@ const ClientOnlyComponent: React.FC<ClientOnlyComponentProps> = ({ fetchSatellit
       }
       
     };
+    
+    
     fetchData();
   }, [fetchSatelliteData]);
 
@@ -47,14 +49,10 @@ const ClientOnlyComponent: React.FC<ClientOnlyComponentProps> = ({ fetchSatellit
 
   return (
     <>
-    <div className="flex flex-col md:flex-row">
-      <div className="bg-blue-500 w-full md:flex-1 min-h-[100px]">
+    <div >
         <Combobox data={frameworkData} onSelect={onSelectSatellite}></Combobox>
-      </div>
-
-      <div className="w-full md:flex-1">
         <MyGlobe satelliteDatas={satelliteData} selectedSatellite={selectedSatellite} />
-      </div>
+
     </div>
   </>
    

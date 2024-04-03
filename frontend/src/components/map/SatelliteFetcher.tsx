@@ -34,17 +34,14 @@ export default async function fetchSatelliteData({
     useExampleData,
     filterList = [],
 }: SatelliteFetcherInterface): Promise<string> {
-    console.log("Yo");
     if (useExampleData) {
-        
-        
         return exampleData;
     } else {
         let graphqlData;
 
         if (filterList.length > 0) {
             const filters = {
-                satelliteName: {
+                name: {
                     in: filterList,
                 },
             };
@@ -61,16 +58,36 @@ export default async function fetchSatelliteData({
             });
         }
 
-        const satelliteUrls = graphqlData?.data?.satellites?.data.map(satEntity => {
-            const celestrakURL = satEntity?.attributes?.celestrakURL;
-            return celestrakURL ? celestrakURL.replace(/FORMAT=[^&]*/, "FORMAT=TLE") :
-                `https://celestrak.org/NORAD/elements/gp.php?CATNR=${satEntity?.attributes?.catalogNumberNORAD}`;
-        }) as string[];
+        const satelliteUrls = graphqlData?.data?.satellites?.data.map(
+            (satEntity: any) => {
+                const celestrakURL = satEntity?.attributes?.celestrakURL;
+                if (celestrakURL) {
+                    return celestrakURL.replace(/FORMAT=[^&]*/, "FORMAT=TLE");
+                }
+                return (
+                    "https://celestrak.org/NORAD/elements/gp.php?CATNR=" +
+                    satEntity?.attributes?.catalogNumberNORAD
+                );
+            },
+        ) as string[];
 
-        let responses = satelliteUrls.map(url =>
-            fetch(url).then(r => r.ok ? r.text() : Promise.reject("Failed to fetch data from Celestrak"))
-        );
-
+        // Fetch every satellite's data from celestrak
+        let responses: Promise<String>[] = [];
+        satelliteUrls.forEach((url) => {
+            responses.push(
+                fetch(url, {
+                    next: {
+                        revalidate: 10800, // 3 hours
+                    },
+                }).then((r) => {
+                    if (r.ok) {
+                        return r.text();
+                    }
+                    throw new Error("Failed to fetch data from Celestrak");
+                }),
+            );
+        });
+        // Wait for all the responses to come back
         const data = await Promise.all(responses);
 
         console.log(data);

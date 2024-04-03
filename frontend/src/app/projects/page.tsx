@@ -5,7 +5,6 @@ import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
-import BlockRendererClient from "@/components/BlockRendererClient";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECTS = gql(`
@@ -55,14 +54,16 @@ export default async function ProjectsPage() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-extrabold ">Our Projects</h1>
-            <p className="text-sm text-muted-foreground">
-                Information about our various projects are shown here.
-            </p>
+        <div>
+            <div className="flex flex-col items-center justify-center">
+                <h1 className="text-4xl font-extrabold ">Our Projects</h1>
+                <p className="text-sm text-muted-foreground">
+                    Information about our various projects are shown here.
+                </p>
+            </div>
 
-            <div className="flex flex-col gap-4 mt-4 justify-center items-center">
-                {graphqlData.data.projects.data.map((project) => {
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                {graphqlData.data.projects.data.map((project: any) => {
                     let coverImage =
                         project?.attributes?.coverImage?.data?.attributes?.url;
 
@@ -71,40 +72,52 @@ export default async function ProjectsPage() {
                     }
                     let content: BlocksContent =
                         project?.attributes?.article ?? [];
-
+                    let text = "";
                     for (const block of content) {
                         if (block.type === "paragraph") {
-                            content = [block];
+                            const paragraphBlock = block as {
+                                type: "paragraph";
+                                children: { type: "text"; text: string }[];
+                            };
+
+                            if (paragraphBlock.children[0].text == "") {
+                                continue;
+                            }
+
+                            text =
+                                paragraphBlock.children[0].text.slice(0, 100) +
+                                "...";
+
                             break;
                         }
                     }
                     return (
-                        <Card className="w-1/2" key={project.id}>
-                            <CardHeader>
-                                <CardTitle>
-                                    <Link
-                                        className="hover:underline"
-                                        href={
-                                            "/projects/" +
-                                            project?.attributes?.slug
-                                        }
-                                    >
+                        <Link
+                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                            href={"/projects/" + project?.attributes?.slug}
+                            key={project.id}
+                        >
+                            <Card className="md:w-68 flex h-full w-64 flex-col lg:w-72">
+                                <CardHeader></CardHeader>
+                                <CardContent>
+                                    <div className="h-64">
+                                        {coverImage && (
+                                            <Image
+                                                className="max-h-full max-w-full object-contain"
+                                                src={coverImage}
+                                                alt={coverImage}
+                                                width={500}
+                                                height={0}
+                                            />
+                                        )}
+                                    </div>
+                                    <CardTitle className="mb-2 mt-2 text-xl font-bold">
                                         {project?.attributes?.title}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {coverImage && (
-                                    <Image
-                                        src={coverImage}
-                                        alt={coverImage}
-                                        width={500}
-                                        height={0} // Set height to 0 to maintain aspect ratio
-                                    />
-                                )}
-                                <BlockRendererClient content={content} />
-                            </CardContent>
-                        </Card>
+                                    </CardTitle>
+                                    <p className="break-words">{text}</p>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     );
                 })}
             </div>

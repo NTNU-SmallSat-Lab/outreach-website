@@ -2,14 +2,10 @@ export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SatelliteStatsTable from "@/components/ui/satelliteStatsTable";
 import Image from "next/image";
+
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
@@ -19,7 +15,7 @@ query GET_SATELLITES {
         attributes {
           celestrakURL
           catalogNumberNORAD
-          satelliteName
+          name
           previewImage {
             data {
               attributes {
@@ -40,8 +36,8 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="grid grid-cols-3 gap-4">
-                {graphqlData?.data?.satellites?.data?.map((satellite) => {
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                {graphqlData?.data?.satellites?.data?.map((satellite: any) => {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
                             ?.url;
@@ -49,39 +45,31 @@ export default async function Satellites() {
                         previewImage = HOST_URL + previewImage;
                     }
                     return (
-                        <Card key={satellite.id}>
-                            <CardHeader className="flex flex-col justify-center items-center">
-                                <CardTitle>
-                                    <Link
-                                        href={
-                                            "/satellites/" +
-                                            satellite?.attributes?.satelliteName
-                                        }
-                                        className="hover:underline"
-                                    >
-                                        {satellite?.attributes?.satelliteName}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col items-center">
-                                <div className="flex flex-row gap-1">
-                                    <h1>Altitude: {"1234"}km</h1>
-                                    <h1>Speed: {"1223"}km/s</h1>
-                                    <h1>Latitude: {"24.65"}°</h1>
-                                    <h1>Longitude: {"26.12"}°</h1>
-                                </div>
-
-                                {previewImage && (
-                                    <Image
-                                        src={previewImage}
-                                        alt={previewImage}
-                                        width={200}
-                                        height={0}
-                                    />
-                                )}
-                            </CardContent>
-                            <CardFooter></CardFooter>
-                        </Card>
+                        <Link
+                            href={"/satellites/" + satellite?.attributes?.name}
+                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                            key={satellite.id}
+                        >
+                            <Card className="md:w-76 flex h-full w-72 flex-col">
+                                <CardHeader className="flex flex-col items-center justify-center">
+                                    <CardTitle>
+                                        {satellite?.attributes?.name}
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex flex-col items-center">
+                                    <SatelliteStatsTable />
+                                    {previewImage && (
+                                        <Image
+                                            src={previewImage}
+                                            alt={previewImage}
+                                            width={200}
+                                            height={0}
+                                            className="margin p-2"
+                                        />
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </Link>
                     );
                 })}
             </div>
