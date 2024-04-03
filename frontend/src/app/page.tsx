@@ -1,11 +1,6 @@
 import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
 
-import { gql } from "@/__generated__/gql";
-import { getClient } from "@/lib/ApolloClient";
-const HOST_URL = process.env.HOST_URL;
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
