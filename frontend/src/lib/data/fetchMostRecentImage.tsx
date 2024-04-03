@@ -2,7 +2,6 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "../ApolloClient";
 import Image from "next/image";
 
-
 const HOST_URL = process.env.HOST_URL;
 
 const GET_MOST_RECENT_IMAGE = gql(`
@@ -50,9 +49,11 @@ export default async function fetchMostrecentImage() {
         mostRecentImageURL = "";
     }
 
-    const imageSatelliteRelation = graphqlData.data.mostRecentImages?.data[0]?.attributes?.satellite?.data?.attributes?.name
+    const imageSatelliteRelation =
+        graphqlData.data.mostRecentImages?.data[0]?.attributes?.satellite?.data
+            ?.attributes?.name;
 
-    return(
+    return (
         <div>
             <div className="relative h-[300px] w-[300px]">
                 <Image

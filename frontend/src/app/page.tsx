@@ -14,10 +14,8 @@ import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
 
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
-
 export default async function Home() {
-
-    const mostRecentImageURL = await fetchMostRecentImage()
+    const mostRecentImageURL = await fetchMostRecentImage();
 
     return (
         <>
