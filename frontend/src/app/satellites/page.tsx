@@ -3,9 +3,8 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import SatelliteStatsTable from "@/components/ui/satelliteStatsTable";
+import SatelliteStatsTable from "@/components/ui/SatelliteStatsTable";
 import Image from "next/image";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
 
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
@@ -24,6 +23,7 @@ query GET_SATELLITES {
               }
             }
           }
+          missionStatus
         }
       }
     }
@@ -45,10 +45,8 @@ export default async function Satellites() {
                     if (HOST_URL && previewImage != undefined) {
                         previewImage = HOST_URL + previewImage;
                     }
-                    let satelliteName = satellite?.attributes?.name
-                    if(satelliteName == undefined){
-                        satelliteName = ""
-                    }
+                    let satelliteName = satellite?.attributes?.name ?? ""
+                    let missionStatus = satellite?.attributes?.missionStatus ?? ""
                     return (
                         <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
                             <CardHeader className="flex flex-col items-center justify-center">
@@ -65,7 +63,7 @@ export default async function Satellites() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col items-center">
-                                <SatelliteDataTable satName={satelliteName}/>
+                                <SatelliteStatsTable satName={satelliteName} missionStatus={missionStatus}/>
                                 {previewImage && (
                                     <Image
                                         src={previewImage}
