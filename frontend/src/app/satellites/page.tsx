@@ -3,7 +3,7 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import SatelliteStatsTable from "@/components/ui/satelliteStatsTable";
+import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
 import Image from "next/image";
 
 const HOST_URL = process.env.HOST_URL;
@@ -23,6 +23,7 @@ query GET_SATELLITES {
               }
             }
           }
+          missionStatus
         }
       }
     }
@@ -44,34 +45,38 @@ export default async function Satellites() {
                     if (HOST_URL && previewImage != undefined) {
                         previewImage = HOST_URL + previewImage;
                     }
+                    let satelliteName = satellite?.attributes?.name ?? "";
+                    let missionStatus =
+                        satellite?.attributes?.missionStatus ?? "";
                     return (
-                        <Card key={satellite.id} className="w-1/1.5 md:w-1/3 ">
-                            <CardHeader className="flex flex-col items-center justify-center">
-                                <CardTitle>
-                                    <Link
-                                        href={
-                                            "/satellites/" +
-                                            satellite?.attributes?.name
-                                        }
-                                        className="hover:underline"
-                                    >
+                        <Link
+                            href={"/satellites/" + satellite?.attributes?.name}
+                            className="w-1/1.5 m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4 md:w-1/3"
+                            key={satellite.id}
+                        >
+                            <Card className="flex h-full w-full flex-col">
+                                <CardHeader className="flex flex-col items-center justify-center">
+                                    <CardTitle>
                                         {satellite?.attributes?.name}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col items-center">
-                                <SatelliteStatsTable />
-                                {previewImage && (
-                                    <Image
-                                        src={previewImage}
-                                        alt={previewImage}
-                                        width={200}
-                                        height={0}
-                                        className="margin p-2"
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex flex-col items-center">
+                                    <SatelliteStatsTable
+                                        satName={satelliteName}
+                                        missionStatus={missionStatus}
                                     />
-                                )}
-                            </CardContent>
-                        </Card>
+                                    {previewImage && (
+                                        <Image
+                                            src={previewImage}
+                                            alt={previewImage}
+                                            width={200}
+                                            height={0}
+                                            className="margin p-2"
+                                        />
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </Link>
                     );
                 })}
             </div>

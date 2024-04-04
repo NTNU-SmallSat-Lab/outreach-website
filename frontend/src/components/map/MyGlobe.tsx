@@ -40,7 +40,6 @@ export default function MyGlobe({
     satelliteDatas: string; // Expects a string of TLE strings such as the example files in the datasets folder
 }) {
     const chart = React.useRef<HTMLDivElement>(null);
-    const timeLogger = React.useRef<HTMLDivElement>(null);
 
     // useEffect is used because we want to run the code only once when the component is mounted
     useEffect(() => {
@@ -54,14 +53,26 @@ export default function MyGlobe({
                 .objectLng("lng")
                 .objectAltitude("alt")
                 .objectFacesSurface(false)
-                .objectLabel("name");
+                .objectLabel("name")
+                .backgroundColor("rgba(0,0,0,0)")
+                .width(window.innerWidth / 2);
+
+            window.addEventListener("resize", (event) => {
+                let target = event.target as Window;
+                if (target.innerWidth != null && target.innerHeight != null) {
+                    myGlobe.width(target.innerWidth / 2);
+                    // myGlobe.height(event.target.innerHeight / 2);
+                }
+            });
 
             // Set initial camera distance
             setTimeout(() => myGlobe.pointOfView({ altitude: 3.5 }));
 
             // Disable OrbitControls and enable auto-rotation
             // myGlobe.controls().autoRotate = true;
-            // myGlobe.controls().enabled = false;
+            myGlobe.controls().enabled = true;
+            // Disable zooming
+            myGlobe.controls().enableZoom = false;
             // Invert rotation direction
             // myGlobe.controls().autoRotateSpeed *= -1;
 
@@ -102,9 +113,6 @@ export default function MyGlobe({
                 requestAnimationFrame(frameTicker);
 
                 time = new Date(+time + TIME_STEP);
-                if (timeLogger.current) {
-                    timeLogger.current.innerText = time.toString();
-                }
 
                 // Update satellite positions
                 const gmst = satellite.gstime(time);
@@ -128,14 +136,7 @@ export default function MyGlobe({
 
     return (
         <>
-            <div className="relative">
-                <div
-                    id="time-log"
-                    ref={timeLogger}
-                    className="absolute bottom-0 top-0 z-50 text-white text-opacity-75"
-                ></div>
-                <div id="chart" ref={chart}></div>
-            </div>
+            <div id="chart" className="" ref={chart}></div>
         </>
     );
 }

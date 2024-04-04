@@ -25,10 +25,12 @@ export default async function BlogPage({
 }) {
     const page = searchParams?.page;
     const currentPage = parseInt(page ?? "1", 10);
+    const tag = searchParams?.tag ?? null;
 
     const articles = (await fetchArticlePages({
         currentPage: currentPage,
         pageSize: 7,
+        tag: tag,
     })) as BlogPost[];
 
     return (

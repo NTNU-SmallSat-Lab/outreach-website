@@ -7,8 +7,8 @@ import { BlogPost } from "@/app/blog/page";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_ARTICLES = gql(`
-query GET_ARTICLES($pagination: PaginationArg) {
-    articles(sort: ["datePublished:desc"], pagination: $pagination) {
+query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
+    articles(sort: ["datePublished:desc"], pagination: $pagination, filters: $filters) {
         data {
             id
             attributes {
@@ -50,22 +50,44 @@ query GET_ARTICLES($pagination: PaginationArg) {
 export default async function fetchArticlePages({
     currentPage,
     pageSize,
+    tag,
 }: {
     currentPage: number;
     pageSize: number;
+    tag: string | null;
 }) {
     let firstArticle = true;
 
-    const graphqlData = await getClient().query({
-        query: GET_ARTICLES,
-        variables: {
-            pagination: {
-                pageSize: pageSize,
-                page: currentPage,
-            },
-        },
-    });
+    let graphqlData;
 
+    console.log(!tag);
+
+    if (!tag) {
+        graphqlData = await getClient().query({
+            query: GET_ARTICLES,
+            variables: {
+                pagination: {
+                    pageSize: pageSize,
+                    page: currentPage,
+                },
+            },
+        });
+    } else {
+        graphqlData = await getClient().query({
+            query: GET_ARTICLES,
+            variables: {
+                pagination: {
+                    pageSize: pageSize,
+                    page: currentPage,
+                },
+                filters: {
+                    Tag: {
+                        contains: tag,
+                    },
+                },
+            },
+        });
+    }
     if (
         graphqlData.data === null ||
         graphqlData.data === undefined ||

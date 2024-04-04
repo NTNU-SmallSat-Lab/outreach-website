@@ -4,7 +4,8 @@
   "info": {
     "singularName": "satellite",
     "pluralName": "satellites",
-    "displayName": "Satellite"
+    "displayName": "Satellite",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -28,11 +29,12 @@
       "type": "blocks"
     },
     "previewImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "projects": {
       "type": "relation",
@@ -45,6 +47,9 @@
       "relation": "oneToMany",
       "target": "api::most-recent-image.most-recent-image",
       "mappedBy": "satellite"
+    },
+    "missionStatus": {
+      "type": "string"
     }
   }
 }
