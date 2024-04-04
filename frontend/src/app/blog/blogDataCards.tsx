@@ -29,7 +29,7 @@ export default async function BlogDataCards({
                         }
                     >
                         <FullBlogCard
-                            key={article.id} // A unique ID for each blog post
+                            key={article.id}
                             firstArticle={article.firstArticle}
                             content={article.content}
                             coverImage={article.coverImage}
