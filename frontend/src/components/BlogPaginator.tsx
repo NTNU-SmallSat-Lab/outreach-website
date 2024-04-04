@@ -9,39 +9,70 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "./ui/pagination";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function BlogPaginator() {
     const searchParams = useSearchParams();
-
+    const router = useRouter();
+    const tag = useSearchParams().get("tag");
     const page = searchParams.get("page");
+
     let currentPage = parseInt(page ?? "1", 10);
     currentPage = currentPage > 1 ? currentPage : 1;
+
+    function handlePageChange(page: number) {
+        console.log(page);
+        if (page < 1) {
+            return;
+        }
+        if (tag === null) {
+            router.replace(`/blog?page=${page}`);
+        } else {
+            router.replace(`/blog?page=${page}&tag=${tag}`);
+        }
+    }
 
     return (
         <Pagination className="my-4">
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious
-                        href={
-                            "?page=" + (currentPage > 1 ? currentPage - 1 : 1)
-                        }
+                        onClick={() => {
+                            handlePageChange(currentPage - 1);
+                        }}
+                        href="#"
                     />
                 </PaginationItem>
                 {currentPage > 1 ? (
                     <PaginationItem>
-                        <PaginationLink href={"?page=" + (currentPage - 1)}>
+                        <PaginationLink
+                            onClick={() => {
+                                handlePageChange(currentPage - 1);
+                            }}
+                            href="#"
+                        >
                             {currentPage - 1}
                         </PaginationLink>
                     </PaginationItem>
                 ) : null}
                 <PaginationItem>
-                    <PaginationLink href={"?page=" + currentPage} isActive>
+                    <PaginationLink
+                        onClick={() => {
+                            handlePageChange(currentPage);
+                        }}
+                        href="#"
+                        isActive
+                    >
                         {currentPage}
                     </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationLink href={"?page=" + (currentPage + 1)}>
+                    <PaginationLink
+                        onClick={() => {
+                            handlePageChange(currentPage + 1);
+                        }}
+                        href="#"
+                    >
                         {currentPage + 1}
                     </PaginationLink>
                 </PaginationItem>
@@ -49,7 +80,12 @@ export default function BlogPaginator() {
                     <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationNext href={"?page=" + (currentPage + 1)} />
+                    <PaginationNext
+                        onClick={() => {
+                            handlePageChange(currentPage + 1);
+                        }}
+                        href="#"
+                    />
                 </PaginationItem>
             </PaginationContent>
         </Pagination>
