@@ -5,7 +5,13 @@ import { useSatelliteStore } from "@/lib/store";
 
 const updateInterval = 10;
 
-export default function SatelliteDataTable({ satName }: { satName: string }) {
+export default function SatelliteDataTable({
+    satName,
+    missionStatus = "",
+}: {
+    satName: string;
+    missionStatus: string;
+}) {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
@@ -39,15 +45,20 @@ export default function SatelliteDataTable({ satName }: { satName: string }) {
             </div>
         );
     }
-
     return (
-        <div className="m-5 rounded-lg bg-gray-800 p-6 text-white shadow-lg">
+        <div className="m-5 w-full rounded-lg bg-gray-800 p-6 text-white shadow-lg">
             <div className="mb-4 flex items-center justify-between">
                 <h1 className="text-4xl font-bold">{satelliteInfo.name}</h1>
                 <div>{/* Include the dropdown arrow icon here */}</div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
+                {missionStatus.length != 0 && (
+                    <div className="col-span-2 rounded bg-gray-700 p-4">
+                        <p className="text-xl">{missionStatus}</p>
+                        <p className="text-gray-400">Mission Status</p>
+                    </div>
+                )}
                 <div className="rounded bg-gray-700 p-4">
                     <p className="text-xl">{satelliteInfo.velocity} km/s</p>
                     <p className="text-gray-400">Velocity</p>
