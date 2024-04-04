@@ -9,7 +9,7 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const baseURL = `http://localhost:3000`;
+const baseURL = `http://web.hypso.ies.ntnu.no:3000/`;
 export default defineConfig({
     testDir: "./tests",
     /* Run tests in files in parallel */
@@ -30,20 +30,6 @@ export default defineConfig({
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: "on-first-retry",
     },
-    webServer: [
-        {
-            command: "npm run dev",
-            url: baseURL,
-            timeout: 120 * 1000,
-            reuseExistingServer: !process.env.CI,
-        },
-        {
-            command: "cd ../backend && npm run develop",
-            url: "http://localhost:1337",
-            timeout: 120 * 1000,
-            reuseExistingServer: !process.env.CI,
-        },
-    ],
 
     /* Configure projects for major browsers */
     projects: [
