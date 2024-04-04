@@ -18,6 +18,7 @@ const updateInterval = 10;
 
 interface ClientOnlyComponentProps {
     fetchSatelliteData: ({
+        // eslint-disable-next-line no-unused-vars
         useExampleData,
     }: {
         useExampleData: boolean;
@@ -70,10 +71,6 @@ const SatelliteDataTableMultiple: React.FC<ClientOnlyComponentProps> = ({
     };
 
     // Map satellite data for Combobox options
-    const satelliteOptions = satelliteData.map((sat) => ({
-        value: sat.name,
-        label: sat.name,
-    }));
 
     useEffect(() => {
         const intervalId = setInterval(() => {

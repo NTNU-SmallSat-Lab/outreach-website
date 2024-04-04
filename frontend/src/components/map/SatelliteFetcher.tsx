@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 
@@ -24,10 +24,9 @@ const GET_ALL_SATELLITE_DATA =
   }
   `);
 
-
-  interface SatelliteFetcherInterface {
-    useExampleData: boolean,
-    filterList?: string[],
+interface SatelliteFetcherInterface {
+    useExampleData: boolean;
+    filterList?: string[];
 }
 
 export default async function fetchSatelliteData({
@@ -91,10 +90,8 @@ export default async function fetchSatelliteData({
         const data = await Promise.all(responses);
 
         console.log(data);
-        
 
         let combinedSatelliteDatas = data.join("\n");
-
 
         return combinedSatelliteDatas;
     }
