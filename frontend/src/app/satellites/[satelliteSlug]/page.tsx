@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
+import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTableMultiple";
 
 export interface SatelliteInfo {
     name: string;

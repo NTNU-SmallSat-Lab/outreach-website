@@ -1,88 +1,49 @@
-// Ensure all necessary imports are present
-"use client"
-import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import { Combobox } from "../Combobox"; // Adjust the path as necessary
-import { mapRawDataToTleData, mapTleToSatData, SatelliteData } from "@/lib/mapHelpers";
+"use client";
+import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
+import { useSatelliteStore } from "@/lib/store";
 
-// Define the MyGlobe component with dynamic import
-const MyGlobe = dynamic(() => import('@/components/map/MyGlobe'), { ssr: false });
 const updateInterval = 10;
 
-interface ClientOnlyComponentProps {
-    fetchSatelliteData: ({ useExampleData }: { useExampleData: boolean; filterList?: string[]; }) => Promise<string>;
-}
-
-const SatelliteDataTable: React.FC<ClientOnlyComponentProps> = ({ fetchSatelliteData }) => {
-    const [satelliteData, setSatelliteData] = useState<SatelliteData[]>([]);
-    const [selectedSatellite, setSelectedSatellite] = useState<SatelliteData | undefined>();
-    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(null);
+export default function SatelliteDataTable({ satName }: { satName: string }) {
+    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
+    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
+        null,
+    );
 
     // Fetch satellite data on component mount
     useEffect(() => {
-        const fetchData = async () => {
-            const rawData = await fetchSatelliteData({ useExampleData: true });
-            
-            const tleData = mapRawDataToTleData(rawData);
-            
-            
-            const mappedData = mapTleToSatData(tleData).slice(0, 10)
-            setSatelliteData(mappedData);
-            if (mappedData.length > 0) {
-                updateSatelliteInfo(mappedData[0])
-                setSelectedSatellite(mappedData[0]); // Ensure the first satellite is selected by default
-            }
-        };
-    
-        fetchData();
-    }, [fetchSatelliteData]); 
+        fetchAndSetSatelliteData(satName);
+    }, [fetchAndSetSatelliteData, satName]);
 
-    
-
-    // Function to update satellite info based on selected satellite
-    const updateSatelliteInfo = (satellite: SatelliteData) => {
-        const sat = satelliteData.find(s => s.name === satellite.name);
-        if (sat) {
-            const info = convertSatrec(sat.satrec, sat.name);
-            setSatelliteInfo(info);
-        }
-    };
-
-    // Handle satellite selection from Combobox
-    const handleSelectSatellite = (value: SatelliteData) => {
-        setSelectedSatellite(value);
-        updateSatelliteInfo(value);
-    };
-
-    // Map satellite data for Combobox options
-    const satelliteOptions = satelliteData.map(sat => ({
-        value: sat.name,
-        label: sat.name,
-    }));
-
-
+    // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
             // Access satellite data by name
-            if (selectedSatellite) {
-                const updatedInfo = convertSatrec(selectedSatellite.satrec, selectedSatellite.name);
+            const satData = satelliteData[satName];
+            if (satData) {
+                const updatedInfo = convertSatrec(satData.satrec, satData.name);
                 setSatelliteInfo(updatedInfo);
             }
         }, updateInterval);
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [selectedSatellite]);
+    }, [satelliteData, satName]);
 
+    // Display loading message if satellite info is not available
+    if (!satelliteInfo) {
+        return (
+            <div className="m-20">
+                <h1>Loading...</h1>
+            </div>
+        );
+    }
 
-
-
-    return satelliteData.length > 0 && selectedSatellite && satelliteInfo ? (
-        <>
+    return (
         <div className="m-5 rounded-lg bg-gray-800 p-6 text-white shadow-lg">
             <div className="mb-4 flex items-center justify-between">
-                <Combobox data={satelliteData} onSelect={handleSelectSatellite} />
+                <h1 className="text-4xl font-bold">{satelliteInfo.name}</h1>
                 <div>{/* Include the dropdown arrow icon here */}</div>
             </div>
 
@@ -110,11 +71,5 @@ const SatelliteDataTable: React.FC<ClientOnlyComponentProps> = ({ fetchSatellite
             </div>
             <div className="ml-4">{/* Include the flag icon here */}</div>
         </div>
-            <MyGlobe satelliteDatas={satelliteData} selectedSatellite={selectedSatellite.name} />
-        </>
-    ) : (
-        <div>Loading...</div>
     );
-};
-
-export default SatelliteDataTable;
+}

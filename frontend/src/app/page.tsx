@@ -7,12 +7,8 @@ const HOST_URL = process.env.HOST_URL;
 
 import Image from "next/image";
 import Link from "next/link";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
-import fetchSatelliteData from "@components/map/SatelliteFetcher"
-
-
-
-
+import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTableMultiple";
+import fetchSatelliteData from "@components/map/SatelliteFetcher";
 
 const GET_MOST_RECENT_IMAGE = gql(`
 query MostRecentImages {
@@ -62,11 +58,10 @@ export default async function Home() {
         <>
             <div className="grid grid-cols-2">
                 <div className="grid grid-cols-2">
-                    <SatelliteDataTable fetchSatelliteData={fetchSatelliteData} />
+                    <SatelliteDataTable
+                        fetchSatelliteData={fetchSatelliteData}
+                    />
                 </div>
-                
-
-                        
             </div>
 
             <ColoredSection
