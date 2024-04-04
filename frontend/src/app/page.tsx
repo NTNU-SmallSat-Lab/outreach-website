@@ -14,7 +14,7 @@ export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
 
     return (
-        <main>
+        <>
             {/* 
             <div className="grid grid-cols-6">
                 <SatelliteDataTable satName="HYPSO-1" />
@@ -25,7 +25,8 @@ export default async function Home() {
                 <SatelliteDataTable satName="huh" />
             </div>
             */}
-
+            <div>
+                <Map2d satName="HYPSO-1" />
                 <SatelliteFetcher useExampleData={true} />
             </div>
 
