@@ -947,6 +947,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     singularName: 'satellite';
     pluralName: 'satellites';
     displayName: 'Satellite';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -967,6 +968,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'oneToMany',
       'api::most-recent-image.most-recent-image'
     >;
+    missionStatus: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
