@@ -22,7 +22,7 @@ export default async function Home() {
         <>
             <div className="grid grid-cols-2">
                 <div className="grid grid-cols-2">
-                    <SatelliteDataTableSingle satName="Hypso-1" combobox={combobox} />
+                    <SatelliteDataTable fetchSatelliteData={fetchSatelliteData} />
                 </div>
             </div>
 
