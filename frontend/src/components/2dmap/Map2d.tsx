@@ -1,4 +1,4 @@
-import GeoMercator from "./GeoMercator";
+import GeoCustom from "./2dMapProjection";
 
 export default function Map2d() {
     const width = 960;
@@ -6,7 +6,7 @@ export default function Map2d() {
 
     return (
         <div className="h-full w-full flex justify-center">
-            <GeoMercator width={width} height={height} />
+            <GeoCustom width={width} height={height} />
         </div>
     );
 }

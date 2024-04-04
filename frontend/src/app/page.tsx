@@ -64,6 +64,7 @@ export default async function Home() {
 
     return (
         <main>
+            {/* 
             <div className="grid grid-cols-6">
                 <SatelliteDataTable satName="HYPSO-1" />
                 <SatelliteDataTable satName="UME (ISS)" />
@@ -72,6 +73,7 @@ export default async function Home() {
                 <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
                 <SatelliteDataTable satName="huh" />
             </div>
+            */}
 
             <div className="my-10 flex w-full justify-center">
                 <Map2d />
