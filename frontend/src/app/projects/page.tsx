@@ -5,6 +5,11 @@ import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
+import {
+    PageHeader,
+    PageHeaderAndSubtitle,
+    PageSubtitle,
+} from "@/components/PageHeader";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECTS = gql(`
@@ -56,13 +61,15 @@ export default async function ProjectsPage() {
     return (
         <div>
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-4xl font-extrabold ">Our Projects</h1>
-                <p className="text-sm text-muted-foreground">
-                    Information about our various projects are shown here.
-                </p>
+                <PageHeaderAndSubtitle>
+                    <PageHeader>Our Projects</PageHeader>
+                    <PageSubtitle>
+                        Information about our various projects are shown here.
+                    </PageSubtitle>
+                </PageHeaderAndSubtitle>
             </div>
 
-            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+            <div className="flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData.data.projects.data.map((project: any) => {
                     let coverImage =
                         project?.attributes?.coverImage?.data?.attributes?.url;
