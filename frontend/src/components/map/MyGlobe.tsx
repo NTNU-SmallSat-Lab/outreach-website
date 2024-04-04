@@ -37,7 +37,7 @@ export function mapRawDataToTleData(rawData: string): string[][] {
 
 interface MyGlobeProps {
     satelliteDatas: SatelliteData[]; // Existing prop: a string of TLE strings
-    selectedSatellite?: string;
+    selectedSatellite?: SatelliteData;
 }
 
 export default function MyGlobe({
@@ -126,7 +126,7 @@ export default function MyGlobe({
                         d.lng = THREE.MathUtils.radToDeg(gdPos.longitude);
                         d.alt = gdPos.height / EARTH_RADIUS_KM;
 
-                        if (d.name == selectedSatellite) {
+                        if (d.name == selectedSatellite?.name) {
                             myGlobe.pointOfView(
                                 { lat: d.lat, lng: d.lng, altitude: 2 },
                                 0,

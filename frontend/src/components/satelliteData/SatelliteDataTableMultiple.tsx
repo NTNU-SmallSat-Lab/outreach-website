@@ -129,7 +129,7 @@ const SatelliteDataTableMultiple: React.FC<ClientOnlyComponentProps> = ({
             </div>
             <MyGlobe
                 satelliteDatas={satelliteData}
-                selectedSatellite={selectedSatellite.name}
+                selectedSatellite={selectedSatellite}
             />
         </>
     ) : (
