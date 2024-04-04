@@ -9,7 +9,7 @@ const BlogCard = React.forwardRef<
     <div
         ref={ref}
         className={cn(
-            "border border-white bg-background text-card-foreground",
+            "flex flex-col border border-white bg-background p-5 text-card-foreground",
             className,
         )}
         {...props}
@@ -21,11 +21,7 @@ const BlogCardHeader = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-    <div
-        ref={ref}
-        className={cn("flex flex-col space-y-1.5", className)}
-        {...props}
-    />
+    <div ref={ref} className={cn("flex flex-col", className)} {...props} />
 ));
 BlogCardHeader.displayName = "BlogCardHeader";
 
@@ -35,10 +31,7 @@ const BlogCardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <h3
         ref={ref}
-        className={cn(
-            "text-2xl font-semibold leading-none tracking-tight",
-            className,
-        )}
+        className={cn("text-2xl font-semibold", className)}
         {...props}
     />
 ));

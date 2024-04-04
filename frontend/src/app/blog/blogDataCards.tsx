@@ -17,17 +17,11 @@ export default async function BlogDataCards({
     }
 
     return (
-        <div className="flex w-3/4 flex-row flex-wrap items-center justify-center self-center">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {/* Only map fist article */}
             {articles.map((article: any) => {
-                return (
-                    <div
-                        key={article.id}
-                        className={
-                            article.firstArticle
-                                ? "flex w-full flex-col items-center justify-center"
-                                : "flex w-1/3 flex-col items-center justify-center"
-                        }
-                    >
+                if (article.firstArticle) {
+                    return (
                         <FullBlogCard
                             key={article.id} // A unique ID for each blog post
                             firstArticle={article.firstArticle}
@@ -40,9 +34,29 @@ export default async function BlogDataCards({
                             avatarURL={article.avatarURL}
                             slug={article.slug}
                             title={article.title}
-                        />{" "}
-                        {article.firstArticle ? <BlogpageButtons /> : null}
-                    </div>
+                        />
+                    );
+                }
+            })}
+            <BlogpageButtons />
+            {articles.map((article: any) => {
+                if (article.firstArticle) {
+                    return;
+                }
+                return (
+                    <FullBlogCard
+                        key={article.id} // A unique ID for each blog post
+                        firstArticle={article.firstArticle}
+                        content={article.content}
+                        coverImage={article.coverImage}
+                        datePublished={article.datePublished}
+                        tag={article.tag}
+                        HOST_URL={article.HOST_URL}
+                        authorName={article.authorName}
+                        avatarURL={article.avatarURL}
+                        slug={article.slug}
+                        title={article.title}
+                    />
                 );
             })}
         </div>

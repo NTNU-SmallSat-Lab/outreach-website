@@ -18,21 +18,21 @@ export default function BlogpageButtons() {
     };
 
     return (
-        <div className="m-10 flex w-1/3 flex-row items-center justify-center gap-4">
+        <div className="col-span-3 flex flex-row items-center justify-center gap-4">
             <Button
-                className={`w-1/4 min-w-20 border border-white hover:bg-primary ${activeButton === "All Posts" ? "bg-primary" : "bg-transparent"}`}
+                className={`border border-white hover:bg-primary ${activeButton === "All Posts" ? "bg-primary" : "bg-transparent"}`}
                 onClick={() => handleParameterChange("All Posts")}
             >
                 All Posts
             </Button>
             <Button
-                className={`w-1/4 min-w-20 border border-white hover:bg-primary ${activeButton === "Updates" ? "bg-primary" : "bg-transparent"}`}
+                className={`border border-white hover:bg-primary ${activeButton === "Updates" ? "bg-primary" : "bg-transparent"}`}
                 onClick={() => handleParameterChange("Updates")}
             >
                 Updates
             </Button>
             <Button
-                className={`w-1/4 min-w-20 border border-white hover:bg-primary ${activeButton === "News" ? "bg-primary" : "bg-transparent"}`}
+                className={`border border-white hover:bg-primary ${activeButton === "News" ? "bg-primary" : "bg-transparent"}`}
                 onClick={() => handleParameterChange("News")}
             >
                 News

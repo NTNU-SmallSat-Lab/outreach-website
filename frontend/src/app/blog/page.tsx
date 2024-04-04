@@ -47,7 +47,7 @@ export default async function BlogPage({
                     we have written.
                 </PageSubtitle>
             </PageHeaderAndSubtitle>
-            <div className="just flex flex-col content-center justify-center">
+            <div className="flex flex-col justify-center">
                 {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
                 <BlogDataCards articles={articles} />
                 <BlogPaginator />
