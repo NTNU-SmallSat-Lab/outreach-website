@@ -44,14 +44,14 @@ import { SatelliteData } from '@/lib/mapHelpers';
             aria-expanded={open}
             className="w-[200px] justify-between"
           >
-            {value ? data.find((item) => item.name === value)?.name : "Select framework..."}
+            {value ? data.find((item) => item.name === value)?.name : "Select Satellite"}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder="Search framework..." />
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandInput placeholder="Search Satellite" />
+            <CommandEmpty>No Satellite found.</CommandEmpty>
             <CommandGroup>
               {data.map((item) => (
                 <CommandItem

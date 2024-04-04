@@ -8,6 +8,7 @@ const HOST_URL = process.env.HOST_URL;
 import Image from "next/image";
 import Link from "next/link";
 import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
+import SatelliteDataTableSingle from "@/components/satelliteData/SatelliteDataTableSingle";
 import fetchSatelliteData from "@components/map/SatelliteFetcher"
 
 
@@ -58,15 +59,14 @@ export default async function Home() {
         mostRecentImageURL = "";
     }
 
+    const combobox = <h1>hallo</h1>;
+
     return (
         <>
             <div className="grid grid-cols-2">
                 <div className="grid grid-cols-2">
-                    <SatelliteDataTable fetchSatelliteData={fetchSatelliteData} />
+                    <SatelliteDataTableSingle satName="Hypso-1" combobox={combobox} />
                 </div>
-                
-
-                        
             </div>
 
             <ColoredSection
