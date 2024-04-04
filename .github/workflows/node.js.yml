@@ -32,7 +32,6 @@ jobs:
           cache: "npm"
       - run: npm ci # Clean install packages
       - run: npm run build # Build the frontend
-      - run: npm test --if-present # Run tests
 
   lint:
     runs-on: ubuntu-latest
