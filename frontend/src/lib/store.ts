@@ -5,12 +5,17 @@ import { satLoader } from "@/lib/getSatelliteData";
 
 interface SatelliteStore {
     satelliteData: Record<string, SatelliteData>;
+    satelliteNames: string[];
+
     setSatelliteData: (satName: string, data: SatelliteData) => void;
     fetchAndSetSatelliteData: (satName: string) => Promise<void>;
+
+    getSatelliteNames: () => void;
 }
 
 export const useSatelliteStore = create<SatelliteStore>((set) => ({
     satelliteData: {},
+    satelliteNames: [],
     setSatelliteData: (satName, data) =>
         set((state) => ({
             satelliteData: { ...state.satelliteData, [satName]: data },
@@ -22,4 +27,6 @@ export const useSatelliteStore = create<SatelliteStore>((set) => ({
             satelliteData: { ...state.satelliteData, [satName]: newData },
         }));
     },
+
+    getSatelliteNames: () => {},
 }));
