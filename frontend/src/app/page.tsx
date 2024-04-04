@@ -1,71 +1,43 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import ColoredSection from "@/components/ui/coloredSection";
-import Hero from "@/components/ui/hero";
+
 import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import SatelliteFetcher from "@/components/map/SatelliteFetcher";
+import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
-export default function Home() {
-    useGSAP(() => {
-        gsap.fromTo(
-            "#rocket",
-            { y: 100, rotation: 45, zIndex: 1 },
-            {
-                y: -200,
-                x: 300,
-                opacity: 1,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: "#rocket",
-                    start: "top center",
-                    end: "bottom top",
-                    scrub: true,
-                },
-            },
-        );
-    });
-
-    function handleClick(): void {
-        gsap.to(window, { duration: 1, scrollTo: "#about-us" });
-    }
+export default async function Home() {
+    const mostRecentImageURL = await fetchMostRecentImage();
 
     return (
-        <main>
-            <Hero
-                id="intro-hero"
-                title={"SmallSatLab"}
-                description={"We launch satellites 🚀"}
-                buttonText={"About us"}
-                buttonLink=""
-                className="min-h-[calc(100vh-72px)] flex flex-col justify-center z-10"
-                handleClick={handleClick}
-            >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    id="rocket"
-                    src="/images/rocketLaunch.gif"
-                    alt="rocket launching"
-                    className=""
-                />
-            </Hero>
+        <>
+            <div className="grid grid-cols-2">
+                <div className="grid grid-cols-2">
+                    <SatelliteDataTable satName="HYPSO-1" />
+                    <SatelliteDataTable satName="UME (ISS)" />
+                    <SatelliteDataTable satName="STARLINK-1007" />
+                    <SatelliteDataTable satName="VANGUARD 1" />
+                    <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
+                    <SatelliteDataTable satName="huh" />
+                </div>
+
+                <SatelliteFetcher useExampleData={true} />
+            </div>
 
             <ColoredSection
                 id="about-us"
-                className="flex flex-col items-center py-12 px-8"
+                className="flex flex-col items-center px-8 py-12"
             >
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+                <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1>
-                        Empowering Space Exploration One Satellite at a Time
+                        TEST NUMBER 3 Empowering Space Exploration One Satellite
+                        at a Time
                     </h1>
 
-                    <div className="relative w-[300px] h-[300px]">
+                    <div className="relative h-[300px] w-[300px]">
                         <Image
                             alt="Satellite in orbit"
                             src="/images/satellite.jpg"
@@ -73,7 +45,7 @@ export default function Home() {
                             layout="fill"
                         />
                     </div>
-                    <div className="flex flex-col gap-4 items-center col-span-2 lg:col-span-2">
+                    <div className="col-span-2 flex flex-col items-center gap-4 lg:col-span-2 ">
                         <div className=" self-center">
                             <p>
                                 NTNU Small Satellite Lab is an initiative to
@@ -92,8 +64,8 @@ export default function Home() {
                     </div>
                 </div>
             </ColoredSection>
-            <div className="pt-8 items-center text-center flex flex-col py-12 px-8">
-                <div className="prose dark:prose-invert">
+            <div className="flex flex-col items-center px-8 py-24 text-center">
+                <div className="prose prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
                         The SmallSat Lab team is part of a variety of projects,
@@ -112,20 +84,13 @@ export default function Home() {
                     </Link>
                 </div>
             </div>
-            <ColoredSection className="flex flex-col items-center py-12 px-8">
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+
+            <ColoredSection className="flex flex-col items-center px-8 py-12">
+                <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1 className="">Most recent picture</h1>
-                    <div className="relative w-[300px] h-[300px]">
-                        <Image
-                            alt="Satellite image of city"
-                            src="/images/recent-image.jpg"
-                            className="m-0"
-                            layout="fill"
-                            objectFit="cover"
-                        />
-                    </div>
+                    {mostRecentImageURL}
                 </div>
             </ColoredSection>
-        </main>
+        </>
     );
 }

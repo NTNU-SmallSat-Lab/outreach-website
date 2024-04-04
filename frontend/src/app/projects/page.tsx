@@ -1,19 +1,42 @@
 export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getClient } from "@/lib/ApolloClient";
+import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
+import Image from "next/image";
+const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECTS = gql(`
  query GET_PROJECTS {
-    projects {
-      data {
-        attributes {
-          title
-          description
-          slug
+    projects(sort: ["publishedAt:desc"]) {
+        data {
+          id
+          attributes {
+            title
+            article
+            satellites {
+              data {
+                attributes {
+                  catalogNumberNORAD
+                }
+              }
+            }
+            slug
+            coverImage {
+              data {
+                attributes {
+                  url
+                }
+              }
+            }
+            updatedAt
+            publishedAt
+            createdAt
+            description
+          }
         }
       }
-    }
   }`);
 
 export default async function ProjectsPage() {
@@ -32,24 +55,72 @@ export default async function ProjectsPage() {
 
     return (
         <div>
-            <h1>Projects</h1>
-            {/* map projects from strapi to component */}
-            {}
-            {graphqlData.data.projects.data.map(
-                (
-                    project: any, // TODO: fix any
-                ) => (
-                    <div key={project.attributes.title}>
+            <div className="flex flex-col items-center justify-center">
+                <h1 className="text-4xl font-extrabold ">Our Projects</h1>
+                <p className="text-sm text-muted-foreground">
+                    Information about our various projects are shown here.
+                </p>
+            </div>
+
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                {graphqlData.data.projects.data.map((project: any) => {
+                    let coverImage =
+                        project?.attributes?.coverImage?.data?.attributes?.url;
+
+                    if (HOST_URL && coverImage != undefined) {
+                        coverImage = HOST_URL + coverImage;
+                    }
+                    let content: BlocksContent =
+                        project?.attributes?.article ?? [];
+                    let text = "";
+                    for (const block of content) {
+                        if (block.type === "paragraph") {
+                            const paragraphBlock = block as {
+                                type: "paragraph";
+                                children: { type: "text"; text: string }[];
+                            };
+
+                            if (paragraphBlock.children[0].text == "") {
+                                continue;
+                            }
+
+                            text =
+                                paragraphBlock.children[0].text.slice(0, 100) +
+                                "...";
+
+                            break;
+                        }
+                    }
+                    return (
                         <Link
-                            className="hover:underline"
+                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
+                            key={project.id}
                         >
-                            {project.attributes.title}
+                            <Card className="md:w-68 flex h-full w-64 flex-col lg:w-72">
+                                <CardHeader></CardHeader>
+                                <CardContent>
+                                    <div className="h-64">
+                                        {coverImage && (
+                                            <Image
+                                                className="max-h-full max-w-full object-contain"
+                                                src={coverImage}
+                                                alt={coverImage}
+                                                width={500}
+                                                height={0}
+                                            />
+                                        )}
+                                    </div>
+                                    <CardTitle className="mb-2 mt-2 text-xl font-bold">
+                                        {project?.attributes?.title}
+                                    </CardTitle>
+                                    <p className="break-words">{text}</p>
+                                </CardContent>
+                            </Card>
                         </Link>
-                        <p>{project.attributes.description}</p>
-                    </div>
-                ),
-            )}
+                    );
+                })}
+            </div>
         </div>
     );
 }
