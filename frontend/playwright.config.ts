@@ -11,7 +11,6 @@ import { defineConfig, devices } from "@playwright/test";
  */
 const baseURL = `http://web.hypso.ies.ntnu.no:3000/`;
 
-
 export default defineConfig({
     testDir: "./tests",
     /* Run tests in files in parallel */
