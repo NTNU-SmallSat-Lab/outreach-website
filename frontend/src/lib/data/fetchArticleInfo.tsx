@@ -65,8 +65,6 @@ export default async function fetchArticlePages({
 
     let graphqlData;
 
-    console.log(!tag);
-
     if (!tag) {
         graphqlData = await getClient().query({
             query: GET_ARTICLES,

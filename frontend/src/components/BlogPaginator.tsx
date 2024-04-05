@@ -26,7 +26,6 @@ export default function BlogPaginator({
 
     const pageSize = 7;
     const totalPages = Math.ceil(Number(totalArticles) / pageSize);
-    console.log(totalPages);
 
     function handlePageChange(page: number) {
         console.log(page);
