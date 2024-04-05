@@ -1,5 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
-
+import path from "path";
+import fs from "fs";
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -10,6 +11,57 @@ import { defineConfig, devices } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 const baseURL = `http://web.hypso.ies.ntnu.no:3000/`;
+
+function isMobileTest(filename: string) {
+    return filename.startsWith("navbar.mobile");
+}
+
+function isDesktopTest(filename: string) {
+    return filename.startsWith("navbar.desktop");
+}
+
+// Function to get all test files in the directory
+function getTestFiles(directory: string) {
+    return fs
+        .readdirSync(directory)
+        .filter((file) => file.endsWith(".spec.ts"));
+}
+
+// Get all test files
+const testFiles = getTestFiles("./tests");
+
+// Check if there are mobile or desktop test files
+const mobileTestFiles = testFiles.some(isMobileTest);
+const desktopTestFiles = testFiles.some(isDesktopTest);
+
+// Define projects based on the presence of mobile or desktop test files
+const projects = [
+    ...(mobileTestFiles
+        ? [
+              {
+                  name: "Mobile Safari",
+                  use: { ...devices["iPhone 13"] },
+              },
+          ]
+        : []),
+    ...(desktopTestFiles
+        ? [
+              {
+                  name: "firefox",
+                  use: { ...devices["Desktop Firefox"] },
+              },
+              {
+                  name: "webkit",
+                  use: { ...devices["Desktop Safari"] },
+              },
+              {
+                  name: "Google Chrome",
+                  use: { ...devices["Desktop Chrome"], channel: "chrome" },
+              },
+          ]
+        : []),
+];
+
 export default defineConfig({
     testDir: "./tests",
     /* Run tests in files in parallel */
@@ -30,37 +82,5 @@ export default defineConfig({
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: "on-first-retry",
     },
-
-    /* Configure projects for major browsers */
-    projects: [
-        {
-            name: "firefox",
-            use: { ...devices["Desktop Firefox"] },
-        },
-
-        {
-            name: "webkit",
-            use: { ...devices["Desktop Safari"] },
-        },
-
-        /* Test against mobile viewports. */
-        // {
-        //   name: 'Mobile Chrome',
-        //   use: { ...devices['Pixel 5'] },
-        // },
-        // {
-        //   name: 'Mobile Safari',
-        //   use: { ...devices['iPhone 12'] },
-        // },
-
-        /* Test against branded browsers. */
-        // {
-        //   name: 'Microsoft Edge',
-        //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-        // },
-        {
-            name: "Google Chrome",
-            use: { ...devices["Desktop Chrome"], channel: "chrome" },
-        },
-    ],
+    projects,
 });
