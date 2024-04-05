@@ -11,7 +11,11 @@ import {
 } from "./ui/pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function BlogPaginator() {
+export default function BlogPaginator({
+    totalArticles,
+}: {
+    totalArticles: Number;
+}) {
     const searchParams = useSearchParams();
     const router = useRouter();
     const tag = useSearchParams().get("tag");
@@ -20,9 +24,16 @@ export default function BlogPaginator() {
     let currentPage = parseInt(page ?? "1", 10);
     currentPage = currentPage > 1 ? currentPage : 1;
 
+    const pageSize = 7;
+    const totalPages = Math.ceil(Number(totalArticles) / pageSize);
+    console.log(totalPages);
+
     function handlePageChange(page: number) {
         console.log(page);
         if (page < 1) {
+            return;
+        }
+        if (page > totalPages) {
             return;
         }
         if (tag === null) {
@@ -31,6 +42,29 @@ export default function BlogPaginator() {
             router.replace(`/blog?page=${page}&tag=${tag}`);
         }
     }
+
+    let startPage;
+    let endPage;
+
+    if (totalPages <= 3) {
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        startPage = Math.max(currentPage - 1, 1);
+        endPage = Math.min(currentPage + 1, totalPages);
+        if (endPage - startPage < 2) {
+            if (currentPage === 1) {
+                endPage = Math.min(endPage + 1, totalPages);
+            } else {
+                startPage = Math.max(startPage - 1, 1);
+            }
+        }
+    }
+
+    const pages = Array.from(
+        { length: endPage - startPage + 1 },
+        (_, index) => index + startPage,
+    );
 
     return (
         <Pagination className="my-4">
@@ -43,42 +77,25 @@ export default function BlogPaginator() {
                         href="#"
                     />
                 </PaginationItem>
-                {currentPage > 1 ? (
-                    <PaginationItem>
+
+                {pages.map((page, id) => (
+                    <PaginationItem
+                        key={id}
+                        className={
+                            currentPage === page ? "rounded-md bg-primary" : ""
+                        }
+                    >
                         <PaginationLink
                             onClick={() => {
-                                handlePageChange(currentPage - 1);
+                                handlePageChange(page);
                             }}
                             href="#"
                         >
-                            {currentPage - 1}
+                            {page}
                         </PaginationLink>
                     </PaginationItem>
-                ) : null}
-                <PaginationItem>
-                    <PaginationLink
-                        onClick={() => {
-                            handlePageChange(currentPage);
-                        }}
-                        href="#"
-                        isActive
-                    >
-                        {currentPage}
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink
-                        onClick={() => {
-                            handlePageChange(currentPage + 1);
-                        }}
-                        href="#"
-                    >
-                        {currentPage + 1}
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationEllipsis />
-                </PaginationItem>
+                ))}
+
                 <PaginationItem>
                     <PaginationNext
                         onClick={() => {
