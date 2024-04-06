@@ -25,12 +25,11 @@ export default async function Home() {
                 <SatelliteDataTable satName="huh" />
             </div>
             */}
-            <div className="grid grid-cols-2">
-                <SatelliteDataTable satName="HYPSO-1" />
-                <SatelliteFetcher useExampleData={true} />
-            </div>
 
+            <SatelliteDataTable satName="HYPSO-1" />
             <Map2d satName="HYPSO-1" />
+
+            <SatelliteFetcher useExampleData={true} />
 
             <ColoredSection
                 id="about-us"

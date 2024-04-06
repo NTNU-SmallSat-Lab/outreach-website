@@ -44,7 +44,7 @@ export default function Map2d({ satName }: { satName: string }) {
     const height = width / 2;
 
     return (
-        <div className="flex h-full w-full justify-center">
+        <div className="">
             <GeoCustom
                 width={width}
                 height={height}
