@@ -3,9 +3,8 @@ import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
-
-import SatelliteFetcher from "@/components/map/SatelliteFetcher";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
+import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTableMultiple";
+import fetchSatelliteData from "@components/map/SatelliteFetcher";
 import Map2d from "@/components/2dmap/Map2d";
 
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";

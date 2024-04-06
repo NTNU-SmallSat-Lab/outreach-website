@@ -908,16 +908,16 @@ export interface ApiProjectProject extends Schema.CollectionType {
     singularName: 'project';
     pluralName: 'projects';
     displayName: 'Project';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     title: Attribute.String & Attribute.Required & Attribute.Unique;
-    description: Attribute.String;
-    article: Attribute.Blocks;
+    content: Attribute.Blocks;
     slug: Attribute.UID<'api::project.project', 'title'> & Attribute.Required;
-    coverImage: Attribute.Media;
+    previewImage: Attribute.Media;
     satellites: Attribute.Relation<
       'api::project.project',
       'manyToMany',

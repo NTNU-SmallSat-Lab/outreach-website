@@ -4,25 +4,10 @@ import {
     BlogCardHeader,
     BlogCardTitle,
 } from "@/components/ui/blogCard";
-
-import BlockRendererClient from "./BlockRendererClient";
-import { Enum_Article_Tag } from "@/__generated__/graphql";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
-
-interface BlogPost {
-    key: string | null | undefined;
-    firstArticle?: boolean | null | undefined;
-    title: string | undefined;
-    content: BlocksContent; // Or a more appropriate type if your content is structured
-    coverImage?: string; // Optional cover image
-    datePublished: any;
-    tag?: Enum_Article_Tag | null | undefined; // Optional tag
-    HOST_URL?: string; // It's common to keep the host URL separate from post data
-    authorName?: string;
-    avatarURL?: string; // Optional avatar URL
-    slug: string | undefined;
-}
+import { SlicePreviewText } from "./SlicePreviewText";
+import { BlogPost } from "@/app/blog/page";
+import Image from "next/image";
 
 export default function FullBlogCard(article: BlogPost) {
     function formatDate(dateString: string) {
@@ -47,9 +32,11 @@ export default function FullBlogCard(article: BlogPost) {
             <BlogCardHeader>
                 <BlogCardContent>
                     {article.coverImage && (
-                        <img
+                        <Image
                             src={article.coverImage}
                             alt={article.coverImage}
+                            width={500}
+                            height={0}
                             className="m-0 aspect-video max-h-[250px] w-full object-cover p-0"
                         />
                     )}
@@ -70,7 +57,9 @@ export default function FullBlogCard(article: BlogPost) {
                                 {article.title}
                             </Link>
                         </BlogCardTitle>
-                        <BlockRendererClient content={article.content} />
+                        <p className="break-words">
+                            {SlicePreviewText(article.content)}
+                        </p>
                     </div>
                 </BlogCardContent>
             </BlogCardHeader>
