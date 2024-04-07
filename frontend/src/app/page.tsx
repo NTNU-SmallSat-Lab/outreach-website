@@ -3,8 +3,7 @@ import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTableMultiple";
-import fetchSatelliteData from "@components/map/SatelliteFetcher";
+import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
 import Map2d from "@/components/2dmap/Map2d";
 
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
@@ -27,8 +26,6 @@ export default async function Home() {
 
             <SatelliteDataTable satName="HYPSO-1" />
             <Map2d satName="HYPSO-1" />
-
-            <SatelliteFetcher useExampleData={true} />
 
             <ColoredSection
                 id="about-us"

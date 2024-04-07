@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-handler-names */
 import React from "react";
 import * as topojson from "topojson-client";
-import { scaleQuantize } from "@visx/scale";
 import { CustomProjection, Graticule } from "@visx/geo";
 import { geoNaturalEarth1 } from "@visx/vendor/d3-geo";
 import topology from "./world-topo.json";
@@ -30,14 +29,6 @@ const world = topojson.feature(topology, topology.objects.units) as {
     features: FeatureShape[];
 };
 
-const color = scaleQuantize({
-    domain: [
-        Math.min(...world.features.map((f) => f.geometry.coordinates.length)),
-        Math.max(...world.features.map((f) => f.geometry.coordinates.length)),
-    ],
-    range: ["#009c4e"],
-});
-
 export default function GeoCustom({
     width,
     height,
@@ -49,11 +40,13 @@ export default function GeoCustom({
     const scale = (width / 630) * 100;
 
     // This function projects lat/long to the SVG coordinate system
-    const projection = geoNaturalEarth1().scale(scale).translate([centerX, centerY]);
+    const projection = geoNaturalEarth1()
+        .scale(scale)
+        .translate([centerX, centerY]);
 
     // Check if both satLatitude and satLongitude are defined
     let satPoint: [number, number] | undefined;
-    if (typeof satLatitude === 'number' && typeof satLongitude === 'number') {
+    if (typeof satLatitude === "number" && typeof satLongitude === "number") {
         satPoint = projection([satLongitude, satLatitude]) || undefined;
     }
     return width < 10 ? null : (
@@ -76,34 +69,23 @@ export default function GeoCustom({
                     >
                         {(customProjection) => (
                             <g>
-                                <Graticule
-                                    graticule={(g) =>
-                                        customProjection.path(g) || ""
-                                    }
-                                    stroke={strokeColor}
-                                />
-                                {customProjection.features.map(
-                                    ({ feature, path }, i) => (
-                                        <path
-                                            key={`map-feature-${i}`}
-                                            d={path || ""}
-                                            fill={color(
-                                                feature.geometry.coordinates
-                                                    .length,
-                                            )}
-                                            stroke={background}
-                                            strokeWidth={0.5}
-                                        />
-                                    ),
-                                )}
+                                {customProjection.features.map(({ feature, path }, i) => (
+                                    <path
+                                        key={`map-feature-${i}`}
+                                        d={path || ""}
+                                        fill={"#d3d3d3"}
+                                        stroke={"#000"}
+                                        strokeWidth={0.5}
+                                    />
+                                ))}
                                 {satPoint && (
                                     <circle
                                         cx={satPoint[0]}
                                         cy={satPoint[1]}
-                                        r="5"
+                                        r="6"
                                         fill="red"
-                                        stroke="white"
-                                        strokeWidth="2"
+                                        stroke="black"
+                                        strokeWidth="1"
                                     />
                                 )}
                             </g>
@@ -114,4 +96,3 @@ export default function GeoCustom({
         </>
     );
 }
-
