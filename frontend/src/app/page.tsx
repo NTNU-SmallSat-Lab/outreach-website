@@ -3,8 +3,8 @@ import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
-import Map2d from "@/components/2dmap/Map2d";
+import SatelliteDataTableMultiple from "@/components/satelliteData/SatelliteDataTableMultiple";
+import fetchSatelliteData from "@components/map/SatelliteFetcher";
 
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
@@ -13,19 +13,13 @@ export default async function Home() {
 
     return (
         <>
-            {/* 
-            <div className="grid grid-cols-6">
-                <SatelliteDataTable satName="HYPSO-1" />
-                <SatelliteDataTable satName="UME (ISS)" />
-                <SatelliteDataTable satName="STARLINK-1007" />
-                <SatelliteDataTable satName="VANGUARD 1" />
-                <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
-                <SatelliteDataTable satName="huh" />
+            <div className="grid grid-cols-2">
+                <div className="grid grid-cols-2">
+                    <SatelliteDataTableMultiple
+                        fetchSatelliteData={fetchSatelliteData}
+                    />
+                </div>
             </div>
-            */}
-
-            <SatelliteDataTable satName="HYPSO-1" />
-            <Map2d satName="HYPSO-1" />
 
             <ColoredSection
                 id="about-us"

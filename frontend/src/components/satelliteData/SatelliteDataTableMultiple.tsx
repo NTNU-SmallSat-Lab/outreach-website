@@ -9,6 +9,7 @@ import {
     SatelliteData,
 } from "@/lib/mapHelpers";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
+import Map2d from "../2dmap/Map2d";
 
 // Define the MyGlobe component with dynamic import
 const MyGlobe = dynamic(() => import("@/components/map/MyGlobe"), {
@@ -131,6 +132,7 @@ const SatelliteDataTableMultiple: React.FC<ClientOnlyComponentProps> = ({
                 satelliteDatas={satelliteData}
                 selectedSatellite={selectedSatellite}
             />
+            <Map2d satName={selectedSatellite.name}/>
         </>
     ) : (
         <div>Loading...</div>
