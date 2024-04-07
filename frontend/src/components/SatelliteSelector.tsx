@@ -10,10 +10,17 @@ export default function SatelliteSelector() {
     const setSelectedSatellite = useSatelliteStore(
         (state) => state.setSelectedSatellite,
     );
+    const fetchAndSetSatelliteData = useSatelliteStore(
+        (state) => state.fetchAndSetSatelliteData,
+    );
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedSatellite(event.target.value);
     };
+
+    for (const satellite of satelliteNames) {
+        fetchAndSetSatelliteData(satellite);
+    }
 
     return (
         <div>

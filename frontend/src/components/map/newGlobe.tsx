@@ -118,13 +118,27 @@ export default function SatelliteGlobe() {
                             selectedSatellite === sat.name
                                 ? "red"
                                 : "palegreen",
-                        key: `${sat.name}-${selectedSatellite === sat.name ? "selected" : "not-selected"}`,
                     };
                 });
 
                 globeRef.current.objectsData(newPositions);
             }
         }, UPDATE_INTERVAL_MS);
+
+        if (satelliteData[selectedSatellite] === undefined) {
+            return;
+        }
+
+        const targetPosition = convertSatrec(
+            satelliteData[selectedSatellite].satrec,
+            new Date().toISOString(),
+        );
+
+        globeRef?.current?.pointOfView({
+            lat: Number(targetPosition.latitudeDeg),
+            lng: Number(targetPosition.longitudeDeg),
+            altitude: 2.5,
+        });
 
         return () => clearInterval(intervalId);
     }, [satelliteData, selectedSatellite]);

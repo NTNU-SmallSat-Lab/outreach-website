@@ -90,7 +90,6 @@ export default async function fetchSatelliteData({
         const data = await Promise.all(responses);
 
         console.log(data);
-        
 
         let combinedSatelliteDatas = data.join("\n");
 

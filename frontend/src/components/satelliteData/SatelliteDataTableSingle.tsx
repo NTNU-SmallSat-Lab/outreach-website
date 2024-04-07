@@ -5,7 +5,13 @@ import { useSatelliteStore } from "@/lib/store";
 
 const updateInterval = 10;
 
-export default function SatelliteDataTable({ satName, combobox }: { satName: string, combobox: React.ReactNode }) {
+export default function SatelliteDataTable({
+    satName,
+    combobox,
+}: {
+    satName: string;
+    combobox: React.ReactNode;
+}) {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
@@ -42,7 +48,7 @@ export default function SatelliteDataTable({ satName, combobox }: { satName: str
 
     return (
         <div className="m-5 rounded-lg bg-gray-800 p-6 text-white shadow-lg">
-            <div className="mb-4 flex flex-col items-left justify-between">
+            <div className="items-left mb-4 flex flex-col justify-between">
                 <div>{combobox}</div>
                 <h1 className="text-4xl font-bold">{satelliteInfo.name}</h1>
             </div>

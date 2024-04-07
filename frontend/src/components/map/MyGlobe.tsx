@@ -48,9 +48,6 @@ export default function MyGlobe({
 
     // useEffect is used because we want to run the code only once when the component is mounted
     useEffect(() => {
-
-
-        
         if (chart.current) {
             let myGlobe: GlobeInstance;
             myGlobe = Globe()(chart.current)
