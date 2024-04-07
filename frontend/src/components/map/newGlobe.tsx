@@ -34,7 +34,6 @@ export default function SatelliteGlobe() {
                 .objectLabel("name")
                 .objectsData([])
                 .objectThreeObject((sat: any) => {
-                    console.log(sat);
                     return new THREE.Mesh(
                         new THREE.SphereGeometry(SAT_RADIUS, 16, 8),
                         new THREE.MeshBasicMaterial({ color: sat.color }),
@@ -42,7 +41,6 @@ export default function SatelliteGlobe() {
                 })
                 .onObjectClick((obj: any) => {
                     setSelectedSatellite(obj.name);
-                    console.log(obj);
                 });
 
             // Set initial POV after globe instantiation
