@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-handler-names */
 import React from "react";
 import * as topojson from "topojson-client";
-import { CustomProjection, Graticule } from "@visx/geo";
+import { CustomProjection } from "@visx/geo";
 import { geoNaturalEarth1 } from "@visx/vendor/d3-geo";
 import topology from "./world-topo.json";
 
@@ -21,7 +21,6 @@ interface FeatureShape {
 }
 
 export const background = "";
-const strokeColor = "#FFFFFF";
 
 // @ts-expect-error
 const world = topojson.feature(topology, topology.objects.units) as {
@@ -69,15 +68,17 @@ export default function GeoCustom({
                     >
                         {(customProjection) => (
                             <g>
-                                {customProjection.features.map(({ feature, path }, i) => (
-                                    <path
-                                        key={`map-feature-${i}`}
-                                        d={path || ""}
-                                        fill={"#d3d3d3"}
-                                        stroke={"#000"}
-                                        strokeWidth={0.5}
-                                    />
-                                ))}
+                                {customProjection.features.map(
+                                    ({ path }, i) => (
+                                        <path
+                                            key={`map-feature-${i}`}
+                                            d={path || ""}
+                                            fill={"#d3d3d3"}
+                                            stroke={"#000"}
+                                            strokeWidth={0.5}
+                                        />
+                                    ),
+                                )}
                                 {satPoint && (
                                     <circle
                                         cx={satPoint[0]}
