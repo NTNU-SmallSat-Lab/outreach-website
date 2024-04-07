@@ -8,6 +8,7 @@ import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import SatelliteSelector from "@/components/SatelliteSelector";
+import SatelliteGlobe from "@/components/map/newGlobe";
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
@@ -15,18 +16,22 @@ export default async function Home() {
     return (
         <>
             <div className="flex flex-wrap bg-gray-600 p-0.5 md:flex-nowrap">
-                <div className="flex-1">
+                {/* Stats Container */}
+                <div className="flex w-full flex-col md:w-1/3">
                     <div className="bg-black p-5">
                         <SatelliteSelector />
                     </div>
-
                     <div className="mt-0.5">
                         <SatelliteDataHome />
                     </div>
+                    <div className="mt-0.5 w-full flex-grow bg-black"></div>
                 </div>
 
-                <div className="ml-0.5 flex-1 bg-black p-5">
-                    <p>Globe Component Goes Here</p>
+                {/* Globe Container */}
+                <div className="w-full md:w-2/3 ml-0.5">
+                    <div className="h-full bg-black md:flex md:items-center md:justify-center">
+                        <SatelliteGlobe />
+                    </div>
                 </div>
             </div>
 
