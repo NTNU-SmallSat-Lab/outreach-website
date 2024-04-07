@@ -41,8 +41,8 @@ export default function BlogPaginator({
         }
     }
 
-    let startPage;
-    let endPage;
+    let startPage: number;
+    let endPage: number;
 
     if (totalPages <= 3) {
         startPage = 1;
