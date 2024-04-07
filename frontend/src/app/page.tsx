@@ -3,21 +3,31 @@ import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTableMultiple";
-import fetchSatelliteData from "@components/map/SatelliteFetcher";
 
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
+
+import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
 
     return (
         <>
-            <div className="grid grid-cols-2">
-                <div className="grid grid-cols-2">
-                    <SatelliteDataTable
-                        fetchSatelliteData={fetchSatelliteData}
-                    />
+            <div className="flex flex-wrap md:flex-nowrap">
+                <div className="flex-1">
+                    <div id="satellite-select-placeholder" className="bg-black p-5">
+                        <p>Select Satellite Component Goes Here</p>
+                    </div>
+
+                    <div id="satellite-data-home-placeholder">
+                        <SatelliteDataHome satName="HYPSO-1" />
+                    </div>
+                </div>
+
+                <div className="flex-1">
+                    <div id="globe-component-placeholder">
+                        <p>Globe Component Goes Here</p>
+                    </div>
                 </div>
             </div>
 
