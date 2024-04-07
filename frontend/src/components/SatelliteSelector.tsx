@@ -4,6 +4,9 @@ import { useSatelliteStore } from "@/lib/store";
 
 export default function SatelliteSelector() {
     const satelliteNames = useSatelliteStore((state) => state.satelliteNames);
+    const selectedSatellite = useSatelliteStore(
+        (state) => state.selectedSatellite,
+    );
     const setSelectedSatellite = useSatelliteStore(
         (state) => state.setSelectedSatellite,
     );
@@ -18,6 +21,7 @@ export default function SatelliteSelector() {
                 className="block w-full cursor-pointer bg-black"
                 name="satellite"
                 id="satellite"
+                value={selectedSatellite}
                 onChange={handleChange}
             >
                 {satelliteNames.map((satellite) => (

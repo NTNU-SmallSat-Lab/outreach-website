@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 
-const updateInterval = 1000;
+const updateInterval = 10;
 
 export default function SatelliteDataHome() {
     const { satelliteData, fetchAndSetSatelliteData, selectedSatellite } =

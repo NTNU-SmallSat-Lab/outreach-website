@@ -6,16 +6,18 @@ import { useSatelliteStore } from "@/lib/store";
 import { convertSatrec } from "@/lib/convertSatrec";
 
 const SAT_RADIUS = 5; // Relative size of the satellite for visualization
-const UPDATE_INTERVAL_MS = 1000; // Update interval in milliseconds
+const UPDATE_INTERVAL_MS = 10; // Update interval in milliseconds
 const EARTH_RADIUS_KM = 6371; // Earth radius in kilometers
 
 export default function SatelliteGlobe() {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
-    const { satelliteData, selectedSatellite } = useSatelliteStore((state) => ({
-        satelliteData: state.satelliteData,
-        selectedSatellite: state.selectedSatellite,
-    }));
+    const { satelliteData, selectedSatellite, setSelectedSatellite } =
+        useSatelliteStore((state) => ({
+            satelliteData: state.satelliteData,
+            selectedSatellite: state.selectedSatellite,
+            setSelectedSatellite: state.setSelectedSatellite,
+        }));
 
     // Initialize the globe
     useEffect(() => {
@@ -31,18 +33,22 @@ export default function SatelliteGlobe() {
                 .backgroundColor("rgba(0,0,0,0)")
                 .objectLabel("name")
                 .objectsData([])
-                .objectThreeObject(
-                    (sat) =>
-                        new THREE.Mesh(
-                            new THREE.SphereGeometry(SAT_RADIUS, 16, 8),
-                            new THREE.MeshBasicMaterial({ color: "palegreen" }),
-                        ),
-                );
+                .objectThreeObject((sat: any) => {
+                    console.log(sat);
+                    return new THREE.Mesh(
+                        new THREE.SphereGeometry(SAT_RADIUS, 16, 8),
+                        new THREE.MeshBasicMaterial({ color: sat.color }),
+                    );
+                })
+                .onObjectClick((obj: any) => {
+                    setSelectedSatellite(obj.name);
+                    console.log(obj);
+                });
 
             // Set initial POV after globe instantiation
             setTimeout(() => {
                 if (globeRef.current) {
-                    globeRef.current.pointOfView({ altitude: 3.5 });
+                    globeRef.current.pointOfView({ altitude: 2.5 });
                 }
             });
 
@@ -67,10 +73,20 @@ export default function SatelliteGlobe() {
             handleResize(); // Call it initially to set the size
 
             // Set initial positions of satellites
+            let currentDate = new Date().toISOString();
             const initialPositions = Object.values(satelliteData).map(
                 (sat) => ({
-                    ...sat,
-                    ...convertSatrec(sat.satrec, new Date().toISOString()),
+                    lat: parseFloat(
+                        convertSatrec(sat.satrec, currentDate).latitudeDeg,
+                    ),
+                    lng: parseFloat(
+                        convertSatrec(sat.satrec, currentDate).longitudeDeg,
+                    ),
+                    alt:
+                        parseFloat(
+                            convertSatrec(sat.satrec, currentDate).altitude,
+                        ) / EARTH_RADIUS_KM,
+                    name: sat.name,
                 }),
             );
             globeRef.current.objectsData(initialPositions);
@@ -87,10 +103,8 @@ export default function SatelliteGlobe() {
             const currentDate = new Date().toISOString();
 
             if (globeRef.current) {
-                const newPositions = Object.values(satelliteData).map(
-                    (sat) => ({
-                        ...sat,
-                        ...convertSatrec(sat.satrec, currentDate),
+                const newPositions = Object.values(satelliteData).map((sat) => {
+                    return {
                         lat: parseFloat(
                             convertSatrec(sat.satrec, currentDate).latitudeDeg,
                         ),
@@ -102,17 +116,20 @@ export default function SatelliteGlobe() {
                                 convertSatrec(sat.satrec, currentDate).altitude,
                             ) / EARTH_RADIUS_KM,
                         name: sat.name,
-                    }),
-                );
+                        color:
+                            selectedSatellite === sat.name
+                                ? "red"
+                                : "palegreen",
+                        key: `${sat.name}-${selectedSatellite === sat.name ? "selected" : "not-selected"}`,
+                    };
+                });
 
                 globeRef.current.objectsData(newPositions);
             }
         }, UPDATE_INTERVAL_MS);
 
         return () => clearInterval(intervalId);
-    }, [satelliteData]);
-
-    // Update selected satellite when satellite is pressed
+    }, [satelliteData, selectedSatellite]);
 
     return <div id="chart" className="" ref={chart}></div>;
 }
