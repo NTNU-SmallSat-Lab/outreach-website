@@ -14,7 +14,7 @@ import { SatelliteData } from "@/lib/mapHelpers";
 
 const EARTH_RADIUS_KM = 6371; // km
 const SAT_SIZE = 500; // km
-const TIME_STEP = 1 * 1000; // per frame
+const TIME_STEP = 1; // per frame
 //const SATELLITE_AMOUNT = 100; // amount of satellites to display
 
 export function mapRawDataToTleData(rawData: string): string[][] {
@@ -35,20 +35,15 @@ export function mapRawDataToTleData(rawData: string): string[][] {
     );
 }
 
-
 interface MyGlobeProps {
     satelliteDatas: SatelliteData[]; // Existing prop: a string of TLE strings
-    selectedSatellite?: string
+    selectedSatellite?: SatelliteData;
 }
-
 
 export default function MyGlobe({
     satelliteDatas,
     selectedSatellite,
 }: MyGlobeProps) {
-
-    
-    
     const chart = React.useRef<HTMLDivElement>(null);
 
     // useEffect is used because we want to run the code only once when the component is mounted
@@ -68,30 +63,23 @@ export default function MyGlobe({
                 .objectFacesSurface(false)
                 .backgroundColor("rgba(0,0,0,0)")
                 .objectLabel("name");
-                
 
             // Set initial camera distance
             setTimeout(() => myGlobe.pointOfView({ altitude: 3.5 }));
 
-
             const handleResize = () => {
                 //Making it responsive like this
-                
 
-                if(window.innerWidth <= 768){
-                    myGlobe.width(window.innerWidth)
-                    myGlobe.height(window.innerHeight/2)
-                }else{
-                    myGlobe.width(window.innerWidth/2)
-                    myGlobe.height(window.innerHeight/2)
+                if (window.innerWidth <= 768) {
+                    myGlobe.width(window.innerWidth);
+                    myGlobe.height(window.innerHeight / 2);
+                } else {
+                    myGlobe.width(window.innerWidth / 2);
+                    myGlobe.height(window.innerHeight / 2);
                 }
-              };
-              handleResize();
-              window.addEventListener('resize', handleResize);
-
-
-
-
+            };
+            handleResize();
+            window.addEventListener("resize", handleResize);
 
             // Disable OrbitControls and enable auto-rotation
             // myGlobe.controls().autoRotate = true;
@@ -117,10 +105,8 @@ export default function MyGlobe({
             myGlobe.objectThreeObject(
                 () => new THREE.Mesh(satGeometry, satMaterial),
             );
-            const satData = satelliteDatas
+            const satData = satelliteDatas;
 
-           
-            
             // time ticker
             let time = new Date();
             (function frameTicker() {
@@ -129,8 +115,7 @@ export default function MyGlobe({
                 time = new Date(+time + TIME_STEP);
 
                 // Update satellite positions
-                
-                
+
                 const gmst = satellite.gstime(time);
                 satData.forEach((d: any) => {
                     const eci = satellite.propagate(d.satrec, time);
@@ -139,17 +124,17 @@ export default function MyGlobe({
                             eci.position as satellite.EciVec3<number>,
                             gmst,
                         );
-                        
-                        
+
                         d.lat = THREE.MathUtils.radToDeg(gdPos.latitude);
                         d.lng = THREE.MathUtils.radToDeg(gdPos.longitude);
                         d.alt = gdPos.height / EARTH_RADIUS_KM;
-                        
-                        if(d.name == selectedSatellite) {
-                            myGlobe.pointOfView({lat: d.lat, lng: d.lng, altitude: 2 }, 0);
+
+                        if (d.name == selectedSatellite?.name) {
+                            myGlobe.pointOfView(
+                                { lat: d.lat, lng: d.lng, altitude: 2 },
+                                0,
+                            );
                         }
-                        
-                       
                     }
                 });
 

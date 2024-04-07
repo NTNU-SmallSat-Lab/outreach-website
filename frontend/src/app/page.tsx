@@ -3,15 +3,12 @@ import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
-import SatelliteDataTableSingle from "@/components/satelliteData/SatelliteDataTableSingle";
-import fetchSatelliteData from "@components/map/SatelliteFetcher"
-
-
-
-
 
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
+
+import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import SatelliteSelector from "@/components/SatelliteSelector";
+import SatelliteGlobe from "@/components/map/newGlobe";
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
@@ -20,9 +17,23 @@ export default async function Home() {
 
     return (
         <>
-            <div className="grid grid-cols-2">
-                <div className="grid grid-cols-2">
-                    <SatelliteDataTable fetchSatelliteData={fetchSatelliteData} />
+            <div className="flex flex-wrap bg-gray-600 p-0.5 md:flex-nowrap">
+                {/* Stats Container */}
+                <div className="flex w-full flex-col md:w-1/3">
+                    <div className="bg-black p-5">
+                        <SatelliteSelector />
+                    </div>
+                    <div className="mt-0.5">
+                        <SatelliteDataHome />
+                    </div>
+                    <div className="mt-0.5 w-full flex-grow bg-black"></div>
+                </div>
+
+                {/* Globe Container */}
+                <div className="ml-0.5 w-full md:w-2/3">
+                    <div className="h-full bg-black md:flex md:items-center md:justify-center">
+                        <SatelliteGlobe />
+                    </div>
                 </div>
             </div>
 
