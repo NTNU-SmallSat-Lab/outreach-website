@@ -3,7 +3,7 @@ import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTableMultiple";
+import SatelliteDataTableMultiple from "@/components/satelliteData/SatelliteDataTableMultiple";
 import fetchSatelliteData from "@components/map/SatelliteFetcher";
 
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
@@ -15,7 +15,7 @@ export default async function Home() {
         <>
             <div className="grid grid-cols-2">
                 <div className="grid grid-cols-2">
-                    <SatelliteDataTable
+                    <SatelliteDataTableMultiple
                         fetchSatelliteData={fetchSatelliteData}
                     />
                 </div>
