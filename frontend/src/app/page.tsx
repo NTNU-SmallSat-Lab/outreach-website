@@ -13,21 +13,19 @@ export default async function Home() {
 
     return (
         <>
-            <div className="flex flex-wrap md:flex-nowrap">
+            <div className="flex flex-wrap bg-gray-600 p-0.5 md:flex-nowrap">
                 <div className="flex-1">
-                    <div id="satellite-select-placeholder" className="bg-black p-5">
+                    <div className="bg-black p-5">
                         <p>Select Satellite Component Goes Here</p>
                     </div>
 
-                    <div id="satellite-data-home-placeholder">
+                    <div className="mt-0.5">
                         <SatelliteDataHome satName="HYPSO-1" />
                     </div>
                 </div>
 
-                <div className="flex-1">
-                    <div id="globe-component-placeholder">
-                        <p>Globe Component Goes Here</p>
-                    </div>
+                <div className="ml-0.5 flex-1 bg-black p-5">
+                    <p>Globe Component Goes Here</p>
                 </div>
             </div>
 

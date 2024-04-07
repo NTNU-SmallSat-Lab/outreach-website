@@ -34,14 +34,40 @@ export default function SatelliteDataHome({ satName }: { satName: string }) {
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {
         return (
-            <div className="m-20">
-                <h1>Loading...</h1>
+            <div>
+                <div className="grid grid-cols-2 gap-0.5">
+                    <div className="bg-black p-5">
+                        <p className="text-xl font-medium">loading...</p>
+                        <p className="text-gray-400">Velocity</p>
+                    </div>
+                    <div className="bg-black p-5">
+                        <p className="text-xl font-medium">loading...</p>
+                        <p className="text-gray-400">Altitude</p>
+                    </div>
+                    <div className="bg-black p-5">
+                        <p className="text-xl font-medium">loading...</p>
+                        <p className="text-gray-400">Latitude</p>
+                    </div>
+                    <div className="bg-black p-5">
+                        <p className="text-xl font-medium">loading...</p>
+                        <p className="text-gray-400">Longitude</p>
+                    </div>
+                </div>
+
+                <div className="mt-0.5 bg-black p-5">
+                    <div>
+                        <p className="text-xl font-medium">loading...</p>
+                    </div>
+                    <div>
+                        <p className="text-gray-400">Flag Icon</p>
+                    </div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="bg-gray-600 p-0.5">
+        <div>
             <div className="grid grid-cols-2 gap-0.5">
                 <div className="bg-black p-5">
                     <p className="text-xl font-medium">
