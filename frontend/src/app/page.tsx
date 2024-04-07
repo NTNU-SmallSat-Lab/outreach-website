@@ -7,6 +7,7 @@ import Link from "next/link";
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import SatelliteSelector from "@/components/SatelliteSelector";
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
@@ -16,11 +17,11 @@ export default async function Home() {
             <div className="flex flex-wrap bg-gray-600 p-0.5 md:flex-nowrap">
                 <div className="flex-1">
                     <div className="bg-black p-5">
-                        <p>Select Satellite Component Goes Here</p>
+                        <SatelliteSelector />
                     </div>
 
                     <div className="mt-0.5">
-                        <SatelliteDataHome satName="HYPSO-1" />
+                        <SatelliteDataHome />
                     </div>
                 </div>
 

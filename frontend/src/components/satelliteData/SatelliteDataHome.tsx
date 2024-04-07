@@ -3,33 +3,42 @@ import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 
-const updateInterval = 10;
+const updateInterval = 1000;
 
-export default function SatelliteDataHome({ satName }: { satName: string }) {
-    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
+export default function SatelliteDataHome() {
+    const { satelliteData, fetchAndSetSatelliteData, selectedSatellite } =
+        useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
 
-    // Fetch satellite data on component mount
+    // Fetch satellite data on component mount or when selectedSatellite changes
     useEffect(() => {
-        fetchAndSetSatelliteData(satName);
-    }, [fetchAndSetSatelliteData, satName]);
+        if (selectedSatellite) {
+            fetchAndSetSatelliteData(selectedSatellite);
+        }
+    }, [fetchAndSetSatelliteData, selectedSatellite]);
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
-            // Access satellite data by name
-            const satData = satelliteData[satName];
-            if (satData) {
-                const updatedInfo = convertSatrec(satData.satrec, satData.name);
-                setSatelliteInfo(updatedInfo);
+            if (selectedSatellite) {
+                // Access satellite data by name
+                const satData = satelliteData[selectedSatellite];
+                if (satData) {
+                    const updatedInfo = convertSatrec(
+                        satData.satrec,
+                        satData.name,
+                    );
+                    setSatelliteInfo(updatedInfo);
+                    console.log(satData.name);
+                }
             }
         }, updateInterval);
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, satName]);
+    }, [satelliteData, selectedSatellite]);
 
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {
