@@ -132,7 +132,7 @@ const SatelliteDataTableMultiple: React.FC<ClientOnlyComponentProps> = ({
                 satelliteDatas={satelliteData}
                 selectedSatellite={selectedSatellite}
             />
-            <Map2d satName={selectedSatellite.name}/>
+            <Map2d satName={selectedSatellite.name} />
         </>
     ) : (
         <div>Loading...</div>
