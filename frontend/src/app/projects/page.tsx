@@ -52,7 +52,7 @@ export default async function ProjectsPage() {
     return (
         <div>
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-4xl font-extrabold ">Our Projects</h1>
+                <h1 className="text-4xl font-extrabold mt-8">Our Projects</h1>
                 <p className="text-sm text-muted-foreground">
                     Information about our various projects are shown here.
                 </p>
