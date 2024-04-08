@@ -1,7 +1,6 @@
 // Ensure all necessary imports are present
 "use client";
 import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 import { Combobox } from "../Combobox"; // Adjust the path as necessary
 import {
     mapRawDataToTleData,
@@ -10,14 +9,11 @@ import {
 } from "@/lib/mapHelpers";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 
-// Define the MyGlobe component with dynamic import
-const MyGlobe = dynamic(() => import("@/components/map/MyGlobe"), {
-    ssr: false,
-});
 const updateInterval = 10;
 
 interface ClientOnlyComponentProps {
     fetchSatelliteData: ({
+        // eslint-disable-next-line no-unused-vars
         useExampleData,
     }: {
         useExampleData: boolean;
@@ -68,12 +64,6 @@ const SatelliteDataTable: React.FC<ClientOnlyComponentProps> = ({
         setSelectedSatellite(value);
         updateSatelliteInfo(value);
     };
-
-    // Map satellite data for Combobox options
-    const satelliteOptions = satelliteData.map((sat) => ({
-        value: sat.name,
-        label: sat.name,
-    }));
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -130,10 +120,6 @@ const SatelliteDataTable: React.FC<ClientOnlyComponentProps> = ({
                 </div>
                 <div className="ml-4">{/* Include the flag icon here */}</div>
             </div>
-            <MyGlobe
-                satelliteDatas={satelliteData}
-                selectedSatellite={selectedSatellite.name}
-            />
         </>
     ) : (
         <div>Loading...</div>

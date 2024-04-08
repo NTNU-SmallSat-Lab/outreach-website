@@ -13,8 +13,6 @@ import SatelliteGlobe from "@/components/map/newGlobe";
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
 
-    const combobox = <h1>hallo</h1>;
-
     return (
         <>
             <div className="flex flex-wrap bg-gray-600 p-0.5 md:flex-nowrap">

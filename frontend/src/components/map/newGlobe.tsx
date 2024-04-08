@@ -46,7 +46,7 @@ export default function SatelliteGlobe() {
             // Set initial POV after globe instantiation
             setTimeout(() => {
                 if (globeRef.current) {
-                    globeRef.current.pointOfView({ altitude: 2.5 });
+                    globeRef.current.pointOfView({ altitude: 3.5 });
                 }
             });
 
@@ -134,14 +134,17 @@ export default function SatelliteGlobe() {
             new Date().toISOString(),
         );
 
-        globeRef?.current?.pointOfView({
-            lat: Number(targetPosition.latitudeDeg),
-            lng: Number(targetPosition.longitudeDeg),
-            altitude: 2.5,
-        }, 1700);
+        globeRef?.current?.pointOfView(
+            {
+                lat: Number(targetPosition.latitudeDeg),
+                lng: Number(targetPosition.longitudeDeg),
+                altitude: 2.5,
+            },
+            1700,
+        );
 
         return () => clearInterval(intervalId);
-    }, [satelliteData, selectedSatellite]);
+    });
 
     return <div id="chart" className="" ref={chart}></div>;
 }
