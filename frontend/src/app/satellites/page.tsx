@@ -10,6 +10,7 @@ import {
     PageHeaderAndSubtitle,
     PageSubtitle,
 } from "@/components/PageHeader";
+import { OuiImage } from "@/components/fullBlogCard";
 
 const HOST_URL = process.env.HOST_URL;
 const GET_SATELLITES = gql(`
@@ -82,7 +83,7 @@ export default async function Satellites() {
                                                 satName={satelliteName}
                                                 missionStatus={missionStatus}
                                             />
-                                            {previewImage && (
+                                            {previewImage ? (
                                                 <Image
                                                     src={previewImage}
                                                     alt={previewImage}
@@ -90,6 +91,10 @@ export default async function Satellites() {
                                                     height={0}
                                                     className="margin p-2"
                                                 />
+                                            ) : (
+                                                <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
+                                                    <OuiImage />
+                                                </div>
                                             )}
                                         </CardContent>
                                     </Card>

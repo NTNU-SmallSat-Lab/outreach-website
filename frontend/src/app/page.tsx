@@ -15,9 +15,9 @@ export default async function Home() {
 
     return (
         <>
-            <div className="flex flex-wrap bg-gray-600 p-0.5 md:flex-nowrap">
+            <div className="flex flex-col bg-gray-600 p-0.5 md:flex-row">
                 {/* Stats Container */}
-                <div className="flex w-full flex-col md:w-1/3">
+                <div className="flex w-full min-w-[320px] flex-col md:w-1/3">
                     <div className="bg-black p-5">
                         <SatelliteSelector />
                     </div>
@@ -29,7 +29,7 @@ export default async function Home() {
 
                 {/* Globe Container */}
                 <div className="ml-0.5 w-full md:w-2/3">
-                    <div className="h-full bg-black md:flex md:items-center md:justify-center">
+                    <div className="flex h-full items-center justify-center bg-black">
                         <SatelliteGlobe />
                     </div>
                 </div>
