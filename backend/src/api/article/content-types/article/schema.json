@@ -22,9 +22,6 @@
       "targetField": "title",
       "required": true
     },
-    "subtitle": {
-      "type": "string"
-    },
     "datePublished": {
       "type": "date",
       "required": true

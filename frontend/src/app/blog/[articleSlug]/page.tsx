@@ -126,9 +126,6 @@ export default async function Page({
                         <p>{datePublished}</p>
                     </div>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                    {article?.attributes?.subtitle}{" "}
-                </p>
                 <div className="relative h-[300px] w-full">
                   <Image 
                       src={coverImage} 
