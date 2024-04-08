@@ -138,7 +138,7 @@ export default function SatelliteGlobe() {
             lat: Number(targetPosition.latitudeDeg),
             lng: Number(targetPosition.longitudeDeg),
             altitude: 2.5,
-        });
+        }, 1700);
 
         return () => clearInterval(intervalId);
     }, [satelliteData, selectedSatellite]);
