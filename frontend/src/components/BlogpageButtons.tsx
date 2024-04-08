@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-export default function BlogpageButtons() {
+export default function BlogpageButtons({ className }: { className?: string }) {
     const [activeButton, setActiveButton] = useState("All Posts");
     const router = useRouter();
     const page = useSearchParams().get("currentPage");
@@ -18,7 +19,12 @@ export default function BlogpageButtons() {
     };
 
     return (
-        <div className="col-span-3 flex flex-row items-center justify-center gap-4">
+        <div
+            className={cn(
+                "flex flex-row items-center justify-center gap-4",
+                className,
+            )}
+        >
             <Button
                 className={`border border-white hover:bg-primary ${activeButton === "All Posts" ? "bg-primary" : "bg-transparent"}`}
                 onClick={() => handleParameterChange("All Posts")}

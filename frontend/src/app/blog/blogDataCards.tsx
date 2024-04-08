@@ -17,47 +17,25 @@ export default async function BlogDataCards({
     }
 
     return (
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
             {/* Only map fist article */}
             {articles.map((article: any) => {
                 if (article.firstArticle) {
                     return (
                         <FullBlogCard
-                            key={article.id} // A unique ID for each blog post
-                            firstArticle={article.firstArticle}
-                            content={article.content}
-                            coverImage={article.coverImage}
-                            datePublished={article.datePublished}
-                            tag={article.tag}
-                            HOST_URL={article.HOST_URL}
-                            authorName={article.authorName}
-                            avatarURL={article.avatarURL}
-                            slug={article.slug}
-                            title={article.title}
+                            className="col-span-full"
+                            article={article}
+                            key={article.ID}
                         />
                     );
                 }
             })}
-            <BlogpageButtons />
+            <BlogpageButtons className="col-span-full" />
             {articles.map((article: any) => {
                 if (article.firstArticle) {
                     return;
                 }
-                return (
-                    <FullBlogCard
-                        key={article.id} // A unique ID for each blog post
-                        firstArticle={article.firstArticle}
-                        content={article.content}
-                        coverImage={article.coverImage}
-                        datePublished={article.datePublished}
-                        tag={article.tag}
-                        HOST_URL={article.HOST_URL}
-                        authorName={article.authorName}
-                        avatarURL={article.avatarURL}
-                        slug={article.slug}
-                        title={article.title}
-                    />
-                );
+                return <FullBlogCard article={article} key={article.ID} />;
             })}
         </div>
     );

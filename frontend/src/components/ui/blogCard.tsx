@@ -37,23 +37,11 @@ const BlogCardTitle = React.forwardRef<
 ));
 BlogCardTitle.displayName = "BlogCardTitle";
 
-const BlogCardDescription = React.forwardRef<
-    HTMLParagraphElement,
-    React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-    <p
-        ref={ref}
-        className={cn("text-sm text-muted-foreground", className)}
-        {...props}
-    />
-));
-BlogCardDescription.displayName = "BlogCardDescription";
-
 const BlogCardContent = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("pt-0", className)} {...props} />
+    <div ref={ref} className={cn(className)} {...props} />
 ));
 BlogCardContent.displayName = "BlogCardContent";
 
@@ -61,11 +49,7 @@ const BlogCardFooter = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-    <div
-        ref={ref}
-        className={cn("flex items-center p-6 pt-0", className)}
-        {...props}
-    />
+    <div ref={ref} className={cn(className)} {...props} />
 ));
 BlogCardFooter.displayName = "BlogCardFooter";
 
@@ -74,6 +58,5 @@ export {
     BlogCardHeader,
     BlogCardFooter,
     BlogCardTitle,
-    BlogCardDescription,
     BlogCardContent,
 };

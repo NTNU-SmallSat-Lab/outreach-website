@@ -1,6 +1,6 @@
 import {
     BlogCard,
-    BlogCardContent,
+    BlogCardFooter,
     BlogCardHeader,
     BlogCardTitle,
 } from "@/components/ui/blogCard";
@@ -9,10 +9,9 @@ import BlockRendererClient from "./BlockRendererClient";
 import { Enum_Article_Tag } from "@/__generated__/graphql";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface BlogPost {
-    key: string | null | undefined;
-    firstArticle?: boolean | null | undefined;
     title: string | undefined;
     content: BlocksContent; // Or a more appropriate type if your content is structured
     coverImage?: string; // Optional cover image
@@ -24,7 +23,13 @@ interface BlogPost {
     slug: string | undefined;
 }
 
-export default function FullBlogCard(article: BlogPost) {
+export default function FullBlogCard({
+    article,
+    className,
+}: {
+    article: BlogPost;
+    className?: string;
+}) {
     function formatDate(dateString: string) {
         const date = new Date(dateString);
         const options: Intl.DateTimeFormatOptions = {
@@ -36,17 +41,19 @@ export default function FullBlogCard(article: BlogPost) {
     }
 
     return (
-        <BlogCard key={article.key}>
+        <BlogCard className={cn(className)}>
             <BlogCardHeader>
                 <div className="flex items-center gap-2">
+                    {/* Tags */}
                     <p className="rounded-md bg-primary p-2 text-center text-xs text-white">
                         {article.tag ? article.tag : "General"}
                     </p>
-                    <p className=" text-center text-xs text-white">
+                    {/* Date published */}
+                    <p className="text-xs text-white">
                         {formatDate(article.datePublished)}
                     </p>
                 </div>
-                <BlogCardTitle className="my-2">
+                <BlogCardTitle>
                     <Link
                         className="hover:underline"
                         href={"/blog/" + article.slug}
@@ -55,7 +62,7 @@ export default function FullBlogCard(article: BlogPost) {
                     </Link>
                 </BlogCardTitle>
             </BlogCardHeader>
-            <BlogCardContent>
+            {/* <BlogCardContent>
                 {article.coverImage && (
                     <img
                         src={article.coverImage}
@@ -66,11 +73,12 @@ export default function FullBlogCard(article: BlogPost) {
                 <div>
                     <BlockRendererClient content={article.content} />
                 </div>
-            </BlogCardContent>
-
-            <Link href={"/blog/" + article.slug} className="text-primary">
-                Read more →
-            </Link>
+            </BlogCardContent> */}
+            <BlogCardFooter>
+                <Link href={"/blog/" + article.slug} className="text-primary">
+                    Read more →
+                </Link>
+            </BlogCardFooter>
         </BlogCard>
     );
 }
