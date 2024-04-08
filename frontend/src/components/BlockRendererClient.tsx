@@ -58,7 +58,7 @@ export default function BlockRendererClient({
                         if (italic) {
                             return <p>{children}</p>;
                         }
-                        return <p >{children}</p>;
+                        return <p>{children}</p>;
                     },
 
                     link: ({ url, children }) => {
