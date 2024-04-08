@@ -12,6 +12,7 @@
     "license": "",
     "dependencies": {
         "concurrently": "^8.2.2",
+        "country-emoji": "^1.5.6",
         "openapi-typescript": "^6.7.4",
         "three-glow-mesh": "^0.1.2"
     }

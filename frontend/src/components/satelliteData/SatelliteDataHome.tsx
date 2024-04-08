@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
+import { flag } from 'country-emoji';
 
 const updateInterval = 10;
 
@@ -82,10 +83,8 @@ export default function SatelliteDataHome() {
                         {satelliteInfo
                             ? "Above " + satelliteInfo.country
                             : "Loading..."}
+                        {satelliteInfo && flag(satelliteInfo.country)}
                     </p>
-                </div>
-                <div>
-                    <p className="text-gray-400">Flag Icon</p>
                 </div>
             </div>
         </div>
