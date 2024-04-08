@@ -1,7 +1,14 @@
-import { SatRec } from "satellite.js";
 import * as satellite from "satellite.js";
-import { PolyUtil } from "node-geometry-library";
+import { SatRec } from "satellite.js";
 import globeData from "@components/map/githubglobe/files/globe-data.json";
+
+// turf needs ts ignore to work with typescript
+// @ts-ignore
+import * as turf from "@turf/turf";
+// @ts-ignore
+import { point } from "@turf/helpers";
+// @ts-ignore
+import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 
 interface SatelliteInfo {
     name: string;
@@ -14,63 +21,23 @@ interface SatelliteInfo {
 
 export type { SatelliteInfo };
 
-// Function to find the country of a satellite
 const findCountry = (latitudeDeg: number, longitudeDeg: number): string => {
+    const pointFeature = point([longitudeDeg, latitudeDeg]);
+
     for (const feature of globeData.features) {
-        const { bbox, geometry } = feature;
-        const boundingBoxPoints = [
-            { lat: bbox[1], lng: bbox[0] },
-            { lat: bbox[3], lng: bbox[0] },
-            { lat: bbox[3], lng: bbox[2] },
-            { lat: bbox[1], lng: bbox[2] },
-        ];
-
-        if (
-            PolyUtil.containsLocation(
-                { lat: latitudeDeg, lng: longitudeDeg },
-                boundingBoxPoints,
-            )
-        ) {
-            if (geometry.type === "Polygon") {
-                const coordinates = geometry.coordinates as number[][][];
-                for (const polygon of coordinates) {
-                    let boundingPolygon = polygon.map((coordinate) => {
-                        return { lat: coordinate[1], lng: coordinate[0] };
-                    });
-
-                    if (
-                        PolyUtil.containsLocation(
-                            { lat: latitudeDeg, lng: longitudeDeg },
-                            boundingPolygon,
-                        )
-                    ) {
-                        return feature.properties.ADMIN;
-                    }
-                }
-            } else if (geometry.type === "MultiPolygon") {
-                const multiPolygons = geometry.coordinates as number[][][][];
-                for (const multiPolygon of multiPolygons) {
-                    for (const polygon of multiPolygon) {
-                        let boundingPolygon = polygon.map((coordinate) => {
-                            return { lat: coordinate[1], lng: coordinate[0] };
-                        });
-
-                        if (
-                            PolyUtil.containsLocation(
-                                { lat: latitudeDeg, lng: longitudeDeg },
-                                boundingPolygon,
-                            )
-                        ) {
-                            return feature.properties.ADMIN;
-                        }
-                    }
-                }
-            }
+        const { geometry } = feature;
+        // Create a polygon or multiPolygon feature depending on the geometry type
+        const turfGeometry =
+            geometry.type === "Polygon"
+                ? turf.polygon(geometry.coordinates)
+                : turf.multiPolygon(geometry.coordinates);
+        // Check if the point is within the geometry
+        if (booleanPointInPolygon(pointFeature, turfGeometry)) {
+            return feature.properties.ADMIN;
         }
     }
 
-    // Default to "Ocean" if no country is found
-    return "Ocean";
+    return "Ocean"; // Fallback in case no country is found
 };
 
 // Convert satellite record to satellite info, including latitude, longitude, altitude, velocity, and country
