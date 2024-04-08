@@ -25,7 +25,9 @@ export default function SatelliteGlobe() {
             globeRef.current = Globe()(chart.current)
                 .globeImageUrl(
                     "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
-                )
+                )/*.backgroundImageUrl(
+                    "//unpkg.com/three-globe/example/img/night-sky.png",
+                )*/
                 .objectLat("lat")
                 .objectLng("lng")
                 .objectAltitude("alt")
@@ -58,10 +60,10 @@ export default function SatelliteGlobe() {
                 if (globeRef.current) {
                     if (window.innerWidth <= 768) {
                         globeRef.current.width(window.innerWidth);
-                        globeRef.current.height(window.innerHeight / 2);
+                        globeRef.current.height(window.innerHeight);
                     } else {
                         globeRef.current.width(window.innerWidth);
-                        globeRef.current.height(window.innerHeight / 2);
+                        globeRef.current.height(window.innerHeight);
                     }
                 }
             };
