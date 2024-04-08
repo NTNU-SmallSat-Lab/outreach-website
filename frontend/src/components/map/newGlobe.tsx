@@ -56,22 +56,20 @@ export default function SatelliteGlobe() {
             globeRef.current.controls().enabled = true;
             globeRef.current.controls().enableZoom = false;
 
-            // Define the handleResize function
-            const handleResize = () => {
-                if (globeRef.current) {
-                    if (window.innerWidth <= 768) {
-                        globeRef.current.width(window.innerWidth);
-                        globeRef.current.height(window.innerHeight);
-                    } else {
-                        globeRef.current.width(window.innerWidth);
-                        globeRef.current.height(window.innerHeight / 1.5);
-                    }
+            const setGlobeSize = () => {
+                if (globeRef.current && chart.current) {
+                    const { width, height } =
+                        chart.current.getBoundingClientRect();
+                    globeRef.current.width(width);
+                    globeRef.current.height(height);
                 }
             };
 
-            // Handle the resize event
-            window.addEventListener("resize", handleResize);
-            handleResize(); // Call it initially to set the size
+            // Initially set the globe size to match the container
+            setGlobeSize();
+
+            // Resize listener to update the globe size
+            window.addEventListener("resize", setGlobeSize);
 
             // Set initial positions of satellites
             let currentDate = new Date().toISOString();
@@ -93,7 +91,7 @@ export default function SatelliteGlobe() {
             globeRef.current.objectsData(initialPositions);
 
             return () => {
-                window.removeEventListener("resize", handleResize);
+                window.removeEventListener("resize", setGlobeSize);
             };
         }
     }, []);
