@@ -21,7 +21,11 @@ const BlogCardHeader = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("flex flex-col", className)} {...props} />
+    <div
+        ref={ref}
+        className={cn("flex flex-col gap-2", className)}
+        {...props}
+    />
 ));
 BlogCardHeader.displayName = "BlogCardHeader";
 
@@ -31,7 +35,10 @@ const BlogCardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <h3
         ref={ref}
-        className={cn("text-2xl font-semibold", className)}
+        className={cn(
+            "hyphens-auto break-words text-2xl font-semibold",
+            className,
+        )}
         {...props}
     />
 ));

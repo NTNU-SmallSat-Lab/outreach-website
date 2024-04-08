@@ -17,26 +17,29 @@ export default async function BlogDataCards({
     }
 
     return (
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-            {/* Only map fist article */}
-            {articles.map((article: any) => {
-                if (article.firstArticle) {
-                    return (
-                        <FullBlogCard
-                            className="col-span-full"
-                            article={article}
-                            key={article.ID}
-                        />
-                    );
-                }
-            })}
-            <BlogpageButtons className="col-span-full" />
-            {articles.map((article: any) => {
-                if (article.firstArticle) {
-                    return;
-                }
-                return <FullBlogCard article={article} key={article.ID} />;
-            })}
-        </div>
+        <>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <BlogpageButtons className="col-span-full" />
+                {/* Only map fist article */}
+                {articles.map((article: any) => {
+                    if (article.firstArticle) {
+                        return (
+                            <FullBlogCard
+                                className="col-span-full"
+                                article={article}
+                                key={article.ID}
+                            />
+                        );
+                    }
+                })}
+
+                {articles.map((article: any) => {
+                    if (article.firstArticle) {
+                        return;
+                    }
+                    return <FullBlogCard article={article} key={article.ID} />;
+                })}
+            </div>
+        </>
     );
 }
