@@ -43,6 +43,11 @@ query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
                 Tag
             }
         }
+        meta {
+            pagination {
+                total
+            }
+        }
     }
 }
 `);
@@ -59,8 +64,6 @@ export default async function fetchArticlePages({
     let firstArticle = true;
 
     let graphqlData;
-
-    console.log(!tag);
 
     if (!tag) {
         graphqlData = await getClient().query({
@@ -145,5 +148,7 @@ export default async function fetchArticlePages({
         firstArticle = false;
     });
 
-    return articleList;
+    const totalArticles = graphqlData.data?.articles?.meta?.pagination?.total;
+
+    return { articleList, totalArticles };
 }
