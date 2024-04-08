@@ -1,5 +1,6 @@
 import {
     BlogCard,
+    BlogCardContent,
     BlogCardFooter,
     BlogCardHeader,
     BlogCardTitle,
@@ -62,7 +63,7 @@ export default function FullBlogCard({
                     </Link>
                 </BlogCardTitle>
             </BlogCardHeader>
-            {/* <BlogCardContent>
+            <BlogCardContent>
                 {article.coverImage && (
                     <img
                         src={article.coverImage}
@@ -73,7 +74,7 @@ export default function FullBlogCard({
                 <div>
                     <BlockRendererClient content={article.content} />
                 </div>
-            </BlogCardContent> */}
+            </BlogCardContent>
             <BlogCardFooter>
                 <Link href={"/blog/" + article.slug} className="text-primary">
                     Read more →
