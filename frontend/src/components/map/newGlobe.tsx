@@ -6,7 +6,7 @@ import { useSatelliteStore } from "@/lib/store";
 import { convertSatrec } from "@/lib/convertSatrec";
 
 const SAT_RADIUS = 5; // Relative size of the satellite for visualization
-const UPDATE_INTERVAL_MS = 10; // Update interval in milliseconds
+const UPDATE_INTERVAL_MS = 100; // Update interval in milliseconds
 const EARTH_RADIUS_KM = 6371; // Earth radius in kilometers
 
 export default function SatelliteGlobe() {
