@@ -21,7 +21,12 @@ type SatelliteStore = SatelliteState & SatelliteActions;
 // Create satellite store. Update selectedSatellite if you want a different default
 export const useSatelliteStore = create<SatelliteStore>((set, get) => ({
     satelliteData: {},
-    satelliteNames: ["0 VANGUARD 2", "0 EXPLORER 7", "0 SOLRAD 3/INJUN 1", "0 STARLINK-1007"],
+    satelliteNames: [
+        "0 VANGUARD 2",
+        "0 EXPLORER 7",
+        "0 SOLRAD 3/INJUN 1",
+        "0 STARLINK-1007",
+    ],
     selectedSatellite: "0 VANGUARD 2",
 
     setSatelliteData: (satName, data) =>

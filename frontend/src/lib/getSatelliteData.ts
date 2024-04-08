@@ -19,6 +19,7 @@ let cachedData: {
 };
 
 // Fetch satellite data from Celestrak by satellite name
+// eslint-disable-next-line no-unused-vars
 async function fetchSatelliteData(satName: string): Promise<any> {
     const response = await fetch(
         `https://celestrak.org/NORAD/elements/gp.php?NAME=${satName}&FORMAT=TLE`,
@@ -68,9 +69,7 @@ export async function satLoader(satName: string): Promise<SatelliteData> {
         // Fetch the data and update the cache
         // const newDataArray = await fetchSatelliteData(satName);
         const newDataArray = mapTleToSatData(exampleData);
-        const satExample = newDataArray.find(
-            (sat) => sat.name == satName,
-        );
+        const satExample = newDataArray.find((sat) => sat.name == satName);
         const newData = satExample || newDataArray[0];
 
         cachedData = {
