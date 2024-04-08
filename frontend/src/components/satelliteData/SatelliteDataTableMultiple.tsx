@@ -1,6 +1,7 @@
 // Ensure all necessary imports are present
 "use client";
 import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { Combobox } from "../Combobox"; // Adjust the path as necessary
 import {
     mapRawDataToTleData,
@@ -8,7 +9,12 @@ import {
     SatelliteData,
 } from "@/lib/mapHelpers";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
+import Map2d from "../2dmap/Map2d";
 
+// Define the MyGlobe component with dynamic import
+const MyGlobe = dynamic(() => import("@/components/map/MyGlobe"), {
+    ssr: false,
+});
 const updateInterval = 10;
 
 interface ClientOnlyComponentProps {
@@ -21,7 +27,7 @@ interface ClientOnlyComponentProps {
     }) => Promise<string>;
 }
 
-const SatelliteDataTable: React.FC<ClientOnlyComponentProps> = ({
+const SatelliteDataTableMultiple: React.FC<ClientOnlyComponentProps> = ({
     fetchSatelliteData,
 }) => {
     const [satelliteData, setSatelliteData] = useState<SatelliteData[]>([]);
@@ -64,6 +70,8 @@ const SatelliteDataTable: React.FC<ClientOnlyComponentProps> = ({
         setSelectedSatellite(value);
         updateSatelliteInfo(value);
     };
+
+    // Map satellite data for Combobox options
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -120,10 +128,15 @@ const SatelliteDataTable: React.FC<ClientOnlyComponentProps> = ({
                 </div>
                 <div className="ml-4">{/* Include the flag icon here */}</div>
             </div>
+            <MyGlobe
+                satelliteDatas={satelliteData}
+                selectedSatellite={selectedSatellite}
+            />
+            <Map2d satName={selectedSatellite.name} />
         </>
     ) : (
         <div>Loading...</div>
     );
 };
 
-export default SatelliteDataTable;
+export default SatelliteDataTableMultiple;

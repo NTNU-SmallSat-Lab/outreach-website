@@ -5,24 +5,12 @@ import {
     BlogCardHeader,
     BlogCardTitle,
 } from "@/components/ui/blogCard";
-
-import BlockRendererClient from "./BlockRendererClient";
-import { Enum_Article_Tag } from "@/__generated__/graphql";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
+import { SlicePreviewText } from "./SlicePreviewText";
+import { BlogPost } from "@/app/blog/page";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-interface BlogPost {
-    title: string | undefined;
-    content: BlocksContent; // Or a more appropriate type if your content is structured
-    coverImage?: string; // Optional cover image
-    datePublished: any;
-    tag?: Enum_Article_Tag | null | undefined; // Optional tag
-    HOST_URL?: string; // It's common to keep the host URL separate from post data
-    authorName?: string;
-    avatarURL?: string; // Optional avatar URL
-    slug: string | undefined;
-}
 
 export default function FullBlogCard({
     article,
@@ -44,42 +32,42 @@ export default function FullBlogCard({
     return (
         <BlogCard className={cn(className)}>
             <BlogCardHeader>
-                <div className="flex items-center gap-2">
-                    {/* Tags */}
-                    <p className="rounded-md bg-primary p-2 text-center text-xs text-white">
-                        {article.tag ? article.tag : "General"}
-                    </p>
-                    {/* Date published */}
-                    <p className="text-xs text-white">
-                        {formatDate(article.datePublished)}
-                    </p>
-                </div>
-                <BlogCardTitle>
-                    <Link
-                        className="hover:underline"
-                        href={"/blog/" + article.slug}
-                    >
-                        {article.title}
-                    </Link>
-                </BlogCardTitle>
+                <BlogCardContent>
+                    {article.coverImage && (
+                        <Image
+                            src={article.coverImage}
+                            alt={article.coverImage}
+                            width={500}
+                            height={0}
+                            className="m-0 aspect-video max-h-[250px] w-full object-cover p-0"
+                        />
+                    )}
+                    <div className="m-5">
+                        <div className="flex">
+                            <p className="ww-fit rounded-md bg-primary p-2 text-center text-xs text-white">
+                                {article.tag ? article.tag : "General"}
+                            </p>
+                            <p className="w-fit p-2 text-center text-xs text-white">
+                                {formatDate(article.datePublished)}
+                            </p>
+                        </div>
+                        <BlogCardTitle className="my-2">
+                            <Link
+                                className="hover:underline"
+                                href={"/blog/" + article.slug}
+                            >
+                                {article.title}
+                            </Link>
+                        </BlogCardTitle>
+                        <p className="break-words">
+                            {SlicePreviewText(article.content)}
+                        </p>
+                    </div>
+                </BlogCardContent>
             </BlogCardHeader>
-            <BlogCardContent>
-                {article.coverImage && (
-                    <img
-                        src={article.coverImage}
-                        alt={article.coverImage}
-                        className="aspect-video object-cover"
-                    />
-                )}
-                <div>
-                    <BlockRendererClient content={article.content} />
-                </div>
-            </BlogCardContent>
-            <BlogCardFooter>
-                <Link href={"/blog/" + article.slug} className="text-primary">
-                    Read more →
-                </Link>
-            </BlogCardFooter>
+            <Link href={"/blog/" + article.slug} className="m-5 text-primary">
+                Read more →
+            </Link>
         </BlogCard>
     );
 }

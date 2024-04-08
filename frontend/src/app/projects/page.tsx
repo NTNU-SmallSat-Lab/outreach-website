@@ -2,9 +2,9 @@ export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getClient } from "@/lib/ApolloClient";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
+import { SlicePreviewText } from "@/components/SlicePreviewText";
 import {
     PageHeader,
     PageHeaderAndSubtitle,
@@ -19,7 +19,7 @@ const GET_PROJECTS = gql(`
           id
           attributes {
             title
-            article
+            content
             satellites {
               data {
                 attributes {
@@ -28,17 +28,13 @@ const GET_PROJECTS = gql(`
               }
             }
             slug
-            coverImage {
+            previewImage {
               data {
                 attributes {
                   url
                 }
               }
             }
-            updatedAt
-            publishedAt
-            createdAt
-            description
           }
         }
       }
@@ -70,33 +66,13 @@ export default async function ProjectsPage() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData.data.projects.data.map((project: any) => {
-                    let coverImage =
-                        project?.attributes?.coverImage?.data?.attributes?.url;
+                {graphqlData.data.projects.data.map((project) => {
+                    let previewImage =
+                        project?.attributes?.previewImage?.data?.attributes
+                            ?.url;
 
-                    if (HOST_URL && coverImage != undefined) {
-                        coverImage = HOST_URL + coverImage;
-                    }
-                    let content: BlocksContent =
-                        project?.attributes?.article ?? [];
-                    let text = "";
-                    for (const block of content) {
-                        if (block.type === "paragraph") {
-                            const paragraphBlock = block as {
-                                type: "paragraph";
-                                children: { type: "text"; text: string }[];
-                            };
-
-                            if (paragraphBlock.children[0].text == "") {
-                                continue;
-                            }
-
-                            text =
-                                paragraphBlock.children[0].text.slice(0, 100) +
-                                "...";
-
-                            break;
-                        }
+                    if (HOST_URL && previewImage != undefined) {
+                        previewImage = HOST_URL + previewImage;
                     }
                     return (
                         <Link
@@ -108,11 +84,11 @@ export default async function ProjectsPage() {
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="h-64">
-                                        {coverImage && (
+                                        {previewImage && (
                                             <Image
                                                 className="max-h-full max-w-full object-contain"
-                                                src={coverImage}
-                                                alt={coverImage}
+                                                src={previewImage}
+                                                alt={previewImage}
                                                 width={500}
                                                 height={0}
                                             />
@@ -121,7 +97,11 @@ export default async function ProjectsPage() {
                                     <CardTitle className="mb-2 mt-2 text-xl font-bold">
                                         {project?.attributes?.title}
                                     </CardTitle>
-                                    <p className="break-words">{text}</p>
+                                    <p className="break-words">
+                                        {SlicePreviewText(
+                                            project?.attributes?.content ?? [],
+                                        )}
+                                    </p>
                                 </CardContent>
                             </Card>
                         </Link>

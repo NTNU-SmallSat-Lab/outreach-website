@@ -13,13 +13,13 @@ export interface BlogPost {
     key: string | null | undefined;
     firstArticle?: boolean | null | undefined;
     title: string | undefined;
-    content: BlocksContent; // Or a more appropriate type if your content is structured
-    coverImage?: string; // Optional cover image
+    content: BlocksContent;
+    coverImage?: string;
     datePublished: any;
-    tag?: Enum_Article_Tag | null | undefined; // Optional tag
-    HOST_URL?: string; // It's common to keep the host URL separate from post data
+    tag?: Enum_Article_Tag | null | undefined;
+    HOST_URL?: string;
     authorName?: string;
-    avatarURL?: string; // Optional avatar URL
+    avatarURL?: string;
     slug: string | undefined;
 }
 
@@ -32,11 +32,18 @@ export default async function BlogPage({
     const currentPage = parseInt(page ?? "1", 10);
     const tag = searchParams?.tag ?? null;
 
-    const articles = (await fetchArticlePages({
+    const result = await fetchArticlePages({
         currentPage: currentPage,
         pageSize: 7,
         tag: tag,
-    })) as BlogPost[];
+    });
+
+    if (!result) {
+        // Handle the case where fetchArticlePages returns null
+        return <div>Error fetching articles</div>;
+    }
+
+    const { articleList, totalArticles } = result;
 
     return (
         <>
@@ -49,8 +56,8 @@ export default async function BlogPage({
             </PageHeaderAndSubtitle>
             <div className="flex flex-col justify-center">
                 {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
-                <BlogDataCards articles={articles} />
-                <BlogPaginator />
+                <BlogDataCards articles={articleList} />
+                <BlogPaginator totalArticles={totalArticles} />
             </div>
         </>
     );

@@ -1,66 +1,51 @@
 "use client";
-import { useEffect, useRef } from "react";
-import "ol/ol.css";
+import React, { useEffect, useRef } from "react";
 import Map from "ol/Map";
 import View from "ol/View";
-import { defaults as defaultInteractions } from "ol/interaction.js";
-import { applyStyle } from "ol-mapbox-style";
-import { VectorTile } from "ol/layer.js";
-import { useMemo } from "react";
-import { useTheme } from "next-themes";
+import { GeoJSON } from "ol/format";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import "ol/ol.css";
+import { Feature } from "ol";
+import { Geometry } from "ol/geom";
+import globeData from "@components/map/githubglobe/files/globe-data.json";
 
-const MyCustomMap = () => {
-    // useMemo to avoid creating a new instance of the layer on every render
-    const darkLayer = useMemo(() => new VectorTile({ declutter: true }), []);
-    const lightLayer = useMemo(() => new VectorTile({ declutter: true }), []);
+export default function Map2d() {
+    const mapRef = useRef<HTMLDivElement>(null);
 
-    // Custom map styling achieved using https://docs.stadiamaps.com/custom-styles/ and https://maplibre.org/maputnik
-    applyStyle(darkLayer, "./mapStyleDark.json");
-    applyStyle(lightLayer, "./mapStyleLight.json");
-
-    const mapContainer = useRef(null);
-
-    // nextjs useTheme to decide layer
-    let currentLayer: VectorTile;
-    const { theme } = useTheme();
-    if (theme === "light") {
-        currentLayer = lightLayer;
-    } else {
-        currentLayer = darkLayer;
-    }
-
-    // on component mount create the map and set the map refrences to the state
     useEffect(() => {
-        const mapInstance = new Map({
-            interactions: defaultInteractions({
-                // doubleClickZoom: false,
-                // dragPan: false,
-                // mouseWheelZoom: false,
-            }),
-            layers: [currentLayer],
+        const map = new Map({
+            target: mapRef.current!,
             view: new View({
-                //Coordinate System: WGS 84 / Pseudo-Mercator-EPSG:3857
                 center: [0, 0],
-                zoom: 1,
+                zoom: 2,
+                projection: "EPSG:4326",
             }),
         });
-        if (mapContainer.current) {
-            mapInstance.setTarget(mapContainer.current);
-        }
 
-        // on component unmount remove the map refrences to avoid unexpected behaviour
-        return () => {
-            mapInstance.setTarget(undefined);
-        };
-    }, [currentLayer, darkLayer]);
+        const vectorSource = new VectorSource({
+            features: new GeoJSON().readFeatures(globeData, {
+                dataProjection: "EPSG:4326",
+                featureProjection: "EPSG:3857",
+            }) as Feature<Geometry>[],
+        });
+
+        const vectorLayer = new VectorLayer({
+            source: vectorSource,
+        });
+
+        map.addLayer(vectorLayer);
+        map.getView().fit(vectorSource.getExtent(), {
+            padding: [50, 50, 50, 50],
+        });
+
+        return () => map.setTarget(undefined);
+    }, []);
 
     return (
-        <>
-            <div
-                ref={mapContainer}
-                className="relative aspect-square w-full bg-neutral-600"
-            ></div>
-        </>
+        <div className="h-[500px] w-full">
+            <h1>2D Map</h1>
+            <div ref={mapRef} className="h-full w-full"></div>
+        </div>
     );
-};
-export default MyCustomMap;
+}

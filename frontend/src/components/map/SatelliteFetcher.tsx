@@ -1,12 +1,8 @@
-export const runtime = "edge";
+"use server";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 
 // Dynamic import because of leaflet and globe.gl ssr problem with next.js
-import dynamic from "next/dynamic";
-const MyGlobe = dynamic(() => import("@/components/map/MyGlobe"), {
-    ssr: false,
-});
 
 // Example Datasources
 import { exampleData } from "./exampleSatData";
@@ -28,16 +24,17 @@ const GET_ALL_SATELLITE_DATA =
   }
   `);
 
-export default async function SatelliteFetcher({
-    useExampleData,
-    filterList = [],
-}: {
+interface SatelliteFetcherInterface {
     useExampleData: boolean;
     filterList?: string[];
-}) {
-    // Fetch the data, either from the example file or from strapi then celestrak
+}
+
+export default async function fetchSatelliteData({
+    useExampleData,
+    filterList = [],
+}: SatelliteFetcherInterface): Promise<string> {
     if (useExampleData) {
-        return <MyGlobe satelliteDatas={exampleData}></MyGlobe>;
+        return exampleData;
     } else {
         let graphqlData;
 
@@ -96,6 +93,6 @@ export default async function SatelliteFetcher({
 
         let combinedSatelliteDatas = data.join("\n");
 
-        return <MyGlobe satelliteDatas={combinedSatelliteDatas}></MyGlobe>;
+        return combinedSatelliteDatas;
     }
 }
