@@ -21,6 +21,11 @@ let cachedData: {
 async function fetchSatelliteData(satName: string): Promise<any> {
     const response = await fetch(
         `https://celestrak.org/NORAD/elements/gp.php?NAME=${satName}&FORMAT=TLE`,
+        {
+            next: {
+                revalidate: 60 * 60 * 24, // revalidate every 24 hours
+            },
+        },
     );
     if (!response.ok) {
         throw new Error(

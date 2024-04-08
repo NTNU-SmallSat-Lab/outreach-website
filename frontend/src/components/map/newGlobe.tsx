@@ -25,7 +25,8 @@ export default function SatelliteGlobe() {
             globeRef.current = Globe()(chart.current)
                 .globeImageUrl(
                     "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
-                )/*.backgroundImageUrl(
+                ) /*
+                .backgroundImageUrl(
                     "//unpkg.com/three-globe/example/img/night-sky.png",
                 )*/
                 .objectLat("lat")
@@ -63,7 +64,7 @@ export default function SatelliteGlobe() {
                         globeRef.current.height(window.innerHeight);
                     } else {
                         globeRef.current.width(window.innerWidth);
-                        globeRef.current.height(window.innerHeight);
+                        globeRef.current.height(window.innerHeight / 1.5);
                     }
                 }
             };
@@ -146,7 +147,7 @@ export default function SatelliteGlobe() {
         );
 
         return () => clearInterval(intervalId);
-    });
+    }, [satelliteData, selectedSatellite]);
 
     return <div id="chart" className="" ref={chart}></div>;
 }
