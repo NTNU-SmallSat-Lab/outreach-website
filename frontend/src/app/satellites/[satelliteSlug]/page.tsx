@@ -1,6 +1,5 @@
 export const runtime = "edge";
 import BlockRendererClient from "@/components/BlockRendererClient";
-import SatelliteFetcher from "@/components/map/SatelliteFetcher";
 import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
@@ -31,10 +30,6 @@ export default async function SatelliteInfoPage({
 
         return (
             <div className="flex flex-col items-center">
-                <SatelliteFetcher
-                    useExampleData={true}
-                    filterList={[satelliteInfo.name]}
-                />
                 <h1 className="mt-4 text-2xl font-bold">
                     {satelliteInfo.name}
                 </h1>

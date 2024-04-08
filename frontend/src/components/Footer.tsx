@@ -35,6 +35,12 @@ export default function Footer() {
                             >
                                 Youtube
                             </a>
+                            <a
+                                href="mailto:roger.birkeland@ntnu.no"
+                                className="hover:underline"
+                            >
+                                Contact
+                            </a>
                         </div>
                         <p>&copy; 2021 NTNU Small Satellite Lab</p>
                     </div>
