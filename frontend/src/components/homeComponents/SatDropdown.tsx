@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 type DropdownProps = {
     satelliteNames: string[];
     selectedSatellite: string;
+    // eslint-disable-next-line no-unused-vars
     setSelectedSatellite: (satellite: string) => void;
 };
 
@@ -24,7 +25,7 @@ export default function SatDropdown({
 
     // Animation variants for the dropdown content
     const variants = {
-        open: { opacity: 1, height: "auto", maxHeight: "300px" }, // Ensure maxHeight is a string with units
+        open: { opacity: 1, height: "auto", maxHeight: "300px" },
         collapsed: { opacity: 0, height: 0 },
     };
 
@@ -38,7 +39,7 @@ export default function SatDropdown({
             </button>
             {isOpen && <hr />}
             <motion.div
-                className={cn("overflow-hidden", isOpen && "overflow-y-scroll")} // Use 'overflow-y-scroll' for vertical scrolling
+                className={cn("overflow-hidden", isOpen && "overflow-y-scroll")}
                 initial="collapsed"
                 animate={isOpen ? "open" : "collapsed"}
                 variants={variants}
