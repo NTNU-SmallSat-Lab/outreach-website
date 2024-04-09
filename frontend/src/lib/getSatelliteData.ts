@@ -1,6 +1,6 @@
 import { twoline2satrec } from "satellite.js";
 import { SatRec } from "satellite.js";
-import { exampleData } from "@/components/map/exampleSatData";
+import { exampleData } from "@/components/satelliteData/exampleSatData";
 
 // Satellite data interface
 interface SatelliteData {

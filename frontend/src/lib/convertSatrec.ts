@@ -1,6 +1,6 @@
 import * as satellite from "satellite.js";
 import { SatRec } from "satellite.js";
-import globeData from "@components/map/githubglobe/files/globe-data.json";
+import globeData from "@components/homeComponents/files/globe-data.json";
 
 // turf needs ts ignore to work with typescript
 // @ts-ignore
