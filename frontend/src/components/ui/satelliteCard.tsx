@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
 // Import OuiImage or your placeholder image component here
 import { OuiImage } from "@/components/fullBlogCard";
-import { useSatelliteStore } from "@/lib/store";
+//import { useSatelliteStore } from "@/lib/store";
 
 interface SatelliteCardProps {
     satelliteName: string;
@@ -19,12 +18,12 @@ const SatelliteCard: React.FC<SatelliteCardProps> = ({
     missionStatus,
     previewImage,
 }) => {
-    const setSelectedSatellite = useSatelliteStore(
+    /*const setSelectedSatellite = useSatelliteStore(
         (state) => state.setSelectedSatellite,
-    );
+    );*/
 
     const handleSatelliteCardClick = (satelliteName: string) => () => {
-        setSelectedSatellite(satelliteName);
+        //setSelectedSatellite(satelliteName);
         window.location.href = `/satellites/${encodeURIComponent(satelliteName)}`;
     };
 

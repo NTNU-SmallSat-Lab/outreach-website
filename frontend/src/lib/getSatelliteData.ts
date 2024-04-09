@@ -1,6 +1,6 @@
 import { twoline2satrec } from "satellite.js";
 import { SatRec } from "satellite.js";
-import { exampleData } from "@/components/map/exampleSatData";
+//import { exampleData } from "@/components/map/exampleSatData";
 // Satellite data interface
 interface SatelliteData {
     satrec: SatRec;
@@ -60,8 +60,7 @@ export async function satLoader(satName: string): Promise<SatelliteData> {
         !(satName in cachedData.data)
     ) {
         // Fetch the data and update the cache
-        // const newDataArray = await fetchSatelliteData(satName);
-        const newDataArray = mapTleToSatData(exampleData)
+        const newDataArray = await fetchSatelliteData(satName);
         const newData = newDataArray[0];
 
         cachedData = {

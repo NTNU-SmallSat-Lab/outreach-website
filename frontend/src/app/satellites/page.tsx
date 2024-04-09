@@ -1,11 +1,6 @@
 export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
-import Image from "next/image";
-import { OuiImage } from "@/components/fullBlogCard";
 import SatelliteCard from "@/components/ui/satelliteCard";
 
 const HOST_URL = process.env.HOST_URL;
