@@ -7,29 +7,29 @@ import Link from "next/link";
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
-import SatelliteSelector from "@/components/SatelliteSelector";
-import SatelliteGlobe from "@/components/map/newGlobe";
+import SatelliteSelector from "@/components/homeComponents/SatelliteSelector";
+import SatelliteGlobe from "@/components/homeComponents/homeGlobe";
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
 
     return (
         <>
-            <div className="flex flex-wrap bg-gray-600 p-0.5 md:flex-nowrap">
+            <div className="flex flex-col bg-gray-600 p-0.5 xl:flex-row">
                 {/* Stats Container */}
-                <div className="flex w-full flex-col md:w-1/3">
-                    <div className="bg-black p-5">
+                <div className="z-10 flex w-full min-w-[500px] flex-col xl:w-1/3">
+                    <div className="bg-black p-1">
                         <SatelliteSelector />
                     </div>
                     <div className="mt-0.5">
                         <SatelliteDataHome />
                     </div>
-                    <div className="mt-0.5 w-full bg-black md:flex-grow"></div>
+                    <div className="mt-0.5 w-full bg-black xl:flex-grow"></div>
                 </div>
 
                 {/* Globe Container */}
-                <div className="ml-0.5 w-full md:w-2/3">
-                    <div className="h-full bg-black md:flex md:items-center md:justify-center">
+                <div className="z-0 ml-0.5 w-full xl:w-2/3">
+                    <div className="flex h-full items-center justify-center bg-black">
                         <SatelliteGlobe />
                     </div>
                 </div>

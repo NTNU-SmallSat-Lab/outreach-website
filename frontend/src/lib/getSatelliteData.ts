@@ -1,6 +1,7 @@
 import { twoline2satrec } from "satellite.js";
 import { SatRec } from "satellite.js";
-//import { exampleData } from "@/components/map/exampleSatData";
+import { exampleData } from "@/components/satelliteData/exampleSatData";
+
 // Satellite data interface
 interface SatelliteData {
     satrec: SatRec;
@@ -18,9 +19,15 @@ let cachedData: {
 };
 
 // Fetch satellite data from Celestrak by satellite name
+// eslint-disable-next-line no-unused-vars
 async function fetchSatelliteData(satName: string): Promise<any> {
     const response = await fetch(
         `https://celestrak.org/NORAD/elements/gp.php?NAME=${satName}&FORMAT=TLE`,
+        {
+            next: {
+                revalidate: 60 * 60 * 24, // revalidate every 24 hours
+            },
+        },
     );
     if (!response.ok) {
         throw new Error(
@@ -60,8 +67,10 @@ export async function satLoader(satName: string): Promise<SatelliteData> {
         !(satName in cachedData.data)
     ) {
         // Fetch the data and update the cache
-        const newDataArray = await fetchSatelliteData(satName);
-        const newData = newDataArray[0];
+        // const newDataArray = await fetchSatelliteData(satName);
+        const newDataArray = mapTleToSatData(exampleData);
+        const satExample = newDataArray.find((sat) => sat.name == satName);
+        const newData = satExample || newDataArray[0];
 
         cachedData = {
             data: { ...cachedData.data, [satName]: newData },
