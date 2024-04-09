@@ -10,7 +10,10 @@
         "prettierWrite": "npx prettier . --write",
         "prettierCheck": "npx prettier . --check",
         "compileTypes": "graphql-codegen",
-        "watchTypes": " graphql-codegen -w"
+        "watchTypes": " graphql-codegen -w",
+        "test": "npx playwright test",
+        "testui": "npx playwright test --ui",
+        "codegen": "npx playwright codegen"
     },
     "dependencies": {
         "@apollo/client": "^3.9.0-alpha.5",
