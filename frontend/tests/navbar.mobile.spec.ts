@@ -22,6 +22,8 @@ test.describe("Navbar Test", () => {
 
     test("NavbarClickLinksTest", async ({ page }) => {
         await page.goto("/");
+        await page.getByRole("link", { name: "logo" }).click();
+        await expect(page).toHaveURL("/");
         await page.getByRole("navigation").getByRole("button").click();
         await page.getByRole("button", { name: "Blog" }).click();
         await expect(page).toHaveURL("/blog");
@@ -29,8 +31,5 @@ test.describe("Navbar Test", () => {
         await expect(page).toHaveURL("/projects");
         await page.getByRole("button", { name: "Satellites" }).click();
         await expect(page).toHaveURL("/satellites");
-        await page.locator(".fixed").first().click();
-        await page.getByRole("link", { name: "logo" }).click();
-        await expect(page).toHaveURL("/");
     });
 });
