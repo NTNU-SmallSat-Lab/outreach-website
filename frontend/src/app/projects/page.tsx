@@ -5,6 +5,7 @@ import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
 import Image from "next/image";
 import { SlicePreviewText } from "@/components/SlicePreviewText";
+import { OuiImage } from "@/components/fullBlogCard";
 const HOST_URL = process.env.HOST_URL;
 
 const GET_PROJECTS = gql(`
@@ -77,7 +78,7 @@ export default async function ProjectsPage() {
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="h-64">
-                                        {previewImage && (
+                                        {previewImage ? (
                                             <Image
                                                 className="max-h-full max-w-full object-contain"
                                                 src={previewImage}
@@ -85,6 +86,10 @@ export default async function ProjectsPage() {
                                                 width={500}
                                                 height={0}
                                             />
+                                        ) : (
+                                            <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
+                                                <OuiImage />
+                                            </div>
                                         )}
                                     </div>
                                     <CardTitle className="mb-2 mt-2 text-xl font-bold">
