@@ -1,7 +1,7 @@
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
 import Link from "next/link";
 import Image from "next/image";
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function RelatedProjectsAndSatellites({
@@ -10,8 +10,8 @@ export default function RelatedProjectsAndSatellites({
     project: ProjectOrSatellite;
 }) {
     let previewImage = project.previewImage;
-    if (HOST_URL && previewImage != undefined) {
-        previewImage = HOST_URL + previewImage;
+    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
+        previewImage = OUTSIDE_STRAPI_URL + previewImage;
     }
     const projectOrSatellite = project.isProject ? "projects" : "satellites";
 

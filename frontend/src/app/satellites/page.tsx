@@ -7,7 +7,7 @@ import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable"
 import Image from "next/image";
 import { OuiImage } from "@/components/fullBlogCard";
 
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
     satellites {
@@ -43,8 +43,8 @@ export default async function Satellites() {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
                             ?.url;
-                    if (HOST_URL && previewImage != undefined) {
-                        previewImage = HOST_URL + previewImage;
+                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
+                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
                     }
                     let satelliteName = satellite?.attributes?.name ?? "";
                     let missionStatus =
