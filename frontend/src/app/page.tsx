@@ -4,27 +4,35 @@ import ColoredSection from "@/components/ui/coloredSection";
 import Image from "next/image";
 import Link from "next/link";
 
-import SatelliteFetcher from "@/components/map/SatelliteFetcher";
-import SatelliteDataTable from "@/components/satelliteData/SatelliteDataTable";
-
 import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
+
+import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import SatelliteSelector from "@/components/SatelliteSelector";
+import SatelliteGlobe from "@/components/map/newGlobe";
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
 
     return (
         <>
-            <div className="grid grid-cols-2">
-                <div className="grid grid-cols-2">
-                    <SatelliteDataTable satName="HYPSO-1" />
-                    <SatelliteDataTable satName="UME (ISS)" />
-                    <SatelliteDataTable satName="STARLINK-1007" />
-                    <SatelliteDataTable satName="VANGUARD 1" />
-                    <SatelliteDataTable satName="MULTIFUNCTION TEST SAT" />
-                    <SatelliteDataTable satName="huh" />
+            <div className="flex flex-col bg-gray-600 p-0.5 md:flex-row">
+                {/* Stats Container */}
+                <div className="flex w-full min-w-[320px] flex-col md:w-1/3">
+                    <div className="bg-black p-5">
+                        <SatelliteSelector />
+                    </div>
+                    <div className="mt-0.5">
+                        <SatelliteDataHome />
+                    </div>
+                    <div className="mt-0.5 w-full bg-black md:flex-grow"></div>
                 </div>
 
-                <SatelliteFetcher useExampleData={true} />
+                {/* Globe Container */}
+                <div className="ml-0.5 w-full md:w-2/3">
+                    <div className="flex h-full items-center justify-center bg-black">
+                        <SatelliteGlobe />
+                    </div>
+                </div>
             </div>
 
             <ColoredSection
