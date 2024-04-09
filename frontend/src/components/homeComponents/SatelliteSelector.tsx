@@ -21,7 +21,7 @@ export default function SatelliteSelector() {
     }
 
     return (
-        <div className="w-full m-0 p-0">
+        <div className="m-0 w-full p-0">
             <SatDropdown
                 satelliteNames={satelliteNames}
                 selectedSatellite={selectedSatellite}
