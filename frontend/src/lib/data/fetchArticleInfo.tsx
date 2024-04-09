@@ -39,7 +39,6 @@ query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
                 createdAt
                 publishedAt
                 slug
-                subtitle
                 Tag
             }
         }

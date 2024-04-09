@@ -6,7 +6,11 @@ import BlockRendererClient from "@/components/BlockRendererClient";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import { BlogCard } from "@/components/ui/blogCard";
+
 import Image from "next/image";
+import Link from "next/link";
+import ShareButtons from "@/components/ShareButtons";
+
 const HOST_URL = process.env.HOST_URL;
 
 const GET_ARTICLE_BY_SLUG = gql(
@@ -38,7 +42,6 @@ const GET_ARTICLE_BY_SLUG = gql(
             }
           }
           datePublished
-          subtitle
           title
         }
       }
@@ -84,9 +87,7 @@ export default async function Page({
     const datePublished = article?.attributes?.datePublished;
     const content: BlocksContent = article?.attributes?.body ?? [];
 
-    let coverImage =
-        article?.attributes?.coverImage
-            ?.data?.attributes?.url;
+    let coverImage = article?.attributes?.coverImage?.data?.attributes?.url;
 
     if (HOST_URL && coverImage != undefined) {
         coverImage = HOST_URL + coverImage;
@@ -96,49 +97,54 @@ export default async function Page({
 
     return (
         <div className="flex items-center justify-center">
-          <BlogCard
-            className={
-                article
-                    ? "m-20 mt-10 w-full pb-5"
-                    : "m-[1%] mb-5 min-w-80 max-w-[30%] grow pb-5"
-            }
-            key={article.id}
-        >
-            <div className="flex flex-col items-center gap-4">
-                <h1 className="text-4xl font-extrabold">
-                    {article?.attributes?.title}
-                </h1>
-                <div className="flex flex-row items-center justify-center gap-1">
-                    {avatarURL && (
-                        <Avatar className="">
-                            <AvatarImage src={avatarURL} />
-                            <AvatarFallback>
-                                {// Get initials from author name
-                                authorName
-                                    ?.split(" ")
-                                    .map((name: any) => name[0])
-                                    .join("")}
-                            </AvatarFallback>
-                        </Avatar>
-                    )}
-                    <div className="flex flex-col justify-center">
-                        <p>{authorName}</p>
-                        <p>{datePublished}</p>
+            <BlogCard
+                className={
+                    article
+                        ? "m-20 mt-10 w-full pb-5"
+                        : "m-[1%] mb-5 min-w-80 max-w-[30%] grow pb-5"
+                }
+                key={article.id}
+            >
+                <div className="flex w-full flex-col gap-4">
+                    <h1 className="text-4xl font-extrabold">
+                        {article?.attributes?.title}
+                    </h1>
+                    <div className="flex w-full flex-row items-center gap-1">
+                        <div className="flex flex-1 justify-start gap-1">
+                            {avatarURL && (
+                                <Avatar className="">
+                                    <AvatarImage src={avatarURL} />
+                                    <AvatarFallback>
+                                        {// Get initials from author name
+                                        authorName
+                                            ?.split(" ")
+                                            .map((name: any) => name[0])
+                                            .join("")}
+                                    </AvatarFallback>
+                                </Avatar>
+                            )}
+                            <div className="flex flex-col justify-center">
+                                <p>{authorName}</p>
+                                <p>{datePublished}</p>
+                            </div>
+                        </div>
+                        <div className="flex flex-1 justify-end gap-1">
+                            <ShareButtons />
+                        </div>
+                    </div>
+                    <div className="relative h-[300px] w-full">
+                        <Image
+                            src={coverImage}
+                            alt="coverImage"
+                            className="absolute inset-0 object-contain"
+                            layout="fill"
+                        />
+                    </div>
+                    <div className="w-1/2 justify-center self-center">
+                        <BlockRendererClient content={content} />
                     </div>
                 </div>
-                <div className="relative h-[300px] w-full">
-                  <Image 
-                      src={coverImage} 
-                      alt="coverImage" 
-                      className="absolute inset-0 object-contain"
-                      layout="fill"
-                  />
-              </div>
-                <div className="w-1/2">
-                    <BlockRendererClient content={content} />
-                </div>
-            </div>
-          </BlogCard>
+            </BlogCard>
         </div>
     );
 }
