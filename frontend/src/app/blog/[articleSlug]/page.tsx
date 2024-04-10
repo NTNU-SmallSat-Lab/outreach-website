@@ -93,7 +93,12 @@ export default async function Page({
                     {avatarURL && (
                         <Avatar className="">
                             {avatarURL && (
-                                <NextImage src={avatarURL} alt="Avatar Image" />
+                                <NextImage
+                                    src={avatarURL}
+                                    alt="Avatar Image"
+                                    width={50}
+                                    height={50}
+                                />
                             )}
                             {!avatarURL && (
                                 <AvatarFallback>
