@@ -2,7 +2,7 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "../ApolloClient";
 import Image from "next/image";
 
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
+const STRAPI_URL = process.env.STRAPI_URL;
 
 const GET_MOST_RECENT_IMAGE = gql(`
 query MostRecentImages {
@@ -43,8 +43,8 @@ export default async function fetchMostrecentImage() {
         graphqlData.data.mostRecentImages?.data[0]?.attributes?.mostRecentImage
             ?.data?.attributes?.url;
 
-    if (OUTSIDE_STRAPI_URL && mostRecentImageURL != undefined) {
-        mostRecentImageURL = OUTSIDE_STRAPI_URL + mostRecentImageURL;
+    if (STRAPI_URL && mostRecentImageURL != undefined) {
+        mostRecentImageURL = STRAPI_URL + mostRecentImageURL;
     } else {
         mostRecentImageURL = "";
     }

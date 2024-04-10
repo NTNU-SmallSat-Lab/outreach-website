@@ -25,8 +25,7 @@ export default function SatelliteGlobe() {
             globeRef.current = Globe()(chart.current)
                 .globeImageUrl(
                     "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
-                ) /*
-                .backgroundImageUrl(
+                ) /*.backgroundImageUrl(
                     "//unpkg.com/three-globe/example/img/night-sky.png",
                 )*/
                 .objectLat("lat")

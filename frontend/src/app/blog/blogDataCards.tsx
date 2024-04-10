@@ -1,7 +1,7 @@
-export const runtime = "edge";
 import FullBlogCard from "@/components/fullBlogCard";
 import BlogpageButtons from "@/components/BlogpageButtons";
 import { BlogPost } from "./page";
+import React from "react";
 
 export default async function BlogDataCards({
     articles,
@@ -17,34 +17,34 @@ export default async function BlogDataCards({
     }
 
     return (
-        <div className="flex w-3/4 flex-row flex-wrap items-center justify-center self-center">
-            {articles.map((article: any) => {
-                return (
-                    <div
-                        key={article.id}
-                        className={
-                            article.firstArticle
-                                ? "flex w-full flex-col items-center justify-center"
-                                : "flex w-1/3 flex-col items-center justify-center"
-                        }
-                    >
-                        <FullBlogCard
-                            key={article.id}
-                            firstArticle={article.firstArticle}
-                            content={article.content}
-                            coverImage={article.coverImage}
-                            datePublished={article.datePublished}
-                            tag={article.tag}
-                            HOST_URL={article.HOST_URL}
-                            authorName={article.authorName}
-                            avatarURL={article.avatarURL}
-                            slug={article.slug}
-                            title={article.title}
-                        />{" "}
-                        {article.firstArticle ? <BlogpageButtons /> : null}
-                    </div>
-                );
-            })}
-        </div>
+        <>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <BlogpageButtons className="col-span-full" />
+                {/* Only map fist article */}
+                {articles.map((article: BlogPost) => {
+                    if (article.firstArticle) {
+                        return (
+                            <React.Fragment key={article.key}>
+                                <FullBlogCard
+                                    className="col-span-full"
+                                    article={article}
+                                />
+                            </React.Fragment>
+                        );
+                    }
+                })}
+
+                {articles.map((article: BlogPost) => {
+                    if (article.firstArticle) {
+                        return;
+                    }
+                    return (
+                        <React.Fragment key={article.key}>
+                            <FullBlogCard article={article} />
+                        </React.Fragment>
+                    );
+                })}
+            </div>
+        </>
     );
 }
