@@ -3,9 +3,9 @@ See the following docs for more info about strapi deployment:
 
 ### Setting up ntnu halfadministrated server
 
-###### SSH
+###### Firewall
 
-We have created a firewall rule to allow remote ssh connections, such that we can remote in form a github runner and autodeploy. First we create a firewall rule:
+We have created firewall rules to access website and api.
 
 `/etc/local/firewall.d $ touch ipv4-magnastr-docker-website-git-autodeply.conf`
 
@@ -14,8 +14,14 @@ do `sudo nano ipv4-magnastr-docker-website-git-autodeply.conf` to enter the file
 paste the lines
 
 ```
--I INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 -I INPUT -p tcp -m tcp --dport 3000 -j ACCEPT
+
+# Frontend (next.js node) Open TCP port 3000 for the world:
+-I DOCKER-USER -p tcp -m conntrack --ctorigdstport 3000 -j ACCEPT
+
+# Backend (strapi) Open TCP port 1337 for world:
+-I DOCKER-USER -p tcp -m conntrack --ctorigdstport 1337 -j ACCEPT
+
 ```
 
 ###### PKGSYNC

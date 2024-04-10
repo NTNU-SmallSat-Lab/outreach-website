@@ -11,7 +11,7 @@ import {
     PageSubtitle,
 } from "@/components/PageHeader";
 import { OuiImage } from "@/components/fullBlogCard";
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 
 const GET_PROJECTS = gql(`
  query GET_PROJECTS {
@@ -72,8 +72,8 @@ export default async function ProjectsPage() {
                         project?.attributes?.previewImage?.data?.attributes
                             ?.url;
 
-                    if (HOST_URL && previewImage != undefined) {
-                        previewImage = HOST_URL + previewImage;
+                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
+                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
                     }
                     return (
                         <Link
