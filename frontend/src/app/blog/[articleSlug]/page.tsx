@@ -6,9 +6,7 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import ShareButtons from "@/components/ShareButtons";
 
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 const STRAPI_URL = process.env.STRAPI_URL;
-
 
 const GET_ARTICLE_BY_SLUG = gql(
     `query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {
