@@ -83,7 +83,7 @@ export default function SatelliteDataHome() {
                         {satelliteInfo
                             ? "Above " + satelliteInfo.country
                             : "Loading..."}
-                        {satelliteInfo && flag(satelliteInfo.country)}
+                        {satelliteInfo && " " + flag(satelliteInfo.country)}
                     </p>
                 </div>
             </div>

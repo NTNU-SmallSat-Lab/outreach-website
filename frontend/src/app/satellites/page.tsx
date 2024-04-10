@@ -51,7 +51,7 @@ export default async function Satellites() {
                     return (
                         <Link
                             href={"/satellites/" + satellite?.attributes?.name}
-                            className="w-1/1.5 m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4 md:w-1/3"
+                            className="w-1/1.5 m-1 transition-transform duration-300 ease-in-out sm:m-4 md:w-1/3"
                             key={satellite.id}
                         >
                             <Card className="flex h-full w-full flex-col">
