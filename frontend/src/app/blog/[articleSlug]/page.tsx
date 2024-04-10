@@ -92,7 +92,7 @@ export default async function Page({
                 <div className="flex flex-1 justify-start gap-1">
                     {avatarURL && (
                         <Avatar className="">
-                            <AvatarImageFix src={avatarURL} />
+                            <AvatarImageFix src={avatarURL} alt="Avatar" />
                             <AvatarFallback>
                                 {// Get initials from author name
                                 authorName
