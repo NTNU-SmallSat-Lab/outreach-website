@@ -24,8 +24,7 @@ jobs:
                   echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
                   echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
                   # Create .env.production with HOST_URL Frontend
-                  echo "INTERNAL_STRAPI_URL=${{ vars.INTERNAL_STRAPI_URL }}" >> .env.production
-                  echo "OUTSIDE_STRAPI_URL=${{ vars.OUTSIDE_STRAPI_URL }}" >> .env.production
+                  echo "STRAPI_URL=${{ vars.STRAPI_URL }}" >> .env.production
             - name: Docker build
               run: docker-compose build
             - name: Docker up
