@@ -1,4 +1,3 @@
-export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import SatelliteCard from "@/components/ui/satelliteCard";

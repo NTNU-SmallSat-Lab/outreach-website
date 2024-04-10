@@ -1,4 +1,3 @@
-export const runtime = "edge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { BlocksContent } from "@strapi/blocks-react-renderer";

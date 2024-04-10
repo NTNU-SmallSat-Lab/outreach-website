@@ -1,4 +1,3 @@
-export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
