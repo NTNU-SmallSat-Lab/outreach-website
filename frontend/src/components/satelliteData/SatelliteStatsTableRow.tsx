@@ -50,12 +50,31 @@ export default function SatelliteStatsTableRow({
     }
     return (
         <tr className="duration-150 hover:bg-white hover:text-black">
-            <td className="px-6 py-4"><Link href={`/satellites/${satName}`} className="w-full">
-{satName}</Link></td>
-            <td className="px-6 py-4"><Link href={`/satellites/${satName}`} className="w-full">{satelliteInfo.velocity + " km/s"}</Link></td>
-            <td className="px-6 py-4"><Link href={`/satellites/${satName}`} className="w-full">{satelliteInfo.altitude + " km"}</Link></td>
-            <td className="px-6 py-4"><Link href={`/satellites/${satName}`} className="w-full">{satelliteInfo.latitudeDeg + "° N"}</Link></td>
-            <td className="px-6 py-4"><Link href={`/satellites/${satName}`} className="w-full">{satelliteInfo.longitudeDeg + "° E"}</Link></td>
+            <td className="px-6 py-4">
+                <Link href={`/satellites/${satName}`} className="w-full">
+                    {satName}
+                </Link>
+            </td>
+            <td className="px-6 py-4">
+                <Link href={`/satellites/${satName}`} className="w-full">
+                    {satelliteInfo.velocity + " km/s"}
+                </Link>
+            </td>
+            <td className="px-6 py-4">
+                <Link href={`/satellites/${satName}`} className="w-full">
+                    {satelliteInfo.altitude + " km"}
+                </Link>
+            </td>
+            <td className="px-6 py-4">
+                <Link href={`/satellites/${satName}`} className="w-full">
+                    {satelliteInfo.latitudeDeg + "° N"}
+                </Link>
+            </td>
+            <td className="px-6 py-4">
+                <Link href={`/satellites/${satName}`} className="w-full">
+                    {satelliteInfo.longitudeDeg + "° E"}
+                </Link>
+            </td>
         </tr>
     );
 }
