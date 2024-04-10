@@ -10,7 +10,7 @@ const AvatarImageFix = React.forwardRef<
     <AvatarPrimitive.Image
         ref={ref}
         className={cn("aspect-square h-full w-full", className)}
-        src={STRAPI_URL + "_next/image?url=" + src + "&w=100&q=100"}
+        src={STRAPI_URL + "/_next/image?url=" + src + "&w=100&q=100"}
         {...props}
     />
 ));
