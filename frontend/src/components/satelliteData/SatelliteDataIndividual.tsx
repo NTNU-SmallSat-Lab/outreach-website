@@ -40,7 +40,7 @@ export default function SatelliteDataIndividual() {
     }, [satelliteData, selectedSatellite]);
 
     return (
-        <div className="bg-black w-full">
+        <div className="w-full bg-black">
             <div className="grid grid-cols-2 gap-0.5">
                 <div className="bg-black p-5">
                     <p className="text-xl font-medium">

@@ -113,7 +113,11 @@ export const predictFuturePositions = (
 
     // Predict the satellite's position every minute for the next projectionAmount minutes
     const step = projectionAmount < 0 ? -1 : 1;
-    for (let i = 0; (step > 0 ? i <= projectionAmount : i >= projectionAmount); i += step) {
+    for (
+        let i = 0;
+        step > 0 ? i <= projectionAmount : i >= projectionAmount;
+        i += step
+    ) {
         const futureTime = new Date(now.getTime() + i * 60000);
 
         const positionAndVelocity = satellite.propagate(satrec, futureTime);
