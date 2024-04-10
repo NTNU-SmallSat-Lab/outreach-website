@@ -1,4 +1,3 @@
-export const runtime = "edge";
 import FullBlogCard from "@/components/fullBlogCard";
 import BlogpageButtons from "@/components/BlogpageButtons";
 import { BlogPost } from "./page";

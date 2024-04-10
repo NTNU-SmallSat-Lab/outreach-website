@@ -1,17 +1,12 @@
-export const runtime = "edge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
-import { BlogCard } from "@/components/ui/blogCard";
-
-import Image from "next/image";
-import Link from "next/link";
 import ShareButtons from "@/components/ShareButtons";
 
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 
 const GET_ARTICLE_BY_SLUG = gql(
     `query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {
@@ -77,8 +72,8 @@ export default async function Page({
         graphqlData.data.articles?.data[0]?.attributes?.author?.data?.attributes
             ?.avatar?.data?.attributes?.url;
 
-    if (HOST_URL && avatarURL != undefined) {
-        avatarURL = HOST_URL + avatarURL;
+    if (OUTSIDE_STRAPI_URL && avatarURL != undefined) {
+        avatarURL = OUTSIDE_STRAPI_URL + avatarURL;
     }
 
     const article = graphqlData.data.articles?.data[0];

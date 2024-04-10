@@ -4,7 +4,7 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import { Enum_Article_Tag } from "@/__generated__/graphql";
 import { BlogPost } from "@/app/blog/page";
 
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 
 const GET_ARTICLES = gql(`
 query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
@@ -105,8 +105,8 @@ export default async function fetchArticlePages({
             article?.attributes?.author?.data?.attributes?.avatar?.data
                 ?.attributes?.url;
 
-        if (HOST_URL && avatarURL != undefined) {
-            avatarURL = HOST_URL + avatarURL;
+        if (OUTSIDE_STRAPI_URL && avatarURL != undefined) {
+            avatarURL = OUTSIDE_STRAPI_URL + avatarURL;
         }
 
         const authorName: string | undefined =
@@ -116,8 +116,8 @@ export default async function fetchArticlePages({
         const datePublished: any = article?.attributes?.datePublished;
         let coverImage: string | undefined =
             article?.attributes?.coverImage?.data?.attributes?.url;
-        if (HOST_URL && coverImage != undefined) {
-            coverImage = HOST_URL + coverImage;
+        if (OUTSIDE_STRAPI_URL && coverImage != undefined) {
+            coverImage = OUTSIDE_STRAPI_URL + coverImage;
         }
         let content: BlocksContent = article?.attributes?.body ?? [];
 
@@ -138,7 +138,7 @@ export default async function fetchArticlePages({
             coverImage,
             datePublished,
             tag,
-            HOST_URL,
+            HOST_URL: OUTSIDE_STRAPI_URL,
             authorName,
             avatarURL,
             slug: article.attributes.slug,

@@ -1,4 +1,3 @@
-export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getClient } from "@/lib/ApolloClient";
@@ -6,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { SlicePreviewText } from "@/components/SlicePreviewText";
 import { OuiImage } from "@/components/fullBlogCard";
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 
 const GET_PROJECTS = gql(`
  query GET_PROJECTS {
@@ -65,8 +64,8 @@ export default async function ProjectsPage() {
                         project?.attributes?.previewImage?.data?.attributes
                             ?.url;
 
-                    if (HOST_URL && previewImage != undefined) {
-                        previewImage = HOST_URL + previewImage;
+                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
+                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
                     }
                     return (
                         <Link
