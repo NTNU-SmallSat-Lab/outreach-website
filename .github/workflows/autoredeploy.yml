@@ -11,10 +11,14 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - name: Remove old Docker images
+      - name: Stop and remove containers by tag
         run: |
-          docker rmi $(docker images -q backend:outreach) || true
-          docker rmi $(docker images -q frontend:outreach) || true
+          # Stop containers running from 'backend:outreach' image
+          docker ps -q --filter ancestor=backend:outreach | xargs -r docker stop
+          # Stop containers running from 'frontend:outreach' image
+          docker ps -q --filter ancestor=frontend:outreach | xargs -r docker stop
+          # Now, remove the images
+          docker rmi backend:outreach frontend:outreach || true
       - name: Create .env files
         run: |
           # Create .env with all variables except HOST_URL Backend
