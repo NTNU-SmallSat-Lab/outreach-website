@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-
 import {
     FacebookShareButton,
     FacebookIcon,
@@ -11,28 +9,24 @@ import {
     TwitterIcon,
 } from "next-share";
 
-export default function ShareButtons() {
-    const [currentUrl, setCurrentUrl] = useState("");
-
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            setCurrentUrl(window.location.href);
-        }
-    }, []);
-
-    console.log(window.location.href);
-
+export default function ShareButtons({ slug }: { slug: String }) {
     return (
-        <div>
-            <FacebookShareButton url={currentUrl}>
+        <>
+            <FacebookShareButton
+                url={`http://web.hypso.ies.ntnu.no:3000/blog/${slug}`}
+            >
                 <FacebookIcon size={32} round />
             </FacebookShareButton>
-            <LinkedinShareButton url={currentUrl}>
+            <LinkedinShareButton
+                url={`http://web.hypso.ies.ntnu.no:3000/blog/${slug}`}
+            >
                 <LinkedinIcon size={32} round />
             </LinkedinShareButton>
-            <TwitterShareButton url={currentUrl}>
+            <TwitterShareButton
+                url={`http://web.hypso.ies.ntnu.no:3000/blog/${slug}`}
+            >
                 <TwitterIcon size={32} round />
             </TwitterShareButton>
-        </div>
+        </>
     );
 }
