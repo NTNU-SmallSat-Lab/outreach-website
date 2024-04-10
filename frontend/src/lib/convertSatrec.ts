@@ -19,7 +19,12 @@ interface SatelliteInfo {
     country: string;
 }
 
-export type { SatelliteInfo };
+interface SatelliteFutureInfo {
+    latitudeDeg: string;
+    longitudeDeg: string;
+}
+
+export type { SatelliteInfo, SatelliteFutureInfo };
 
 const findCountry = (latitudeDeg: number, longitudeDeg: number): string => {
     const pointFeature = point([longitudeDeg, latitudeDeg]);
@@ -96,4 +101,44 @@ export const convertSatrec = (
         velocity: velocity.toFixed(2),
         country: country,
     };
+};
+
+// Function to predict the satellite's future positions
+export const predictFuturePositions = (
+    satrec: SatRec,
+    projectionAmount: number,
+): SatelliteFutureInfo[] => {
+    const futurePositions: SatelliteFutureInfo[] = [];
+    const now = new Date();
+
+    // Predict the satellite's position every minute for the next projectionAmount minutes
+    const step = projectionAmount < 0 ? -1 : 1;
+    for (
+        let i = 0;
+        step > 0 ? i <= projectionAmount : i >= projectionAmount;
+        i += step
+    ) {
+        const futureTime = new Date(now.getTime() + i * 60000);
+
+        const positionAndVelocity = satellite.propagate(satrec, futureTime);
+        const gmst = satellite.gstime(futureTime);
+        const positionEci = positionAndVelocity.position;
+
+        let positionGd;
+        if (positionEci && typeof positionEci !== "boolean") {
+            positionGd = satellite.eciToGeodetic(positionEci, gmst);
+        }
+
+        if (positionGd && typeof positionGd !== "boolean") {
+            const latitudeDeg = satellite.degreesLat(positionGd.latitude);
+            const longitudeDeg = satellite.degreesLong(positionGd.longitude);
+
+            futurePositions.push({
+                longitudeDeg: longitudeDeg.toFixed(2),
+                latitudeDeg: latitudeDeg.toFixed(2),
+            });
+        }
+    }
+
+    return futurePositions;
 };
