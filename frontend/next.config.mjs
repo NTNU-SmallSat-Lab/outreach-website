@@ -15,6 +15,10 @@ const nextConfig = {
                 hostname: "web.hypso.ies.ntnu.no",
                 port: '1337'
             },
+            {
+                protocol: "http",
+                hostname: "backend",
+            },
         ],
     },
 };

@@ -1,11 +1,10 @@
-export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
+const STRAPI_URL = process.env.STRAPI_URL;
 
 const GET_PROJECT_BY_SLUG = gql(`
 query Projects($projectFilters: ProjectFiltersInput) {
@@ -70,8 +69,8 @@ export default async function Page({
 
     let projectTitle = projects?.attributes?.slug;
 
-    if (OUTSIDE_STRAPI_URL && projectTitle != undefined) {
-        projectTitle = OUTSIDE_STRAPI_URL + projectTitle;
+    if (STRAPI_URL && projectTitle != undefined) {
+        projectTitle = STRAPI_URL + projectTitle;
     }
     return (
         <div className="flex flex-col items-center gap-4">

@@ -9,7 +9,7 @@ const BlogCard = React.forwardRef<
     <div
         ref={ref}
         className={cn(
-            "border border-white bg-background text-card-foreground",
+            "flex flex-col border border-white bg-background p-5 text-card-foreground",
             className,
         )}
         {...props}
@@ -23,7 +23,7 @@ const BlogCardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <div
         ref={ref}
-        className={cn("flex flex-col space-y-1.5", className)}
+        className={cn("flex flex-col gap-2", className)}
         {...props}
     />
 ));
@@ -36,7 +36,7 @@ const BlogCardTitle = React.forwardRef<
     <h3
         ref={ref}
         className={cn(
-            "text-2xl font-semibold leading-none tracking-tight",
+            "hyphens-auto break-words text-2xl font-semibold",
             className,
         )}
         {...props}
@@ -44,23 +44,11 @@ const BlogCardTitle = React.forwardRef<
 ));
 BlogCardTitle.displayName = "BlogCardTitle";
 
-const BlogCardDescription = React.forwardRef<
-    HTMLParagraphElement,
-    React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-    <p
-        ref={ref}
-        className={cn("text-sm text-muted-foreground", className)}
-        {...props}
-    />
-));
-BlogCardDescription.displayName = "BlogCardDescription";
-
 const BlogCardContent = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("pt-0", className)} {...props} />
+    <div ref={ref} className={cn(className)} {...props} />
 ));
 BlogCardContent.displayName = "BlogCardContent";
 
@@ -68,11 +56,7 @@ const BlogCardFooter = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-    <div
-        ref={ref}
-        className={cn("flex items-center p-6 pt-0", className)}
-        {...props}
-    />
+    <div ref={ref} className={cn(className)} {...props} />
 ));
 BlogCardFooter.displayName = "BlogCardFooter";
 
@@ -81,6 +65,5 @@ export {
     BlogCardHeader,
     BlogCardFooter,
     BlogCardTitle,
-    BlogCardDescription,
     BlogCardContent,
 };
