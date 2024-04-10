@@ -1,9 +1,10 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
+import { AvatarImageFix } from "@/components/AvatarImageFix";
 import ShareButtons from "@/components/ShareButtons";
 
 const STRAPI_URL = process.env.STRAPI_URL;
@@ -91,7 +92,7 @@ export default async function Page({
                 <div className="flex flex-1 justify-start gap-1">
                     {avatarURL && (
                         <Avatar className="">
-                            <AvatarImage src={avatarURL} />
+                            <AvatarImageFix src={avatarURL} />
                             <AvatarFallback>
                                 {// Get initials from author name
                                 authorName
