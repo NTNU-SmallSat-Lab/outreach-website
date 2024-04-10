@@ -3,6 +3,11 @@ import BlogDataCards from "./blogDataCards";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import { Enum_Article_Tag } from "@/__generated__/graphql";
 import fetchArticlePages from "@/lib/data/fetchArticleInfo";
+import {
+    PageHeaderAndSubtitle,
+    PageSubtitle,
+    PageHeader,
+} from "@/components/PageHeader";
 
 export interface BlogPost {
     key: string | null | undefined;
@@ -41,10 +46,19 @@ export default async function BlogPage({
     const { articleList, totalArticles } = result;
 
     return (
-        <div className="just flex flex-col content-center justify-center">
-            {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
-            <BlogDataCards articles={articleList} />
-            <BlogPaginator totalArticles={totalArticles} />
-        </div>
+        <>
+            <PageHeaderAndSubtitle>
+                <PageHeader>Blog</PageHeader>
+                <PageSubtitle>
+                    Welcome to the blog! Here you can find all of the articles
+                    we have written.
+                </PageSubtitle>
+            </PageHeaderAndSubtitle>
+            <div className="flex flex-col justify-center">
+                {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
+                <BlogDataCards articles={articleList} />
+                <BlogPaginator totalArticles={totalArticles} />
+            </div>
+        </>
     );
 }

@@ -1,32 +1,39 @@
 name: Server auto deploy
 on:
-    push:
-        branches: ["main"]
+  push:
+    branches: ["main"]
 
 jobs:
-    docker-build:
-        strategy:
-            matrix:
-                node-version: [20.x]
-        runs-on: self-hosted
-        steps:
-            - uses: actions/checkout@v3
-            - name: Create .env files
-              run: |
-                  # Create .env with all variables except HOST_URL Backend
-                  echo "HOST=${{ vars.HOST }}" >> .env
-                  echo "PORT=${{ vars.PORT }}" >> .env
-                  echo "DATABASE_CLIENT=${{ vars.DATABASE_CLIENT }}" >> .env
-                  echo "DATABASE_FILENAME=${{ vars.DATABASE_FILENAME }}" >> .env
-                  echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> .env
-                  echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> .env
-                  echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> .env
-                  echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
-                  echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
-                  # Create .env.production with HOST_URL Frontend
-                  echo "INTERNAL_STRAPI_URL=${{ vars.INTERNAL_STRAPI_URL }}" >> .env.production
-                  echo "OUTSIDE_STRAPI_URL=${{ vars.OUTSIDE_STRAPI_URL }}" >> .env.production
-            - name: Docker build
-              run: docker-compose build
-            - name: Docker up
-              run: docker-compose up -d
+  docker-build:
+    strategy:
+      matrix:
+        node-version: [20.x]
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - name: Stop and remove containers by tag
+        run: |
+          # Stop containers running from 'backend:outreach' image
+          docker ps -q --filter ancestor=backend:outreach | xargs -r docker stop
+          # Stop containers running from 'frontend:outreach' image
+          docker ps -q --filter ancestor=frontend:outreach | xargs -r docker stop
+          # Now, remove the images
+          docker rmi backend:outreach frontend:outreach || true
+      - name: Create .env files
+        run: |
+          # Create .env with all variables except HOST_URL Backend
+          echo "HOST=${{ vars.HOST }}" >> .env
+          echo "PORT=${{ vars.PORT }}" >> .env
+          echo "DATABASE_CLIENT=${{ vars.DATABASE_CLIENT }}" >> .env
+          echo "DATABASE_FILENAME=${{ vars.DATABASE_FILENAME }}" >> .env
+          echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> .env
+          echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> .env
+          echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
+          # Create .env.production with HOST_URL Frontend
+          echo "STRAPI_URL=${{ vars.STRAPI_URL }}" >> .env.production
+      - name: Docker build
+        run: docker-compose build
+      - name: Docker up
+        run: docker-compose up -d

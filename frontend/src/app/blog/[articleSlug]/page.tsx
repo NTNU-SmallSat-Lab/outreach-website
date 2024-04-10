@@ -1,16 +1,19 @@
-export const runtime = "edge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
+import { AvatarImageFix } from "@/components/AvatarImageFix";
+import ShareButtons from "@/components/ShareButtons";
+
+const STRAPI_URL = process.env.STRAPI_URL;
 
 const GET_ARTICLE_BY_SLUG = gql(
     `query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {
     articles(filters: $articlesFilters) {
       data {
+        id
         attributes {
           author {
             data {
@@ -35,8 +38,7 @@ const GET_ARTICLE_BY_SLUG = gql(
             }
           }
           datePublished
-          subtitle
-          title
+          previewCardTitle
         }
       }
     }
@@ -71,8 +73,8 @@ export default async function Page({
         graphqlData.data.articles?.data[0]?.attributes?.author?.data?.attributes
             ?.avatar?.data?.attributes?.url;
 
-    if (OUTSIDE_STRAPI_URL && avatarURL != undefined) {
-        avatarURL = OUTSIDE_STRAPI_URL + avatarURL;
+    if (STRAPI_URL && avatarURL != undefined) {
+        avatarURL = STRAPI_URL + avatarURL;
     }
 
     const article = graphqlData.data.articles?.data[0];
@@ -82,15 +84,15 @@ export default async function Page({
     const content: BlocksContent = article?.attributes?.body ?? [];
 
     return (
-        <>
-            <div className="flex flex-col items-center gap-4">
-                <h1 className="text-4xl font-extrabold">
-                    {article?.attributes?.title}
-                </h1>
-                <div className="flex flex-row items-center justify-center gap-1">
+        <div className="flex flex-col items-center gap-4">
+            <div className="w-1/2">
+                <BlockRendererClient content={content} />
+            </div>
+            <div className="flex w-1/2 flex-row items-center gap-1">
+                <div className="flex flex-1 justify-start gap-1">
                     {avatarURL && (
                         <Avatar className="">
-                            <AvatarImage src={avatarURL} />
+                            <AvatarImageFix src={avatarURL} alt="Avatar" />
                             <AvatarFallback>
                                 {// Get initials from author name
                                 authorName
@@ -105,13 +107,10 @@ export default async function Page({
                         <p>{datePublished}</p>
                     </div>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                    {article?.attributes?.subtitle}{" "}
-                </p>
-                <div className="w-1/2">
-                    <BlockRendererClient content={content} />
+                <div className="flex flex-1 justify-end gap-1">
+                    <ShareButtons slug={params.articleSlug} />
                 </div>
             </div>
-        </>
+        </div>
     );
 }

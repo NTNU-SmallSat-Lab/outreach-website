@@ -1,9 +1,6 @@
-export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
+import SatelliteStatsTableRow from "@/components/satelliteData/SatelliteStatsTableRow";
 import { getClient } from "@/lib/ApolloClient";
-import SatelliteCard from "@/components/ui/satelliteCard";
-
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
     satellites {
@@ -34,26 +31,35 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData?.data?.satellites?.data?.map((satellite: any) => {
-                    let previewImage =
-                        satellite?.attributes?.previewImage?.data?.attributes
-                            ?.url;
-                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
-                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
-                    }
-                    let satelliteName = satellite?.attributes?.name ?? "";
-                    let missionStatus =
-                        satellite?.attributes?.missionStatus ?? "";
-                    return (
-                        // eslint-disable-next-line react/jsx-key
-                        <SatelliteCard
-                            satelliteName={satelliteName}
-                            missionStatus={missionStatus}
-                            previewImage={previewImage}
-                        ></SatelliteCard>
-                    );
-                })}
+            <div className="flex w-full flex-col items-center justify-center">
+                <h1 className="my-10 text-4xl font-extrabold  text-white">
+                    Satellites
+                </h1>
+                <table className="w-4/5 table-auto border-collapse rounded-md border-b border-white shadow">
+                    <thead>
+                        <tr className="border-y border-white px-3 py-2 text-left text-white">
+                            <th className="px-6">Satellite</th>
+                            <th className="px-6">Speed</th>
+                            <th className="px-6">Altitude</th>
+                            <th className="px-6">Latitude</th>
+                            <th className="px-6">Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {graphqlData?.data?.satellites?.data?.map(
+                            (satellite: any) => {
+                                let satelliteName =
+                                    satellite?.attributes?.name ?? "";
+                                return (
+                                    <SatelliteStatsTableRow
+                                        key={satellite.id}
+                                        satName={satelliteName}
+                                    />
+                                );
+                            },
+                        )}
+                    </tbody>
+                </table>
             </div>
         );
     } catch (error) {
