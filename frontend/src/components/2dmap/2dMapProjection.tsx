@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-handler-names */
 import React from "react";
 import * as topojson from "topojson-client";
+// @ts-ignore
 import { CustomProjection } from "@visx/geo";
 import { geoNaturalEarth1 } from "@visx/vendor/d3-geo";
 import topology from "./world-topo.json";
@@ -66,7 +67,7 @@ export default function GeoCustom({
                         scale={scale}
                         translate={[centerX, centerY]}
                     >
-                        {(customProjection) => (
+                        {(customProjection: { features: { path: any; }[]; }) => (
                             <g>
                                 {customProjection.features.map(
                                     ({ path }, i) => (

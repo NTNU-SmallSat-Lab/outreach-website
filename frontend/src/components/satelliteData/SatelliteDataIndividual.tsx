@@ -5,7 +5,7 @@ import { useSatelliteStore } from "@/lib/store";
 
 const updateInterval = 50;
 
-export default function SatelliteDataHome() {
+export default function SatelliteDataIndividual() {
     const { satelliteData, fetchAndSetSatelliteData, selectedSatellite } =
         useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
@@ -40,7 +40,7 @@ export default function SatelliteDataHome() {
     }, [satelliteData, selectedSatellite]);
 
     return (
-        <div>
+        <div className="bg-black w-full">
             <div className="grid grid-cols-2 gap-0.5">
                 <div className="bg-black p-5">
                     <p className="text-xl font-medium">

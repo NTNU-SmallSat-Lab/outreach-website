@@ -30,6 +30,13 @@ export const useSatelliteStore = create<SatelliteStore>((set, get) => ({
         "0 EXPLORER 11",
         "0 GREB",
         "0 METEOR 1-5",
+        "0 COSMOS 2486",
+        "0 YAOGAN 17B",
+        "0 POPACS 3",
+        "0 CINEMA 2",
+        "0 FIREBIRD A",
+        "0 EGYPTSAT 2",
+        "0 HODOYOSHI 3",
     ],
     selectedSatellite: "0 VANGUARD 2",
 

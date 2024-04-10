@@ -4,7 +4,7 @@ import { useSatelliteStore } from "@/lib/store";
 import React, { useState, useEffect } from "react";
 import { SatelliteInfo, convertSatrec } from "@/lib/convertSatrec";
 
-const updateInterval = 10;
+const updateInterval = 50;
 
 export default function Map2d({ satName }: { satName: string }) {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
@@ -44,7 +44,7 @@ export default function Map2d({ satName }: { satName: string }) {
     const height = width / 2;
 
     return (
-        <div className="">
+        <div className="w-full">
             <GeoCustom
                 width={width}
                 height={height}
