@@ -1,13 +1,7 @@
 export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
+import SatelliteStatsTableRow from "@/components/satelliteData/SatelliteStatsTableRow";
 import { getClient } from "@/lib/ApolloClient";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
-import Image from "next/image";
-import { OuiImage } from "@/components/fullBlogCard";
-
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
     satellites {
@@ -38,52 +32,35 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData?.data?.satellites?.data?.map((satellite: any) => {
-                    let previewImage =
-                        satellite?.attributes?.previewImage?.data?.attributes
-                            ?.url;
-                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
-                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
-                    }
-                    let satelliteName = satellite?.attributes?.name ?? "";
-                    let missionStatus =
-                        satellite?.attributes?.missionStatus ?? "";
-                    return (
-                        <Link
-                            href={"/satellites/" + satellite?.attributes?.name}
-                            className="w-1/1.5 m-1 transition-transform duration-300 ease-in-out sm:m-4 md:w-1/3"
-                            key={satellite.id}
-                        >
-                            <Card className="flex h-full w-full flex-col">
-                                <CardHeader className="flex flex-col items-center justify-center">
-                                    <CardTitle>
-                                        {satellite?.attributes?.name}
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="flex flex-col items-center">
-                                    <SatelliteStatsTable
+            <div className="flex w-full flex-col items-center justify-center">
+                <h1 className="my-10 text-4xl font-extrabold  text-white">
+                    Satellites
+                </h1>
+                <table className="w-4/5 table-auto border-collapse rounded-md border-b border-white shadow">
+                    <thead>
+                        <tr className="border-y border-white px-3 py-2 text-left text-white">
+                            <th className="px-6">Satellite</th>
+                            <th className="px-6">Speed</th>
+                            <th className="px-6">Altitude</th>
+                            <th className="px-6">Latitude</th>
+                            <th className="px-6">Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {graphqlData?.data?.satellites?.data?.map(
+                            (satellite: any) => {
+                                let satelliteName =
+                                    satellite?.attributes?.name ?? "";
+                                return (
+                                    <SatelliteStatsTableRow
+                                        key={satellite.id}
                                         satName={satelliteName}
-                                        missionStatus={missionStatus}
                                     />
-                                    {previewImage ? (
-                                        <Image
-                                            src={previewImage}
-                                            alt={previewImage}
-                                            width={200}
-                                            height={0}
-                                            className="margin p-2"
-                                        />
-                                    ) : (
-                                        <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                                            <OuiImage />
-                                        </div>
-                                    )}
-                                </CardContent>
-                            </Card>
-                        </Link>
-                    );
-                })}
+                                );
+                            },
+                        )}
+                    </tbody>
+                </table>
             </div>
         );
     } catch (error) {

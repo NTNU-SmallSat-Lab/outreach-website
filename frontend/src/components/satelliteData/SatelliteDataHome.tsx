@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
-import { flag } from 'country-emoji';
+import { flag } from "country-emoji";
 
 const updateInterval = 50;
 
