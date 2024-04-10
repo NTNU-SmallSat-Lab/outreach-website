@@ -81,7 +81,7 @@ export default function Map2dNaturalProjection({
                                         <path
                                             key={`map-feature-${i}`}
                                             d={path || ""}
-                                            fill={"#d3d3d3"}
+                                            fill={"#FFFFFF"}
                                             stroke={"#000"}
                                             strokeWidth={0.5}
                                         />
