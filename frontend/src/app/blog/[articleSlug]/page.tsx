@@ -82,14 +82,6 @@ export default async function Page({
     const datePublished = article?.attributes?.datePublished;
     const content: BlocksContent = article?.attributes?.body ?? [];
 
-    let coverImage = article?.attributes?.coverImage?.data?.attributes?.url;
-
-    if (HOST_URL && coverImage != undefined) {
-        coverImage = HOST_URL + coverImage;
-    } else {
-        coverImage = "";
-    }
-
     return (
         <div className="flex flex-col items-center gap-4">
             <div className="w-1/2">
