@@ -46,6 +46,7 @@
         "lucide-react": "^0.314.0",
         "luxon": "^3.4.4",
         "next": "14.1.0",
+        "next-share": "^0.27.0",
         "next-themes": "^0.2.1",
         "node-geometry-library": "^1.2.6",
         "ol": "^8.2.0",

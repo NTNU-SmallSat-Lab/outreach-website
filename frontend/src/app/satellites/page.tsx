@@ -51,12 +51,8 @@ export default async function Satellites() {
                             let previewImage =
                                 satellite?.attributes?.previewImage?.data
                                     ?.attributes?.url;
-                            if (
-                                STRAPI_URL &&
-                                previewImage != undefined
-                            ) {
-                                previewImage =
-                                STRAPI_URL + previewImage;
+                            if (STRAPI_URL && previewImage != undefined) {
+                                previewImage = STRAPI_URL + previewImage;
                             }
                             let satelliteName =
                                 satellite?.attributes?.name ?? "";

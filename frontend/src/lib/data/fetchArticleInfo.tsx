@@ -26,7 +26,7 @@ query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
                         }
                     }
                 }
-                title
+                previewCardTitle
                 datePublished
                 body
                 coverImage {
@@ -39,7 +39,6 @@ query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
                 createdAt
                 publishedAt
                 slug
-                subtitle
                 Tag
             }
         }
@@ -122,7 +121,7 @@ export default async function fetchArticlePages({
         }
         let content: BlocksContent = article?.attributes?.body ?? [];
 
-        const title: string | undefined = article?.attributes?.title;
+        const title: string | undefined = article?.attributes?.previewCardTitle;
 
         for (const block of content) {
             if (block.type === "paragraph") {
