@@ -1,5 +1,3 @@
-"use client";
-/* eslint-disable react/jsx-handler-names */
 import React from "react";
 import * as topojson from "topojson-client";
 // @ts-ignore
@@ -12,6 +10,7 @@ export type GeoCustomProps = {
     height: number;
     satLatitude?: number;
     satLongitude?: number;
+    futurePositions?: [number, number][];
 };
 
 interface FeatureShape {
@@ -21,35 +20,44 @@ interface FeatureShape {
     properties: { name: string };
 }
 
-export const background = "";
-
 // @ts-expect-error
 const world = topojson.feature(topology, topology.objects.units) as {
     type: "FeatureCollection";
     features: FeatureShape[];
 };
 
-export default function GeoCustom({
+export default function Map2dNaturalProjection({
     width,
     height,
     satLatitude,
     satLongitude,
+    futurePositions,
 }: GeoCustomProps) {
     const centerX = width / 2;
     const centerY = height / 2;
     const scale = (width / 630) * 100;
 
-    // This function projects lat/long to the SVG coordinate system
     const projection = geoNaturalEarth1()
         .scale(scale)
         .translate([centerX, centerY]);
 
-    // Check if both satLatitude and satLongitude are defined
     let satPoint: [number, number] | undefined;
     if (typeof satLatitude === "number" && typeof satLongitude === "number") {
         satPoint = projection([satLongitude, satLatitude]) || undefined;
     }
-    return width < 10 ? null : (
+
+    // Function to interpolate the green color based on the index
+    const interPolateColor = (index: number, total: number) => {
+        const startColor = { r: 40, g: 96, b: 241 };
+        const endColor = { r: 241, g: 0, b: 20 };
+        const ratio = index / total;
+        const r = Math.round((1 - ratio) * startColor.r + ratio * endColor.r);
+        const g = Math.round((1 - ratio) * startColor.g + ratio * endColor.g);
+        const b = Math.round((1 - ratio) * startColor.b + ratio * endColor.b);
+        return `rgb(${r}, ${g}, ${b})`;
+    };
+
+    return (
         <>
             <div className="relative">
                 <svg width={width} height={height}>
@@ -58,8 +66,7 @@ export default function GeoCustom({
                         y={0}
                         width={width}
                         height={height}
-                        fill={background}
-                        rx={14}
+                        fill={"#000"}
                     />
                     <CustomProjection<FeatureShape>
                         projection={geoNaturalEarth1}
@@ -67,7 +74,7 @@ export default function GeoCustom({
                         scale={scale}
                         translate={[centerX, centerY]}
                     >
-                        {(customProjection: { features: { path: any; }[]; }) => (
+                        {(customProjection) => (
                             <g>
                                 {customProjection.features.map(
                                     ({ path }, i) => (
@@ -80,12 +87,31 @@ export default function GeoCustom({
                                         />
                                     ),
                                 )}
+                                {futurePositions &&
+                                    futurePositions.map(([lng, lat], i) => {
+                                        const point = projection([lng, lat]);
+                                        return (
+                                            point && (
+                                                <circle
+                                                    key={`future-position-${i}`}
+                                                    cx={point[0]}
+                                                    cy={point[1]}
+                                                    r="3"
+                                                    fill={interPolateColor(
+                                                        i,
+                                                        futurePositions.length -
+                                                            1,
+                                                    )}
+                                                />
+                                            )
+                                        );
+                                    })}
                                 {satPoint && (
                                     <circle
                                         cx={satPoint[0]}
                                         cy={satPoint[1]}
-                                        r="6"
-                                        fill="red"
+                                        r="8"
+                                        fill={interPolateColor(0, 1)}
                                         stroke="black"
                                         strokeWidth="1"
                                     />
