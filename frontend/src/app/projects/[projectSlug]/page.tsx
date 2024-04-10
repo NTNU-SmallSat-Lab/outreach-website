@@ -5,7 +5,7 @@ import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 
 const GET_PROJECT_BY_SLUG = gql(`
 query Projects($projectFilters: ProjectFiltersInput) {
@@ -70,12 +70,12 @@ export default async function Page({
 
     let projectTitle = projects?.attributes?.slug;
 
-    if (HOST_URL && projectTitle != undefined) {
-        projectTitle = HOST_URL + projectTitle;
+    if (OUTSIDE_STRAPI_URL && projectTitle != undefined) {
+        projectTitle = OUTSIDE_STRAPI_URL + projectTitle;
     }
     return (
         <div className="flex flex-col items-center gap-4">
-            <div className="prose prose-invert w-1/2 lg:prose-xl">
+            <div className="w-1/2">
                 <BlockRendererClient content={content} />
             </div>
             {graphqlData.data.projects?.data[0].attributes?.satellites?.data

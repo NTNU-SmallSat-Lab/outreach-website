@@ -4,7 +4,7 @@ import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import { flag } from 'country-emoji';
 
-const updateInterval = 10;
+const updateInterval = 50;
 
 export default function SatelliteDataHome() {
     const { satelliteData, fetchAndSetSatelliteData, selectedSatellite } =

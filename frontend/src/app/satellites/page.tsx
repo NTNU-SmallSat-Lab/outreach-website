@@ -5,8 +5,9 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
 import Image from "next/image";
+import { OuiImage } from "@/components/fullBlogCard";
 
-const HOST_URL = process.env.HOST_URL;
+const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
     satellites {
@@ -42,8 +43,8 @@ export default async function Satellites() {
                     let previewImage =
                         satellite?.attributes?.previewImage?.data?.attributes
                             ?.url;
-                    if (HOST_URL && previewImage != undefined) {
-                        previewImage = HOST_URL + previewImage;
+                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
+                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
                     }
                     let satelliteName = satellite?.attributes?.name ?? "";
                     let missionStatus =
@@ -65,7 +66,7 @@ export default async function Satellites() {
                                         satName={satelliteName}
                                         missionStatus={missionStatus}
                                     />
-                                    {previewImage && (
+                                    {previewImage ? (
                                         <Image
                                             src={previewImage}
                                             alt={previewImage}
@@ -73,6 +74,10 @@ export default async function Satellites() {
                                             height={0}
                                             className="margin p-2"
                                         />
+                                    ) : (
+                                        <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
+                                            <OuiImage />
+                                        </div>
                                     )}
                                 </CardContent>
                             </Card>
