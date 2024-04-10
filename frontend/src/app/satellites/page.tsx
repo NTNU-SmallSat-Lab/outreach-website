@@ -1,6 +1,11 @@
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import SatelliteCard from "@/components/ui/satelliteCard";
+import {
+    PageHeader,
+    PageHeaderAndSubtitle,
+    PageSubtitle,
+} from "@/components/PageHeader";
 
 const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
 const GET_SATELLITES = gql(`
@@ -33,26 +38,42 @@ export default async function Satellites() {
         });
 
         return (
-            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData?.data?.satellites?.data?.map((satellite: any) => {
-                    let previewImage =
-                        satellite?.attributes?.previewImage?.data?.attributes
-                            ?.url;
-                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
-                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
-                    }
-                    let satelliteName = satellite?.attributes?.name ?? "";
-                    let missionStatus =
-                        satellite?.attributes?.missionStatus ?? "";
-                    return (
-                        // eslint-disable-next-line react/jsx-key
-                        <SatelliteCard
-                            satelliteName={satelliteName}
-                            missionStatus={missionStatus}
-                            previewImage={previewImage}
-                        ></SatelliteCard>
-                    );
-                })}
+            <div>
+                <PageHeaderAndSubtitle>
+                    <PageHeader>Satellites</PageHeader>
+                    <PageSubtitle>
+                        Theese are all the satellites we have worked on.
+                    </PageSubtitle>
+                </PageHeaderAndSubtitle>
+                <div className="flex flex-wrap justify-center gap-4 md:justify-start">
+                    {graphqlData?.data?.satellites?.data?.map(
+                        (satellite: any) => {
+                            let previewImage =
+                                satellite?.attributes?.previewImage?.data
+                                    ?.attributes?.url;
+                            if (
+                                OUTSIDE_STRAPI_URL &&
+                                previewImage != undefined
+                            ) {
+                                previewImage =
+                                    OUTSIDE_STRAPI_URL + previewImage;
+                            }
+                            let satelliteName =
+                                satellite?.attributes?.name ?? "";
+                            let missionStatus =
+                                satellite?.attributes?.missionStatus ?? "";
+                            return (
+                                // eslint-disable-next-line react/jsx-key
+                                <SatelliteCard
+                                    satelliteName={satelliteName}
+                                    missionStatus={missionStatus}
+                                    previewImage={previewImage}
+                                    satelliteId={satellite.id}
+                                ></SatelliteCard>
+                            );
+                        },
+                    )}
+                </div>
             </div>
         );
     } catch (error) {
