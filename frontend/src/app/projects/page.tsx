@@ -10,7 +10,7 @@ import {
     PageSubtitle,
 } from "@/components/PageHeader";
 import { OuiImage } from "@/components/fullBlogCard";
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
+const STRAPI_URL = process.env.STRAPI_URL;
 
 const GET_PROJECTS = gql(`
  query GET_PROJECTS {
@@ -71,8 +71,8 @@ export default async function ProjectsPage() {
                         project?.attributes?.previewImage?.data?.attributes
                             ?.url;
 
-                    if (OUTSIDE_STRAPI_URL && previewImage != undefined) {
-                        previewImage = OUTSIDE_STRAPI_URL + previewImage;
+                    if (STRAPI_URL && previewImage != undefined) {
+                        previewImage = STRAPI_URL + previewImage;
                     }
                     return (
                         <Link

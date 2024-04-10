@@ -7,7 +7,7 @@ import {
     PageSubtitle,
 } from "@/components/PageHeader";
 
-const OUTSIDE_STRAPI_URL = process.env.OUTSIDE_STRAPI_URL;
+const STRAPI_URL = process.env.STRAPI_URL;
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
     satellites {
@@ -52,11 +52,11 @@ export default async function Satellites() {
                                 satellite?.attributes?.previewImage?.data
                                     ?.attributes?.url;
                             if (
-                                OUTSIDE_STRAPI_URL &&
+                                STRAPI_URL &&
                                 previewImage != undefined
                             ) {
                                 previewImage =
-                                    OUTSIDE_STRAPI_URL + previewImage;
+                                STRAPI_URL + previewImage;
                             }
                             let satelliteName =
                                 satellite?.attributes?.name ?? "";
