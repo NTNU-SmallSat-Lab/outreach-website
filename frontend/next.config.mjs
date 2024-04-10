@@ -13,7 +13,6 @@ const nextConfig = {
             {
                 protocol: "http",
                 hostname: "web.hypso.ies.ntnu.no",
-                port: 3000,
             },
         ],
     },
