@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
@@ -11,54 +12,58 @@ interface SatelliteCardProps {
     satelliteName: string;
     missionStatus: string;
     previewImage?: string; // Optional
+    satelliteId: Number;
 }
 
 const SatelliteCard: React.FC<SatelliteCardProps> = ({
     satelliteName,
     missionStatus,
     previewImage,
+    satelliteId
+    
 }) => {
     /*const setSelectedSatellite = useSatelliteStore(
         (state) => state.setSelectedSatellite,
     );*/
 
-    const handleSatelliteCardClick = (satelliteName: string) => () => {
-        //setSelectedSatellite(satelliteName);
-        window.location.href = `/satellites/${encodeURIComponent(satelliteName)}`;
-    };
+
 
     return (
-        <div
-            onClick={handleSatelliteCardClick(satelliteName)}
-            className="w-1/1.5 m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4 md:w-1/3"
-        >
-            {" "}
-            {/* Ensure the link is clickable and accessible */}
-            <Card className="flex h-full w-full flex-col">
-                <CardHeader className="flex flex-col items-center justify-center">
-                    <CardTitle>{satelliteName}</CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-col items-center">
-                    <SatelliteStatsTable
-                        satName={satelliteName}
-                        missionStatus={missionStatus}
-                    />
-                    {previewImage ? (
-                        <Image
-                            src={previewImage}
-                            alt={satelliteName}
-                            width={200}
-                            height={200}
-                            className="margin p-2"
+            <Link
+                href={
+                    "/satellites/" +
+                    satelliteName
+                }
+                className="w-1/1.5 transition-transform duration-300 ease-in-out hover:scale-105 hover:transform md:w-1/3"
+                key={satelliteId.toString()}
+            >
+                <Card className="flex h-full w-full flex-col">
+                    <CardHeader className="flex flex-col items-center justify-center">
+                        <CardTitle>
+                            {satelliteName}
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-col items-center">
+                        <SatelliteStatsTable
+                            satName={satelliteName}
+                            missionStatus={missionStatus}
                         />
-                    ) : (
-                        <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                            <OuiImage />
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
-        </div>
+                        {previewImage ? (
+                            <Image
+                                src={previewImage}
+                                alt={previewImage}
+                                width={200}
+                                height={0}
+                                className="margin p-2"
+                            />
+                        ) : (
+                            <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
+                                <OuiImage />
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+            </Link> 
     );
 };
 
