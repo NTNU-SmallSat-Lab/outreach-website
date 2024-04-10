@@ -1,10 +1,16 @@
-export const runtime = "edge";
+import React from "react";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
-import Map2d from "@/components/2dmap/Map2d";
-import SatelliteDataIndividual from "@/components/satelliteData/SatelliteDataIndividual";
+import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import { useSatelliteStore } from "@/lib/store";
+import SolarDataComponent from "@/components/SolarActivity/SolarData";
+function setSelectedSatelliteSlug(satelliteSlug: string) {
+    const setSelectedSatellite =
+        useSatelliteStore.getState().setSelectedSatellite;
+    setSelectedSatellite(satelliteSlug);
+}
 
 export interface SatelliteInfo {
     name: string;
@@ -25,10 +31,12 @@ export default async function SatelliteInfoPage({
 }: {
     params: { satelliteSlug: string };
 }) {
-    try {
-        const satelliteInfo: SatelliteInfo = await fetchSatelliteInfo({
-            params: params,
-        });
+    setSelectedSatelliteSlug(params.satelliteSlug);
+    const satelliteInfo: SatelliteInfo = await fetchSatelliteInfo({
+        params: params,
+    });
+
+    if (!satelliteInfo) return <div>Loading...</div>;
 
         return (
             <div className="flex min-h-screen items-center justify-center">
@@ -64,9 +72,6 @@ export default async function SatelliteInfoPage({
                     </div>
                 </div>
             </div>
-        );
-    } catch (error) {
-        console.error("Error fetching satellite info:", error);
-        return <div>Error fetching satellite info</div>;
-    }
+        </>
+    );
 }
