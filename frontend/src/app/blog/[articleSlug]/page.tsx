@@ -38,7 +38,7 @@ const GET_ARTICLE_BY_SLUG = gql(
             }
           }
           datePublished
-          previewCardTitle
+          previewTitle
         }
       }
     }
