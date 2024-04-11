@@ -9,12 +9,20 @@ import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import SatelliteSelector from "@/components/homeComponents/SatelliteSelector";
 import SatelliteGlobe from "@/components/homeComponents/homeGlobe";
+import HeroWithAnimation from "@/components/HeroWithAnimation";
+
+import dynamic from 'next/dynamic';
+
+const SatelliteGlobeNoSSR = dynamic(() => import('@/components/homeComponents/homeGlobe'), {
+  ssr: false,
+});
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
 
     return (
         <>
+        <HeroWithAnimation></HeroWithAnimation>
             <div className="flex flex-col bg-gray-600 p-0.5 xl:flex-row">
                 {/* Stats Container */}
                 <div className="z-10 flex w-full min-w-[500px] flex-col xl:w-1/3">
@@ -30,7 +38,7 @@ export default async function Home() {
                 {/* Globe Container */}
                 <div className="z-0 ml-0.5 w-full xl:w-2/3">
                     <div className="flex h-full items-center justify-center bg-black">
-                        <SatelliteGlobe />
+                        <SatelliteGlobeNoSSR />
                     </div>
                 </div>
             </div>
