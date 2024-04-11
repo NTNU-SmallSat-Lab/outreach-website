@@ -102,7 +102,7 @@ export default function SatelliteGlobe() {
                 
             };
         }
-    }, []);
+    });
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
