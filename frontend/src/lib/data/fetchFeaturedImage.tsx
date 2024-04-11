@@ -4,12 +4,12 @@ import Image from "next/image";
 
 const STRAPI_URL = process.env.STRAPI_URL;
 
-const GET_MOST_RECENT_IMAGE = gql(`
-query MostRecentImages {
-    mostRecentImages(sort: ["publishedAt:desc"]) {
+const GET_FEATURED_IMAGE = gql(`
+query FeaturedImage {
+    featuredImage {
       data {
         attributes {
-          mostRecentImage {
+          featuredImage {
             data {
                 attributes {
                     url
@@ -34,23 +34,23 @@ query MostRecentImages {
 
 `);
 
-export default async function fetchMostrecentImage() {
+export default async function fetchFeaturedImage() {
     const graphqlData = await getClient().query({
-        query: GET_MOST_RECENT_IMAGE,
+        query: GET_FEATURED_IMAGE,
     });
 
-    let mostRecentImageURL =
-        graphqlData.data.mostRecentImages?.data[0]?.attributes?.mostRecentImage
-            ?.data?.attributes?.url;
+    let featuredImageURL =
+        graphqlData.data.featuredImage?.data?.attributes?.featuredImage?.data
+            ?.attributes?.url;
 
-    if (STRAPI_URL && mostRecentImageURL != undefined) {
-        mostRecentImageURL = STRAPI_URL + mostRecentImageURL;
+    if (STRAPI_URL && featuredImageURL != undefined) {
+        featuredImageURL = STRAPI_URL + featuredImageURL;
     } else {
-        mostRecentImageURL = "";
+        featuredImageURL = "";
     }
 
     const imageSatelliteRelation =
-        graphqlData.data.mostRecentImages?.data[0]?.attributes?.satellite?.data
+        graphqlData.data.featuredImage?.data?.attributes?.satellite?.data
             ?.attributes?.name;
 
     return (
@@ -58,7 +58,7 @@ export default async function fetchMostrecentImage() {
             <div className="relative h-[300px] w-[300px]">
                 <Image
                     alt="Most recent satellite image"
-                    src={mostRecentImageURL}
+                    src={featuredImageURL}
                     className="m-0"
                     layout="fill"
                     objectFit="cover"

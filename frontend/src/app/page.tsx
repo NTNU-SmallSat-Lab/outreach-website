@@ -4,14 +4,14 @@ import ColoredSection from "@/components/ui/coloredSection";
 import Image from "next/image";
 import Link from "next/link";
 
-import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
+import fetchFeaturedImage from "@/lib/data/fetchFeaturedImage";
 
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import SatelliteSelector from "@/components/homeComponents/SatelliteSelector";
 import SatelliteGlobe from "@/components/homeComponents/homeGlobe";
 
 export default async function Home() {
-    const mostRecentImageURL = await fetchMostRecentImage();
+    const featuredImageURL = await fetchFeaturedImage();
 
     return (
         <>
@@ -96,7 +96,7 @@ export default async function Home() {
             <ColoredSection className="flex flex-col items-center px-8 py-12">
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1 className="">Most recent picture</h1>
-                    {mostRecentImageURL}
+                    {featuredImageURL}
                 </div>
             </ColoredSection>
         </>

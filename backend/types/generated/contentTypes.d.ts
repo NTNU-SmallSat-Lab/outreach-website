@@ -865,35 +865,34 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
-export interface ApiMostRecentImageMostRecentImage
-  extends Schema.CollectionType {
-  collectionName: 'most_recent_images';
+export interface ApiFeaturedImageFeaturedImage extends Schema.SingleType {
+  collectionName: 'featured_images';
   info: {
-    singularName: 'most-recent-image';
-    pluralName: 'most-recent-images';
-    displayName: 'Most Recent Image';
+    singularName: 'featured-image';
+    pluralName: 'featured-images';
+    displayName: 'featuredImage';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    mostRecentImage: Attribute.Media & Attribute.Required;
+    featuredImage: Attribute.Media & Attribute.Required;
     satellite: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
-      'manyToOne',
+      'api::featured-image.featured-image',
+      'oneToOne',
       'api::satellite.satellite'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
+      'api::featured-image.featured-image',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
+      'api::featured-image.featured-image',
       'oneToOne',
       'admin::user'
     > &
@@ -962,11 +961,6 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'manyToMany',
       'api::project.project'
     >;
-    most_recent_images: Attribute.Relation<
-      'api::satellite.satellite',
-      'oneToMany',
-      'api::most-recent-image.most-recent-image'
-    >;
     missionStatus: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1006,7 +1000,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
-      'api::most-recent-image.most-recent-image': ApiMostRecentImageMostRecentImage;
+      'api::featured-image.featured-image': ApiFeaturedImageFeaturedImage;
       'api::project.project': ApiProjectProject;
       'api::satellite.satellite': ApiSatelliteSatellite;
     }
