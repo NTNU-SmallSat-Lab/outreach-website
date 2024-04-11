@@ -7,12 +7,6 @@ import Map2d from "@/components/2dmap/Map2d";
 import { useSatelliteStore } from "@/lib/store";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 
-function setSelectedSatelliteSlug(satelliteSlug: string) {
-    const setSelectedSatellite =
-        useSatelliteStore.getState().setSelectedSatellite;
-    setSelectedSatellite(satelliteSlug);
-}
-
 export interface SatelliteInfo {
     name: string;
     content: BlocksContent;
@@ -32,7 +26,6 @@ export default async function SatelliteInfoPage({
 }: {
     params: { satelliteSlug: string };
 }) {
-    setSelectedSatelliteSlug(params.satelliteSlug);
     const satelliteInfo: SatelliteInfo = await fetchSatelliteInfo({
         params: params,
     });
