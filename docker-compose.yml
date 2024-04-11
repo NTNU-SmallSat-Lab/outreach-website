@@ -6,6 +6,9 @@ services:
       - type: bind
         source: /var/data/
         target: /var/data/
+      - type: bind
+        source: /var/data/outreachuploads
+        target: /usr/src/app/backend/public/uploads
     build:
       context: .
       dockerfile: Dockerfile-backend
