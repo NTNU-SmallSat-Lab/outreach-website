@@ -4,7 +4,6 @@ import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import Map2d from "@/components/2dmap/Map2d";
-import { useSatelliteStore } from "@/lib/store";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 
 export interface SatelliteInfo {
