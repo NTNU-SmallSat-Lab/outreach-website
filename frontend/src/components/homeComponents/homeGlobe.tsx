@@ -68,7 +68,7 @@ export default function SatelliteGlobe() {
             setGlobeSize();
 
             // Resize listener to update the globe size
-            
+
             if (typeof window !== "undefined") {
                 window.addEventListener("resize", setGlobeSize);
                 return () => {
@@ -99,7 +99,6 @@ export default function SatelliteGlobe() {
                 if (typeof window !== "undefined") {
                     window.removeEventListener("resize", setGlobeSize);
                 }
-                
             };
         }
     });

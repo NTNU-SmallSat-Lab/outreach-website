@@ -23,23 +23,27 @@ query Query($publicationState: PublicationState) {
   }`);
 
 export default async function HeroWrapper() {
-
     const graphqlData = await getClient().query({
         query: GET_HERO_DATA,
     });
 
-    if (
-        graphqlData.data === null ||
-        graphqlData.data === undefined
-    ) {
+    if (graphqlData.data === null || graphqlData.data === undefined) {
         return <div>There are no projects to show.</div>;
     }
 
-    
-
     return (
         <>
-        <Hero title={"Hero"} description={graphqlData.data.hero?.data?.attributes?.text as string} imageUrl={(STRAPI_URL! + graphqlData.data.hero?.data?.attributes?.image?.data?.attributes?.url) as string}></Hero>
+            <Hero
+                title={"Hero"}
+                description={
+                    graphqlData.data.hero?.data?.attributes?.text as string
+                }
+                imageUrl={
+                    (STRAPI_URL! +
+                        graphqlData.data.hero?.data?.attributes?.image?.data
+                            ?.attributes?.url) as string
+                }
+            ></Hero>
         </>
     );
 }
