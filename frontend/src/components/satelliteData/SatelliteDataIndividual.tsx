@@ -2,11 +2,10 @@
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
-import { flag } from "country-emoji";
 
-const updateInterval = 1000;
+const updateInterval = 50;
 
-export default function SatelliteDataHome() {
+export default function SatelliteDataIndividual() {
     const { satelliteData, fetchAndSetSatelliteData, selectedSatellite } =
         useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
@@ -41,7 +40,7 @@ export default function SatelliteDataHome() {
     }, [satelliteData, selectedSatellite]);
 
     return (
-        <div>
+        <div className="w-full bg-black">
             <div className="grid grid-cols-2 gap-0.5">
                 <div className="bg-black p-5">
                     <p className="text-xl font-medium">
@@ -83,8 +82,10 @@ export default function SatelliteDataHome() {
                         {satelliteInfo
                             ? "Above " + satelliteInfo.country
                             : "Loading..."}
-                        {satelliteInfo && " " + flag(satelliteInfo.country)}
                     </p>
+                </div>
+                <div>
+                    <p className="text-gray-400">Flag Icon</p>
                 </div>
             </div>
         </div>

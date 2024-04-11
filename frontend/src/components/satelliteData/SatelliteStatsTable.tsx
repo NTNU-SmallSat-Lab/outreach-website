@@ -4,7 +4,7 @@ import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-const updateInterval = 10;
+const updateInterval = 50;
 
 export default function SatelliteStatsTable({
     satName,
@@ -46,6 +46,7 @@ export default function SatelliteStatsTable({
             </div>
         );
     }
+
     return (
         <Table className="mx-auto w-full border-collapse border">
             <TableBody>
@@ -57,11 +58,11 @@ export default function SatelliteStatsTable({
                 </TableRow>
                 <TableRow>
                     <TableCell className="w-1/2 border p-2">
-                        <p>{satelliteInfo.velocity + " Km/h"}</p>
+                        <p>{satelliteInfo.velocity + " Km/s"}</p>
                         <p className="">{"Speed"}</p>
                     </TableCell>
                     <TableCell className="border p-2">
-                        <p>{satelliteInfo.altitude + " Moh"}</p>
+                        <p>{satelliteInfo.altitude + " km"}</p>
                         <p className="">{"Altitude"}</p>
                     </TableCell>
                 </TableRow>
