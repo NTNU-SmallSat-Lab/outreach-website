@@ -65,7 +65,7 @@ export default async function ProjectsPage() {
                 </PageHeaderAndSubtitle>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-20 md:justify-start md:grid-cols-3">
+            <div className="grid grid-cols-1 items-center justify-center gap-12 md:grid-cols-2 md:justify-start md:gap-16 lg:grid-cols-3 xl:grid-cols-4">
                 {graphqlData.data.projects.data.map((project) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
@@ -76,14 +76,14 @@ export default async function ProjectsPage() {
                     }
                     return (
                         <Link
-                            className="transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4 self-center mx-16 h-96"
+                            className="mx:20 h-full self-center transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
                         >
                             <Card className="h-full w-full">
                                 <CardHeader></CardHeader>
                                 <CardContent>
-                                    <div className="h-52">
+                                    <div className="w-full">
                                         {previewImage ? (
                                             <Image
                                                 className="max-h-full max-w-full object-contain"
@@ -101,7 +101,7 @@ export default async function ProjectsPage() {
                                     <CardTitle className="mb-2 mt-2 text-xl font-bold">
                                         {project?.attributes?.title}
                                     </CardTitle>
-                                    <p className="break-words">
+                                    <p className="prose prose-invert break-words">
                                         {SlicePreviewText(
                                             project?.attributes?.content ?? [],
                                         )}
