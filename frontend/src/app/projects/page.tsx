@@ -65,7 +65,7 @@ export default async function ProjectsPage() {
                 </PageHeaderAndSubtitle>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 md:justify-start">
+            <div className="grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-20 md:justify-start md:grid-cols-3">
                 {graphqlData.data.projects.data.map((project) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
@@ -76,14 +76,14 @@ export default async function ProjectsPage() {
                     }
                     return (
                         <Link
-                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                            className="transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4 self-center mx-16 h-96"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
                         >
-                            <Card className="md:w-68 flex h-full w-64 flex-col lg:w-72">
+                            <Card className="h-full w-full">
                                 <CardHeader></CardHeader>
                                 <CardContent>
-                                    <div className="h-64">
+                                    <div className="h-52">
                                         {previewImage ? (
                                             <Image
                                                 className="max-h-full max-w-full object-contain"
