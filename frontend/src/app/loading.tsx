@@ -3,7 +3,7 @@ import {
     SkeletonHero,
     SkeletonSection,
     EmptySection,
-} from "@/components/ui/skeleton";
+} from "@shadcn/skeleton";
 import React from "react";
 
 export default function Loading() {

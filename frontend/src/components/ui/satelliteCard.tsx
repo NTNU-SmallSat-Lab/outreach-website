@@ -2,7 +2,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/shadcn/card";
 import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
 // Import OuiImage or your placeholder image component here
 import { OuiImage } from "@/components/fullBlogCard";

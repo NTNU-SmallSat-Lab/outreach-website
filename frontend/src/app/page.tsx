@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@shadcn/button";
 import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
