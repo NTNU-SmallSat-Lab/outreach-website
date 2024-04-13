@@ -2,7 +2,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+    Drawer,
+    DrawerContent,
+    DrawerTrigger,
+} from "@/components/shadcn/drawer";
 import Image from "next/image";
 
 import type { SVGProps } from "react";
