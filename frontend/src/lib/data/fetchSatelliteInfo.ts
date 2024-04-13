@@ -45,7 +45,7 @@ export default async function fetchSatelliteInfo({
     let satelliteInfo: SatelliteInfo;
 
     const filters = {
-        name: {
+        slug: {
             eq: params.satelliteSlug,
         },
     };
