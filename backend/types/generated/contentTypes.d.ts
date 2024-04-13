@@ -986,6 +986,8 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'api::project.project'
     >;
     missionStatus: Attribute.String;
+    slug: Attribute.UID<'api::satellite.satellite', 'name'> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
