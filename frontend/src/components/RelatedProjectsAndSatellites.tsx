@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 const STRAPI_URL = process.env.STRAPI_URL;
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { OuiImage } from "@/components/fullBlogCard";
 
 export default function RelatedProjectsAndSatellites({
     project,
@@ -17,7 +18,7 @@ export default function RelatedProjectsAndSatellites({
 
     return (
         <Link
-            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+            className="m-1 transition-transform duration-200 ease-in-out hover:scale-105 hover:transform sm:m-4"
             href={"/" + projectOrSatellite + "/" + project.slug}
             key={project.id}
         >
@@ -29,7 +30,7 @@ export default function RelatedProjectsAndSatellites({
                 </CardHeader>
                 <CardContent>
                     <div className="h-48">
-                        {previewImage && (
+                        {previewImage ? (
                             <Image
                                 className="max-h-full max-w-full object-contain"
                                 src={previewImage}
@@ -37,6 +38,10 @@ export default function RelatedProjectsAndSatellites({
                                 width={500}
                                 height={0}
                             />
+                        ) : (
+                            <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
+                                <OuiImage />
+                            </div>
                         )}
                     </div>
                 </CardContent>
