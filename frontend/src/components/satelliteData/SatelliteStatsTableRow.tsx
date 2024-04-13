@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import Link from "next/link";
+import {
+    TableCell,
+    TableRow,
+  } from "@/components/ui/table"
 
 const updateInterval = 10;
 
@@ -51,32 +55,32 @@ export default function SatelliteStatsTableRow({
         );
     }
     return (
-        <tr className="duration-150 hover:bg-white hover:text-black">
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
+        <TableRow>
+            <TableCell className="px-6 py-4">
+                <Link href={`/satellites/${slug}`} className=" w-full hover:bg-white hover:text-black">
                     {satName}
                 </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
+            </TableCell>
+            <TableCell className="px-6 py-4">
+                <Link href={`/satellites/${slug}`} className="w-full hover:bg-white hover:text-black">
                     {satelliteInfo.velocity + " km/s"}
                 </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
+            </TableCell>
+            <TableCell className="px-6 py-4">
+                <Link href={`/satellites/${slug}`} className="w-full hover:bg-white hover:text-black">
                     {satelliteInfo.altitude + " km"}
                 </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
+            </TableCell>
+            <TableCell className="px-6 py-4">
+                <Link href={`/satellites/${slug}`} className="w-full hover:bg-white hover:text-black">
                     {satelliteInfo.latitudeDeg + "° N"}
                 </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
+            </TableCell>
+            <TableCell className="px-6 py-4">
+                <Link href={`/satellites/${slug}`} className="w-full hover:bg-white hover:text-black">
                     {satelliteInfo.longitudeDeg + "° E"}
                 </Link>
-            </td>
-        </tr>
+            </TableCell>
+        </TableRow>
     );
 }
