@@ -32,7 +32,7 @@ export default async function SatelliteInfoPage({
     if (!satelliteInfo) return <div>Loading...</div>;
 
     return (
-        <div className="my-12 flex min-h-screen items-center justify-center">
+        <div className="flex min-h-screen items-center justify-center">
             <div className="flex w-2/3 flex-col">
                 <div className="flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
                     {/* Container for satname, stats and sat image */}
@@ -69,22 +69,22 @@ export default async function SatelliteInfoPage({
                 </div>
 
                 {/* Related projects */}
-                <div className="mt-8 flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
-                    {satelliteInfo.relatedProjects?.length != 0 ? (
+                {satelliteInfo.relatedProjects?.length != 0 ? (
+                    <div className="mt-8 flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
                         <h1 className="text-xl font-bold">Related Projects</h1>
-                    ) : null}
 
-                    <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                        {satelliteInfo.relatedProjects?.map(
-                            (project: ProjectOrSatellite) => (
-                                <RelatedProjectsAndSatellites
-                                    project={project}
-                                    key={project.id}
-                                />
-                            ),
-                        )}
+                        <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                            {satelliteInfo.relatedProjects?.map(
+                                (project: ProjectOrSatellite) => (
+                                    <RelatedProjectsAndSatellites
+                                        project={project}
+                                        key={project.id}
+                                    />
+                                ),
+                            )}
+                        </div>
                     </div>
-                </div>
+                ) : null}
             </div>
         </div>
     );
