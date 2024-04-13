@@ -74,9 +74,7 @@ export default async function Page({
     }
     return (
         <div className="flex flex-col items-center gap-4">
-            <div className="mx-auto">
-                <BlockRendererClient content={content} />
-            </div>
+            <BlockRendererClient content={content} />
             {graphqlData.data.projects?.data[0].attributes?.satellites?.data
                 .length != 0 && (
                 <h1 className="mb-2 mt-2 text-xl font-bold">

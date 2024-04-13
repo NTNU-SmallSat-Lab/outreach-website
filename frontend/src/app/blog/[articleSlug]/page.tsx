@@ -85,9 +85,7 @@ export default async function Page({
 
     return (
         <div className="flex flex-col items-center gap-4">
-            <div className="w-1/2">
-                <BlockRendererClient content={content} />
-            </div>
+            <BlockRendererClient content={content} />
             <div className="flex w-1/2 flex-row items-center gap-1">
                 <div className="flex flex-1 justify-start gap-1">
                     {avatarURL && (
