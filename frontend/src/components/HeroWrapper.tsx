@@ -21,41 +21,43 @@ query Query($publicationState: PublicationState) {
       }
     }
   }`);
-  export default async function HeroWrapper() {
+export default async function HeroWrapper() {
     const graphqlData = await getClient().query({
         query: GET_HERO_DATA,
     });
 
     // Check if data is available
-    if (!graphqlData.data || !graphqlData.data.hero || !graphqlData.data.hero.data) {
+    if (
+        !graphqlData.data ||
+        !graphqlData.data.hero ||
+        !graphqlData.data.hero.data
+    ) {
         return <></>;
     }
 
     const heroData = graphqlData.data.hero.data;
     const heroAttributes = heroData.attributes;
-    
+
     if (!heroAttributes || !heroAttributes.image?.data) {
         return <></>;
     }
 
     const imageUrl = STRAPI_URL! + heroAttributes.image?.data?.attributes?.url;
     if (!isValidUrl(imageUrl)) {
-      
         return <div>Invalid image URL.</div>;
     }
 
     return (
         <>
-         <div className="flex flex-col items-center px-8 py-12 text-center">
+            <div className="flex flex-col items-center px-8 py-12 text-center">
                 <div className="prose prose-invert">
-                <Hero
-                title="Hero"
-                description={heroAttributes.text || ''}
-                imageUrl={imageUrl}
-            />
+                    <Hero
+                        title="Hero"
+                        description={heroAttributes.text || ""}
+                        imageUrl={imageUrl}
+                    />
                 </div>
             </div>
-            
         </>
     );
 }

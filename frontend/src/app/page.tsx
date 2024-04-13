@@ -108,7 +108,7 @@ export default async function Home() {
                 </div>
             </ColoredSection>
 
-           <HeroWrapper></HeroWrapper>
+            <HeroWrapper></HeroWrapper>
         </>
     );
 }
