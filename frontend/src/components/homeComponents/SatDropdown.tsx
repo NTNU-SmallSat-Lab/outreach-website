@@ -25,7 +25,7 @@ export default function SatDropdown({
 
     // Animation variants for the dropdown content
     const variants = {
-        open: { opacity: 1, height: "auto", maxHeight: "300px" },
+        open: { opacity: 1, height: "auto", maxHeight: "250px" },
         collapsed: { opacity: 0, height: 0 },
     };
 

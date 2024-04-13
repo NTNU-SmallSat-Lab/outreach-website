@@ -6,7 +6,7 @@ import { useSatelliteStore } from "@/lib/store";
 import { convertSatrec } from "@/lib/convertSatrec";
 
 const SAT_RADIUS = 5; // Relative size of the satellite for visualization
-const UPDATE_INTERVAL_MS = 100; // Update interval in milliseconds
+const UPDATE_INTERVAL_MS = 1000; // Update interval in milliseconds
 const EARTH_RADIUS_KM = 6371; // Earth radius in kilometers
 
 export default function SatelliteGlobe() {
@@ -68,7 +68,13 @@ export default function SatelliteGlobe() {
             setGlobeSize();
 
             // Resize listener to update the globe size
-            window.addEventListener("resize", setGlobeSize);
+
+            if (typeof window !== "undefined") {
+                window.addEventListener("resize", setGlobeSize);
+                return () => {
+                    window.removeEventListener("resize", setGlobeSize);
+                };
+            }
 
             // Set initial positions of satellites
             let currentDate = new Date().toISOString();
@@ -90,10 +96,12 @@ export default function SatelliteGlobe() {
             globeRef.current.objectsData(initialPositions);
 
             return () => {
-                window.removeEventListener("resize", setGlobeSize);
+                if (typeof window !== "undefined") {
+                    window.removeEventListener("resize", setGlobeSize);
+                }
             };
         }
-    }, []);
+    });
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {

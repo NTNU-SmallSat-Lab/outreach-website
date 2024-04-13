@@ -4,8 +4,8 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
-import { AvatarImageFix } from "@/components/AvatarImageFix";
 import ShareButtons from "@/components/ShareButtons";
+import NextImage from "next/image";
 
 const STRAPI_URL = process.env.STRAPI_URL;
 
@@ -90,14 +90,23 @@ export default async function Page({
                 <div className="flex flex-1 justify-start gap-1">
                     {avatarURL && (
                         <Avatar className="">
-                            <AvatarImageFix src={avatarURL} />
-                            <AvatarFallback>
-                                {// Get initials from author name
-                                authorName
-                                    ?.split(" ")
-                                    .map((name: any) => name[0])
-                                    .join("")}
-                            </AvatarFallback>
+                            {avatarURL && (
+                                <NextImage
+                                    src={avatarURL}
+                                    alt="Avatar Image"
+                                    width={50}
+                                    height={50}
+                                />
+                            )}
+                            {!avatarURL && (
+                                <AvatarFallback>
+                                    {// Get initials from author name
+                                    authorName
+                                        ?.split(" ")
+                                        .map((name: any) => name[0])
+                                        .join("")}
+                                </AvatarFallback>
+                            )}
                         </Avatar>
                     )}
                     <div className="flex flex-col justify-center">

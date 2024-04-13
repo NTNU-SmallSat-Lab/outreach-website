@@ -1,16 +1,27 @@
 "use client";
-import GeoCustom from "./2dMapProjection";
+import Map2dNaturalProjection from "./2dMapProjection";
 import { useSatelliteStore } from "@/lib/store";
-import React, { useState, useEffect } from "react";
-import { SatelliteInfo, convertSatrec } from "@/lib/convertSatrec";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import {
+    SatelliteInfo,
+    convertSatrec,
+    predictFuturePositions,
+} from "@/lib/convertSatrec";
 
-const updateInterval = 10;
+const updateInterval = 50;
 
 export default function Map2d({ satName }: { satName: string }) {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
+    const [futurePositions, setFuturePositions] = useState<[number, number][]>(
+        [],
+    );
+    const [projectionAmount, setProjectionAmount] = useState(120);
+    const [inputValue, setInputValue] = useState(120);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [size, setSize] = useState({ width: 0, height: 0 });
 
     // Fetch satellite data on component mount
     useEffect(() => {
@@ -32,7 +43,22 @@ export default function Map2d({ satName }: { satName: string }) {
         return () => clearInterval(intervalId);
     }, [satelliteData, satName]);
 
-    // Convert string values to numbers
+    // Calculate and update size based on the container's width
+    useLayoutEffect(() => {
+        function updateSize() {
+            if (containerRef.current) {
+                const width = containerRef.current.offsetWidth;
+                const height = width / 2;
+                setSize({ width, height });
+            }
+        }
+
+        window.addEventListener("resize", updateSize);
+        updateSize();
+
+        return () => window.removeEventListener("resize", updateSize);
+    }, []);
+
     const satLatitude = satelliteInfo
         ? parseFloat(satelliteInfo.latitudeDeg)
         : undefined;
@@ -40,16 +66,63 @@ export default function Map2d({ satName }: { satName: string }) {
         ? parseFloat(satelliteInfo.longitudeDeg)
         : undefined;
 
-    const width = 960;
-    const height = width / 2;
+    // Get future satellite positions on component mount
+    useEffect(() => {
+        if (!satelliteData[satName] || !satelliteData[satName].satrec) return;
+
+        const predictions = predictFuturePositions(
+            satelliteData[satName].satrec,
+            projectionAmount,
+        );
+        const futurePosTuples: [number, number][] = predictions.map(
+            (prediction) => [
+                parseFloat(prediction.longitudeDeg),
+                parseFloat(prediction.latitudeDeg),
+            ],
+        ) as [number, number][];
+
+        setFuturePositions(futurePosTuples);
+    }, [satelliteData, satName, projectionAmount]);
+
+    // Function to handle projection amount change
+    const handleInputChange = (event: { target: { value: any } }) => {
+        const value = event.target.value;
+        // Update the inputValue state
+        setInputValue(value);
+
+        const newAmount = parseInt(value, 10);
+        if (!isNaN(newAmount)) {
+            // Update the projectionAmount only when newAmount is a number
+            setProjectionAmount(newAmount);
+        }
+    };
 
     return (
-        <div className="">
-            <GeoCustom
-                width={width}
-                height={height}
+        <div ref={containerRef} className="w-full">
+            <div className="flex items-center justify-between border-b-2 border-gray-600 bg-black px-6 py-4">
+                <h1 className="text-lg font-semibold text-white">
+                    Current and Predicted Satellite Position
+                </h1>
+                <div className="flex flex-col items-end">
+                    <input
+                        type="number"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        className="focus:primary rounded-lg bg-gray-200 px-3 py-2 text-black focus:outline-none focus:ring"
+                        placeholder="Enter projection amount"
+                    />
+                    <p className="mt-2 font-thin">
+                        Positions {projectionAmount} minutes into the{" "}
+                        {projectionAmount >= 0 ? "future" : "past"}
+                    </p>
+                </div>
+            </div>
+            <Map2dNaturalProjection
+                width={size.width}
+                height={size.height}
                 satLatitude={satLatitude}
                 satLongitude={satLongitude}
+                futurePositions={futurePositions}
             />
         </div>
     );
