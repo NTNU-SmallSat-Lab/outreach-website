@@ -10,6 +10,7 @@ export interface SatelliteInfo {
     name: string;
     content: BlocksContent;
     relatedProjects?: ProjectOrSatellite[];
+    noradId: string | undefined;
 }
 
 export interface ProjectOrSatellite {
@@ -35,14 +36,24 @@ export default async function SatelliteInfoPage({
         <div className="flex min-h-screen items-center justify-center">
             <div className="flex w-2/3 flex-col">
                 <div className="flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
+                    <h1 className="mb-2 self-start text-4xl font-bold">
+                        {satelliteInfo.name}
+                    </h1>
                     {/* Container for satname, stats and sat image */}
                     <div className="flex w-full flex-col bg-gray-600 p-0.5 xl:flex-row">
                         {/* Stats Container */}
-                        <div className="z-10 flex w-full flex-col">
-                            <div className="bg-black p-5">
-                                <h1 className="text-xl font-bold tracking-wide">
-                                    {satelliteInfo.name}
-                                </h1>
+                        <div className="z-10 flex w-full  flex-col">
+                            <div className="flex flex-row">
+                                {satelliteInfo.noradId ? (
+                                    <div className="grow basis-0 bg-black p-5">
+                                        <h1 className="text-xl font-bold tracking-wide">
+                                            {satelliteInfo.noradId}
+                                        </h1>
+                                        <p className="text-gray-400">
+                                            NORAD ID
+                                        </p>
+                                    </div>
+                                ) : null}
                             </div>
                             <div className="mt-0.5">
                                 <SatelliteDataHome />
