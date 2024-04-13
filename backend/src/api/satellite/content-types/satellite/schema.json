@@ -50,6 +50,9 @@
     },
     "missionStatus": {
       "type": "string"
+    },
+    "launchDate": {
+      "type": "datetime"
     }
   }
 }

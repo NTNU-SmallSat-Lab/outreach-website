@@ -99,7 +99,7 @@ export default function Map2d({ satName }: { satName: string }) {
 
     return (
         <div ref={containerRef} className="w-full">
-            <div className="flex items-center justify-between border-b-2 border-gray-600 bg-black px-6 py-4">
+            <div className="flex items-center justify-between bg-black px-6 py-4">
                 <h1 className="text-lg font-semibold text-white">
                     Current and Predicted Satellite Position
                 </h1>

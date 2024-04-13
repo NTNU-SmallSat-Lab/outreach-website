@@ -6,6 +6,7 @@ import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatelli
 import Map2d from "@/components/2dmap/Map2d";
 import { useSatelliteStore } from "@/lib/store";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import LaunchDateCountDown from "@/components/ui/launchDateCountDown";
 
 function setSelectedSatelliteSlug(satelliteSlug: string) {
     const setSelectedSatellite =
@@ -17,6 +18,7 @@ export interface SatelliteInfo {
     name: string;
     content: BlocksContent;
     relatedProjects?: ProjectOrSatellite[];
+    launchDate?: string
 }
 
 export interface ProjectOrSatellite {
@@ -36,12 +38,15 @@ export default async function SatelliteInfoPage({
     const satelliteInfo: SatelliteInfo = await fetchSatelliteInfo({
         params: params,
     });
+    console.log(satelliteInfo.launchDate);
+    
+    
 
     if (!satelliteInfo) return <div>Loading...</div>;
 
     return (
         <div className="my-12 flex min-h-screen items-center justify-center">
-            <div className="flex w-2/3 flex-col">
+            <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
                     {/* Container for satname, stats and sat image */}
                     <div className="flex w-full flex-col bg-gray-600 p-0.5 xl:flex-row">
@@ -63,6 +68,10 @@ export default async function SatelliteInfoPage({
                                 <h1>Satellite Image</h1>
                             </div>
                         </div>
+                    </div>
+
+                    <div className="mt-6 w-full">
+                        <LaunchDateCountDown launchDateString={satelliteInfo.launchDate}></LaunchDateCountDown>
                     </div>
 
                     {/* Container for map */}
