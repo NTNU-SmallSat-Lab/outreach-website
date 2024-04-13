@@ -98,14 +98,17 @@ export default async function ProjectsPage() {
                                             </div>
                                         )}
                                     </div>
-                                    <CardTitle className="mb-2 mt-2 text-xl font-bold">
-                                        {project?.attributes?.title}
-                                    </CardTitle>
-                                    <p className="prose prose-invert break-words">
-                                        {SlicePreviewText(
-                                            project?.attributes?.content ?? [],
-                                        )}
-                                    </p>
+                                    <div className="prose prose-invert">
+                                        <CardTitle className="mb-2 mt-6">
+                                            {project?.attributes?.title}
+                                        </CardTitle>
+                                        <p className="break-words">
+                                            {SlicePreviewText(
+                                                project?.attributes?.content ??
+                                                    [],
+                                            )}
+                                        </p>
+                                    </div>
                                 </CardContent>
                             </Card>
                         </Link>
