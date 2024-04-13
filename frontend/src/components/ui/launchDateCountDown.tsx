@@ -8,14 +8,17 @@ type LaunchDateCountDownProps = {
 
 const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({ launchDateString }) => {
   const [displayTime, setDisplayTime] = useState<string[]>([]);
-  const [hasLaunched, setHasLaunched] = useState<boolean>(false);
+  const [hasLaunched, setHasLaunched] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
+    
     if (!launchDateString) return;
     
     const launchDate = new Date(launchDateString);
     
         const intervalId = setInterval(() => {
+         
+          
             const now = new Date();
             const difference = launchDate.getTime() - now.getTime();
       
@@ -36,7 +39,11 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({ launchDateStr
       
           return () => clearInterval(intervalId);
         }, [launchDateString]);
-      
+
+
+        if(hasLaunched == undefined){
+          return <></>
+        }
         return (
   <>
     <div className='text-4xl text-grey-400 text-center tracking-widest pt-10'>
