@@ -8,7 +8,15 @@ import fetchMostRecentImage from "@/lib/data/fetchMostRecentImage";
 
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import SatelliteSelector from "@/components/homeComponents/SatelliteSelector";
-import SatelliteGlobe from "@/components/homeComponents/homeGlobe";
+import dynamic from "next/dynamic";
+import HeroWrapper from "@/components/HeroWrapper";
+
+const SatelliteGlobeNoSSR = dynamic(
+    () => import("@/components/homeComponents/homeGlobe"),
+    {
+        ssr: false,
+    },
+);
 
 export default async function Home() {
     const mostRecentImageURL = await fetchMostRecentImage();
@@ -30,7 +38,7 @@ export default async function Home() {
                 {/* Globe Container */}
                 <div className="z-0 ml-0.5 w-full xl:w-2/3">
                     <div className="flex h-full items-center justify-center bg-black">
-                        <SatelliteGlobe />
+                        <SatelliteGlobeNoSSR />
                     </div>
                 </div>
             </div>
@@ -72,7 +80,7 @@ export default async function Home() {
                     </div>
                 </div>
             </ColoredSection>
-            <div className="flex flex-col items-center px-8 py-24 text-center">
+            <div className="flex flex-col items-center px-8 py-12 text-center">
                 <div className="prose prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
@@ -99,6 +107,8 @@ export default async function Home() {
                     {mostRecentImageURL}
                 </div>
             </ColoredSection>
+
+            <HeroWrapper></HeroWrapper>
         </>
     );
 }

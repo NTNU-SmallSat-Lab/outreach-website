@@ -46,7 +46,7 @@ export default async function fetchSatelliteInfo({
     let satelliteInfo: SatelliteInfo;
 
     const filters = {
-        name: {
+        slug: {
             eq: params.satelliteSlug,
         },
     };
@@ -78,7 +78,8 @@ export default async function fetchSatelliteInfo({
         content:
             graphqlData?.data?.satellites?.data[0]?.attributes?.content ?? "",
         relatedProjects: projects ?? [],
-        launchDate: graphqlData.data.satellites?.data[0]?.attributes?.launchDate ?? ""
+        launchDate:
+            graphqlData.data.satellites?.data[0]?.attributes?.launchDate ?? "",
     };
 
     return satelliteInfo;

@@ -53,6 +53,11 @@
     },
     "launchDate": {
       "type": "datetime"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
     }
   }
 }

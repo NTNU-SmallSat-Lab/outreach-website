@@ -858,6 +858,30 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
+export interface ApiHeroHero extends Schema.SingleType {
+  collectionName: 'heroes';
+  info: {
+    singularName: 'hero';
+    pluralName: 'heroes';
+    displayName: 'Hero';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    image: Attribute.Media & Attribute.Required;
+    text: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::hero.hero', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::hero.hero', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMostRecentImageMostRecentImage
   extends Schema.CollectionType {
   collectionName: 'most_recent_images';
@@ -962,6 +986,8 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     >;
     missionStatus: Attribute.String;
     launchDate: Attribute.DateTime;
+    slug: Attribute.UID<'api::satellite.satellite', 'name'> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1000,6 +1026,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::hero.hero': ApiHeroHero;
       'api::most-recent-image.most-recent-image': ApiMostRecentImageMostRecentImage;
       'api::project.project': ApiProjectProject;
       'api::satellite.satellite': ApiSatelliteSatellite;

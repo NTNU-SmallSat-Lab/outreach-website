@@ -4,21 +4,14 @@ import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import Map2d from "@/components/2dmap/Map2d";
-import { useSatelliteStore } from "@/lib/store";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import LaunchDateCountDown from "@/components/ui/launchDateCountDown";
-
-function setSelectedSatelliteSlug(satelliteSlug: string) {
-    const setSelectedSatellite =
-        useSatelliteStore.getState().setSelectedSatellite;
-    setSelectedSatellite(satelliteSlug);
-}
 
 export interface SatelliteInfo {
     name: string;
     content: BlocksContent;
     relatedProjects?: ProjectOrSatellite[];
-    launchDate?: string
+    launchDate?: string;
 }
 
 export interface ProjectOrSatellite {
@@ -34,19 +27,16 @@ export default async function SatelliteInfoPage({
 }: {
     params: { satelliteSlug: string };
 }) {
-    setSelectedSatelliteSlug(params.satelliteSlug);
     const satelliteInfo: SatelliteInfo = await fetchSatelliteInfo({
         params: params,
     });
     console.log(satelliteInfo.launchDate);
-    
-    
 
     if (!satelliteInfo) return <div>Loading...</div>;
 
     return (
         <div className="my-12 flex min-h-screen items-center justify-center">
-            <div className="flex flex-col w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:px-6 lg:px-8">
                 <div className="flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
                     {/* Container for satname, stats and sat image */}
                     <div className="flex w-full flex-col bg-gray-600 p-0.5 xl:flex-row">
@@ -71,7 +61,9 @@ export default async function SatelliteInfoPage({
                     </div>
 
                     <div className="mt-6 w-full">
-                        <LaunchDateCountDown launchDateString={satelliteInfo.launchDate}></LaunchDateCountDown>
+                        <LaunchDateCountDown
+                            launchDateString={satelliteInfo.launchDate}
+                        ></LaunchDateCountDown>
                     </div>
 
                     {/* Container for map */}
