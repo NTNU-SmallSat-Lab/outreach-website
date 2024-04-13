@@ -65,7 +65,7 @@ export default async function ProjectsPage() {
                 </PageHeaderAndSubtitle>
             </div>
 
-            <div className="grid grid-cols-1 items-center justify-center gap-12 md:grid-cols-2 md:justify-start md:gap-16 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:grid-cols-3 xl:grid-cols-4">
                 {graphqlData.data.projects.data.map((project) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
@@ -76,7 +76,7 @@ export default async function ProjectsPage() {
                     }
                     return (
                         <Link
-                            className="mx:20 h-full self-center transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                            className="h-full transition-transform duration-200 ease-in-out hover:scale-105 hover:transform sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
                         >
