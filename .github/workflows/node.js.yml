@@ -16,7 +16,7 @@ defaults:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -34,7 +34,7 @@ jobs:
       - run: npm run build # Build the frontend
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -52,7 +52,7 @@ jobs:
       - run: npm run lint # Run linter
 
   prettier:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     strategy:
       matrix:
@@ -71,7 +71,7 @@ jobs:
 
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
