@@ -15,6 +15,11 @@ type SolarData = SolarDataEntry[];
 async function getSolarData(): Promise<SolarData> {
     const res = await fetch(
         "https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json",
+        {
+            next: {
+                revalidate: 60 * 60 * 24, // revalidate every 24 hours
+            },
+        },
     );
 
     if (!res.ok) {
