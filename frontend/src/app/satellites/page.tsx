@@ -18,6 +18,7 @@ query GET_SATELLITES {
             }
           }
           missionStatus
+          slug
         }
       }
     }
@@ -50,10 +51,12 @@ export default async function Satellites() {
                             (satellite: any) => {
                                 let satelliteName =
                                     satellite?.attributes?.name ?? "";
+                                let slug = satellite?.attributes.slug ?? "";
                                 return (
                                     <SatelliteStatsTableRow
                                         key={satellite.id}
                                         satName={satelliteName}
+                                        slug={slug}
                                     />
                                 );
                             },

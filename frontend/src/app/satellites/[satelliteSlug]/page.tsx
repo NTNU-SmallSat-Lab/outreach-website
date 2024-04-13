@@ -38,6 +38,7 @@ export default async function SatelliteInfoPage({
     });
 
     if (!satelliteInfo) return <div>Loading...</div>;
+    console.log(params);
 
     return (
         <div className="my-12 flex min-h-screen items-center justify-center">
@@ -77,22 +78,23 @@ export default async function SatelliteInfoPage({
                 </div>
 
                 {/* Related projects */}
-                <div className="mt-8 flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
-                    {satelliteInfo.relatedProjects?.length != 0 ? (
-                        <h1 className="text-xl font-bold">Related Projects</h1>
-                    ) : null}
 
-                    <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                        {satelliteInfo.relatedProjects?.map(
-                            (project: ProjectOrSatellite) => (
-                                <RelatedProjectsAndSatellites
-                                    project={project}
-                                    key={project.id}
-                                />
-                            ),
-                        )}
+                {satelliteInfo.relatedProjects?.length != 0 ? (
+                    <div className="mt-8 flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
+                        <h1 className="text-xl font-bold">Related Projects</h1>
+
+                        <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                            {satelliteInfo.relatedProjects?.map(
+                                (project: ProjectOrSatellite) => (
+                                    <RelatedProjectsAndSatellites
+                                        project={project}
+                                        key={project.id}
+                                    />
+                                ),
+                            )}
+                        </div>
                     </div>
-                </div>
+                ) : null}
             </div>
         </div>
     );

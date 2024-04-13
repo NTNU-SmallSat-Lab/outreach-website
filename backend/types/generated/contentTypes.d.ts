@@ -968,6 +968,8 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'api::most-recent-image.most-recent-image'
     >;
     missionStatus: Attribute.String;
+    slug: Attribute.UID<'api::satellite.satellite', 'name'> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
