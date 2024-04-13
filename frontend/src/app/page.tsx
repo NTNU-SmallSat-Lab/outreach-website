@@ -108,11 +108,7 @@ export default async function Home() {
                 </div>
             </ColoredSection>
 
-            <div className="flex flex-col items-center px-8 py-12 text-center">
-                <div className="prose prose-invert">
-                    <HeroWrapper></HeroWrapper>
-                </div>
-            </div>
+            <HeroWrapper></HeroWrapper>
         </>
     );
 }
