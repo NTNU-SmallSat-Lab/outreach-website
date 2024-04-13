@@ -103,7 +103,7 @@ export default async function Home() {
 
             <ColoredSection className="flex flex-col items-center px-8 py-12">
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
-                    <h1 className="">Most recent picture</h1>
+                    <h1 className="">Featured Satellite Image</h1>
                     {featuredImageURL}
                 </div>
             </ColoredSection>

@@ -535,7 +535,6 @@ export type Mutation = {
   createAuthor?: Maybe<AuthorEntityResponse>;
   createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
-  createMostRecentImage?: Maybe<MostRecentImageEntityResponse>;
   createProject?: Maybe<ProjectEntityResponse>;
   createSatellite?: Maybe<SatelliteEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -576,7 +575,6 @@ export type Mutation = {
   updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateHero?: Maybe<HeroEntityResponse>;
-  updateMostRecentImage?: Maybe<MostRecentImageEntityResponse>;
   updateProject?: Maybe<ProjectEntityResponse>;
   updateSatellite?: Maybe<SatelliteEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -614,12 +612,6 @@ export type MutationCreateContentReleasesReleaseArgs = {
 export type MutationCreateContentReleasesReleaseActionArgs = {
   data: ContentReleasesReleaseActionInput;
 };
-
-
-export type MutationCreateMostRecentImageArgs = {
-  data: MostRecentImageInput;
-};
-
 
 export type MutationCreateProjectArgs = {
   data: ProjectInput;
@@ -667,11 +659,6 @@ export type MutationDeleteContentReleasesReleaseArgs = {
 
 
 export type MutationDeleteContentReleasesReleaseActionArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationDeleteMostRecentImageArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -761,23 +748,6 @@ export type MutationUpdateAuthorArgs = {
 export type MutationUpdateContentReleasesReleaseArgs = {
   data: ContentReleasesReleaseInput;
   id: Scalars['ID']['input'];
-};
-
-
-export type MutationUpdateContentReleasesReleaseActionArgs = {
-  data: ContentReleasesReleaseActionInput;
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationUpdateContentReleasesReleaseArgs = {
-  data: ContentReleasesReleaseInput;
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationUpdateHeroArgs = {
-  data: HeroInput;
 };
 
 
