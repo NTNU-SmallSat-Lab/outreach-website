@@ -68,7 +68,13 @@ export default function SatelliteGlobe() {
             setGlobeSize();
 
             // Resize listener to update the globe size
-            window.addEventListener("resize", setGlobeSize);
+
+            if (typeof window !== "undefined") {
+                window.addEventListener("resize", setGlobeSize);
+                return () => {
+                    window.removeEventListener("resize", setGlobeSize);
+                };
+            }
 
             // Set initial positions of satellites
             let currentDate = new Date().toISOString();
@@ -90,10 +96,12 @@ export default function SatelliteGlobe() {
             globeRef.current.objectsData(initialPositions);
 
             return () => {
-                window.removeEventListener("resize", setGlobeSize);
+                if (typeof window !== "undefined") {
+                    window.removeEventListener("resize", setGlobeSize);
+                }
             };
         }
-    }, []);
+    });
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
