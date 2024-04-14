@@ -32,18 +32,21 @@ export default function SatDropdown({
     return (
         <div className="w-full">
             <button
-                className="flex w-full cursor-pointer flex-row items-center justify-between bg-black p-4 text-left text-xl font-bold tracking-wide"
+                className="flex w-full cursor-pointer flex-col  bg-black p-4 text-left"
                 onClick={toggleDropdown}
             >
-                {selectedSatellite || "Select a Satellite"}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="2em"
-                    height="2em"
-                    viewBox="0 0 24 24"
-                >
-                    <path fill="currentColor" d="m7 10l5 5l5-5z" />
-                </svg>
+                <div className="flex flex-row items-center justify-between text-xl font-bold tracking-wide">
+                    {selectedSatellite || "Select a Satellite"}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="2em"
+                        height="2em"
+                        viewBox="0 0 24 24"
+                    >
+                        <path fill="currentColor" d="m7 10l5 5l5-5z" />
+                    </svg>
+                </div>
+                <p className=" text-gray-400">Selected Satellite</p>
             </button>
 
             {isOpen && <hr />}
