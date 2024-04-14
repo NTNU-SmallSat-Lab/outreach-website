@@ -616,8 +616,9 @@ export type MutationUpdateFeaturedImageArgs = {
 };
 
 
-export type MutationUpdateFeaturedImageArgs = {
-  data: FeaturedImageInput;
+export type MutationUpdateFileInfoArgs = {
+  id: Scalars['ID']['input'];
+  info?: InputMaybe<FileInfoInput>;
 };
 
 
@@ -804,16 +805,6 @@ export type QueryAuthorsArgs = {
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type QueryFeaturedImageArgs = {
-  publicationState?: InputMaybe<PublicationState>;
-};
-
-
-export type QueryHeroArgs = {
-  publicationState?: InputMaybe<PublicationState>;
 };
 
 
