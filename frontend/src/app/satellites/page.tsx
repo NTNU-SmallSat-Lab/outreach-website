@@ -12,7 +12,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-  } from "@/components/shadcn/table"
+} from "@/components/shadcn/table";
 
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {

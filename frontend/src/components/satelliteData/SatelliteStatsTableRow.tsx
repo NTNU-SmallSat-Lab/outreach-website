@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
-import Link from "next/link";
 import { TableCell, TableRow } from "@/components/shadcn/table";
 import { useRouter } from "next/navigation";
 
