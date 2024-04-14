@@ -1,7 +1,7 @@
 import React from "react";
 
 // Assuming the correct import path for the Skeleton component
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@shadcn/skeleton";
 
 export default function Loading() {
     return (

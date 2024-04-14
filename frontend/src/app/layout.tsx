@@ -10,7 +10,7 @@ import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "NTNU SmallSat Lab",
+    title: "Small Satellite Lab",
     description: "NTNU Small Satellite Lab",
 };
 
