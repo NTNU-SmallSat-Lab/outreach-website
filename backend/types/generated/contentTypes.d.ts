@@ -800,8 +800,9 @@ export interface ApiArticleArticle extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    previewCardTitle: Attribute.String & Attribute.Required & Attribute.Unique;
-    slug: Attribute.UID & Attribute.Required;
+    previewTitle: Attribute.String & Attribute.Required & Attribute.Unique;
+    slug: Attribute.UID<'api::article.article', 'previewTitle'> &
+      Attribute.Required;
     datePublished: Attribute.Date & Attribute.Required;
     coverImage: Attribute.Media;
     body: Attribute.Blocks & Attribute.Required;

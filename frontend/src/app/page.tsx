@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@shadcn/button";
 import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
@@ -23,21 +23,16 @@ export default async function Home() {
 
     return (
         <>
-            <div className="flex flex-col bg-gray-600 p-0.5 xl:flex-row">
+            <div className="flex min-h-[calc(100vh-73px)] flex-col gap-0 xl:flex-row">
                 {/* Stats Container */}
-                <div className="z-10 flex w-full min-w-[500px] flex-col xl:w-1/3">
-                    <div className="bg-black p-1">
-                        <SatelliteSelector />
-                    </div>
-                    <div className="mt-0.5">
-                        <SatelliteDataHome />
-                    </div>
-                    <div className="mt-0.5 w-full bg-black xl:flex-grow"></div>
+                <div className="z-10 flex w-full min-w-[500px] flex-col border-2 border-r border-gray-600 bg-black xl:w-1/3">
+                    <SatelliteSelector />
+                    <SatelliteDataHome />
                 </div>
 
                 {/* Globe Container */}
-                <div className="z-0 ml-0.5 w-full xl:w-2/3">
-                    <div className="flex h-full items-center justify-center bg-black">
+                <div className="z-0 w-full overflow-x-hidden border-2 border-gray-600 xl:w-2/3 ">
+                    <div className="flex h-full items-center justify-center ">
                         <SatelliteGlobeNoSSR />
                     </div>
                 </div>
@@ -49,8 +44,7 @@ export default async function Home() {
             >
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1>
-                        TEST NUMBER 3 Empowering Space Exploration One Satellite
-                        at a Time
+                        Empowering Space Exploration One Satellite at a Time
                     </h1>
 
                     <div className="relative h-[300px] w-[300px]">
@@ -108,11 +102,7 @@ export default async function Home() {
                 </div>
             </ColoredSection>
 
-            <div className="flex flex-col items-center px-8 py-12 text-center">
-                <div className="prose prose-invert">
-                    <HeroWrapper></HeroWrapper>
-                </div>
-            </div>
+            <HeroWrapper></HeroWrapper>
         </>
     );
 }

@@ -33,10 +33,9 @@ export default async function SatelliteInfoPage({
     if (!satelliteInfo) return <div>Loading...</div>;
 
     return (
-        <div className="flex min-h-screen items-center justify-center">
-            <div className="flex w-2/3 flex-col">
-                <div className="flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
-                    <h1 className="mb-2 self-start text-4xl font-bold">
+        <>
+            <div className="flex w-full flex-col items-center ">
+            <h1 className="mb-2 self-start text-4xl font-bold">
                         {satelliteInfo.name}
                     </h1>
                     {/* Container for satname, stats and sat image */}
@@ -54,34 +53,33 @@ export default async function SatelliteInfoPage({
                                         </p>
                                     </div>
                                 ) : null}
-                            </div>
-                            <div className="mt-0.5">
-                                <SatelliteDataHome />
-                            </div>
-                        </div>
-
-                        {/* Image container */}
-                        <div className="z-0 ml-0.5 w-full">
-                            <div className="flex h-full w-full items-center justify-center bg-black">
-                                <h1>Satellite Image</h1>
-                            </div>
+                        <div className="mt-0.5">
+                            <SatelliteDataHome />
                         </div>
                     </div>
 
-                    {/* Container for map */}
-                    <div className="mt-6 w-full">
-                        <Map2d satName={satelliteInfo.name} />
-                    </div>
-
-                    {/* Container for body content */}
-                    <div className="mt-6">
-                        <BlockRendererClient content={satelliteInfo.content} />
+                    {/* Image container */}
+                    <div className="z-0 ml-0.5 w-full">
+                        <div className="flex h-full w-full items-center justify-center bg-black">
+                            <h1>Satellite Image</h1>
+                        </div>
                     </div>
                 </div>
 
+                {/* Container for map */}
+                <div className="mt-6 w-full">
+                    <Map2d satName={satelliteInfo.name} />
+                </div>
+
+                {/* Container for body content */}
+                <div className="mt-6">
+                    <BlockRendererClient content={satelliteInfo.content} />
+                </div>
+            </div>
+
                 {/* Related projects */}
                 {satelliteInfo.relatedProjects?.length != 0 ? (
-                    <div className="mt-8 flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
+                    <div className="mt-8 flex w-full flex-col items-center">
                         <h1 className="text-xl font-bold">Related Projects</h1>
 
                         <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
@@ -97,6 +95,6 @@ export default async function SatelliteInfoPage({
                     </div>
                 ) : null}
             </div>
-        </div>
+        </>
     );
 }

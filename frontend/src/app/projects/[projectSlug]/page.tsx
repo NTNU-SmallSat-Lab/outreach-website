@@ -74,9 +74,7 @@ export default async function Page({
     }
     return (
         <div className="flex flex-col items-center gap-4">
-            <div className="w-1/2">
-                <BlockRendererClient content={content} />
-            </div>
+            <BlockRendererClient content={content} />
             {graphqlData.data.projects?.data[0].attributes?.satellites?.data
                 .length != 0 && (
                 <h1 className="mb-2 mt-2 text-xl font-bold">
@@ -86,12 +84,13 @@ export default async function Page({
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
                     (satellite: any) => {
+                        const previewImage =
+                            satellite?.attributes?.previewImage?.data
+                                ?.attributes?.url ?? undefined;
                         const satelliteObject: ProjectOrSatellite = {
                             id: satellite.id,
                             title: satellite.attributes.name,
-                            previewImage:
-                                satellite.attributes.previewImage.data
-                                    .attributes.url,
+                            previewImage: previewImage,
                             slug: satellite.attributes.name,
                             isProject: false,
                         };

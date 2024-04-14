@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@shadcn/skeleton";
 import React from "react";
 
 export default function Loading() {
