@@ -28,7 +28,7 @@ export default function RootLayout({
                 <ApolloWrapper>
                     <Navbar />
                     <ErrorBoundaryNavigation>
-                        <main className="flex-grow">
+                        <main className="flex grow flex-col">
                             <Starfield />
                             {children}
                         </main>
