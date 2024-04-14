@@ -70,7 +70,7 @@ export default async function ProjectsPage() {
                 </PageHeaderAndSubtitle>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 md:justify-start">
+            <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:grid-cols-3 xl:grid-cols-4">
                 {graphqlData.data.projects.data.map((project) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
@@ -81,14 +81,14 @@ export default async function ProjectsPage() {
                     }
                     return (
                         <Link
-                            className="m-1 transition-transform duration-300 ease-in-out hover:scale-110 hover:transform sm:m-4"
+                            className="h-full transition-transform duration-200 ease-in-out hover:scale-105 hover:transform sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
                         >
-                            <Card className="md:w-68 flex h-full w-64 flex-col lg:w-72">
+                            <Card className="h-full w-full">
                                 <CardHeader></CardHeader>
                                 <CardContent>
-                                    <div className="h-64">
+                                    <div className="w-full">
                                         {previewImage ? (
                                             <Image
                                                 className="max-h-full max-w-full object-contain"
@@ -103,14 +103,17 @@ export default async function ProjectsPage() {
                                             </div>
                                         )}
                                     </div>
-                                    <CardTitle className="mb-2 mt-2 text-xl font-bold">
-                                        {project?.attributes?.title}
-                                    </CardTitle>
-                                    <p className="break-words">
-                                        {SlicePreviewText(
-                                            project?.attributes?.content ?? [],
-                                        )}
-                                    </p>
+                                    <div className="prose prose-invert">
+                                        <CardTitle className="mb-2 mt-6">
+                                            {project?.attributes?.title}
+                                        </CardTitle>
+                                        <p className="break-words">
+                                            {SlicePreviewText(
+                                                project?.attributes?.content ??
+                                                    [],
+                                            )}
+                                        </p>
+                                    </div>
                                 </CardContent>
                             </Card>
                         </Link>
