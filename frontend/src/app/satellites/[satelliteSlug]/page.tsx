@@ -55,7 +55,7 @@ export default async function SatelliteInfoPage({
                         </div>
                     </div>
                     {/* Image container */}
-                    <div className="z-0 w-full">
+                    <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
                         <div className="flex h-full w-full items-center justify-center bg-black">
                             <h1>Satellite Image</h1>
                         </div>
