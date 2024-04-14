@@ -1,5 +1,4 @@
 import {
-    BlogCard,
     BlogCardContent,
     BlogCardFooter,
     BlogCardHeader,
@@ -11,6 +10,7 @@ import { BlogPost } from "@/app/blog/page";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SVGProps } from "react";
+import { Card } from "./shadcn/card";
 
 export function OuiImage(props: SVGProps<SVGSVGElement>) {
     return (
@@ -47,7 +47,7 @@ export default function FullBlogCard({
     }
 
     return (
-        <BlogCard className={cn(className)}>
+        <Card className={cn(className)}>
             <BlogCardHeader>
                 {article.coverImage ? (
                     <Image
@@ -89,6 +89,6 @@ export default function FullBlogCard({
                     Read more →
                 </Link>
             </BlogCardFooter>
-        </BlogCard>
+        </Card>
     );
 }
