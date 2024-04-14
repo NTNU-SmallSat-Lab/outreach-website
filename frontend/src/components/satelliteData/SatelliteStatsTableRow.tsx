@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
-import Link from "next/link";
+import { TableCell, TableRow } from "@/components/shadcn/table";
+import { useRouter } from "next/navigation";
 
 const updateInterval = 10;
 
@@ -17,6 +18,8 @@ export default function SatelliteStatsTableRow({
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
+
+    const router = useRouter();
 
     // Fetch satellite data on component mount
     useEffect(() => {
@@ -50,33 +53,29 @@ export default function SatelliteStatsTableRow({
             </tr>
         );
     }
+
+    function handleClick() {
+        router.replace(`/satellites/${slug}`);
+    }
+
     return (
-        <tr className="duration-150 hover:bg-white hover:text-black">
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
-                    {satName}
-                </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
-                    {satelliteInfo.velocity + " km/s"}
-                </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
-                    {satelliteInfo.altitude + " km"}
-                </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
-                    {satelliteInfo.latitudeDeg + "° N"}
-                </Link>
-            </td>
-            <td className="px-6 py-4">
-                <Link href={`/satellites/${slug}`} className="w-full">
-                    {satelliteInfo.longitudeDeg + "° E"}
-                </Link>
-            </td>
-        </tr>
+        <TableRow
+            onClick={handleClick}
+            className="hover: cursor-pointer hover:bg-white hover:bg-white hover:text-black"
+        >
+            <TableCell className="px-6 py-4">{satName}</TableCell>
+            <TableCell className="px-6 py-4">
+                {satelliteInfo.velocity + " km/s"}
+            </TableCell>
+            <TableCell className="px-6 py-4">
+                {satelliteInfo.altitude + " km"}
+            </TableCell>
+            <TableCell className="px-6 py-4">
+                {satelliteInfo.latitudeDeg + "° N"}
+            </TableCell>
+            <TableCell className="px-6 py-4">
+                {satelliteInfo.longitudeDeg + "° E"}
+            </TableCell>
+        </TableRow>
     );
 }
