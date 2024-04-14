@@ -1,5 +1,5 @@
-import { PagePadding } from "@/components/PagePadding";
+import { PageColoredBackground } from "@/components/PageLayout";
 import React from "react";
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return <PagePadding>{children}</PagePadding>;
+    return <PageColoredBackground>{children}</PageColoredBackground>;
 }
