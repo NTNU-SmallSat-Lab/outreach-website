@@ -4,12 +4,10 @@ import { getClient } from "@/lib/ApolloClient";
 import {
     Table,
     TableBody,
-    TableCaption,
-    TableCell,
     TableHead,
     TableHeader,
     TableRow,
-  } from "@/components/ui/table"
+  } from "@/components/shadcn/table"
 
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
