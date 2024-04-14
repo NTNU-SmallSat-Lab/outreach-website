@@ -84,12 +84,13 @@ export default async function Page({
             <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
                 {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
                     (satellite: any) => {
+                        const previewImage =
+                            satellite?.attributes?.previewImage?.data
+                                ?.attributes?.url ?? undefined;
                         const satelliteObject: ProjectOrSatellite = {
                             id: satellite.id,
                             title: satellite.attributes.name,
-                            previewImage:
-                                satellite.attributes.previewImage.data
-                                    .attributes.url,
+                            previewImage: previewImage,
                             slug: satellite.attributes.name,
                             isProject: false,
                         };
