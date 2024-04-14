@@ -2,7 +2,12 @@ import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
 import Link from "next/link";
 import Image from "next/image";
 const STRAPI_URL = process.env.STRAPI_URL;
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/shadcn/card";
 import { OuiImage } from "@/components/fullBlogCard";
 
 export default function RelatedProjectsAndSatellites({
