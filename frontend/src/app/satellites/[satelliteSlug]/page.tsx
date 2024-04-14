@@ -73,7 +73,7 @@ export default async function SatelliteInfoPage({
                     <h1 className="text-xl font-bold">Related Projects</h1>
                 ) : null}
 
-                <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
                     {satelliteInfo.relatedProjects?.map(
                         (project: ProjectOrSatellite) => (
                             <RelatedProjectsAndSatellites

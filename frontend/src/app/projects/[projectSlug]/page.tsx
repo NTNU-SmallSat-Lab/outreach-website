@@ -81,7 +81,7 @@ export default async function Page({
                     Related Satellites
                 </h1>
             )}
-            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
                 {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
                     (satellite: any) => {
                         const previewImage =
