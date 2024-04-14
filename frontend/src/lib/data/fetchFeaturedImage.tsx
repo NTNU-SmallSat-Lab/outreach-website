@@ -53,6 +53,20 @@ export default async function fetchFeaturedImage() {
         graphqlData.data.featuredImage?.data?.attributes?.satellite?.data
             ?.attributes?.name;
 
+    if (featuredImageURL == "") {
+        return (
+            <div className="relative h-[300px] w-[300px]">
+                <Image
+                    alt="Most recent satellite image"
+                    src={featuredImageURL}
+                    className="m-0"
+                    layout="fill"
+                    objectFit="cover"
+                />
+            </div>
+        );
+    }
+
     return (
         <div>
             <div className="relative h-[300px] w-[300px]">
