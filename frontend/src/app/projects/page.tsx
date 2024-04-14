@@ -63,7 +63,9 @@ export default async function ProjectsPage() {
         <div>
             <div className="flex flex-col items-center justify-center">
                 <PageHeaderAndSubtitle>
-                    <PageHeader>Our Projects</PageHeader>
+                    <PageHeader data-testid="projectHeading">
+                        Our Projects
+                    </PageHeader>
                     <PageSubtitle>
                         Information about our various projects are shown here.
                     </PageSubtitle>
@@ -84,6 +86,7 @@ export default async function ProjectsPage() {
                             className="h-full transition-transform duration-200 ease-in-out hover:scale-105 hover:transform sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
+                            data-testid="projectCard"
                         >
                             <Card className="h-full w-full">
                                 <CardHeader></CardHeader>

@@ -9,7 +9,8 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const baseURL = `http://web.hypso.ies.ntnu.no:3000/`;
+const baseURL = `http://localhost:3000/`;
+//const baseURL = `http://web.hypso.ies.ntnu.no:3000/`;
 
 export default defineConfig({
     testDir: "./tests",
@@ -27,7 +28,7 @@ export default defineConfig({
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
         baseURL,
-
+        
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: "on-first-retry",
     },
