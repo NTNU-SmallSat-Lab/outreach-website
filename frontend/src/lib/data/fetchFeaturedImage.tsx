@@ -1,6 +1,7 @@
 import { gql } from "@/__generated__/gql";
 import { getClient } from "../ApolloClient";
 import Image from "next/image";
+import { OuiImage } from "@/components/fullBlogCard";
 
 const STRAPI_URL = process.env.STRAPI_URL;
 
@@ -53,34 +54,28 @@ export default async function fetchFeaturedImage() {
         graphqlData.data.featuredImage?.data?.attributes?.satellite?.data
             ?.attributes?.name;
 
-    if (featuredImageURL == "") {
-        return (
-            <div className="relative h-[300px] w-[300px]">
-                <Image
-                    alt="Most recent satellite image"
-                    src={featuredImageURL}
-                    className="m-0"
-                    layout="fill"
-                    objectFit="cover"
-                />
-            </div>
-        );
-    }
-
     return (
         <div>
-            <div className="relative h-[300px] w-[300px]">
-                <Image
-                    alt="Most recent satellite image"
-                    src={featuredImageURL}
-                    className="m-0"
-                    layout="fill"
-                    objectFit="cover"
-                />
-            </div>
-            <div className="">
-                <p>Taken by {imageSatelliteRelation}</p>
-            </div>
+            {featuredImageURL ? (
+                <div>
+                    <div className="relative h-[300px] w-[300px]">
+                        <Image
+                            alt="Most recent satellite image"
+                            src={featuredImageURL}
+                            className="m-0"
+                            layout="fill"
+                            objectFit="cover"
+                        />
+                    </div>
+                    <div className="">
+                        <p>Taken by {imageSatelliteRelation}</p>
+                    </div>
+                </div>
+            ) : (
+                <div className="relative flex h-[300px] w-[300px] items-center justify-center object-contain">
+                    <OuiImage />
+                </div>
+            )}
         </div>
     );
 }
