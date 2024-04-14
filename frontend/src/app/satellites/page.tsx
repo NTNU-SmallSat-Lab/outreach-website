@@ -18,6 +18,7 @@ query GET_SATELLITES {
             }
           }
           missionStatus
+          slug
         }
       }
     }
@@ -54,6 +55,7 @@ export default async function Satellites() {
                                     <SatelliteStatsTableRow
                                         key={satellite.id}
                                         satName={satelliteName}
+                                        slug={satellite?.attributes?.slug}
                                     />
                                 );
                             },

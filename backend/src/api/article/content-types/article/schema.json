@@ -12,14 +12,15 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "previewCardTitle": {
+    "previewTitle": {
       "type": "string",
       "required": true,
       "unique": true
     },
     "slug": {
       "type": "uid",
-      "required": true
+      "required": true,
+      "targetField": "previewTitle"
     },
     "datePublished": {
       "type": "date",
