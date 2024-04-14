@@ -1,5 +1,10 @@
 import { gql } from "@/__generated__/gql";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/shadcn/card";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
 import Image from "next/image";

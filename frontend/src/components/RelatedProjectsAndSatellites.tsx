@@ -5,6 +5,7 @@ const STRAPI_URL = process.env.STRAPI_URL;
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OuiImage } from "@/components/fullBlogCard";
 
+
 export default function RelatedProjectsAndSatellites({
     project,
 }: {

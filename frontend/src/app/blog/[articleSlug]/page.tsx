@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@shadcn/avatar";
 
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import BlockRendererClient from "@/components/BlockRendererClient";
@@ -38,7 +38,7 @@ const GET_ARTICLE_BY_SLUG = gql(
             }
           }
           datePublished
-          previewCardTitle
+          previewTitle
         }
       }
     }
