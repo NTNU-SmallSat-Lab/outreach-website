@@ -77,7 +77,7 @@ export default function SatelliteDataHome() {
                 </div>
             </div>
 
-            <div className="border-t border-gray-600 bg-black p-5 xl:border-b-2">
+            <div className="border-t border-gray-600 bg-black p-5">
                 <div>
                     <p className="text-xl font-medium">
                         {satelliteInfo
