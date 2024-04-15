@@ -9,6 +9,7 @@ query Query($publicationState: PublicationState) {
     hero(publicationState: $publicationState) {
       data {
         attributes {
+          title
           text
           image {
             data {
@@ -21,6 +22,7 @@ query Query($publicationState: PublicationState) {
       }
     }
   }`);
+
 export default async function HeroWrapper() {
     const graphqlData = await getClient().query({
         query: GET_HERO_DATA,
@@ -52,7 +54,7 @@ export default async function HeroWrapper() {
             <div className="flex flex-col items-center px-8 py-12 text-center">
                 <div className="prose prose-invert">
                     <Hero
-                        title="Hero"
+                        title={heroAttributes.title || ""}
                         description={heroAttributes.text || ""}
                         imageUrl={imageUrl}
                     />
