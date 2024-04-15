@@ -145,6 +145,9 @@ export default function Navbar() {
                 </DrawerTrigger>
                 <DrawerContent>
                     <div className="flex flex-col">
+                        <DrawerTrigger className="flex justify-end px-5 duration-200 hover:bg-primary">
+                            <IconParkHamburgerButton />
+                        </DrawerTrigger>
                         <Link
                             href="/blog"
                             className="py-5 duration-200 hover:bg-primary"
