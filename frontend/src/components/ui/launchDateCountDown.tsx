@@ -9,11 +9,14 @@ type LaunchDateCountDownProps = {
 const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
     launchDateString,
 }) => {
-    const [displayTime, setDisplayTime] = useState<string[]>([]);
-    const [hasLaunched, setHasLaunched] = useState<boolean | undefined>(
-        undefined,
-    );
-    const [columns, setColumns] = useState<string>();
+    const [displayTime, setDisplayTime] = useState<string[]>([
+        "0 days",
+        "0 hours",
+        "0 minutes",
+        "0 seconds",
+    ]);
+    const [hasLaunched, setHasLaunched] = useState<boolean | undefined>(true);
+    const [columns, setColumns] = useState<string>("grid grid-cols-4");
 
     useEffect(() => {
         if (!launchDateString) return;
@@ -22,8 +25,9 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
 
         const intervalId = setInterval(() => {
             const now = new Date();
-            const difference = Math.abs(launchDate.getTime() - now.getTime());
             const differenceReal = launchDate.getTime() - now.getTime();
+            const difference = Math.abs(differenceReal);
+
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
             const minutes = Math.floor((difference / 1000 / 60) % 60);

@@ -9,6 +9,9 @@ import {
     PageHeader,
 } from "@/components/PageHeader";
 
+import { PagePadding } from "@/components/PageLayout";
+import React from "react";
+
 export interface BlogPost {
     key: string | null | undefined;
     firstArticle?: boolean | null | undefined;
@@ -47,18 +50,20 @@ export default async function BlogPage({
 
     return (
         <>
-            <PageHeaderAndSubtitle>
-                <PageHeader>Blog</PageHeader>
-                <PageSubtitle>
-                    Welcome to the blog! Here you can find all of the articles
-                    we have written.
-                </PageSubtitle>
-            </PageHeaderAndSubtitle>
-            <div className="flex flex-col justify-center">
-                {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
-                <BlogDataCards articles={articleList} />
-                <BlogPaginator totalArticles={totalArticles} />
-            </div>
+            <PagePadding>
+                <PageHeaderAndSubtitle>
+                    <PageHeader>Blog</PageHeader>
+                    <PageSubtitle>
+                        Welcome to the blog! Here you can find all of the
+                        articles we have written.
+                    </PageSubtitle>
+                </PageHeaderAndSubtitle>
+                <div className="flex flex-col justify-center">
+                    {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
+                    <BlogDataCards articles={articleList} />
+                    <BlogPaginator totalArticles={totalArticles} />
+                </div>
+            </PagePadding>
         </>
     );
 }

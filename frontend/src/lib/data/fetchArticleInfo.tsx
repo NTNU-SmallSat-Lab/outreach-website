@@ -26,7 +26,7 @@ query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
                         }
                     }
                 }
-                previewCardTitle
+                previewTitle
                 datePublished
                 body
                 coverImage {
@@ -121,7 +121,7 @@ export default async function fetchArticlePages({
         }
         let content: BlocksContent = article?.attributes?.body ?? [];
 
-        const title: string | undefined = article?.attributes?.previewCardTitle;
+        const title: string | undefined = article?.attributes?.previewTitle;
 
         for (const block of content) {
             if (block.type === "paragraph") {
