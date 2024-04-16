@@ -85,7 +85,7 @@ export default function Map2d({ satName }: { satName: string }) {
     }, [satelliteData, satName, projectionAmount]);
 
     // Function to handle projection amount change
-    const handleInputChange = (event: { target: { value: any } }) => {
+    const handleSliderChange = (event: { target: { value: any } }) => {
         const value = event.target.value;
         // Update the inputValue state
         setInputValue(value);
@@ -105,11 +105,13 @@ export default function Map2d({ satName }: { satName: string }) {
                 </h1>
                 <div className="flex flex-col items-end">
                     <input
-                        type="number"
+                        type="range"
+                        min="-120"
+                        max="120"
+                        step="10"
                         value={inputValue}
-                        onChange={handleInputChange}
-                        className="focus:primary rounded-lg bg-gray-200 px-3 py-2 text-black focus:outline-none focus:ring"
-                        placeholder="Enter projection amount"
+                        onChange={handleSliderChange}
+                        className="rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
                     />
                     <p className="mt-2 font-thin">
                         Positions {projectionAmount} minutes into the{" "}
