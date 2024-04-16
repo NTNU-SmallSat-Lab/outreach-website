@@ -866,6 +866,41 @@ export interface ApiAuthorAuthor extends Schema.CollectionType {
   };
 }
 
+export interface ApiFeaturedImageFeaturedImage extends Schema.SingleType {
+  collectionName: 'featured_images';
+  info: {
+    singularName: 'featured-image';
+    pluralName: 'featured-images';
+    displayName: 'featuredImage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    featuredImage: Attribute.Media & Attribute.Required;
+    satellite: Attribute.Relation<
+      'api::featured-image.featured-image',
+      'oneToOne',
+      'api::satellite.satellite'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::featured-image.featured-image',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::featured-image.featured-image',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiHeroHero extends Schema.SingleType {
   collectionName: 'heroes';
   info: {
@@ -886,42 +921,6 @@ export interface ApiHeroHero extends Schema.SingleType {
     createdBy: Attribute.Relation<'api::hero.hero', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::hero.hero', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiMostRecentImageMostRecentImage
-  extends Schema.CollectionType {
-  collectionName: 'most_recent_images';
-  info: {
-    singularName: 'most-recent-image';
-    pluralName: 'most-recent-images';
-    displayName: 'Most Recent Image';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    mostRecentImage: Attribute.Media & Attribute.Required;
-    satellite: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
-      'manyToOne',
-      'api::satellite.satellite'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::most-recent-image.most-recent-image',
-      'oneToOne',
-      'admin::user'
-    > &
       Attribute.Private;
   };
 }
@@ -987,11 +986,6 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
       'manyToMany',
       'api::project.project'
     >;
-    most_recent_images: Attribute.Relation<
-      'api::satellite.satellite',
-      'oneToMany',
-      'api::most-recent-image.most-recent-image'
-    >;
     missionStatus: Attribute.String;
     slug: Attribute.UID<'api::satellite.satellite', 'name'> &
       Attribute.Required;
@@ -1033,8 +1027,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::featured-image.featured-image': ApiFeaturedImageFeaturedImage;
       'api::hero.hero': ApiHeroHero;
-      'api::most-recent-image.most-recent-image': ApiMostRecentImageMostRecentImage;
       'api::project.project': ApiProjectProject;
       'api::satellite.satellite': ApiSatelliteSatellite;
     }

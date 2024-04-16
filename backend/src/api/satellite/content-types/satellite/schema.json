@@ -42,12 +42,6 @@
       "target": "api::project.project",
       "mappedBy": "satellites"
     },
-    "most_recent_images": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::most-recent-image.most-recent-image",
-      "mappedBy": "satellite"
-    },
     "missionStatus": {
       "type": "string"
     },
