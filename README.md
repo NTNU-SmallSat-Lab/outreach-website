@@ -20,8 +20,8 @@
 ## Project Structure
 
 * `/docs/`: Contains technical documentation.
-* `/backend/`: Backend code and setup instructions.
-* `/frontend/`: Frontend code and setup instructions.
+* `/backend/`: Backend code and local setup instructions.
+* `/frontend/`: Frontend code and local setup instructions.
 * `/.vscode/`: IDE settings (if applicable).
 * `/.github/`: GitHub repository settings (e.g., issue templates, workflows).
 
