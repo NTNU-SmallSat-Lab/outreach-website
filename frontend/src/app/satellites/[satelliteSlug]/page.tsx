@@ -42,7 +42,7 @@ export default async function SatelliteInfoPage({
                         launchDateString={satelliteInfo.launchDate}
                     ></LaunchDateCountDown>
                 </div>
-                <h1 className="mb-2 self-start text-4xl font-bold">
+                <h1 className="self-start text-center text-4xl font-bold w-full md:text-left my-3">
                     {satelliteInfo.name}
                 </h1>
                 {/* Container for satname, stats and sat image */}

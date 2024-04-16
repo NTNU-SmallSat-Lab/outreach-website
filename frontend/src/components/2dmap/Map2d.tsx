@@ -99,8 +99,8 @@ export default function Map2d({ satName }: { satName: string }) {
 
     return (
         <div ref={containerRef} className="w-full">
-            <div className="flex items-center justify-between bg-black px-6 py-4">
-                <h1 className="text-lg font-semibold text-white">
+            <div className="flex flex-col items-center justify-between bg-black px-6 py-4 md:flex-row">
+                <h1 className="text-center text-lg font-semibold text-white md:text-left">
                     Current and Predicted Satellite Position
                 </h1>
                 <div className="flex flex-col items-end">
@@ -111,7 +111,7 @@ export default function Map2d({ satName }: { satName: string }) {
                         step="10"
                         value={inputValue}
                         onChange={handleSliderChange}
-                        className="rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
+                        className="w-full rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
                     />
                     <p className="mt-2 font-thin">
                         Positions {projectionAmount} minutes into the{" "}
