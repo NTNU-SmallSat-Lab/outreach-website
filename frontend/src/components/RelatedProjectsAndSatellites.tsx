@@ -23,11 +23,11 @@ export default function RelatedProjectsAndSatellites({
 
     return (
         <Link
-            className="m-1 transition-transform duration-200 ease-in-out hover:scale-105 hover:transform sm:m-4"
+            className="m-1 sm:m-4"
             href={"/" + projectOrSatellite + "/" + project.slug}
             key={project.id}
         >
-            <Card className="md:w-68 flex h-full w-64 flex-col">
+            <Card className="md:w-68 flex h-full w-64 flex-col hover:border-blue-500">
                 <CardHeader>
                     <CardTitle className="mb-2 mt-2 text-center text-xl font-bold">
                         {project.title}

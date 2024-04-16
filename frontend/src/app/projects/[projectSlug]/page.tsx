@@ -73,11 +73,11 @@ export default async function Page({
         projectTitle = STRAPI_URL + projectTitle;
     }
     return (
-        <div className="flex flex-col items-center gap-4">
+        <div className="mt-8 flex flex-col items-center gap-4">
             <BlockRendererClient content={content} />
             {graphqlData.data.projects?.data[0].attributes?.satellites?.data
                 .length != 0 && (
-                <h1 className="mb-2 mt-2 text-xl font-bold">
+                <h1 className="mb-1 prose prose-invert lg:prose-xl">
                     Related Satellites
                 </h1>
             )}

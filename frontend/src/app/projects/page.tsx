@@ -81,12 +81,12 @@ export default async function ProjectsPage() {
                     }
                     return (
                         <Link
-                            className="h-full sm:m-4 transform-transition duration-200 border hover:border-blue-500"
+                            className="h-full sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
                             
                         >
-                            <Card className="h-full w-full">
+                            <Card className="h-full w-full hover:border-blue-500">
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="w-full">
