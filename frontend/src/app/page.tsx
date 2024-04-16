@@ -25,7 +25,7 @@ export default async function Home() {
         <>
             <div className="flex min-h-[calc(100vh-73px)] flex-col gap-0 xl:flex-row">
                 {/* Stats Container */}
-                <div className="z-10 flex w-full min-w-[500px] flex-col border-2 border-r border-gray-600 bg-black xl:w-1/3">
+                <div className="z-10 flex w-full flex-col border-2 border-r border-gray-600 bg-black md:min-w-[500px] xl:w-1/3">
                     <SatelliteSelector />
                     <SatelliteDataHome />
                 </div>
