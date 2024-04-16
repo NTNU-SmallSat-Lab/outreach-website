@@ -60,7 +60,7 @@ export default async function ProjectsPage() {
     }
 
     return (
-        <div>
+        <div className="mx-auto w-full max-w-6xl grow bg-opacity-50 px-4 py-8 sm:px-8 md:px-10">
             <div className="flex flex-col items-center justify-center">
                 <PageHeaderAndSubtitle>
                     <PageHeader>Our Projects</PageHeader>
@@ -71,7 +71,7 @@ export default async function ProjectsPage() {
             </div>
 
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {graphqlData.data.projects.data.map((project) => {
+                {graphqlData.data.projects.data.map((project : any) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
                             ?.url;
