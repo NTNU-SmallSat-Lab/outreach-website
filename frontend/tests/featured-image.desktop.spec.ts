@@ -3,9 +3,9 @@ import { test, expect } from "@playwright/test";
 test("test", async ({ page }) => {
     await page.goto("/");
     await expect(
-        page.getByRole("img", { name: "Most recent satellite image" }),
+        page.getByRole("img", { name: "Featured satellite image" }),
     ).toBeVisible();
     await expect(
-        page.getByRole("heading", { name: "Most recent picture" }),
+        page.getByRole("heading", { name: "Featured Satellite Image" }),
     ).toBeVisible();
 });
