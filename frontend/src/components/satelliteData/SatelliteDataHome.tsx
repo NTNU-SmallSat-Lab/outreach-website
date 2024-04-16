@@ -42,7 +42,7 @@ export default function SatelliteDataHome() {
 
     return (
         <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1">
                 <div className="border-y border-gray-600 bg-black p-5 md:border-r">
                     <p className="text-xl font-medium">
                         {satelliteInfo
