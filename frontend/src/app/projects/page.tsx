@@ -84,7 +84,6 @@ export default async function ProjectsPage() {
                             className="h-full sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
-                            
                         >
                             <Card className="h-full w-full hover:border-blue-500">
                                 <CardHeader></CardHeader>
@@ -109,10 +108,11 @@ export default async function ProjectsPage() {
                                             {project?.attributes?.title}
                                         </CardTitle>
                                         <p className="break-words">
-                                            <span>{SlicePreviewText(
-                                                project?.attributes?.content ??
-                                                    [],
-                                            )}
+                                            <span>
+                                                {SlicePreviewText(
+                                                    project?.attributes
+                                                        ?.content ?? [],
+                                                )}
                                             </span>
                                         </p>
                                     </div>

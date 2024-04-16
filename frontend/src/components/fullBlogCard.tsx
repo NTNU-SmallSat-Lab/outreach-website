@@ -12,7 +12,6 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SVGProps } from "react";
 
-
 export function OuiImage(props: SVGProps<SVGSVGElement>) {
     return (
         <svg
