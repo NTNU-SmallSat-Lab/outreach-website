@@ -19,9 +19,9 @@ const config = {
         },
         extend: {
             screens: {
-                'xs': '400px',
-                'xxs': '300px'
-              },
+                xs: "400px",
+                xxs: "300px",
+            },
             colors: {
                 // These should all be defined in the global CSS file and used with the var(--color) syntax. Preferably using hsl
                 border: "var(--border)",
