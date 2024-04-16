@@ -77,32 +77,34 @@ export default async function Page({
             <BlockRendererClient content={content} />
             {graphqlData.data.projects?.data[0].attributes?.satellites?.data
                 .length != 0 && (
-                <h1 className="mb-1 prose prose-invert lg:prose-xl">
-                    Related Satellites
-                </h1>
+                <>
+                    <div className="prose prose-invert mb-1 lg:prose-xl">
+                        <h2>Related Satellites</h2>
+                    </div>
+                    <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
+                        {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
+                            (satellite: any) => {
+                                const previewImage =
+                                    satellite?.attributes?.previewImage?.data
+                                        ?.attributes?.url ?? undefined;
+                                const satelliteObject: ProjectOrSatellite = {
+                                    id: satellite.id,
+                                    title: satellite.attributes.name,
+                                    previewImage: previewImage,
+                                    slug: satellite.attributes.name,
+                                    isProject: false,
+                                };
+                                return (
+                                    <RelatedProjectsAndSatellites
+                                        project={satelliteObject}
+                                        key={satellite.id}
+                                    />
+                                );
+                            },
+                        )}
+                    </div>
+                </>
             )}
-            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
-                {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
-                    (satellite: any) => {
-                        const previewImage =
-                            satellite?.attributes?.previewImage?.data
-                                ?.attributes?.url ?? undefined;
-                        const satelliteObject: ProjectOrSatellite = {
-                            id: satellite.id,
-                            title: satellite.attributes.name,
-                            previewImage: previewImage,
-                            slug: satellite.attributes.name,
-                            isProject: false,
-                        };
-                        return (
-                            <RelatedProjectsAndSatellites
-                                project={satelliteObject}
-                                key={satellite.id}
-                            />
-                        );
-                    },
-                )}
-            </div>
         </div>
     );
 }

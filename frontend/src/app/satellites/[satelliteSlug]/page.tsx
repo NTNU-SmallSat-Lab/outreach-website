@@ -77,10 +77,10 @@ export default async function SatelliteInfoPage({
             <div className="mt-8 flex w-full flex-col items-center">
                 {satelliteInfo.relatedProjects?.length != 0 ? (
                     <>
-                        <h1 className="prose prose-invert mb-1 lg:prose-xl">
-                            Related Projects
-                        </h1>
-                        <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                        <div className="prose prose-invert mb-1 lg:prose-xl">
+                            <h2>Related Projects</h2>
+                        </div>
+                        <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
                             {satelliteInfo.relatedProjects?.map(
                                 (project: ProjectOrSatellite) => (
                                     <RelatedProjectsAndSatellites
