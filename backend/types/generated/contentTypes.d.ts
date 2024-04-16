@@ -811,7 +811,7 @@ export interface ApiArticleArticle extends Schema.CollectionType {
       'manyToOne',
       'api::author.author'
     >;
-    Tag: Attribute.Enumeration<['Featured', 'News', 'Updates']>;
+    Tag: Attribute.Enumeration<['Satellites', 'Projects', 'General']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

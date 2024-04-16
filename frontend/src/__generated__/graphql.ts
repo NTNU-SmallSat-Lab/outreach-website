@@ -217,9 +217,9 @@ export type DateTimeFilterInput = {
 };
 
 export enum Enum_Article_Tag {
-  Featured = 'Featured',
-  News = 'News',
-  Updates = 'Updates'
+  General = 'General',
+  Projects = 'Projects',
+  Satellites = 'Satellites'
 }
 
 export type FeaturedImage = {
