@@ -70,7 +70,7 @@ export default async function SatelliteInfoPage({
             {/* Related projects */}
             <div className="mt-8 flex w-full flex-col items-center">
                 {satelliteInfo.relatedProjects?.length != 0 ? (
-                    <h1 className="text-xl font-bold">Related Projects</h1>
+                    <h1 className="mb-1 prose prose-invert lg:prose-xl">Related Projects</h1>
                 ) : null}
 
                 <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
