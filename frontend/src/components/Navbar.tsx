@@ -154,7 +154,7 @@ export default function Navbar() {
                             href="/blog"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <DrawerClose>
+                            <DrawerClose asChild>
                                 <Button variant={"ghost"} className="text-left">
                                     <MingcuteEdit4Line />
                                     Blog
@@ -177,7 +177,7 @@ export default function Navbar() {
                             href="/satellites"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <DrawerClose>
+                            <DrawerClose asChild>
                                 <Button variant={"ghost"} className="text-left">
                                     <SolarSatelliteLineDuotone />
                                     Satellites
