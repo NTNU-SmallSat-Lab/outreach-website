@@ -45,6 +45,9 @@
     "missionStatus": {
       "type": "string"
     },
+    "launchDate": {
+      "type": "datetime"
+    },
     "slug": {
       "type": "uid",
       "targetField": "name",

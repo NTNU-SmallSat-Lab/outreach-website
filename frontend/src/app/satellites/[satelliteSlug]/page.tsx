@@ -5,8 +5,10 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import Map2d from "@/components/2dmap/Map2d";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import LaunchDateCountDown from "@/components/ui/launchDateCountDown";
 
 export interface SatelliteInfo {
+    launchDate: string | undefined;
     name: string;
     content: BlocksContent;
     relatedProjects?: ProjectOrSatellite[];
@@ -35,6 +37,11 @@ export default async function SatelliteInfoPage({
     return (
         <>
             <div className="flex flex-col items-center ">
+                <div className="mt-6 w-full">
+                    <LaunchDateCountDown
+                        launchDateString={satelliteInfo.launchDate}
+                    ></LaunchDateCountDown>
+                </div>
                 <h1 className="mb-2 self-start text-4xl font-bold">
                     {satelliteInfo.name}
                 </h1>
@@ -57,7 +64,7 @@ export default async function SatelliteInfoPage({
                     {/* Image container */}
                     <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
                         <div className="flex h-full w-full items-center justify-center bg-black">
-                            <h1>Satellite Image</h1>
+                            <h1>Satellite image</h1>
                         </div>
                     </div>
                 </div>
