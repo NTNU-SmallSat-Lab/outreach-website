@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "featured_images",
+  "info": {
+    "singularName": "featured-image",
+    "pluralName": "featured-images",
+    "displayName": "featuredImage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "featuredImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "satellite": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::satellite.satellite"
+    }
+  }
+}

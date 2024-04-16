@@ -3,7 +3,7 @@ See the following docs for more info about strapi deployment:
 
 ### Setting up ntnu halfadministrated server
 
-###### Firewall
+#### Firewall
 
 We have created firewall rules to access website and api.
 
@@ -24,13 +24,13 @@ paste the lines
 
 ```
 
-###### PKGSYNC
+#### PKGSYNC
 
 Make sure docker compose is installed on the server.
 
 Can be checked by running `docker compose version`
 
-###### Github Runner
+#### Github Runner
 
 Setup a self hosted GitHub runner for the repository.
 
@@ -59,11 +59,7 @@ No need to run it manually. We will install it as a service running as the user 
 
 `sudo chown outreach-github-runner /home/outreach-github-runner/ -R`
 
-##### Logs and errors
-
-`sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
-
-###### Secrets and variables
+#### Secrets and variables
 
 The secrets should all be filled in and generated using `openssl rand -base64 32`
 
@@ -78,7 +74,26 @@ The GitHub repo should define the following secrets:
 And the following variables:
 
 -   DATABASE_CLIENT=sqlite
--   DATABASE_FILENAME=/var/data/strapi.db
+-   DATABASE_FILENAME=/var/data/outreach-strapi.db
 -   HOST=0.0.0.0
--   HOST_URL=http://backend-app:1337
+-   STRAPI_URL=http://backend-app:1337
 -   PORT=1337
+
+
+#### Logs and errors
+
+##### Action runner
+If the action runner is having issues, try running this command to check out its logs.
+
+`sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
+
+If the command does not work, try reading this [Monitoring and troubleshooting self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/monitoring-and-troubleshooting-self-hosted-runners).  
+Keep in mind, the name might be something else than what is shown in the command.
+
+##### Docker
+
+If there are any issues with docker. You can run the following commands to see logs:  
+- `sudo docker ps -a` to see all running conatiners.
+- `sudo docker logs <hash>`, with the hash of the container (you usually only need to type in the first few letters), to see the logs printed to console.   
+
+Log `outreach:backend` for strapi, and `outreach:frontend` for next.js.
