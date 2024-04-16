@@ -11,7 +11,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     ({ title, description, imageUrl, className, children, ...props }, ref) => (
         <section ref={ref} {...props} className={`w-full ${className}`}>
             <div className="container px-4 md:px-6">
-                <h1>Our Team</h1>
+                <h1>{title}</h1>
                 <div className="flex flex-col items-center space-y-4 text-center">
                     <Image
                         alt={title}

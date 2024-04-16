@@ -915,6 +915,7 @@ export interface ApiHeroHero extends Schema.SingleType {
   attributes: {
     image: Attribute.Media & Attribute.Required;
     text: Attribute.Text;
+    title: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
