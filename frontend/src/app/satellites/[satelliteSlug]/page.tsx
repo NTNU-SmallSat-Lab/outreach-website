@@ -76,21 +76,23 @@ export default async function SatelliteInfoPage({
             {/* Related projects */}
             <div className="mt-8 flex w-full flex-col items-center">
                 {satelliteInfo.relatedProjects?.length != 0 ? (
-                    <h1 className="mb-1 prose prose-invert lg:prose-xl">Related Projects</h1>
+                    <>
+                        <h1 className="prose prose-invert mb-1 lg:prose-xl">
+                            Related Projects
+                        </h1>
+                        <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                            {satelliteInfo.relatedProjects?.map(
+                                (project: ProjectOrSatellite) => (
+                                    <RelatedProjectsAndSatellites
+                                        project={project}
+                                        key={project.id}
+                                    />
+                                ),
+                            )}
+                        </div>
+                    </>
                 ) : null}
-
-                    <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                        {satelliteInfo.relatedProjects?.map(
-                            (project: ProjectOrSatellite) => (
-                                <RelatedProjectsAndSatellites
-                                    project={project}
-                                    key={project.id}
-                                />
-                            ),
-                        )}
-                    </div>
-                </div>
-            ) : null}
+            </div>
         </>
     );
 }
