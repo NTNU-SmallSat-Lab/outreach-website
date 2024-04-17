@@ -82,7 +82,8 @@ export default async function fetchSatelliteInfo({
             graphqlData?.data?.satellites?.data[0]?.attributes
                 ?.catalogNumberNORAD ?? undefined,
         launchDate:
-            graphqlData.data.satellites?.data[0]?.attributes?.launchDate ?? undefined,
+            graphqlData.data.satellites?.data[0]?.attributes?.launchDate ??
+            undefined,
     };
 
     return satelliteInfo;
