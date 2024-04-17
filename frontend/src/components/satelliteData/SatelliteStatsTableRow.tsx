@@ -46,10 +46,10 @@ export default function SatelliteStatsTableRow({
         return (
             <tr>
                 <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
+                <td className="px-6">Loading...</td>
+                <td className="px-6">Loading...</td>
+                <td className="px-6">Loading...</td>
+                <td className="px-6">Loading...</td>
             </tr>
         );
     }
@@ -61,19 +61,30 @@ export default function SatelliteStatsTableRow({
     return (
         <TableRow
             onClick={handleClick}
-            className="hover: cursor-pointer hover:bg-white hover:bg-white hover:text-black"
+            className="cursor-pointer hover:bg-white hover:text-black"
         >
-            <TableCell className="px-6 py-4">{satName}</TableCell>
-            <TableCell className="px-6 py-4">
+            <TableCell className="px-6 py-4" style={{ width: "20%" }}>
+                {satName}
+            </TableCell>
+            <TableCell className="px-6 py-4" style={{ width: "20%" }}>
                 {satelliteInfo.velocity + " km/s"}
             </TableCell>
-            <TableCell className="px-6 py-4">
+            <TableCell
+                className="hidden px-6 py-4 lg:table-cell"
+                style={{ width: "20%" }}
+            >
                 {satelliteInfo.altitude + " km"}
             </TableCell>
-            <TableCell className="px-6 py-4">
+            <TableCell
+                className="hidden px-6 py-4 md:table-cell"
+                style={{ width: "20%" }}
+            >
                 {satelliteInfo.latitudeDeg + "° N"}
             </TableCell>
-            <TableCell className="px-6 py-4">
+            <TableCell
+                className="hidden px-6 py-4 md:table-cell"
+                style={{ width: "20%" }}
+            >
                 {satelliteInfo.longitudeDeg + "° E"}
             </TableCell>
         </TableRow>
