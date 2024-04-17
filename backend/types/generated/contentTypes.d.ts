@@ -978,7 +978,6 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
-    celestrakURL: Attribute.String & Attribute.Unique;
     catalogNumberNORAD: Attribute.String & Attribute.Unique;
     content: Attribute.Blocks;
     previewImage: Attribute.Media;
@@ -991,6 +990,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     launchDate: Attribute.DateTime;
     slug: Attribute.UID<'api::satellite.satellite', 'name'> &
       Attribute.Required;
+    massKg: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
