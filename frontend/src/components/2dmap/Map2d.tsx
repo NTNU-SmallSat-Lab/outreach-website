@@ -106,9 +106,9 @@ export default function Map2d({ satName }: { satName: string }) {
                 <div className="flex flex-col items-end">
                     <input
                         type="range"
-                        min="-120"
-                        max="120"
-                        step="10"
+                        min="0"
+                        max="1440"
+                        step="60"
                         value={inputValue}
                         onChange={handleSliderChange}
                         className="rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
