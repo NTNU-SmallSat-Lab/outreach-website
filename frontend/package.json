@@ -14,7 +14,7 @@
     "test": "npx playwright test",
     "testui": "npx playwright test --ui",
     "codegen": "npx playwright codegen",
-    "test-ct": "playwright test -c playwright-ct.config.ts"
+    "test-ct": "npx playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.9.0-alpha.5",
