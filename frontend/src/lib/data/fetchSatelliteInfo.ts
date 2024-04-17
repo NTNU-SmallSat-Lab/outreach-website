@@ -11,10 +11,10 @@ const GET_SATELLITE_INFO =
         data {
             id
             attributes {
-                celestrakURL
                 catalogNumberNORAD
                 content
                 name
+                massKg
               projects {
                 data {
                   attributes {
