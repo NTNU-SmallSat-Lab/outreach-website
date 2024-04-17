@@ -19,6 +19,7 @@ export interface SatelliteInfo {
     relatedProjects?: ProjectOrSatellite[];
     noradId: string | undefined;
     missionStatus: string | undefined;
+    massKg: number | undefined;
 }
 
 export interface ProjectOrSatellite {
@@ -65,12 +66,14 @@ export default async function SatelliteInfoPage({
                         {/* Stats Container */}
                         <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
                             <div className="grow basis-0 border-b border-gray-600 bg-black p-5">
-                                <h1 className="text-xl font-bold tracking-wide">
-                                    {satelliteInfo.name}
-                                </h1>
+                                {satelliteInfo.noradId
+                                    ? "NORAD ID: " + satelliteInfo.noradId
+                                    : null}
                                 <p className="text-gray-400">
-                                    {satelliteInfo.noradId
-                                        ? "NORAD ID: " + satelliteInfo.noradId
+                                    {satelliteInfo.massKg
+                                        ? "Mass: " +
+                                          satelliteInfo.massKg +
+                                          " kg"
                                         : null}
                                 </p>
                             </div>

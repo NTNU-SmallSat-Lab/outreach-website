@@ -87,6 +87,9 @@ export default async function fetchSatelliteInfo({
         missionStatus:
             graphqlData?.data?.satellites?.data[0]?.attributes?.missionStatus ??
             undefined,
+        massKg:
+            graphqlData?.data?.satellites?.data[0]?.attributes?.massKg ??
+            undefined,
     };
 
     return satelliteInfo;
