@@ -4,7 +4,7 @@ test.describe("Blogs pages test", () => {
     test.use({
         viewport: { width: 390, height: 844 },
     });
-    test("blogsOverviewPageTest", async ({ page } ) => {
+    test("blogsOverviewPageTest", async ({ page }) => {
         await page.goto("/");
         await page.getByRole("navigation").getByRole("button").click();
         await page.getByRole("button", { name: "Blog" }).click();
@@ -24,6 +24,6 @@ test.describe("Blogs pages test", () => {
         await expect(page).toHaveURL("/blog");
         await page.getByTestId("blogCardLink").first().click();
         await expect(page).toHaveURL(/\/blog\/.+$/);
-        await expect(page.getByTestId('blockParagraph').first()).toBeVisible();
-    })
-})
+        await expect(page.getByTestId("blockParagraph").first()).toBeVisible();
+    });
+});

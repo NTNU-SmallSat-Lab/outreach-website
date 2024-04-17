@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Blogs pages test", () => {
-    test("blogsOverviewPageTest", async ({ page } ) => {
+    test("blogsOverviewPageTest", async ({ page }) => {
         await page.goto("/");
         await page.getByRole("button", { name: "Blog" }).click();
         await expect(page).toHaveURL("/blog");
@@ -19,6 +19,6 @@ test.describe("Blogs pages test", () => {
         await expect(page).toHaveURL("/blog");
         await page.getByTestId("blogCardLink").first().click();
         await expect(page).toHaveURL(/\/blog\/.+$/);
-        await expect(page.getByTestId('blockParagraph').first()).toBeVisible();
-    })
-})
+        await expect(page.getByTestId("blockParagraph").first()).toBeVisible();
+    });
+});
