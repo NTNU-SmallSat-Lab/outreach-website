@@ -49,7 +49,7 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
         return () => clearInterval(intervalId);
     }, [launchDateString]);
 
-    if (hasLaunched == undefined) {
+    if (hasLaunched == undefined || launchDateString == undefined) {
         return <></>;
     }
     return (
