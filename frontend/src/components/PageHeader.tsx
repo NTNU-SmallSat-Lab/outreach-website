@@ -1,11 +1,22 @@
 import React from "react";
 
 function PageHeader({ children }: { children?: React.ReactNode }) {
-    return <h1 className="text-center text-4xl font-bold">{children}</h1>;
+    return (
+        <h1 className="text-center text-4xl font-bold" data-testid="pageHeader">
+            {children}
+        </h1>
+    );
 }
 
 function PageSubtitle({ children }: { children?: React.ReactNode }) {
-    return <h2 className="text-sm text-muted-foreground">{children}</h2>;
+    return (
+        <h2
+            className="text-sm text-muted-foreground"
+            data-testid="pageSubtitle"
+        >
+            {children}
+        </h2>
+    );
 }
 
 // Component that wraps both the header and the subtitle to be used together

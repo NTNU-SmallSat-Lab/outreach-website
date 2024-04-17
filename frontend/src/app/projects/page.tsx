@@ -63,7 +63,9 @@ export default async function ProjectsPage() {
         <div className="mx-auto w-full max-w-6xl grow bg-opacity-50 px-4 py-8 sm:px-8 md:px-10">
             <div className="flex flex-col items-center justify-center">
                 <PageHeaderAndSubtitle>
-                    <PageHeader>Our Projects</PageHeader>
+                    <PageHeader data-testid="projectHeading">
+                        Our Projects
+                    </PageHeader>
                     <PageSubtitle>
                         Information about our various projects are shown here.
                     </PageSubtitle>
@@ -84,6 +86,7 @@ export default async function ProjectsPage() {
                             className="h-full sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
+                            data-testid="projectCard"
                         >
                             <Card className="h-full w-full hover:border-blue-500">
                                 <CardHeader></CardHeader>
