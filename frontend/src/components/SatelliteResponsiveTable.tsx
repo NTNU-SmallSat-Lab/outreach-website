@@ -66,6 +66,7 @@ export default function SatelliteResponsiveTable({
                                       )
                                   }
                                   className="cursor-pointer hover:bg-white hover:text-black"
+                                  key={satellite.attributes.catalogNumberNORAD}
                               >
                                   <TableCell>
                                       {satellite.attributes.name}
