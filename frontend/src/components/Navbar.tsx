@@ -134,12 +134,13 @@ export default function Navbar({ satData }: NavbarProps) {
         // Set the satellite data in the store
         setSatellites(satData);
         satData.forEach((sat) => {
+            if (!sat.data) return;
             setSatelliteData(sat.name, sat.data);
         });
 
         console.log("Initial satData fetch and set:");
         console.log(satData);
-        console.log("-------------------------")
+        console.log("-------------------------");
     }, [satData]);
 
     const pathname = usePathname();
