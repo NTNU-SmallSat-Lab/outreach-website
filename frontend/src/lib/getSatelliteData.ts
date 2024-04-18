@@ -66,7 +66,7 @@ async function fetchSatelliteDataById(satId: string): Promise<any> {
     );
     if (!response.ok) {
         throw new Error(
-            `Failed to fetch satellite data: ${response.statusText}`,
+            `Failed to fetch satellite data from celestrak: ${response.statusText}`,
         );
     }
     const data = await response.text();

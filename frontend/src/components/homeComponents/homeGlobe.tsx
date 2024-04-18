@@ -146,7 +146,8 @@ export default function SatelliteGlobe() {
             {
                 lat: Number(targetPosition.latitudeDeg),
                 lng: Number(targetPosition.longitudeDeg),
-                altitude: 2.5,
+                altitude:
+                    Number(targetPosition.altitude) / EARTH_RADIUS_KM + 2.5,
             },
             1700,
         );

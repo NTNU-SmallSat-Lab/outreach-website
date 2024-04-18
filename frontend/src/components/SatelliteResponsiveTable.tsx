@@ -11,72 +11,61 @@ import {
     TableHead,
     TableHeader,
     TableRow,
+    TableCell,
 } from "@/components/shadcn/table";
-
-interface columnInterface {
-    [key: string]: any;
-    name: string;
-    attributeName: string;
-    classNames: string;
-}
 
 export default function SatelliteResponsiveTable({
     satellites,
-    columns,
-    title,
-    description,
+    inOrbit,
 }: {
     satellites: any;
-    columns: columnInterface[] | undefined;
-    title: string,
-    description: string
+    inOrbit: boolean;
 }) {
-
-    console.log(satellites);
-    console.log(columns);
-    
-    
     return (
         <div className="flex w-full flex-col items-center justify-center">
             <PageHeaderAndSubtitle>
-                <PageHeader>{title}</PageHeader>
-                <PageSubtitle>
-                    {description}
-                </PageSubtitle>
+                <PageHeader>
+                    {inOrbit
+                        ? "Satellites in orbit"
+                        : "Satellites not in orbit"}
+                </PageHeader>
+                <PageSubtitle>description</PageSubtitle>
             </PageHeaderAndSubtitle>
             <Table className="table-auto border-collapse rounded-md border-b border-white shadow">
                 <TableHeader>
                     <TableRow className="border-y border-white px-3 py-2 text-left text-white">
-                        <TableHead className="px-6">
-                            Name
-                        </TableHead>
-                        {columns ? columns.map((column) => (
-                            <TableHead
-                                className={column.classNames}
-                                key={column.id}
-                            >
-                                {column.name}
-                            </TableHead>
-                        )): <></>}
+                        <TableHead className="px-6">Name</TableHead>
+                        {inOrbit ? (
+                            <>
+                                <TableHead className="">Velocity</TableHead>
+                                <TableHead className="">Altitude</TableHead>
+                                <TableHead className="">Latitude</TableHead>
+                                <TableHead className="">Longitude</TableHead>
+                            </>
+                        ) : (
+                            <TableHead>Mission Status</TableHead>
+                        )}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {satellites.map((satellite: any) => {
-                        console.log("-------------------------------------");
-                        console.log(satellites);
-                        console.log("-------------------------------------");
-
-                        let satelliteName = satellite?.attributes?.name ?? "";
-                        
-                        return (
-                            <SatelliteStatsTableRow
-                                key={satellite.id}
-                                satName={satelliteName}
-                                slug={satellite?.attributes?.slug}
-                                columns={columns}
-                            />
-                        );
-                    })}
+                    {inOrbit
+                        ? satellites.map((satellite: any) => (
+                              <SatelliteStatsTableRow
+                                  key={satellite.attributes.catalogNumberNORAD}
+                                  satName={satellite.attributes.name}
+                                  slug={satellite.attributes.slug}
+                              />
+                          ))
+                        : satellites.map((satellite: any) => (
+                              <TableRow>
+                                  <TableCell>
+                                      {satellite.attributes.name}
+                                  </TableCell>
+                                  <TableCell>
+                                      {satellite.attributes.missionStatus}
+                                  </TableCell>
+                              </TableRow>
+                          ))}
                 </TableBody>
             </Table>
         </div>
