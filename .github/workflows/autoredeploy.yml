@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Stop and remove containers and images, using docker compose down
-        run: docker-compose down
+        run: docker-compose down --rmi "all"
       - name: Create .env files
         run: |
           # Create .env with all variables except HOST_URL Backend
