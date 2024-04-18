@@ -13,6 +13,7 @@ import {
     TableRow,
     TableCell,
 } from "@/components/shadcn/table";
+import { useRouter } from "next/navigation";
 
 export default function SatelliteResponsiveTable({
     satellites,
@@ -21,6 +22,7 @@ export default function SatelliteResponsiveTable({
     satellites: any;
     inOrbit: boolean;
 }) {
+    const router = useRouter();
     return (
         <div className="flex w-full flex-col items-center justify-center">
             <PageHeaderAndSubtitle>
@@ -59,7 +61,9 @@ export default function SatelliteResponsiveTable({
                         : satellites.map((satellite: any) => (
                               <TableRow
                                   onClick={() =>
-                                      (window.location.href = `/satellites/${satellite.attributes.slug}`)
+                                      router.push(
+                                          `/satellites/${satellite.attributes.slug}`,
+                                      )
                                   }
                                   className="cursor-pointer hover:bg-white hover:text-black"
                               >

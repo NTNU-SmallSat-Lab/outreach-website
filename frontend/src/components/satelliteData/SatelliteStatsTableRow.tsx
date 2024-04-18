@@ -14,7 +14,7 @@ export default function SatelliteStatsTableRow({
     satName: string;
     slug: string;
 }) {
-    const { satelliteData } = useSatelliteStore();
+    const { satelliteData, setSelectedSatellite } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -49,9 +49,14 @@ export default function SatelliteStatsTableRow({
         );
     }
 
+    const handleClick = () => {
+        setSelectedSatellite(satName);
+        router.push(`/satellites/${slug}`);
+    };
+
     return (
         <TableRow
-            onClick={() => (window.location.href = `/satellites/${slug}`)}
+            onClick={handleClick}
             className="cursor-pointer hover:bg-white hover:text-black"
         >
             <TableCell className="w-1/5 px-6">{satName}</TableCell>
