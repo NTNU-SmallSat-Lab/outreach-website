@@ -6,6 +6,7 @@ import {
     Drawer,
     DrawerContent,
     DrawerTrigger,
+    DrawerClose,
 } from "@/components/shadcn/drawer";
 import Image from "next/image";
 
@@ -126,16 +127,20 @@ export default function Navbar() {
         return "ghost";
     };
 
+    const handleHomeClick = () => {
+        window.location.href = "/";
+    };
+
     return (
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div>
                 <Link href="/">
                     <Image
                         width={256}
-                        height={0}
+                        height={70} // Adjusted height
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
-                        className="w-64 min-w-64"
+                        onClick={handleHomeClick}
                     />
                 </Link>
             </div>
@@ -149,29 +154,35 @@ export default function Navbar() {
                             href="/blog"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <Button variant={"ghost"} className="text-left">
-                                <MingcuteEdit4Line />
-                                Blog
-                            </Button>
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <MingcuteEdit4Line />
+                                    Blog
+                                </Button>
+                            </DrawerClose>
                         </Link>
 
                         <Link
                             href="/projects"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <Button variant={"ghost"} className="text-left">
-                                <CodiconGithubProject />
-                                Projects
-                            </Button>
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <CodiconGithubProject />
+                                    Projects
+                                </Button>
+                            </DrawerClose>
                         </Link>
                         <Link
                             href="/satellites"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <Button variant={"ghost"} className="text-left">
-                                <SolarSatelliteLineDuotone />
-                                Satellites
-                            </Button>
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <SolarSatelliteLineDuotone />
+                                    Satellites
+                                </Button>
+                            </DrawerClose>
                         </Link>
                     </div>
                 </DrawerContent>

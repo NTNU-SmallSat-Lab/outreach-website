@@ -7,34 +7,35 @@ import { getClient } from "../ApolloClient";
 
 const GET_SATELLITE_INFO =
     gql(`query GET_SATELLITE_INFO($filters: SatelliteFiltersInput) {
-        satellites(filters: $filters) {
-          data {
-              id
-              attributes {
-                  celestrakURL
-                  catalogNumberNORAD
-                  content
-                  name
-                projects {
-                  data {
-                    attributes {
-                      title
-                      previewImage {
-                        data {
-                          attributes {
-                            url
-                          }
+      satellites(filters: $filters) {
+        data {
+            id
+            attributes {
+                celestrakURL
+                catalogNumberNORAD
+                content
+                name
+              projects {
+                data {
+                  attributes {
+                    title
+                    previewImage {
+                      data {
+                        attributes {
+                          url
                         }
                       }
-                      slug
                     }
-                    id
+                    slug
                   }
+                  id
                 }
               }
-          }
+              launchDate
+            }
         }
       }
+    }
   `);
 
 export default async function fetchSatelliteInfo({
@@ -77,6 +78,12 @@ export default async function fetchSatelliteInfo({
         content:
             graphqlData?.data?.satellites?.data[0]?.attributes?.content ?? "",
         relatedProjects: projects ?? [],
+        noradId:
+            graphqlData?.data?.satellites?.data[0]?.attributes
+                ?.catalogNumberNORAD ?? undefined,
+        launchDate:
+            graphqlData.data.satellites?.data[0]?.attributes?.launchDate ??
+            undefined,
     };
 
     return satelliteInfo;

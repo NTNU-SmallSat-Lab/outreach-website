@@ -19,6 +19,12 @@ paste the lines
 # Frontend (next.js node) Open TCP port 3000 for the world:
 -I DOCKER-USER -p tcp -m conntrack --ctorigdstport 3000 -j ACCEPT
 
+# Open port 80 for HTTP
+-I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+
+# Open port 443 for HTTPS
+-I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+
 # Backend (strapi) Open TCP port 1337 for world:
 -I DOCKER-USER -p tcp -m conntrack --ctorigdstport 1337 -j ACCEPT
 
@@ -79,10 +85,10 @@ And the following variables:
 -   STRAPI_URL=http://backend-app:1337
 -   PORT=1337
 
-
 #### Logs and errors
 
 ##### Action runner
+
 If the action runner is having issues, try running this command to check out its logs.
 
 `sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
@@ -92,8 +98,9 @@ Keep in mind, the name might be something else than what is shown in the command
 
 ##### Docker
 
-If there are any issues with docker. You can run the following commands to see logs:  
-- `sudo docker ps -a` to see all running conatiners.
-- `sudo docker logs <hash>`, with the hash of the container (you usually only need to type in the first few letters), to see the logs printed to console.   
+If there are any issues with docker. You can run the following commands to see logs:
+
+-   `sudo docker ps -a` to see all running conatiners.
+-   `sudo docker logs <hash>`, with the hash of the container (you usually only need to type in the first few letters), to see the logs printed to console.
 
 Log `outreach:backend` for strapi, and `outreach:frontend` for next.js.
