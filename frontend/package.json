@@ -13,7 +13,8 @@
         "watchTypes": " graphql-codegen -w",
         "test": "npx playwright test",
         "testui": "npx playwright test --ui",
-        "codegen": "npx playwright codegen"
+        "codegen": "npx playwright codegen",
+        "test-ct": "playwright test -c playwright-ct.config.ts"
     },
     "dependencies": {
         "@apollo/client": "^3.9.0-alpha.5",
@@ -77,6 +78,7 @@
         "@graphql-typed-document-node/core": "^3.2.0",
         "@iconify-icon/react": "^2.0.1",
         "@iconify/react": "^4.1.1",
+        "@playwright/experimental-ct-react": "^1.43.1",
         "@playwright/test": "^1.43.1",
         "@tailwindcss/typography": "^0.5.10",
         "@types/chart.js": "^2.9.41",
