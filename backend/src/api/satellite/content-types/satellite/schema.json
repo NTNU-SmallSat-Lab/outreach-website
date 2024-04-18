@@ -17,10 +17,6 @@
       "required": true,
       "unique": true
     },
-    "celestrakURL": {
-      "type": "string",
-      "unique": true
-    },
     "catalogNumberNORAD": {
       "type": "string",
       "unique": true
@@ -52,6 +48,9 @@
       "type": "uid",
       "targetField": "name",
       "required": true
+    },
+    "massKg": {
+      "type": "float"
     }
   }
 }

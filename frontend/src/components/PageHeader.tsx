@@ -2,7 +2,7 @@ import React from "react";
 
 function PageHeader({ children }: { children?: React.ReactNode }) {
     return (
-        <h1 className="text-center text-4xl font-bold" data-testid="pageHeader">
+        <h1 className="text-center text-5xl font-bold" data-testid="pageHeader">
             {children}
         </h1>
     );
@@ -10,10 +10,7 @@ function PageHeader({ children }: { children?: React.ReactNode }) {
 
 function PageSubtitle({ children }: { children?: React.ReactNode }) {
     return (
-        <h2
-            className="text-sm text-muted-foreground"
-            data-testid="pageSubtitle"
-        >
+        <h2 className="text-gray-400" data-testid="pageSubtitle">
             {children}
         </h2>
     );

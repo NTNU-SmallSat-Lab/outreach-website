@@ -8,7 +8,6 @@ query GET_SATELLITES {
       data {
         id
         attributes {
-          celestrakURL
           catalogNumberNORAD
           name
           previewImage {
@@ -20,6 +19,7 @@ query GET_SATELLITES {
           }
           missionStatus
           slug
+          massKg
         }
       }
     }
