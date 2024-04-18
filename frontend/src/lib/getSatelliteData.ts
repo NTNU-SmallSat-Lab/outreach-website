@@ -70,7 +70,6 @@ async function fetchSatelliteDataById(satId: string): Promise<any> {
         );
     }
     const data = await response.text();
-    console.log(mapTleToSatData(data));
     return mapTleToSatData(data);
 }
 
@@ -111,13 +110,11 @@ export async function satLoaderById(satId: string): Promise<SatelliteData> {
     ) {
         // Fetch the data and update the cache
         const newData = await fetchSatelliteDataById(satId);
-        console.log(newData);
 
         cachedData = {
             data: { ...cachedData.data, [satId]: newData[0] },
             timestamp: new Date(),
         };
-        console.log(cachedData);
     }
 
     return cachedData.data[satId];

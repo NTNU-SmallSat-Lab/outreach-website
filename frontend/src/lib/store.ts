@@ -3,6 +3,12 @@ import { create } from "zustand";
 import type { SatelliteData } from "@/lib/getSatelliteData";
 import { satLoaderById } from "@/lib/getSatelliteData";
 
+// Satellite entry for setSatellites
+interface SatelliteEntry {
+    name: string;
+    id: string;
+}
+
 // Define the state and actions separately
 interface SatelliteState {
     satelliteData: Record<string, SatelliteData>;
@@ -15,16 +21,17 @@ interface SatelliteActions {
     setSatelliteData: (satName: string, data: SatelliteData) => void;
     fetchAndSetSatelliteData: (satName: string) => Promise<void>;
     setSelectedSatellite: (satName: string) => void;
+    setSatellites: (satellites: SatelliteEntry[]) => void;
 }
 
 type SatelliteStore = SatelliteState & SatelliteActions;
 
-// Create satellite store. Update selectedSatellite if you want a different default
+// Create satellite store
 export const useSatelliteStore = create<SatelliteStore>((set, get) => ({
     satelliteData: {},
-    satelliteNames: ["HYPSO-1", "VANGUARD 1"],
-    selectedSatellite: "HYPSO-1",
-    satelliteNameToId: { "HYPSO-1": "51053", "VANGUARD 1": "00005" },
+    satelliteNames: [],
+    satelliteNameToId: {},
+    selectedSatellite: "",
 
     fetchAndSetSatelliteData: async (satName) => {
         const satId = get().satelliteNameToId[satName];
@@ -43,6 +50,20 @@ export const useSatelliteStore = create<SatelliteStore>((set, get) => ({
     setSelectedSatellite: (satName) => {
         set(() => ({
             selectedSatellite: satName,
+        }));
+    },
+
+    setSatellites: (satellites) => {
+        const names = satellites.map((sat) => sat.name);
+        const nameToId = satellites.reduce<Record<string, string>>((acc, sat) => {
+            acc[sat.name] = sat.id;
+            return acc;
+        }, {});
+
+        set(() => ({
+            satelliteNames: names,
+            satelliteNameToId: nameToId,
+            selectedSatellite: names[0] || "",
         }));
     },
 }));

@@ -1,4 +1,5 @@
 "use client";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@shadcn/button";
@@ -9,6 +10,7 @@ import {
     DrawerClose,
 } from "@/components/shadcn/drawer";
 import Image from "next/image";
+import { useSatelliteStore } from "@/lib/store";
 
 import type { SVGProps } from "react";
 
@@ -118,7 +120,26 @@ export function CodiconGithubProject(props: SVGProps<SVGSVGElement>) {
     );
 }
 
-export default function Navbar() {
+interface NavbarProps {
+    satData: any[];
+}
+
+export default function Navbar({ satData }: NavbarProps) {
+    const setSatellites = useSatelliteStore((state) => state.setSatellites);
+    const setSatelliteData = useSatelliteStore(
+        (state) => state.setSatelliteData,
+    );
+
+    useEffect(() => {
+        // Set the satellite data in the store
+        setSatellites(satData);
+        satData.forEach((sat) => {
+            setSatelliteData(sat.name, sat.data);
+        });
+
+        console.log(satData);
+    }, [satData]);
+
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {
         if (path === pathname) {
