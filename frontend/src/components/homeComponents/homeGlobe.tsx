@@ -19,8 +19,6 @@ export default function SatelliteGlobe() {
             setSelectedSatellite: state.setSelectedSatellite,
         }));
 
-    console.log(satelliteData);
-
     // Initialize the globe
     useEffect(() => {
         if (chart.current && !globeRef.current) {

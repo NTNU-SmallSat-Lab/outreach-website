@@ -137,10 +137,6 @@ export default function Navbar({ satData }: NavbarProps) {
             if (!sat.data) return;
             setSatelliteData(sat.name, sat.data);
         });
-
-        console.log("Initial satData fetch and set:");
-        console.log(satData);
-        console.log("-------------------------");
     }, [satData]);
 
     const pathname = usePathname();
@@ -215,18 +211,33 @@ export default function Navbar({ satData }: NavbarProps) {
             <div className="hidden flex-1 justify-end md:flex">
                 <div className="flex items-center gap-8">
                     <Link href="/blog">
-                        <Button variant={getButtonVariant("/blog")}>
+                        <Button
+                            variant={getButtonVariant("/blog")}
+                            onClick={() => {
+                                window.location.href = "/blog";
+                            }}
+                        >
                             Blog
                         </Button>
                     </Link>
 
                     <Link href="/projects">
-                        <Button variant={getButtonVariant("/projects")}>
+                        <Button
+                            variant={getButtonVariant("/projects")}
+                            onClick={() => {
+                                window.location.href = "/projects";
+                            }}
+                        >
                             Projects
                         </Button>
                     </Link>
                     <Link href="/satellites">
-                        <Button variant={getButtonVariant("/satellites")}>
+                        <Button
+                            variant={getButtonVariant("/satellites")}
+                            onClick={() => {
+                                window.location.href = "/satellites";
+                            }}
+                        >
                             Satellites
                         </Button>
                     </Link>
