@@ -32,11 +32,51 @@ export default async function Satellites() {
             query: GET_SATELLITES,
         });
 
+       
+        
+
+        const satellitesWithNoradID = [
+            { name: "Speed", classNames: "px-6", attributeName: "velocity" },
+            {
+                name: "Altitude",
+                classNames: " hidden px-6 lg:table-cell",
+                attributeName: "altitude",
+            },
+            {
+                name: "Latitude",
+                classNames: "hidden px-6 md:table-cell",
+                attributeName: "latitudeDeg",
+            },
+            {
+                name: "Longitude",
+                classNames: "hidden px-6 md:table-cell ",
+                attributeName: "longitudeDeg",
+            },
+        ];
+
+
         return (
             <>
                 <SatelliteResponsiveTable
-                    satellites={graphqlData.data.satellites?.data}
+                    satellites={graphqlData.data.satellites?.data.filter((data) => data.attributes?.catalogNumberNORAD !== null)}
+                    columns={satellitesWithNoradID}
+                    title="Satellites"
+                    description="Here are the satellites we have worked on. Click on them to
+                    see more details."
                 ></SatelliteResponsiveTable>
+
+
+
+<SatelliteResponsiveTable
+                    satellites={graphqlData.data.satellites?.data.filter((data) => data.attributes?.catalogNumberNORAD == null)}
+                    columns={undefined}
+                    title="Satellites not in orbit"
+                    description="Here are satellites that are not in orbit."
+                ></SatelliteResponsiveTable>
+
+
+
+
             </>
         );
     } catch (error) {

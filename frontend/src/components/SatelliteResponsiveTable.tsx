@@ -13,40 +13,67 @@ import {
     TableRow,
 } from "@/components/shadcn/table";
 
-export default function SatelliteResponsiveTable({ satellites }: any) {
+interface columnInterface {
+    [key: string]: any;
+    name: string;
+    attributeName: string;
+    classNames: string;
+}
+
+export default function SatelliteResponsiveTable({
+    satellites,
+    columns,
+    title,
+    description,
+}: {
+    satellites: any;
+    columns: columnInterface[] | undefined;
+    title: string,
+    description: string
+}) {
+
+    console.log(satellites);
+    console.log(columns);
+    
+    
     return (
         <div className="flex w-full flex-col items-center justify-center">
             <PageHeaderAndSubtitle>
-                <PageHeader>Satellites</PageHeader>
+                <PageHeader>{title}</PageHeader>
                 <PageSubtitle>
-                    Here are the satellites we have worked on. Click on them to
-                    see more details.
+                    {description}
                 </PageSubtitle>
             </PageHeaderAndSubtitle>
             <Table className="table-auto border-collapse rounded-md border-b border-white shadow">
                 <TableHeader>
                     <TableRow className="border-y border-white px-3 py-2 text-left text-white">
-                        <TableHead className="px-6">Satellite</TableHead>
-                        <TableHead className="px-6">Speed</TableHead>
-                        <TableHead className=" hidden px-6 lg:table-cell">
-                            Altitude
+                        <TableHead className="px-6">
+                            Name
                         </TableHead>
-                        <TableHead className="hidden px-6 md:table-cell">
-                            Latitude
-                        </TableHead>
-                        <TableHead className="hidden px-6 md:table-cell ">
-                            Longitude
-                        </TableHead>
+                        {columns ? columns.map((column) => (
+                            <TableHead
+                                className={column.classNames}
+                                key={column.id}
+                            >
+                                {column.name}
+                            </TableHead>
+                        )): <></>}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {satellites.map((satellite: any) => {
+                        console.log("-------------------------------------");
+                        console.log(satellites);
+                        console.log("-------------------------------------");
+
                         let satelliteName = satellite?.attributes?.name ?? "";
+                        
                         return (
                             <SatelliteStatsTableRow
                                 key={satellite.id}
                                 satName={satelliteName}
                                 slug={satellite?.attributes?.slug}
+                                columns={columns}
                             />
                         );
                     })}

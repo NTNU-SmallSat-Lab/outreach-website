@@ -6,13 +6,21 @@ import { TableCell, TableRow } from "@/components/shadcn/table";
 import { useRouter } from "next/navigation";
 
 const updateInterval = 10;
+interface columnInterface {
+    [key: string]: any;
+    name: string;
+    attributeName: string;
+    classNames: string;
+}
 
 export default function SatelliteStatsTableRow({
     satName,
     slug,
+    columns,
 }: {
     satName: string;
     slug: string;
+    columns: columnInterface[] | undefined;
 }) {
     const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
@@ -29,13 +37,14 @@ export default function SatelliteStatsTableRow({
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
-            // Access satellite data by name
-            const satData = satelliteData[satName];
+            // Access satellite data by name //Fix this to work!
+            const satData = satelliteData[satName]; 
             if (satData) {
                 const updatedInfo = convertSatrec(satData.satrec, satData.name);
                 setSatelliteInfo(updatedInfo);
             }
         }, updateInterval);
+    
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
@@ -45,11 +54,14 @@ export default function SatelliteStatsTableRow({
     if (!satelliteInfo) {
         return (
             <tr>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6">Loading...</td>
-                <td className="px-6">Loading...</td>
-                <td className="px-6">Loading...</td>
-                <td className="px-6">Loading...</td>
+                <td className="px-6">
+                        Loading...
+                </td>
+                {columns ? columns.map((column) => (
+                    <td className={column.classNames} key={column.name}>
+                        Loading...
+                    </td>
+                )): <></>}
             </tr>
         );
     }
@@ -63,30 +75,23 @@ export default function SatelliteStatsTableRow({
             onClick={handleClick}
             className="cursor-pointer hover:bg-white hover:text-black"
         >
-            <TableCell className="px-6 py-4" style={{ width: "20%" }}>
-                {satName}
-            </TableCell>
-            <TableCell className="px-6 py-4" style={{ width: "20%" }}>
-                {satelliteInfo.velocity + " km/s"}
-            </TableCell>
-            <TableCell
-                className="hidden px-6 py-4 lg:table-cell"
-                style={{ width: "20%" }}
-            >
-                {satelliteInfo.altitude + " km"}
-            </TableCell>
-            <TableCell
-                className="hidden px-6 py-4 md:table-cell"
-                style={{ width: "20%" }}
-            >
-                {satelliteInfo.latitudeDeg + "° N"}
-            </TableCell>
-            <TableCell
-                className="hidden px-6 py-4 md:table-cell"
-                style={{ width: "20%" }}
-            >
-                {satelliteInfo.longitudeDeg + "° E"}
-            </TableCell>
+
+                <TableCell
+                    className="px-6"
+                    
+                >
+                    {satName}
+                </TableCell>
+
+            {columns ? columns.map((column) => (
+                <TableCell
+                    className={column.classNames}
+                    key={column.attributeName}
+                    style={{ width: "20%" }}
+                >
+                    {satelliteInfo[column.attributeName]}
+                </TableCell>
+            )): <></>}
         </TableRow>
     );
 }

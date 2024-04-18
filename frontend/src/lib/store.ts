@@ -55,10 +55,13 @@ export const useSatelliteStore = create<SatelliteStore>((set, get) => ({
 
     setSatellites: (satellites) => {
         const names = satellites.map((sat) => sat.name);
-        const nameToId = satellites.reduce<Record<string, string>>((acc, sat) => {
-            acc[sat.name] = sat.id;
-            return acc;
-        }, {});
+        const nameToId = satellites.reduce<Record<string, string>>(
+            (acc, sat) => {
+                acc[sat.name] = sat.id;
+                return acc;
+            },
+            {},
+        );
 
         set(() => ({
             satelliteNames: names,

@@ -35,6 +35,8 @@ export default async function RootLayout({
             if (sat.id) {
                 const data = await satLoaderById(sat.id);
                 satData.push({ name: sat.name, id: sat.id, data });
+            } else {
+                satData.push({ name: sat.name, id: undefined });
             }
         }
     }
