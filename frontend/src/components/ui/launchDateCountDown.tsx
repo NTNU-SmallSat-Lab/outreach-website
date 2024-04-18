@@ -49,7 +49,7 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
         return () => clearInterval(intervalId);
     }, [launchDateString]);
 
-    if (hasLaunched == undefined) {
+    if (hasLaunched == undefined || launchDateString == undefined) {
         return <></>;
     }
     return (
@@ -83,8 +83,6 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
                         </div>
                     )}
                 </div>
-
-                <div className="border-b-2 border-gray-600 py-5"></div>
             </div>
         </>
     );

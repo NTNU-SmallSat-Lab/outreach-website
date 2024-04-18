@@ -42,8 +42,8 @@ export default function SatelliteDataHome() {
 
     return (
         <div>
-            <div className="grid grid-cols-2 ">
-                <div className="border-y border-r border-gray-600 bg-black p-5">
+            <div className="grid grid-cols-2">
+                <div className="border  border-l-0 border-r-0 border-gray-600 bg-black p-5">
                     <p className="text-xl font-medium">
                         {satelliteInfo
                             ? satelliteInfo.velocity + " km/s"
@@ -51,7 +51,7 @@ export default function SatelliteDataHome() {
                     </p>
                     <p className="text-gray-400">Velocity</p>
                 </div>
-                <div className="border-y border-l border-gray-600 bg-black p-5">
+                <div className="border  border-l-2 border-r-0 border-gray-600 bg-black p-5">
                     <p className="text-xl font-medium">
                         {satelliteInfo
                             ? satelliteInfo.altitude + " km"
@@ -59,7 +59,7 @@ export default function SatelliteDataHome() {
                     </p>
                     <p className="text-gray-400">Altitude</p>
                 </div>
-                <div className="border-y border-r border-gray-600 bg-black p-5">
+                <div className="border  border-l-0 border-r-0 border-gray-600 bg-black p-5">
                     <p className="text-xl font-medium">
                         {satelliteInfo
                             ? satelliteInfo.latitudeDeg + "° N"
@@ -67,7 +67,7 @@ export default function SatelliteDataHome() {
                     </p>
                     <p className="text-gray-400">Latitude</p>
                 </div>
-                <div className="border-y border-l border-gray-600 bg-black p-5">
+                <div className="border  border-l-2 border-r-0 border-gray-600 bg-black p-5">
                     <p className="text-xl font-medium">
                         {satelliteInfo
                             ? satelliteInfo.longitudeDeg + "° E"
@@ -77,7 +77,7 @@ export default function SatelliteDataHome() {
                 </div>
             </div>
 
-            <div className="border-t border-gray-600 bg-black p-5">
+            <div className="border border-b-0 border-l-0 border-r-0 border-gray-600 bg-black p-5 sm:border-b-2">
                 <div>
                     <p className="text-xl font-medium">
                         {satelliteInfo

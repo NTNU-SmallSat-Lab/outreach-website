@@ -1,8 +1,4 @@
-import {
-    defineConfig,
-    devices,
-    type PlaywrightTestConfig,
-} from "@playwright/experimental-ct-react";
+import { defineConfig, devices } from "@playwright/experimental-ct-react";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
