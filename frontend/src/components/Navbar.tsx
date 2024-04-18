@@ -121,7 +121,7 @@ export function CodiconGithubProject(props: SVGProps<SVGSVGElement>) {
 }
 
 interface NavbarProps {
-    satData: any[];
+    satData: { name: string; id: string; data: any }[];
 }
 
 export default function Navbar({ satData }: NavbarProps) {
@@ -137,7 +137,9 @@ export default function Navbar({ satData }: NavbarProps) {
             setSatelliteData(sat.name, sat.data);
         });
 
+        console.log("Initial satData fetch and set:");
         console.log(satData);
+        console.log("-------------------------")
     }, [satData]);
 
     const pathname = usePathname();
