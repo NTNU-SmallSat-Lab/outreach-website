@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 
+//BASE_URL: http://web.hypso.ies.ntnu.no:3000/
 test.describe("Navbar Test", () => {
     test("HomepageNavbarTest", async ({ page }) => {
         await page.goto("/");

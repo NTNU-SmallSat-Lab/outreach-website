@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 
+//BASE_URL: http://web.hypso.ies.ntnu.no:3000/
 test.describe("Navbar Test", () => {
     test.use({
         viewport: { width: 390, height: 844 },
@@ -22,14 +23,16 @@ test.describe("Navbar Test", () => {
 
     test("NavbarClickLinksTest", async ({ page }) => {
         await page.goto("/");
-        await page.getByRole("link", { name: "logo" }).click();
-        await expect(page).toHaveURL("/");
         await page.getByRole("navigation").getByRole("button").click();
         await page.getByRole("button", { name: "Blog" }).click();
         await expect(page).toHaveURL("/blog");
+        await page.getByRole("navigation").getByRole("button").click();
         await page.getByRole("button", { name: "Projects" }).click();
         await expect(page).toHaveURL("/projects");
+        await page.getByRole("navigation").getByRole("button").click();
         await page.getByRole("button", { name: "Satellites" }).click();
         await expect(page).toHaveURL("/satellites");
+        await page.getByRole("link", { name: "logo" }).click();
+        await expect(page).toHaveURL("/");
     });
 });

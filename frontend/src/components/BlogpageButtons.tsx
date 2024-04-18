@@ -34,6 +34,7 @@ export default function BlogpageButtons({ className }: { className?: string }) {
             <Button
                 className={`border border-white hover:bg-primary ${activeButton === "Satellites" ? "bg-primary" : "bg-transparent"}`}
                 onClick={() => handleParameterChange("Satellites")}
+                data-testid="blogsSatellitesButton"
             >
                 Satellites
             </Button>
