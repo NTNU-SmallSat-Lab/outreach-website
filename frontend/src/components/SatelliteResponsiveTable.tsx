@@ -31,7 +31,11 @@ export default function SatelliteResponsiveTable({
                         ? "Satellites in orbit"
                         : "Satellites not in orbit"}
                 </PageHeader>
-                <PageSubtitle>description</PageSubtitle>
+                <PageSubtitle>
+                    {inOrbit
+                        ? "Here are some satellites we have worked on that are in orbit. Click on a satellite to view more information."
+                        : "Here are some satellites currently being worked on."}
+                </PageSubtitle>
             </PageHeaderAndSubtitle>
             <Table className="table-auto border-collapse rounded-md border-b border-white shadow">
                 <TableHeader>
@@ -68,7 +72,7 @@ export default function SatelliteResponsiveTable({
                                   className="cursor-pointer hover:bg-white hover:text-black"
                                   key={satellite.attributes.catalogNumberNORAD}
                               >
-                                  <TableCell>
+                                  <TableCell className="px-6">
                                       {satellite.attributes.name}
                                   </TableCell>
                                   <TableCell>
