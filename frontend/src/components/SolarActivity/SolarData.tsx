@@ -65,7 +65,6 @@ export default function SolarDataComponent() {
                 },
                 {} as Record<string, { x: number; y: number }[]>,
             );
-            console.log(groupedData);
 
             // Connect last 'observed' to first 'estimated' and last 'estimated' to first 'predicted'
             if (groupedData["observed"] && groupedData["estimated"]) {

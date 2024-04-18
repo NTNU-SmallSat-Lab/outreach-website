@@ -68,7 +68,6 @@ export default function SatelliteGlobe() {
             setGlobeSize();
 
             // Resize listener to update the globe size
-
             if (typeof window !== "undefined") {
                 window.addEventListener("resize", setGlobeSize);
                 return () => {
@@ -78,8 +77,8 @@ export default function SatelliteGlobe() {
 
             // Set initial positions of satellites
             let currentDate = new Date().toISOString();
-            const initialPositions = Object.values(satelliteData).map(
-                (sat) => ({
+            const initialPositions = Object.entries(satelliteData).map(
+                ([satName, sat]) => ({
                     lat: parseFloat(
                         convertSatrec(sat.satrec, currentDate).latitudeDeg,
                     ),
@@ -90,9 +89,10 @@ export default function SatelliteGlobe() {
                         parseFloat(
                             convertSatrec(sat.satrec, currentDate).altitude,
                         ) / EARTH_RADIUS_KM,
-                    name: sat.name,
+                    name: satName,
                 }),
             );
+
             globeRef.current.objectsData(initialPositions);
 
             return () => {
@@ -101,7 +101,7 @@ export default function SatelliteGlobe() {
                 }
             };
         }
-    });
+    }, [satelliteData]);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
@@ -109,8 +109,8 @@ export default function SatelliteGlobe() {
             const currentDate = new Date().toISOString();
 
             if (globeRef.current) {
-                const newPositions = Object.values(satelliteData).map((sat) => {
-                    return {
+                const newPositions = Object.entries(satelliteData).map(
+                    ([satName, sat]) => ({
                         lat: parseFloat(
                             convertSatrec(sat.satrec, currentDate).latitudeDeg,
                         ),
@@ -121,13 +121,11 @@ export default function SatelliteGlobe() {
                             parseFloat(
                                 convertSatrec(sat.satrec, currentDate).altitude,
                             ) / EARTH_RADIUS_KM,
-                        name: sat.name,
+                        name: satName,
                         color:
-                            selectedSatellite === sat.name
-                                ? "red"
-                                : "palegreen",
-                    };
-                });
+                            selectedSatellite === satName ? "red" : "palegreen",
+                    }),
+                );
 
                 globeRef.current.objectsData(newPositions);
             }
@@ -146,7 +144,8 @@ export default function SatelliteGlobe() {
             {
                 lat: Number(targetPosition.latitudeDeg),
                 lng: Number(targetPosition.longitudeDeg),
-                altitude: 2.5,
+                altitude:
+                    Number(targetPosition.altitude) / EARTH_RADIUS_KM + 2.5,
             },
             1700,
         );

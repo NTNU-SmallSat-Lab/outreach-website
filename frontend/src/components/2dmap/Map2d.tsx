@@ -11,7 +11,7 @@ import {
 const updateInterval = 50;
 
 export default function Map2d({ satName }: { satName: string }) {
-    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
+    const { satelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -22,11 +22,6 @@ export default function Map2d({ satName }: { satName: string }) {
     const [inputValue, setInputValue] = useState(120);
     const containerRef = useRef<HTMLDivElement>(null);
     const [size, setSize] = useState({ width: 0, height: 0 });
-
-    // Fetch satellite data on component mount
-    useEffect(() => {
-        fetchAndSetSatelliteData(satName);
-    }, [fetchAndSetSatelliteData, satName]);
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {

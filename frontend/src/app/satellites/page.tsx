@@ -35,12 +35,22 @@ export default async function Satellites() {
         return (
             <>
                 <SatelliteResponsiveTable
-                    satellites={graphqlData.data.satellites?.data}
+                    satellites={graphqlData.data.satellites?.data.filter(
+                        (data) => data.attributes?.catalogNumberNORAD !== null,
+                    )}
+                    inOrbit={true}
+                ></SatelliteResponsiveTable>
+                <div className="mt-12"></div>
+                <SatelliteResponsiveTable
+                    satellites={graphqlData.data.satellites?.data.filter(
+                        (data) => data.attributes?.catalogNumberNORAD == null,
+                    )}
+                    inOrbit={false}
                 ></SatelliteResponsiveTable>
             </>
         );
     } catch (error) {
-        console.error("Error fetching satellites:", error);
+        console.error("Error fetching satellites from strapi: ", error);
         return <div>Error fetching satellites</div>;
     }
 }
