@@ -47,7 +47,7 @@ export default function SatelliteResponsiveTable({
                         )}
                     </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody className="">
                     {inOrbit
                         ? satellites.map((satellite: any) => (
                               <SatelliteStatsTableRow
@@ -57,12 +57,19 @@ export default function SatelliteResponsiveTable({
                               />
                           ))
                         : satellites.map((satellite: any) => (
-                              <TableRow>
+                              <TableRow
+                                  onClick={() =>
+                                      (window.location.href = `/satellites/${satellite.attributes.slug}`)
+                                  }
+                                  className="cursor-pointer hover:bg-white hover:text-black"
+                              >
                                   <TableCell>
                                       {satellite.attributes.name}
                                   </TableCell>
                                   <TableCell>
-                                      {satellite.attributes.missionStatus}
+                                      {satellite.attributes.missionStatus
+                                          ? satellite.attributes.missionStatus
+                                          : "Unknown"}
                                   </TableCell>
                               </TableRow>
                           ))}

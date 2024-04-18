@@ -49,20 +49,20 @@ export default function SatelliteStatsTableRow({
         );
     }
 
-    function handleClick() {
-        router.replace(`/satellites/${slug}`);
-    }
-
     return (
         <TableRow
-            onClick={handleClick}
+            onClick={() => (window.location.href = `/satellites/${slug}`)}
             className="cursor-pointer hover:bg-white hover:text-black"
         >
-            <TableCell className="px-6 w-1/5">{satName}</TableCell>
-            <TableCell className="px-6 w-1/5">{satelliteInfo.velocity}</TableCell>
-            <TableCell className="px-6 w-1/5">{satelliteInfo.altitude}</TableCell>
-            <TableCell className="px-6 w-1/5">{satelliteInfo.latitudeDeg}</TableCell>
-            <TableCell className="px-6 w-1/5">{satelliteInfo.longitudeDeg}</TableCell>
+            <TableCell className="w-1/5 px-6">{satName}</TableCell>
+            <TableCell className=" w-1/5">{satelliteInfo.velocity}</TableCell>
+            <TableCell className=" w-1/5">{satelliteInfo.altitude}</TableCell>
+            <TableCell className=" w-1/5">
+                {satelliteInfo.latitudeDeg}
+            </TableCell>
+            <TableCell className="w-1/5">
+                {satelliteInfo.longitudeDeg}
+            </TableCell>
         </TableRow>
     );
 }
