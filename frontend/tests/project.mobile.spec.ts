@@ -9,8 +9,7 @@ test.describe("All Project Page Test", () => {
     test("CheckHeadingAndSubtitleIsVisible", async ({ page }) => {
         await page.goto("/");
         await page.getByRole("navigation").getByRole("button").click();
-        await page.getByRole("button", { name: "Projects" }).click();
-        await page.getByRole("button").first().click();
+        await page.getByRole("button", { name: "Projects" }).click()
         await expect(page).toHaveURL("/projects");
         await expect(page.getByTestId("pageHeader")).toBeVisible();
         await expect(page.getByTestId("pageSubtitle")).toBeVisible();
@@ -19,7 +18,6 @@ test.describe("All Project Page Test", () => {
         await page.goto("/");
         await page.getByRole("navigation").getByRole("button").click();
         await page.getByRole("button", { name: "Projects" }).click();
-        await page.getByRole("button").first().click();
         await expect(page).toHaveURL("/projects");
         await expect(page.getByTestId("projectCard").first()).toBeVisible();
         await page.getByTestId("projectCard").first().click();
@@ -36,7 +34,6 @@ test.describe("Individual Project Page Test", () => {
         await page.goto("/");
         await page.getByRole("navigation").getByRole("button").click();
         await page.getByRole("button", { name: "Projects" }).click();
-        await page.getByRole("button").first().click();
         await page.getByTestId("projectCard").first().click();
         await expect(page).toHaveURL(/\/projects\/.+$/);
         await expect(page.getByRole("heading").first()).toBeVisible();

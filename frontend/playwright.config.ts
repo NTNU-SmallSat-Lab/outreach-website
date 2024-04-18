@@ -9,8 +9,8 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const baseURL = `http://localhost:3000/`;
-//const baseURL = `http://web.hypso.ies.ntnu.no:3000/`;
+//const baseURL = `http://localhost:3000/`;
+const baseURL = `http://web.hypso.ies.ntnu.no:3000/`;
 
 export default defineConfig({
     testDir: "./tests",
