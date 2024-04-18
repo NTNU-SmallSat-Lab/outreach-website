@@ -3,23 +3,20 @@ import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import { TableCell, TableRow } from "@/components/shadcn/table";
-import { useRouter } from "next/navigation";
 
 const updateInterval = 50;
 
 export default function SatelliteStatsTableRow({
     satName,
-    slug,
+    handleRowClick,
 }: {
     satName: string;
-    slug: string;
+    handleRowClick: () => void;
 }) {
     const { satelliteData, setSelectedSatellite } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
-
-    const router = useRouter();
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
@@ -40,33 +37,35 @@ export default function SatelliteStatsTableRow({
     if (!satelliteInfo) {
         return (
             <TableRow>
-                <TableCell>Loading...</TableCell>
-                <TableCell>Loading...</TableCell>
-                <TableCell>Loading...</TableCell>
-                <TableCell>Loading...</TableCell>
-                <TableCell>Loading...</TableCell>
+                <TableCell className="w-1/5 px-6">{satName}</TableCell>
+                <TableCell className="w-1/5">Loading...</TableCell>
+                <TableCell className="w-1/5">Loading...</TableCell>
+                <TableCell className="w-1/5">Loading...</TableCell>
+                <TableCell className="w-1/5">Loading...</TableCell>
             </TableRow>
         );
     }
 
-    const handleClick = () => {
-        setSelectedSatellite(satName);
-        router.push(`/satellites/${slug}`);
-    };
-
     return (
         <TableRow
-            onClick={handleClick}
             className="cursor-pointer hover:bg-white hover:text-black"
+            onClick={() => {
+                setSelectedSatellite(satName);
+                handleRowClick();
+            }}
         >
             <TableCell className="w-1/5 px-6">{satName}</TableCell>
-            <TableCell className=" w-1/5">{satelliteInfo.velocity}</TableCell>
-            <TableCell className=" w-1/5">{satelliteInfo.altitude}</TableCell>
             <TableCell className=" w-1/5">
-                {satelliteInfo.latitudeDeg}
+                {satelliteInfo.velocity} km/s
+            </TableCell>
+            <TableCell className=" w-1/5">
+                {satelliteInfo.altitude} km
+            </TableCell>
+            <TableCell className=" w-1/5">
+                {satelliteInfo.latitudeDeg}° N
             </TableCell>
             <TableCell className="w-1/5">
-                {satelliteInfo.longitudeDeg}
+                {satelliteInfo.longitudeDeg}° E
             </TableCell>
         </TableRow>
     );

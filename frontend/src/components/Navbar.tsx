@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@shadcn/button";
@@ -10,7 +10,6 @@ import {
     DrawerClose,
 } from "@/components/shadcn/drawer";
 import Image from "next/image";
-import { useSatelliteStore } from "@/lib/store";
 
 import type { SVGProps } from "react";
 
@@ -120,25 +119,7 @@ export function CodiconGithubProject(props: SVGProps<SVGSVGElement>) {
     );
 }
 
-interface NavbarProps {
-    satData: { name: string; id: string; data: any }[];
-}
-
-export default function Navbar({ satData }: NavbarProps) {
-    const setSatellites = useSatelliteStore((state) => state.setSatellites);
-    const setSatelliteData = useSatelliteStore(
-        (state) => state.setSatelliteData,
-    );
-
-    useEffect(() => {
-        // Set the satellite data in the store
-        setSatellites(satData);
-        satData.forEach((sat) => {
-            if (!sat.data) return;
-            setSatelliteData(sat.name, sat.data);
-        });
-    }, [satData]);
-
+export default function Navbar() {
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {
         if (path === pathname) {
@@ -147,20 +128,15 @@ export default function Navbar({ satData }: NavbarProps) {
         return "ghost";
     };
 
-    const handleHomeClick = () => {
-        window.location.href = "/";
-    };
-
     return (
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div>
                 <Link href="/">
                     <Image
                         width={256}
-                        height={70} // Adjusted height
+                        height={70}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
-                        onClick={handleHomeClick}
                     />
                 </Link>
             </div>
@@ -211,33 +187,18 @@ export default function Navbar({ satData }: NavbarProps) {
             <div className="hidden flex-1 justify-end md:flex">
                 <div className="flex items-center gap-8">
                     <Link href="/blog">
-                        <Button
-                            variant={getButtonVariant("/blog")}
-                            onClick={() => {
-                                window.location.href = "/blog";
-                            }}
-                        >
+                        <Button variant={getButtonVariant("/blog")}>
                             Blog
                         </Button>
                     </Link>
 
                     <Link href="/projects">
-                        <Button
-                            variant={getButtonVariant("/projects")}
-                            onClick={() => {
-                                window.location.href = "/projects";
-                            }}
-                        >
+                        <Button variant={getButtonVariant("/projects")}>
                             Projects
                         </Button>
                     </Link>
                     <Link href="/satellites">
-                        <Button
-                            variant={getButtonVariant("/satellites")}
-                            onClick={() => {
-                                window.location.href = "/satellites";
-                            }}
-                        >
+                        <Button variant={getButtonVariant("/satellites")}>
                             Satellites
                         </Button>
                     </Link>

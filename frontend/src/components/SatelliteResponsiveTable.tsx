@@ -23,6 +23,11 @@ export default function SatelliteResponsiveTable({
     inOrbit: boolean;
 }) {
     const router = useRouter();
+    const handleRowClick = (slug: string) => {
+        // This will update the URL without triggering a full page refresh
+        router.push(`/satellites/${slug}`, undefined);
+    };
+
     return (
         <div className="flex w-full flex-col items-center justify-center">
             <PageHeaderAndSubtitle>
@@ -59,18 +64,18 @@ export default function SatelliteResponsiveTable({
                               <SatelliteStatsTableRow
                                   key={satellite.attributes.catalogNumberNORAD}
                                   satName={satellite.attributes.name}
-                                  slug={satellite.attributes.slug}
+                                  handleRowClick={() =>
+                                      handleRowClick(satellite.attributes.slug)
+                                  }
                               />
                           ))
                         : satellites.map((satellite: any) => (
                               <TableRow
-                                  onClick={() =>
-                                      router.push(
-                                          `/satellites/${satellite.attributes.slug}`,
-                                      )
-                                  }
                                   className="cursor-pointer hover:bg-white hover:text-black"
                                   key={satellite.attributes.catalogNumberNORAD}
+                                  onClick={() =>
+                                      handleRowClick(satellite.attributes.slug)
+                                  }
                               >
                                   <TableCell className="px-6">
                                       {satellite.attributes.name}
