@@ -28,12 +28,15 @@ test("Check content rendering in BlockRendererClient", async ({ mount }) => {
     ];
 
     // Mount the BlockRendererClient with mock content
-    const component = await mount(<BlockRendererClient content={mockContent} />);
+    const component = await mount(
+        <BlockRendererClient content={mockContent} />,
+    );
 
     // Assertions
-    await expect(component.getByRole("heading")).toContainText("Lorem ipsum")
-    await expect(component.getByRole("paragraph")).toContainText("Dolor sit amet")
+    await expect(component.getByRole("heading")).toContainText("Lorem ipsum");
+    await expect(component.getByRole("paragraph")).toContainText(
+        "Dolor sit amet",
+    );
 
     // Add more assertions based on your content blocks
-
 });
