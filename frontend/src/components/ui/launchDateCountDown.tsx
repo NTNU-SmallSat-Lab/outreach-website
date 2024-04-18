@@ -83,8 +83,6 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
                         </div>
                     )}
                 </div>
-
-                <div className="border-b-2 border-gray-600 py-5"></div>
             </div>
         </>
     );
