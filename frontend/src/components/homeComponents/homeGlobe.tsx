@@ -25,9 +25,10 @@ export default function SatelliteGlobe() {
             globeRef.current = Globe()(chart.current)
                 .globeImageUrl(
                     "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
-                ) /*.backgroundImageUrl(
+                )
+                .backgroundImageUrl(
                     "//unpkg.com/three-globe/example/img/night-sky.png",
-                )*/
+                )
                 .objectLat("lat")
                 .objectLng("lng")
                 .objectAltitude("alt")
@@ -54,13 +55,15 @@ export default function SatelliteGlobe() {
 
             globeRef.current.controls().enabled = true;
             globeRef.current.controls().enableZoom = false;
+            globeRef.current.controls().enablePan = false;
+            globeRef.current.controls().enableRotate = true;
 
             const setGlobeSize = () => {
                 if (globeRef.current && chart.current) {
                     const { width, height } =
                         chart.current.getBoundingClientRect();
                     globeRef.current.width(width);
-                    globeRef.current.height(height / 1.5);
+                    globeRef.current.height(height - 76);
                 }
             };
 
@@ -145,7 +148,7 @@ export default function SatelliteGlobe() {
                 lat: Number(targetPosition.latitudeDeg),
                 lng: Number(targetPosition.longitudeDeg),
                 altitude:
-                    Number(targetPosition.altitude) / EARTH_RADIUS_KM + 2.5,
+                    Number(targetPosition.altitude) / EARTH_RADIUS_KM + 3.5,
             },
             1700,
         );
