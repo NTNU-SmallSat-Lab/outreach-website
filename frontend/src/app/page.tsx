@@ -31,8 +31,8 @@ export default async function Home() {
                 </div>
 
                 {/* Globe Container */}
-                <div className="z-0 w-full overflow-x-hidden border-b-2  border-l-2 border-r-2 border-t-0 border-gray-600 sm:border-l-0 sm:border-t-2 xl:w-2/3">
-                    <div className="flex h-[70vh] items-center justify-center sm:h-[100%]">
+                <div className="z-0 h-full w-full overflow-x-hidden  border-b-2 border-l-2 border-r-2 border-t-0 border-gray-600 sm:border-l-0 sm:border-t-2 xl:w-2/3">
+                    <div className="flex h-[70vh] items-center justify-center sm:h-full">
                         <SatelliteGlobeNoSSR />
                     </div>
                 </div>
