@@ -42,16 +42,24 @@ export default function SatelliteResponsiveTable({
                         : "Here are some satellites currently being worked on."}
                 </PageSubtitle>
             </PageHeaderAndSubtitle>
-            <Table className="table-auto border-collapse rounded-md border-b border-white shadow">
+            <Table className="table-auto border-collapse border-b border-white shadow">
                 <TableHeader>
                     <TableRow className="border-y border-white px-3 py-2 text-left text-white">
                         <TableHead className="px-6">Name</TableHead>
                         {inOrbit ? (
                             <>
-                                <TableHead className="">Velocity</TableHead>
-                                <TableHead className="">Altitude</TableHead>
-                                <TableHead className="">Latitude</TableHead>
-                                <TableHead className="">Longitude</TableHead>
+                                <TableHead className="hidden min-w-[100px] sm:table-cell">
+                                    Velocity
+                                </TableHead>
+                                <TableHead className="min-w-[135px]">
+                                    Altitude
+                                </TableHead>
+                                <TableHead className="min-w-[100px]">
+                                    Latitude
+                                </TableHead>
+                                <TableHead className="min-w-[100px]">
+                                    Longitude
+                                </TableHead>
                             </>
                         ) : (
                             <TableHead>Mission Status</TableHead>
