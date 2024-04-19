@@ -54,6 +54,8 @@ export default function SatelliteGlobe() {
 
             globeRef.current.controls().enabled = true;
             globeRef.current.controls().enableZoom = false;
+            globeRef.current.controls().enablePan = false;
+            globeRef.current.controls().enableRotate = true;
 
             const setGlobeSize = () => {
                 if (globeRef.current && chart.current) {
