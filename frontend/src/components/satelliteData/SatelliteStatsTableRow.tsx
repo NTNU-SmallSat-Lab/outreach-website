@@ -38,7 +38,9 @@ export default function SatelliteStatsTableRow({
         return (
             <TableRow>
                 <TableCell className="w-1/5 px-6">{satName}</TableCell>
-                <TableCell className="w-1/5">Loading...</TableCell>
+                <TableCell className="hidden w-1/5 sm:table-cell">
+                    Loading...
+                </TableCell>
                 <TableCell className="w-1/5">Loading...</TableCell>
                 <TableCell className="w-1/5">Loading...</TableCell>
                 <TableCell className="w-1/5">Loading...</TableCell>
@@ -55,7 +57,7 @@ export default function SatelliteStatsTableRow({
             }}
         >
             <TableCell className="w-1/5 px-6">{satName}</TableCell>
-            <TableCell className=" w-1/5">
+            <TableCell className="hidden w-1/5 sm:table-cell">
                 {satelliteInfo.velocity} km/s
             </TableCell>
             <TableCell className=" w-1/5">
