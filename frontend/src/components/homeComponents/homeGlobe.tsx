@@ -63,7 +63,7 @@ export default function SatelliteGlobe() {
                     const { width, height } =
                         chart.current.getBoundingClientRect();
                     globeRef.current.width(width);
-                    globeRef.current.height(height - 73);
+                    globeRef.current.height(height - 76);
                 }
             };
 
