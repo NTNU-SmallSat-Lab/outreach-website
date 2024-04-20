@@ -10,10 +10,7 @@ function PageHeader({ children }: { children?: React.ReactNode }) {
 
 function PageSubtitle({ children }: { children?: React.ReactNode }) {
     return (
-        <h2
-            className="text-gray-400"
-            data-testid="pageSubtitle"
-        >
+        <h2 className="text-gray-400" data-testid="pageSubtitle">
             {children}
         </h2>
     );

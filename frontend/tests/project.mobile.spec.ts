@@ -9,7 +9,7 @@ test.describe("All Project Page Test", () => {
     test("CheckHeadingAndSubtitleIsVisible", async ({ page }) => {
         await page.goto("/");
         await page.getByRole("navigation").getByRole("button").click();
-        await page.getByRole("button", { name: "Projects" }).click()
+        await page.getByRole("button", { name: "Projects" }).click();
         await expect(page).toHaveURL("/projects");
         await expect(page.getByTestId("pageHeader")).toBeVisible();
         await expect(page.getByTestId("pageSubtitle")).toBeVisible();
