@@ -10,7 +10,7 @@ query GET_SATELLITES {
         attributes {
           catalogNumberNORAD
           name
-          previewImage {
+          satelliteImage {
             data {
               attributes {
                 url

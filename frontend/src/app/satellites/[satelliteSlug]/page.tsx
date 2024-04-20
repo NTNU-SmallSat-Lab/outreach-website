@@ -11,6 +11,7 @@ import {
     PageSubtitle,
     PageHeaderAndSubtitle,
 } from "@/components/PageHeader";
+import Image from "next/image";
 
 export interface SatelliteInfo {
     launchDate: string | undefined;
@@ -20,6 +21,7 @@ export interface SatelliteInfo {
     noradId: string | undefined;
     missionStatus: string | undefined;
     massKg: number | undefined;
+    satelliteImage: string | undefined;
 }
 
 export interface ProjectOrSatellite {
@@ -84,7 +86,15 @@ export default async function SatelliteInfoPage({
                         {/* Image container */}
                         <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
                             <div className="flex h-full w-full items-center justify-center bg-black">
-                                <h1>Satellite image</h1>
+                                {satelliteInfo.satelliteImage ? (
+                                    <Image
+                                        src={satelliteInfo.satelliteImage}
+                                        alt={satelliteInfo.name}
+                                        width={200}
+                                        height={0}
+                                        className="margin p-2"
+                                    />
+                                ) : null}
                             </div>
                         </div>
                     </div>

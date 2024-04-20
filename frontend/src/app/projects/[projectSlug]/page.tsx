@@ -18,7 +18,7 @@ query Projects($projectFilters: ProjectFiltersInput) {
             id
             attributes {
               name
-              previewImage {
+              satelliteImage {
                 data {
                   attributes {
                     url
@@ -84,13 +84,13 @@ export default async function Page({
                     <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
                         {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
                             (satellite: any) => {
-                                const previewImage =
-                                    satellite?.attributes?.previewImage?.data
+                                const satelliteImage =
+                                    satellite?.attributes?.satelliteImage?.data
                                         ?.attributes?.url ?? undefined;
                                 const satelliteObject: ProjectOrSatellite = {
                                     id: satellite.id,
                                     title: satellite.attributes.name,
-                                    previewImage: previewImage,
+                                    previewImage: satelliteImage,
                                     slug: satellite.attributes.name,
                                     isProject: false,
                                 };
