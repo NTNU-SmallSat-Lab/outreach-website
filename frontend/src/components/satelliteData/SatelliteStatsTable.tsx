@@ -13,15 +13,10 @@ export default function SatelliteStatsTable({
     satName: string;
     missionStatus: string;
 }) {
-    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
+    const { satelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
-
-    // Fetch satellite data on component mount
-    useEffect(() => {
-        fetchAndSetSatelliteData(satName);
-    }, [fetchAndSetSatelliteData, satName]);
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {

@@ -11,6 +11,7 @@ import { point } from "@turf/helpers";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 
 interface SatelliteInfo {
+    [key: string]: any;
     name: string;
     latitudeDeg: string;
     longitudeDeg: string;

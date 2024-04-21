@@ -16,6 +16,13 @@ const GET_SATELLITE_INFO =
                 name
                 massKg
                 missionStatus
+                satelliteImage {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
               projects {
                 data {
                   attributes {
@@ -90,6 +97,9 @@ export default async function fetchSatelliteInfo({
         massKg:
             graphqlData?.data?.satellites?.data[0]?.attributes?.massKg ??
             undefined,
+        satelliteImage:
+            graphqlData?.data?.satellites?.data[0]?.attributes?.satelliteImage
+                ?.data?.attributes?.url ?? undefined,
     };
 
     return satelliteInfo;

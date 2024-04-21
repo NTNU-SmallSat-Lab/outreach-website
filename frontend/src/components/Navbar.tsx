@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@shadcn/button";
@@ -127,20 +128,15 @@ export default function Navbar() {
         return "ghost";
     };
 
-    const handleHomeClick = () => {
-        window.location.href = "/";
-    };
-
     return (
         <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
             <div>
                 <Link href="/">
                     <Image
                         width={256}
-                        height={70} // Adjusted height
+                        height={70}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
-                        onClick={handleHomeClick}
                     />
                 </Link>
             </div>
