@@ -32,6 +32,8 @@ export interface ProjectOrSatellite {
     isProject: boolean;
 }
 
+const STRAPI_URL = process.env.STRAPI_URL;
+
 export default async function SatelliteInfoPage({
     params,
 }: {
@@ -42,6 +44,11 @@ export default async function SatelliteInfoPage({
     });
 
     if (!satelliteInfo) return <div>Loading...</div>;
+
+    let imageURL = undefined;
+    if (STRAPI_URL && satelliteInfo.satelliteImage) {
+        imageURL = STRAPI_URL + satelliteInfo.satelliteImage;
+    }
 
     return (
         <>
@@ -67,7 +74,7 @@ export default async function SatelliteInfoPage({
                     <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
                         {/* Stats Container */}
                         <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
-                            <div className="grow basis-0 border-b border-gray-600 bg-black p-5">
+                            <div className="border-b border-gray-600 bg-black p-5">
                                 {satelliteInfo.noradId
                                     ? "NORAD ID: " + satelliteInfo.noradId
                                     : null}
@@ -86,13 +93,14 @@ export default async function SatelliteInfoPage({
                         {/* Image container */}
                         <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
                             <div className="flex h-full w-full items-center justify-center bg-black">
-                                {satelliteInfo.satelliteImage ? (
+                                {imageURL ? (
                                     <Image
-                                        src={satelliteInfo.satelliteImage}
+                                        src={imageURL}
                                         alt={satelliteInfo.name}
-                                        width={200}
+                                        width={1600} // Set according to the aspect ratio of the image
                                         height={0}
-                                        className="margin p-2"
+                                        layout="responsive"
+                                        className="p-2"
                                     />
                                 ) : null}
                             </div>
