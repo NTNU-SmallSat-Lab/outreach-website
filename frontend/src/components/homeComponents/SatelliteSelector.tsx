@@ -11,14 +11,6 @@ export default function SatelliteSelector() {
     const setSelectedSatellite = useSatelliteStore(
         (state) => state.setSelectedSatellite,
     );
-    const fetchAndSetSatelliteData = useSatelliteStore(
-        (state) => state.fetchAndSetSatelliteData,
-    );
-
-    // Fetch data for each satellite and set it in the store
-    for (const satellite of satelliteNames) {
-        fetchAndSetSatelliteData(satellite);
-    }
 
     return (
         <div className="m-0 w-full border-b border-gray-600 p-0">

@@ -31,6 +31,7 @@ test("Check content rendering in BlockRendererClient", async ({ mount }) => {
         <BlockRendererClient content={mockContent} />,
     );
 
+    // Assertions
     await expect(component.getByRole("heading")).toContainText("Lorem ipsum");
     await expect(component.getByRole("paragraph")).toContainText(
         "Dolor sit amet",

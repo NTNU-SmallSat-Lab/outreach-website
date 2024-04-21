@@ -980,7 +980,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
     catalogNumberNORAD: Attribute.String & Attribute.Unique;
     content: Attribute.Blocks;
-    previewImage: Attribute.Media;
+    satelliteImage: Attribute.Media;
     projects: Attribute.Relation<
       'api::satellite.satellite',
       'manyToMany',
