@@ -21,7 +21,10 @@ export default function SatDropdown({
     const [noradID, setNoradID] = useState("");
     const [error, setError] = useState("");
 
-    const toggleDropdown = () => setIsOpen(!isOpen);
+    const toggleDropdown = () => {
+        setError("");
+        setIsOpen(!isOpen);
+    };
 
     const handleSelect = (satellite: string) => {
         setSelectedSatellite(satellite);
@@ -30,7 +33,7 @@ export default function SatDropdown({
 
     const handleAddSatellite = async (noradID: string) => {
         if (!noradID) {
-            setError("Please enter a NORAD ID.");
+            setError("Please enter a valid NORAD ID.");
             return;
         }
 
