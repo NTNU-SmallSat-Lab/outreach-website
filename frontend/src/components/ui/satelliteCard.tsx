@@ -16,14 +16,14 @@ import { OuiImage } from "@/components/fullBlogCard";
 interface SatelliteCardProps {
     satelliteName: string;
     missionStatus: string;
-    previewImage?: string; // Optional
+    satelliteImage?: string; // Optional
     satelliteId: Number;
 }
 
 const SatelliteCard: React.FC<SatelliteCardProps> = ({
     satelliteName,
     missionStatus,
-    previewImage,
+    satelliteImage,
     satelliteId,
 }) => {
     /*const setSelectedSatellite = useSatelliteStore(
@@ -45,10 +45,10 @@ const SatelliteCard: React.FC<SatelliteCardProps> = ({
                         satName={satelliteName}
                         missionStatus={missionStatus}
                     />
-                    {previewImage ? (
+                    {satelliteImage ? (
                         <Image
-                            src={previewImage}
-                            alt={previewImage}
+                            src={satelliteImage}
+                            alt={satelliteImage}
                             width={200}
                             height={0}
                             className="margin p-2"

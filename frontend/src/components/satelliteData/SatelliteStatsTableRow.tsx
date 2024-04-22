@@ -42,8 +42,12 @@ export default function SatelliteStatsTableRow({
                     Loading...
                 </TableCell>
                 <TableCell className="w-1/5">Loading...</TableCell>
-                <TableCell className="w-1/5">Loading...</TableCell>
-                <TableCell className="w-1/5">Loading...</TableCell>
+                <TableCell className="hidden w-1/5 sm:table-cell">
+                    Loading...
+                </TableCell>
+                <TableCell className="hidden w-1/5 sm:table-cell">
+                    Loading...
+                </TableCell>
             </TableRow>
         );
     }
@@ -60,13 +64,11 @@ export default function SatelliteStatsTableRow({
             <TableCell className="hidden w-1/5 sm:table-cell">
                 {satelliteInfo.velocity} km/s
             </TableCell>
-            <TableCell className=" w-1/5">
-                {satelliteInfo.altitude} km
-            </TableCell>
-            <TableCell className=" w-1/5">
+            <TableCell className="w-1/5">{satelliteInfo.altitude} km</TableCell>
+            <TableCell className="hidden w-1/5 sm:table-cell">
                 {satelliteInfo.latitudeDeg}° N
             </TableCell>
-            <TableCell className="w-1/5">
+            <TableCell className="hidden w-1/5 sm:table-cell">
                 {satelliteInfo.longitudeDeg}° E
             </TableCell>
         </TableRow>

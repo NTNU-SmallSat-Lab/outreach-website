@@ -54,10 +54,10 @@ export default function SatelliteResponsiveTable({
                                 <TableHead className="min-w-[135px]">
                                     Altitude
                                 </TableHead>
-                                <TableHead className="min-w-[100px]">
+                                <TableHead className="hidden min-w-[100px] sm:table-cell">
                                     Latitude
                                 </TableHead>
-                                <TableHead className="min-w-[100px]">
+                                <TableHead className="hidden min-w-[100px] sm:table-cell">
                                     Longitude
                                 </TableHead>
                             </>

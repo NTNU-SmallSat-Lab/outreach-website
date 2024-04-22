@@ -24,7 +24,7 @@
     "content": {
       "type": "blocks"
     },
-    "previewImage": {
+    "satelliteImage": {
       "type": "media",
       "multiple": false,
       "required": false,
