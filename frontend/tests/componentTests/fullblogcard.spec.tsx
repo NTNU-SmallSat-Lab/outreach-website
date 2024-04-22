@@ -39,8 +39,11 @@ test("FullBlogCard renders correctly", async ({ mount }) => {
         component.getByText("Mock article content preview text..."),
     ).toBeVisible();
 
-    //Check if the image is visible
-    await expect(component.getByRole("img")).toBeVisible();
+    //Wait for the image to actually have its src attribute set with the real image URL
+    await expect(component.getByRole("img")).toHaveAttribute(
+        "src",
+        /mock-cover-image\.jpg/,
+    );
 
     //Check if datePublished is visible
     await expect(component.getByText("April 13, 2024")).toBeVisible();
