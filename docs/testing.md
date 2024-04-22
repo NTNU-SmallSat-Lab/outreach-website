@@ -80,7 +80,10 @@ See the [docs](https://playwright.dev/docs/test-components) for more info about 
 
 You can run tests using the VS Code extension or the command line.
 
+Move to the frontend folder and run the tests.
+
 ```
+cd frontend
 npm run test-ct
 ```
 
