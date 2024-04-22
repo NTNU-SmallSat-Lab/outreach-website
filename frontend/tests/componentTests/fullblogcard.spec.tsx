@@ -40,7 +40,10 @@ test("FullBlogCard renders correctly", async ({ mount }) => {
     ).toBeVisible();
 
     //Wait for the image to actually have its src attribute set with the real image URL
-    await expect(component.getByRole('img')).toHaveAttribute('src', /mock-cover-image\.jpg/);
+    await expect(component.getByRole("img")).toHaveAttribute(
+        "src",
+        /mock-cover-image\.jpg/,
+    );
 
     //Check if datePublished is visible
     await expect(component.getByText("April 13, 2024")).toBeVisible();
