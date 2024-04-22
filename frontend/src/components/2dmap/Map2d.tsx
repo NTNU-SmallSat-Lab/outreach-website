@@ -109,9 +109,8 @@ export default function Map2d({ satName }: { satName: string }) {
                         className="w-full rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
                     />
                     <p className="mt-2 font-thin">
-                        Projected positions {projectionAmount / 60}{" "}
-                        hours into the{" "}
-                        {projectionAmount >= 0 ? "future" : "past"}
+                        Projected positions {projectionAmount / 60} hours into
+                        the {projectionAmount >= 0 ? "future" : "past"}
                     </p>
                 </div>
             </div>
