@@ -52,7 +52,7 @@ export default async function SatelliteInfoPage({
 
     return (
         <>
-            <div className="flex flex-col items-center ">
+            <div className="flex flex-col items-center">
                 <PageHeaderAndSubtitle>
                     <PageHeader>{satelliteInfo.name}</PageHeader>
                     <PageSubtitle>
@@ -62,22 +62,24 @@ export default async function SatelliteInfoPage({
                     </PageSubtitle>
                 </PageHeaderAndSubtitle>
 
-                {satelliteInfo.launchDate ? (
-                    <div className="mt-6 w-full">
-                        <LaunchDateCountDown
-                            launchDateString={satelliteInfo.launchDate}
-                        ></LaunchDateCountDown>
-                    </div>
-                ) : null}
                 {/* Container for satname, stats and sat image */}
                 {satelliteInfo.noradId ? (
                     <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
                         {/* Stats Container */}
                         <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
                             <div className="border-b border-gray-600 bg-black p-5">
-                                {satelliteInfo.noradId
-                                    ? "NORAD ID: " + satelliteInfo.noradId
-                                    : null}
+                                {satelliteInfo.noradId ? (
+                                    <div className="flex flex-row">
+                                        <p>NORAD ID: </p>
+                                        <a
+                                            href={`https://www.n2yo.com/satellite/?s=${satelliteInfo.noradId}`}
+                                            target="_blank"
+                                            className="ml-2 underline"
+                                        >
+                                            {satelliteInfo.noradId}
+                                        </a>
+                                    </div>
+                                ) : null}
                                 <p className="text-gray-400">
                                     {satelliteInfo.massKg
                                         ? "Mass: " +
@@ -115,8 +117,17 @@ export default async function SatelliteInfoPage({
                     </div>
                 ) : null}
 
+                {/* Container for launch date */}
+                {satelliteInfo.launchDate ? (
+                    <div className="w-full">
+                        <LaunchDateCountDown
+                            launchDateString={satelliteInfo.launchDate}
+                        ></LaunchDateCountDown>
+                    </div>
+                ) : null}
+
                 {/* Container for body content */}
-                <div className="mt-6">
+                <div className="mt-6 px-4 sm:px-0">
                     <BlockRendererClient content={satelliteInfo.content} />
                 </div>
             </div>

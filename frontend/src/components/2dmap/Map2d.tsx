@@ -8,7 +8,7 @@ import {
     predictFuturePositions,
 } from "@/lib/convertSatrec";
 
-const updateInterval = 50;
+const updateInterval = 100;
 
 export default function Map2d({ satName }: { satName: string }) {
     const { satelliteData } = useSatelliteStore();
@@ -94,9 +94,9 @@ export default function Map2d({ satName }: { satName: string }) {
 
     return (
         <div ref={containerRef} className="w-full">
-            <div className="flex items-center justify-between bg-black px-6 py-4">
-                <h1 className="text-lg font-semibold text-white">
-                    Current and Predicted Satellite Position
+            <div className="flex flex-col items-center justify-between bg-black px-6 py-4 md:flex-row">
+                <h1 className="text-center text-lg font-semibold text-white md:text-left">
+                    Satellite Position
                 </h1>
                 <div className="flex flex-col items-end">
                     <input
@@ -106,11 +106,11 @@ export default function Map2d({ satName }: { satName: string }) {
                         step="60"
                         value={inputValue}
                         onChange={handleSliderChange}
-                        className="rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
+                        className="w-full rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
                     />
                     <p className="mt-2 font-thin">
-                        Positions {projectionAmount} minutes into the{" "}
-                        {projectionAmount >= 0 ? "future" : "past"}
+                        Projected positions {projectionAmount / 60} hours into
+                        the {projectionAmount >= 0 ? "future" : "past"}
                     </p>
                 </div>
             </div>
