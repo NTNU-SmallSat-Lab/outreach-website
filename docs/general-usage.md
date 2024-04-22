@@ -16,7 +16,7 @@ Goto Settings > Users & Permissions plugin > Roles > Public > Article, and enabl
 - Article
 - Author
 - Hero
-- Most-recent-image
+- Featured-image
 - Project
 - Satellite
 
@@ -26,10 +26,3 @@ The following should **NOT** be made publicly available:
 - Upload
 - User-permissions
 
-### Heroku
-
-Heroku is currently configured to run on [https://small-sat-lab-6ad3da13947b.herokuapp.com/](https://small-sat-lab-6ad3da13947b.herokuapp.com/)
-
-with the admin panel at [https://small-sat-lab-6ad3da13947b.herokuapp.com/admin](https://small-sat-lab-6ad3da13947b.herokuapp.com/admin)
-
-You can invite new admin users in `Settings > Administration panel > Users > Invite new user`
