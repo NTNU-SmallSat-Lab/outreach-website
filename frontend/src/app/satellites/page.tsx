@@ -1,18 +1,6 @@
 import { gql } from "@/__generated__/gql";
-import {
-    PageHeaderAndSubtitle,
-    PageHeader,
-    PageSubtitle,
-} from "@/components/PageHeader";
-import SatelliteStatsTableRow from "@/components/satelliteData/SatelliteStatsTableRow";
 import { getClient } from "@/lib/ApolloClient";
-import {
-    Table,
-    TableBody,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/shadcn/table";
+import SatelliteResponsiveTable from "@/components/SatelliteResponsiveTable";
 
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
@@ -20,10 +8,9 @@ query GET_SATELLITES {
       data {
         id
         attributes {
-          celestrakURL
           catalogNumberNORAD
           name
-          previewImage {
+          satelliteImage {
             data {
               attributes {
                 url
@@ -32,6 +19,7 @@ query GET_SATELLITES {
           }
           missionStatus
           slug
+          massKg
         }
       }
     }
@@ -44,45 +32,36 @@ export default async function Satellites() {
             query: GET_SATELLITES,
         });
 
+        const noNoradIdArray = graphqlData.data.satellites?.data.filter(
+            (data) => data.attributes?.catalogNumberNORAD == null,
+        );
+
         return (
-            <div className="flex w-full flex-col items-center justify-center">
-                <PageHeaderAndSubtitle>
-                    <PageHeader>Satellites</PageHeader>
-                    <PageSubtitle>
-                        Here are the satellites we have worked on. Click on them
-                        to see more details.
-                    </PageSubtitle>
-                </PageHeaderAndSubtitle>
-                <Table className="table-auto border-collapse rounded-md border-b border-white shadow">
-                    <TableHeader>
-                        <TableRow className="border-y border-white px-3 py-2 text-left text-white">
-                            <TableHead className="px-6">Satellite</TableHead>
-                            <TableHead className="px-6">Speed</TableHead>
-                            <TableHead className="px-6">Altitude</TableHead>
-                            <TableHead className="px-6">Latitude</TableHead>
-                            <TableHead className="px-6">Longitude</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {graphqlData?.data?.satellites?.data?.map(
-                            (satellite: any) => {
-                                let satelliteName =
-                                    satellite?.attributes?.name ?? "";
-                                return (
-                                    <SatelliteStatsTableRow
-                                        key={satellite.id}
-                                        satName={satelliteName}
-                                        slug={satellite?.attributes?.slug}
-                                    />
-                                );
-                            },
+            <>
+                {/* Table for satellites in orbit */}
+                <SatelliteResponsiveTable
+                    satellites={graphqlData.data.satellites?.data.filter(
+                        (data) => data.attributes?.catalogNumberNORAD !== null,
+                    )}
+                    inOrbit={true}
+                ></SatelliteResponsiveTable>
+
+                <div className="mt-12" />
+
+                {/* Table for satellites not in orbit */}
+                {noNoradIdArray != undefined && noNoradIdArray.length > 0 ? (
+                    <SatelliteResponsiveTable
+                        satellites={graphqlData.data.satellites?.data.filter(
+                            (data) =>
+                                data.attributes?.catalogNumberNORAD == null,
                         )}
-                    </TableBody>
-                </Table>
-            </div>
+                        inOrbit={false}
+                    ></SatelliteResponsiveTable>
+                ) : null}
+            </>
         );
     } catch (error) {
-        console.error("Error fetching satellites:", error);
+        console.error("Error fetching satellites from strapi: ", error);
         return <div>Error fetching satellites</div>;
     }
 }

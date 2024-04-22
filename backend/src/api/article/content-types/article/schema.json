@@ -47,9 +47,9 @@
     "Tag": {
       "type": "enumeration",
       "enum": [
-        "Featured",
-        "News",
-        "Updates"
+        "Satellites",
+        "Projects",
+        "General"
       ]
     }
   }

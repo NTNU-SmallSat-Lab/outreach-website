@@ -811,7 +811,7 @@ export interface ApiArticleArticle extends Schema.CollectionType {
       'manyToOne',
       'api::author.author'
     >;
-    Tag: Attribute.Enumeration<['Featured', 'News', 'Updates']>;
+    Tag: Attribute.Enumeration<['Satellites', 'Projects', 'General']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -978,10 +978,9 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
-    celestrakURL: Attribute.String & Attribute.Unique;
     catalogNumberNORAD: Attribute.String & Attribute.Unique;
     content: Attribute.Blocks;
-    previewImage: Attribute.Media;
+    satelliteImage: Attribute.Media;
     projects: Attribute.Relation<
       'api::satellite.satellite',
       'manyToMany',
@@ -991,6 +990,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     launchDate: Attribute.DateTime;
     slug: Attribute.UID<'api::satellite.satellite', 'name'> &
       Attribute.Required;
+    massKg: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

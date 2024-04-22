@@ -53,12 +53,12 @@ export default function BlockRendererClient({
                                 italic: boolean;
                             };
                         }[];
-
-                        const italic = child[0]?.props.italic;
-                        if (italic) {
+                        const text = child[0]?.props.text;
+                        //Children with text have testid, excluding videoes and linebreaks.
+                        if (text == "") {
                             return <p>{children}</p>;
                         }
-                        return <p>{children}</p>;
+                        return <p data-testid="blockParagraph">{children}</p>;
                     },
 
                     link: ({ url, children }) => {

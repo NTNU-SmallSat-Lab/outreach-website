@@ -6,9 +6,11 @@ Welcome to our design folder! This folder is dedicated to storing and organizing
 
 This Folder is organized into the following folders:
 
-1. **Iterasjon1**: This folder contains the initial design concepts and drafts for the project. It includes early-stage sketches, wireframes, and basic prototypes.
+1. **iteration-1**: This folder contains the initial design concepts and drafts for the project. It includes early-stage sketches, wireframes, and basic prototypes.
 
-2. **Iterasjon2**: Here, you will find the refined designs that were developed based on feedback and further brainstorming from Iterasjon1. This includes more detailed prototypes, higher fidelity wireframes, and potentially some initial UI elements.
+2. **iteration-2**: Here, you will find the refined designs that were developed based on feedback and further brainstorming from Iterasjon1. This includes more detailed prototypes, higher fidelity wireframes, and potentially some initial UI elements.
+3. **iteration-3**: Here, you will find the final designs that we used for the project.
+
 
 ## Accessing Design Files
 

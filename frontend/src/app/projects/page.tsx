@@ -60,18 +60,20 @@ export default async function ProjectsPage() {
     }
 
     return (
-        <div>
+        <div className="mx-auto w-full max-w-6xl grow bg-opacity-50 px-4 py-8 sm:px-8 md:px-10">
             <div className="flex flex-col items-center justify-center">
                 <PageHeaderAndSubtitle>
-                    <PageHeader>Our Projects</PageHeader>
+                    <PageHeader data-testid="projectHeading">
+                        Our Projects
+                    </PageHeader>
                     <PageSubtitle>
                         Information about our various projects are shown here.
                     </PageSubtitle>
                 </PageHeaderAndSubtitle>
             </div>
 
-            <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:grid-cols-3 xl:grid-cols-4">
-                {graphqlData.data.projects.data.map((project) => {
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {graphqlData.data.projects.data.map((project: any) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
                             ?.url;
@@ -81,11 +83,12 @@ export default async function ProjectsPage() {
                     }
                     return (
                         <Link
-                            className="h-full transition-transform duration-200 ease-in-out hover:scale-105 hover:transform sm:m-4"
+                            className="h-full sm:m-4"
                             href={"/projects/" + project?.attributes?.slug}
                             key={project.id}
+                            data-testid="projectCard"
                         >
-                            <Card className="h-full w-full">
+                            <Card className="h-full w-full hover:border-blue-500">
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="w-full">
@@ -108,10 +111,12 @@ export default async function ProjectsPage() {
                                             {project?.attributes?.title}
                                         </CardTitle>
                                         <p className="break-words">
-                                            {SlicePreviewText(
-                                                project?.attributes?.content ??
-                                                    [],
-                                            )}
+                                            <span>
+                                                {SlicePreviewText(
+                                                    project?.attributes
+                                                        ?.content ?? [],
+                                                )}
+                                            </span>
                                         </p>
                                     </div>
                                 </CardContent>

@@ -60,7 +60,7 @@ export default async function fetchFeaturedImage() {
                 <div>
                     <div className="relative h-[300px] w-[300px]">
                         <Image
-                            alt="Most recent satellite image"
+                            alt="Featured satellite image"
                             src={featuredImageURL}
                             className="m-0"
                             layout="fill"

@@ -3,33 +3,25 @@ import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import { TableCell, TableRow } from "@/components/shadcn/table";
-import { useRouter } from "next/navigation";
 
-const updateInterval = 10;
+const updateInterval = 50;
 
 export default function SatelliteStatsTableRow({
     satName,
-    slug,
+    handleRowClick,
 }: {
     satName: string;
-    slug: string;
+    handleRowClick: () => void;
 }) {
-    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
+    const { satelliteData, setSelectedSatellite } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
 
-    const router = useRouter();
-
-    // Fetch satellite data on component mount
-    useEffect(() => {
-        fetchAndSetSatelliteData(satName);
-    }, [fetchAndSetSatelliteData, satName]);
-
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
-            // Access satellite data by name
+            // Access satellite data by name //Fix this to work!
             const satData = satelliteData[satName];
             if (satData) {
                 const updatedInfo = convertSatrec(satData.satrec, satData.name);
@@ -44,37 +36,40 @@ export default function SatelliteStatsTableRow({
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {
         return (
-            <tr>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
-                <td className="px-6 py-4">Loading...</td>
-            </tr>
+            <TableRow>
+                <TableCell className="w-1/5 px-6">{satName}</TableCell>
+                <TableCell className="hidden w-1/5 sm:table-cell">
+                    Loading...
+                </TableCell>
+                <TableCell className="w-1/5">Loading...</TableCell>
+                <TableCell className="hidden w-1/5 sm:table-cell">
+                    Loading...
+                </TableCell>
+                <TableCell className="hidden w-1/5 sm:table-cell">
+                    Loading...
+                </TableCell>
+            </TableRow>
         );
-    }
-
-    function handleClick() {
-        router.replace(`/satellites/${slug}`);
     }
 
     return (
         <TableRow
-            onClick={handleClick}
-            className="hover: cursor-pointer hover:bg-white hover:bg-white hover:text-black"
+            className="cursor-pointer hover:bg-white hover:text-black"
+            onClick={() => {
+                setSelectedSatellite(satName);
+                handleRowClick();
+            }}
         >
-            <TableCell className="px-6 py-4">{satName}</TableCell>
-            <TableCell className="px-6 py-4">
-                {satelliteInfo.velocity + " km/s"}
+            <TableCell className="w-1/5 px-6">{satName}</TableCell>
+            <TableCell className="hidden w-1/5 sm:table-cell">
+                {satelliteInfo.velocity} km/s
             </TableCell>
-            <TableCell className="px-6 py-4">
-                {satelliteInfo.altitude + " km"}
+            <TableCell className="w-1/5">{satelliteInfo.altitude} km</TableCell>
+            <TableCell className="hidden w-1/5 sm:table-cell">
+                {satelliteInfo.latitudeDeg}° N
             </TableCell>
-            <TableCell className="px-6 py-4">
-                {satelliteInfo.latitudeDeg + "° N"}
-            </TableCell>
-            <TableCell className="px-6 py-4">
-                {satelliteInfo.longitudeDeg + "° E"}
+            <TableCell className="hidden w-1/5 sm:table-cell">
+                {satelliteInfo.longitudeDeg}° E
             </TableCell>
         </TableRow>
     );

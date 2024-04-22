@@ -1,11 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { create } from "zustand";
 import type { SatelliteData } from "@/lib/getSatelliteData";
-import { satLoader } from "@/lib/getSatelliteData";
+import { satLoaderById } from "@/lib/getSatelliteData";
+
+// Satellite entry for setSatellites
+interface SatelliteEntry {
+    name: string;
+    id: string;
+}
 
 // Define the state and actions separately
 interface SatelliteState {
     satelliteData: Record<string, SatelliteData>;
+    satelliteNameToId: Record<string, string>;
     satelliteNames: string[];
     selectedSatellite: string;
 }
@@ -14,46 +21,52 @@ interface SatelliteActions {
     setSatelliteData: (satName: string, data: SatelliteData) => void;
     fetchAndSetSatelliteData: (satName: string) => Promise<void>;
     setSelectedSatellite: (satName: string) => void;
+    setSatellites: (satellites: SatelliteEntry[]) => void;
 }
 
 type SatelliteStore = SatelliteState & SatelliteActions;
 
-// Create satellite store. Update selectedSatellite if you want a different default
+// Create satellite store
 export const useSatelliteStore = create<SatelliteStore>((set, get) => ({
     satelliteData: {},
-    satelliteNames: [
-        "0 VANGUARD 2",
-        "0 EXPLORER 7",
-        "0 SOLRAD 3/INJUN 1",
-        "0 STARLINK-1007",
-        "0 TIROS 1",
-        "0 EXPLORER 11",
-        "0 GREB",
-        "0 METEOR 1-5",
-        "0 COSMOS 2486",
-        "0 YAOGAN 17B",
-        "0 POPACS 3",
-        "0 CINEMA 2",
-        "0 FIREBIRD A",
-        "0 EGYPTSAT 2",
-        "0 HODOYOSHI 3",
-    ],
-    selectedSatellite: "0 VANGUARD 2",
+    satelliteNames: [],
+    satelliteNameToId: {},
+    selectedSatellite: "",
 
-    setSatelliteData: (satName, data) =>
-        set((state) => ({
-            satelliteData: { ...state.satelliteData, [satName]: data },
-        })),
     fetchAndSetSatelliteData: async (satName) => {
-        const newData = await satLoader(satName);
+        const satId = get().satelliteNameToId[satName];
+        const newData = await satLoaderById(satId);
         set((state) => ({
             satelliteData: { ...state.satelliteData, [satName]: newData },
+        }));
+    },
+
+    setSatelliteData: (satName, data) => {
+        set((state) => ({
+            satelliteData: { ...state.satelliteData, [satName]: data },
         }));
     },
 
     setSelectedSatellite: (satName) => {
         set(() => ({
             selectedSatellite: satName,
+        }));
+    },
+
+    setSatellites: (satellites) => {
+        const names = satellites.map((sat) => sat.name);
+        const nameToId = satellites.reduce<Record<string, string>>(
+            (acc, sat) => {
+                acc[sat.name] = sat.id;
+                return acc;
+            },
+            {},
+        );
+
+        set(() => ({
+            satelliteNames: names,
+            satelliteNameToId: nameToId,
+            selectedSatellite: names[0] || "",
         }));
     },
 }));
