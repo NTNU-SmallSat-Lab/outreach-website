@@ -13,32 +13,31 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "unique": true
     },
-    "description": {
-      "type": "text"
-    },
-    "article": {
+    "content": {
       "type": "blocks"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "previewImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "satellites": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::satellite.satellite",
       "inversedBy": "projects"
-    },
-    "slug": {
-      "type": "uid"
-    },
-    "coverImage": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "type": "media",
-      "multiple": false
     }
   }
 }

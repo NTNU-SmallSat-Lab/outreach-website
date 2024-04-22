@@ -12,36 +12,45 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
+    "previewTitle": {
+      "type": "string",
+      "required": true,
+      "unique": true
     },
-    "subtitle": {
-      "type": "string"
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "previewTitle"
+    },
+    "datePublished": {
+      "type": "date",
+      "required": true
     },
     "coverImage": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
-    "datePublished": {
-      "type": "date"
-    },
     "body": {
-      "type": "blocks"
+      "type": "blocks",
+      "required": true
     },
     "author": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::author.author"
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "articles"
     },
-    "slug": {
-      "type": "uid"
+    "Tag": {
+      "type": "enumeration",
+      "enum": [
+        "Satellites",
+        "Projects",
+        "General"
+      ]
     }
   }
 }

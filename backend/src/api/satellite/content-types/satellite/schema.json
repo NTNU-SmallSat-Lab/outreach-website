@@ -12,8 +12,25 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
     "catalogNumberNORAD": {
-      "type": "string"
+      "type": "string",
+      "unique": true
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "satelliteImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "projects": {
       "type": "relation",
@@ -21,8 +38,19 @@
       "target": "api::project.project",
       "mappedBy": "satellites"
     },
-    "celestrakURL": {
+    "missionStatus": {
       "type": "string"
+    },
+    "launchDate": {
+      "type": "datetime"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "massKg": {
+      "type": "float"
     }
   }
 }

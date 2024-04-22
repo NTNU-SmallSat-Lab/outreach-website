@@ -1,12 +1,21 @@
-export const runtime = "edge";
 import { gql } from "@/__generated__/gql";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/shadcn/card";
 import { getClient } from "@/lib/ApolloClient";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
-import BlockRendererClient from "@/components/BlockRendererClient";
-const HOST_URL = process.env.HOST_URL;
+import { SlicePreviewText } from "@/components/SlicePreviewText";
+import {
+    PageHeader,
+    PageHeaderAndSubtitle,
+    PageSubtitle,
+} from "@/components/PageHeader";
+import { OuiImage } from "@/components/fullBlogCard";
+const STRAPI_URL = process.env.STRAPI_URL;
 
 const GET_PROJECTS = gql(`
  query GET_PROJECTS {
@@ -15,7 +24,7 @@ const GET_PROJECTS = gql(`
           id
           attributes {
             title
-            article
+            content
             satellites {
               data {
                 attributes {
@@ -24,17 +33,13 @@ const GET_PROJECTS = gql(`
               }
             }
             slug
-            coverImage {
+            previewImage {
               data {
                 attributes {
                   url
                 }
               }
             }
-            updatedAt
-            publishedAt
-            createdAt
-            description
           }
         }
       }
@@ -55,56 +60,68 @@ export default async function ProjectsPage() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-extrabold ">Our Projects</h1>
-            <p className="text-sm text-muted-foreground">
-                Information about our various projects are shown here.
-            </p>
+        <div className="mx-auto w-full max-w-6xl grow bg-opacity-50 px-4 py-8 sm:px-8 md:px-10">
+            <div className="flex flex-col items-center justify-center">
+                <PageHeaderAndSubtitle>
+                    <PageHeader data-testid="projectHeading">
+                        Our Projects
+                    </PageHeader>
+                    <PageSubtitle>
+                        Information about our various projects are shown here.
+                    </PageSubtitle>
+                </PageHeaderAndSubtitle>
+            </div>
 
-            <div className="flex flex-col gap-4 mt-4 justify-center items-center">
-                {graphqlData.data.projects.data.map((project) => {
-                    let coverImage =
-                        project?.attributes?.coverImage?.data?.attributes?.url;
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {graphqlData.data.projects.data.map((project: any) => {
+                    let previewImage =
+                        project?.attributes?.previewImage?.data?.attributes
+                            ?.url;
 
-                    if (HOST_URL && coverImage != undefined) {
-                        coverImage = HOST_URL + coverImage;
-                    }
-                    let content: BlocksContent =
-                        project?.attributes?.article ?? [];
-
-                    for (const block of content) {
-                        if (block.type === "paragraph") {
-                            content = [block];
-                            break;
-                        }
+                    if (STRAPI_URL && previewImage != undefined) {
+                        previewImage = STRAPI_URL + previewImage;
                     }
                     return (
-                        <Card className="w-1/2" key={project.id}>
-                            <CardHeader>
-                                <CardTitle>
-                                    <Link
-                                        className="hover:underline"
-                                        href={
-                                            "/projects/" +
-                                            project?.attributes?.slug
-                                        }
-                                    >
-                                        {project?.attributes?.title}
-                                    </Link>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                {coverImage && (
-                                    <Image
-                                        src={coverImage}
-                                        alt={coverImage}
-                                        width={500}
-                                        height={0} // Set height to 0 to maintain aspect ratio
-                                    />
-                                )}
-                                <BlockRendererClient content={content} />
-                            </CardContent>
-                        </Card>
+                        <Link
+                            className="h-full sm:m-4"
+                            href={"/projects/" + project?.attributes?.slug}
+                            key={project.id}
+                            data-testid="projectCard"
+                        >
+                            <Card className="h-full w-full hover:border-blue-500">
+                                <CardHeader></CardHeader>
+                                <CardContent>
+                                    <div className="w-full">
+                                        {previewImage ? (
+                                            <Image
+                                                className="max-h-full max-w-full object-contain"
+                                                src={previewImage}
+                                                alt={previewImage}
+                                                width={500}
+                                                height={0}
+                                            />
+                                        ) : (
+                                            <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
+                                                <OuiImage />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="prose prose-invert">
+                                        <CardTitle className="mb-2 mt-6">
+                                            {project?.attributes?.title}
+                                        </CardTitle>
+                                        <p className="break-words">
+                                            <span>
+                                                {SlicePreviewText(
+                                                    project?.attributes
+                                                        ?.content ?? [],
+                                                )}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     );
                 })}
             </div>

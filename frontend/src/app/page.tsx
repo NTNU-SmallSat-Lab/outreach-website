@@ -1,34 +1,53 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@shadcn/button";
 import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
 
-// Dynamic import because of leaflet and globe.gl ssr problem with next.js
+import fetchFeaturedImage from "@/lib/data/fetchFeaturedImage";
+
+import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import SatelliteSelector from "@/components/homeComponents/SatelliteSelector";
 import dynamic from "next/dynamic";
-import SatelliteFetcher from "@/components/map/SatelliteFetcher";
+import HeroWrapper from "@/components/HeroWrapper";
 
-const MyCustomMap = dynamic(() => import("@/components/map/MyCustomMap"), {
-    ssr: false,
-});
+const SatelliteGlobeNoSSR = dynamic(
+    () => import("@/components/homeComponents/homeGlobe"),
+    {
+        ssr: false,
+    },
+);
 
-export default function Home() {
+export default async function Home() {
+    const featuredImageURL = await fetchFeaturedImage();
+
     return (
-        <main>
-            <SatelliteFetcher useExampleData={true} />
+        <>
+            <div className="flex min-h-[calc(100vh-73px)] flex-col gap-0 sm:flex-row">
+                {/* Stats Container */}
+                <div className="z-10 flex w-full flex-col border-b-2 border-l-2 border-r-2 border-t-2 border-gray-600 bg-black md:min-w-[500px] xl:w-1/3">
+                    <SatelliteSelector />
+                    <SatelliteDataHome />
+                </div>
 
-            <MyCustomMap />
+                {/* Globe Container */}
+                <div className="z-0 h-full w-full overflow-x-hidden  border-b-2 border-l-2 border-r-2 border-t-0 border-gray-600 sm:border-l-0 sm:border-t-2 xl:w-2/3">
+                    <div className="flex h-[70vh] items-center justify-center sm:h-full">
+                        <SatelliteGlobeNoSSR />
+                    </div>
+                </div>
+            </div>
 
             <ColoredSection
                 id="about-us"
-                className="flex flex-col items-center py-12 px-8"
+                className="flex flex-col items-center px-8 py-12"
             >
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
+                <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1>
                         Empowering Space Exploration One Satellite at a Time
                     </h1>
 
-                    <div className="relative w-[300px] h-[300px]">
+                    <div className="relative h-[300px] w-[300px]">
                         <Image
                             alt="Satellite in orbit"
                             src="/images/satellite.jpg"
@@ -36,7 +55,7 @@ export default function Home() {
                             layout="fill"
                         />
                     </div>
-                    <div className="flex flex-col gap-4 items-center col-span-2 lg:col-span-2">
+                    <div className="col-span-2 flex flex-col items-center gap-4 lg:col-span-2 ">
                         <div className=" self-center">
                             <p>
                                 NTNU Small Satellite Lab is an initiative to
@@ -55,8 +74,8 @@ export default function Home() {
                     </div>
                 </div>
             </ColoredSection>
-            <div className="pt-8 items-center text-center flex flex-col py-12 px-8">
-                <div className="prose dark:prose-invert">
+            <div className="flex flex-col items-center px-8 py-12 text-center">
+                <div className="prose prose-invert">
                     <h1 className="">Projects</h1>
                     <p className="">
                         The SmallSat Lab team is part of a variety of projects,
@@ -75,20 +94,15 @@ export default function Home() {
                     </Link>
                 </div>
             </div>
-            <ColoredSection className="flex flex-col items-center py-12 px-8">
-                <div className="flex flex-col items-center text-center prose dark:prose-invert prose-img:rounded-xl">
-                    <h1 className="">Most recent picture</h1>
-                    <div className="relative w-[300px] h-[300px]">
-                        <Image
-                            alt="Satellite image of city"
-                            src="/images/recent-image.jpg"
-                            className="m-0"
-                            layout="fill"
-                            objectFit="cover"
-                        />
-                    </div>
+
+            <ColoredSection className="flex flex-col items-center px-8 py-12">
+                <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
+                    <h1 className="">Featured Satellite Image</h1>
+                    {featuredImageURL}
                 </div>
             </ColoredSection>
-        </main>
+
+            <HeroWrapper></HeroWrapper>
+        </>
     );
 }

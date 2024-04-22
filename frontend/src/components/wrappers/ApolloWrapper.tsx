@@ -10,13 +10,13 @@ import {
     SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
-const HOST_URL = process.env.HOST_URL;
+const STRAPI_URL = process.env.STRAPI_URL;
 
 // have a function to create a client for you
 function makeClient() {
     const httpLink = new HttpLink({
         // this needs to be an absolute url, as relative urls cannot be used in SSR
-        uri: HOST_URL + "/graphql",
+        uri: STRAPI_URL + "/graphql",
         // you can disable result caching here if you want to
         // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
         fetchOptions: { cache: "no-store" },

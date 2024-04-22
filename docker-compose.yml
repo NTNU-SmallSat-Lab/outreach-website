@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  backend:
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /var/data/
+        target: /var/data/
+      - type: bind
+        source: /var/data/outreachuploads
+        target: /usr/src/app/backend/public/uploads
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    image: backend:outreach
+    ports:
+      - "1337:1337"
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    image: frontend:outreach
+    ports:
+      - "3000:3000"

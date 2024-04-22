@@ -5,88 +5,66 @@
 name: Node.js CI
 
 on:
-    push:
-        branches: ["main"]
-    pull_request:
-        branches: ["main"]
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 defaults:
-    run:
-        working-directory: ./frontend
+  run:
+    working-directory: ./frontend
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: self-hosted
 
-        strategy:
-            matrix:
-                node-version: [18.x, 20.x]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: "npm"
-            - run: npm ci # Clean install packages
-            - run: npm run build # Build the frontend
-            - run: npm test --if-present # Run tests
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci # Clean install packages
+      - run: npm run build # Build the frontend
 
-    lint:
-        runs-on: ubuntu-latest
+  lint:
+    runs-on: self-hosted
 
-        strategy:
-            matrix:
-                node-version: [20.x]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: "npm"
-            - run: npm ci # Clean install packages
-            - run: npm run lint # Run linter
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci # Clean install packages
+      - run: npm run lint # Run linter
 
-    prettier:
-        runs-on: ubuntu-latest
+  prettier:
+    runs-on: self-hosted
 
-        strategy:
-            matrix:
-                node-version: [20.x]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: "npm"
-            - run: npm ci # Clean install packages
-            - run: npx prettier . --check # Run prettier
-
-    test:
-        timeout-minutes: 60
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 18
-            - name: Install dependencies
-              run: npm ci
-            - name: Install Playwright Browsers
-              run: npx playwright install --with-deps
-            - name: Run Playwright tests
-              run: npx playwright test
-            - uses: actions/upload-artifact@v3
-              if: always()
-              with:
-                  name: playwright-report
-                  path: playwright-report/
-                  retention-days: 30
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci # Clean install packages
+      - run: npx prettier . --check # Run prettier

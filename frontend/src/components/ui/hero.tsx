@@ -1,51 +1,27 @@
-import Link from "next/link";
-import { Button } from "@components/ui/button";
-import { cn } from "@/lib/utils";
 import React from "react";
-
+import Image from "next/image";
 interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     description: string;
-    buttonLink: string;
-    buttonText: string;
-    handleClick: () => void;
+    imageUrl: string;
     className?: string;
 }
 
 const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
-    (
-        {
-            title,
-            description,
-            buttonLink,
-            buttonText,
-            handleClick,
-            className,
-            children,
-            ...props
-        },
-        ref,
-    ) => (
-        <section
-            ref={ref}
-            {...props}
-            className={cn("w-full py-12 md:py-24 lg:py-32 xl:py-48", className)}
-        >
+    ({ title, description, imageUrl, className, children, ...props }, ref) => (
+        <section ref={ref} {...props} className={`w-full ${className}`}>
             <div className="container px-4 md:px-6">
+                <h1>{title}</h1>
                 <div className="flex flex-col items-center space-y-4 text-center">
-                    <div className="space-y-2">
-                        <h1 className=" font-bold tracking-tighter text-6xl">
-                            {title}
-                        </h1>
-                        <p className="mx-auto max-w-[700px] text-gray-500 text-xl dark:text-gray-400">
-                            {description}
-                        </p>
-                    </div>
-                    <div className="space-x-4">
-                        <Link href={buttonLink}>
-                            <Button onClick={handleClick}>{buttonText}</Button>
-                        </Link>
-                    </div>
+                    <Image
+                        alt={title}
+                        src={imageUrl}
+                        width={0}
+                        height={0}
+                        sizes="100vm"
+                        style={{ width: "70%", height: "auto" }}
+                    ></Image>
+                    <p className="self-center"> {description}</p>
                     {children}
                 </div>
             </div>
@@ -53,6 +29,6 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     ),
 );
 
-Hero.displayName = "Hero"; // Add display name
+Hero.displayName = "Hero";
 
 export default Hero;

@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import NextImage from "next/image";
 
 import {
     BlocksRenderer,
@@ -13,52 +13,80 @@ export default function BlockRendererClient({
 }) {
     if (!content) return null;
     return (
-        <BlocksRenderer
-            content={content}
-            blocks={{
-                image: ({ image }) => {
-                    console.log(image);
-                    return (
-                        <Image
-                            src={image.url}
-                            width={500}
-                            height={image.height}
-                            alt={image.alternativeText || ""}
-                        />
-                    );
-                },
-                heading: ({ children, level }) => {
-                    switch (level) {
-                        case 1:
-                            return (
-                                <h1 className="text-4xl mb-4">{children}</h1>
-                            );
-                        case 2:
-                            return (
-                                <h2 className="text-3xl mb-2">{children}</h2>
-                            );
-                        case 3:
-                            return (
-                                <h3 className="text-2xl mb-2">{children}</h3>
-                            );
-                        case 4:
-                            return <h4 className="text-xl mb-2">{children}</h4>;
-                        case 5:
-                            return <h5 className="text-lg mb-2">{children}</h5>;
-                        default:
-                            return (
-                                <h1 className="text-4xl mb-4">{children}</h1>
-                            );
-                    }
-                },
+        <div className="prose prose-invert lg:prose-xl">
+            <BlocksRenderer
+                content={content}
+                blocks={{
+                    image: ({ image }) => {
+                        return (
+                            <NextImage
+                                src={image.url}
+                                width={image.width}
+                                className="object-contain"
+                                height={image.height}
+                                alt={image.alternativeText || ""}
+                            />
+                        );
+                    },
+                    heading: ({ children, level }) => {
+                        switch (level) {
+                            case 1:
+                                return <h1>{children}</h1>;
+                            case 2:
+                                return <h2>{children}</h2>;
+                            case 3:
+                                return <h3>{children}</h3>;
+                            case 4:
+                                return <h4>{children}</h4>;
+                            case 5:
+                                return <h5>{children}</h5>;
+                            default:
+                                return <h1>{children}</h1>;
+                        }
+                    },
 
-                paragraph: ({ children }) => (
-                    <>
-                        <p className="">{children}</p>
-                        <br />
-                    </>
-                ),
-            }}
-        />
+                    paragraph: ({ children }) => {
+                        const child = children as {
+                            props: {
+                                type: "text";
+                                text: string;
+                                italic: boolean;
+                            };
+                        }[];
+                        const text = child[0]?.props.text;
+                        //Children with text have testid, excluding videoes and linebreaks.
+                        if (text == "") {
+                            return <p>{children}</p>;
+                        }
+                        return <p data-testid="blockParagraph">{children}</p>;
+                    },
+
+                    link: ({ url, children }) => {
+                        // Check if the URL is a valid YouTube video link
+                        const isYouTubeVideo = url.includes("youtube.com");
+                        // Render the iframe only if it's a YouTube video link
+                        if (isYouTubeVideo) {
+                            return (
+                                <div className="flex w-full items-center">
+                                    <iframe
+                                        width={"100%"}
+                                        className="aspect-video"
+                                        src={url}
+                                        title="YouTube video"
+                                    ></iframe>
+                                </div>
+                            );
+                        } else {
+                            // If it's not a video link, return an anchor with the href
+                            return (
+                                <a href={url} target="_blank">
+                                    {children}
+                                </a>
+                            );
+                        }
+                    },
+                }}
+            />
+        </div>
     );
 }
