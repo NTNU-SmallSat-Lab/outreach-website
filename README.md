@@ -43,10 +43,22 @@ npx prettier --write
 This will automatically format the code according to the rules set up for this project. The specific formatting rules have been defined here:
 
 ```
-./frontend/prettierrc
+./frontend/.prettierrc
 ```
 
 Prettier has been integrated into the CI/CD pipeline to automatically check code formatting during pull requests.
+
+We have also used ESLint to maintain code quality. It can be run manually with the command
+
+```
+npm run lint
+```
+
+ESLint has also been integratd into the CI/CD pipeline to automatically check code quality during pull requests. The specific linting rules have been defined here:
+
+```
+./frontend/.eslintrc.json
+```
 
 ## More Info
 
