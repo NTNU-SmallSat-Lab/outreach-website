@@ -3,7 +3,7 @@ import { useSatelliteStore } from "@/lib/store";
 import { useEffect } from "react";
 
 interface SatelliteInitialFetchProps {
-    satData: { name: string; id: string; data: any, selected?: boolean }[]; // Adjusted to possibly include 'selected'
+    satData: { name: string; id: string; data: any; selected?: boolean }[]; // Adjusted to possibly include 'selected'
 }
 
 export default function SatelliteInitialFetch({
@@ -13,7 +13,7 @@ export default function SatelliteInitialFetch({
 
     useEffect(() => {
         // Convert incoming data to the expected format by the store
-        const satellites = satData.map(sat => ({
+        const satellites = satData.map((sat) => ({
             name: sat.name,
             id: sat.id,
             data: sat.data, // Assuming data is optional and handled correctly by setSatellites

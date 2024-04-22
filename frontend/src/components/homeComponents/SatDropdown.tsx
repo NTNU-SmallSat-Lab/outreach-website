@@ -7,7 +7,9 @@ import { satLoaderById } from "@/lib/getSatelliteData";
 type DropdownProps = {
     satelliteNames: string[];
     selectedSatellite: string;
+    // eslint-disable-next-line no-unused-vars
     setSelectedSatellite: (satellite: string) => void;
+    // eslint-disable-next-line no-unused-vars
     setSatellites: (satellites: any) => void;
 };
 
