@@ -74,7 +74,7 @@ export default async function SatelliteInfoPage({
                                         <a
                                             href={`https://www.n2yo.com/satellite/?s=${satelliteInfo.noradId}`}
                                             target="_blank"
-                                            className="ml-2 text-blue-400"
+                                            className="ml-2 underline"
                                         >
                                             {satelliteInfo.noradId}
                                         </a>
