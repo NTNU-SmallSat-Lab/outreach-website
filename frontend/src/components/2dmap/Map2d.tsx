@@ -28,7 +28,7 @@ export default function Map2d({ satName }: { satName: string }) {
         const intervalId = setInterval(() => {
             // Access satellite data by name
             const satData = satelliteData[satName];
-            if (satData) {
+            if (satData && satData.satrec) {
                 const updatedInfo = convertSatrec(satData.satrec, satData.name);
                 setSatelliteInfo(updatedInfo);
             }
