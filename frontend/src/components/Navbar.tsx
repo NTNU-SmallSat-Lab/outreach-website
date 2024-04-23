@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@shadcn/button";
@@ -121,14 +122,10 @@ export function CodiconGithubProject(props: SVGProps<SVGSVGElement>) {
 export default function Navbar() {
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {
-        if (path === pathname) {
+        if (pathname.includes(path)) {
             return;
         }
         return "ghost";
-    };
-
-    const handleHomeClick = () => {
-        window.location.href = "/";
     };
 
     return (
@@ -137,10 +134,9 @@ export default function Navbar() {
                 <Link href="/">
                     <Image
                         width={256}
-                        height={70} // Adjusted height
+                        height={70}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
-                        onClick={handleHomeClick}
                     />
                 </Link>
             </div>

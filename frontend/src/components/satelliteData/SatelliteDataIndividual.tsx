@@ -6,18 +6,10 @@ import { useSatelliteStore } from "@/lib/store";
 const updateInterval = 50;
 
 export default function SatelliteDataIndividual() {
-    const { satelliteData, fetchAndSetSatelliteData, selectedSatellite } =
-        useSatelliteStore();
+    const { satelliteData, selectedSatellite } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
-
-    // Fetch satellite data on component mount or when selectedSatellite changes
-    useEffect(() => {
-        if (selectedSatellite) {
-            fetchAndSetSatelliteData(selectedSatellite);
-        }
-    }, [fetchAndSetSatelliteData, selectedSatellite]);
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {

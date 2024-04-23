@@ -25,9 +25,10 @@ export default function SatelliteGlobe() {
             globeRef.current = Globe()(chart.current)
                 .globeImageUrl(
                     "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
-                ) /*.backgroundImageUrl(
+                )
+                .backgroundImageUrl(
                     "//unpkg.com/three-globe/example/img/night-sky.png",
-                )*/
+                )
                 .objectLat("lat")
                 .objectLng("lng")
                 .objectAltitude("alt")
@@ -54,21 +55,31 @@ export default function SatelliteGlobe() {
 
             globeRef.current.controls().enabled = true;
             globeRef.current.controls().enableZoom = false;
+            globeRef.current.controls().enablePan = false;
+            globeRef.current.controls().enableRotate = true;
 
-            const setGlobeSize = () => {
+            // lock the initial height of the globe
+            const setInitialGlobeSize = () => {
                 if (globeRef.current && chart.current) {
                     const { width, height } =
                         chart.current.getBoundingClientRect();
                     globeRef.current.width(width);
-                    globeRef.current.height(height / 1.5);
+                    globeRef.current.height(height - 76);
                 }
             };
 
             // Initially set the globe size to match the container
-            setGlobeSize();
+            setInitialGlobeSize();
+
+            // set globesize on screen resize
+            const setGlobeSize = () => {
+                if (globeRef.current && chart.current) {
+                    const { width } = chart.current.getBoundingClientRect();
+                    globeRef.current.width(width);
+                }
+            };
 
             // Resize listener to update the globe size
-
             if (typeof window !== "undefined") {
                 window.addEventListener("resize", setGlobeSize);
                 return () => {
@@ -78,8 +89,8 @@ export default function SatelliteGlobe() {
 
             // Set initial positions of satellites
             let currentDate = new Date().toISOString();
-            const initialPositions = Object.values(satelliteData).map(
-                (sat) => ({
+            const initialPositions = Object.entries(satelliteData).map(
+                ([satName, sat]) => ({
                     lat: parseFloat(
                         convertSatrec(sat.satrec, currentDate).latitudeDeg,
                     ),
@@ -90,9 +101,10 @@ export default function SatelliteGlobe() {
                         parseFloat(
                             convertSatrec(sat.satrec, currentDate).altitude,
                         ) / EARTH_RADIUS_KM,
-                    name: sat.name,
+                    name: satName,
                 }),
             );
+
             globeRef.current.objectsData(initialPositions);
 
             return () => {
@@ -101,7 +113,7 @@ export default function SatelliteGlobe() {
                 }
             };
         }
-    });
+    }, [satelliteData]);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
@@ -109,8 +121,8 @@ export default function SatelliteGlobe() {
             const currentDate = new Date().toISOString();
 
             if (globeRef.current) {
-                const newPositions = Object.values(satelliteData).map((sat) => {
-                    return {
+                const newPositions = Object.entries(satelliteData).map(
+                    ([satName, sat]) => ({
                         lat: parseFloat(
                             convertSatrec(sat.satrec, currentDate).latitudeDeg,
                         ),
@@ -121,13 +133,11 @@ export default function SatelliteGlobe() {
                             parseFloat(
                                 convertSatrec(sat.satrec, currentDate).altitude,
                             ) / EARTH_RADIUS_KM,
-                        name: sat.name,
+                        name: satName,
                         color:
-                            selectedSatellite === sat.name
-                                ? "red"
-                                : "palegreen",
-                    };
-                });
+                            selectedSatellite === satName ? "red" : "palegreen",
+                    }),
+                );
 
                 globeRef.current.objectsData(newPositions);
             }
@@ -146,7 +156,8 @@ export default function SatelliteGlobe() {
             {
                 lat: Number(targetPosition.latitudeDeg),
                 lng: Number(targetPosition.longitudeDeg),
-                altitude: 2.5,
+                altitude:
+                    Number(targetPosition.altitude) / EARTH_RADIUS_KM + 3.5,
             },
             1700,
         );

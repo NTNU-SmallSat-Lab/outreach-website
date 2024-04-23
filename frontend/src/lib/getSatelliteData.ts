@@ -1,6 +1,5 @@
 import { twoline2satrec } from "satellite.js";
 import { SatRec } from "satellite.js";
-import { exampleData } from "@/components/satelliteData/exampleSatData";
 
 // Satellite data interface
 interface SatelliteData {
@@ -18,26 +17,6 @@ let cachedData: {
     timestamp: new Date(0),
 };
 
-// Fetch satellite data from Celestrak by satellite name
-// eslint-disable-next-line no-unused-vars
-async function fetchSatelliteData(satName: string): Promise<any> {
-    const response = await fetch(
-        `https://celestrak.org/NORAD/elements/gp.php?NAME=${satName}&FORMAT=TLE`,
-        {
-            next: {
-                revalidate: 60 * 60 * 24, // revalidate every 24 hours
-            },
-        },
-    );
-    if (!response.ok) {
-        throw new Error(
-            `Failed to fetch satellite data: ${response.statusText}`,
-        );
-    }
-    const data = await response.text();
-    return mapTleToSatData(data);
-}
-
 // Map TLE data to satellite data
 function mapTleToSatData(tleString: string): SatelliteData[] {
     const lines = tleString.trim().split("\n");
@@ -53,32 +32,54 @@ function mapTleToSatData(tleString: string): SatelliteData[] {
     return satellites;
 }
 
+// fetch satellite data from celestrak by id
+async function fetchSatelliteDataById(satId: string): Promise<any> {
+    const response = await fetch(
+        `https://celestrak.org/NORAD/elements/gp.php?CATNR=${satId}&FORMAT=TLE`,
+        {
+            next: {
+                revalidate: 60 * 60 * 24, // revalidate every 24 hours
+            },
+        },
+    );
+    if (response.status === 403) {
+        throw new Error(
+            "403 - Forbidden: Access is denied. You are likely IP banned temporarily for making too many requests.",
+        );
+    }
+    if (!response.ok) {
+        throw new Error(
+            `Failed to fetch satellite data from celestrak: ${response.statusText}`,
+        );
+    }
+    const data = await response.text();
+    return mapTleToSatData(data);
+}
+
 // Check if cached data is stale
 function isStale(timestamp: Date): boolean {
     const now = new Date();
     return now.getTime() - timestamp.getTime() > 24 * 60 * 60 * 1000;
 }
 
-export async function satLoader(satName: string): Promise<SatelliteData> {
+// Load satellite data by id
+export async function satLoaderById(satId: string): Promise<SatelliteData> {
     // The logic to check if data is stale and needs to be fetched
     if (
         !cachedData ||
         isStale(cachedData.timestamp) ||
-        !(satName in cachedData.data)
+        !(satId in cachedData.data)
     ) {
         // Fetch the data and update the cache
-        const newDataArray = await fetchSatelliteData(satName);
-        //const newDataArray = mapTleToSatData(exampleData);
-        const satExample = newDataArray.find((sat: any) => sat.name == satName);
-        const newData = satExample || newDataArray[0];
+        const newData = await fetchSatelliteDataById(satId);
 
         cachedData = {
-            data: { ...cachedData.data, [satName]: newData },
+            data: { ...cachedData.data, [satId]: newData[0] },
             timestamp: new Date(),
         };
     }
 
-    return cachedData.data[satName];
+    return cachedData.data[satId];
 }
 
 export type { SatelliteData };

@@ -11,10 +11,18 @@ const GET_SATELLITE_INFO =
         data {
             id
             attributes {
-                celestrakURL
                 catalogNumberNORAD
                 content
                 name
+                massKg
+                missionStatus
+                satelliteImage {
+                  data {
+                    attributes {
+                      url
+                    }
+                  }
+                }
               projects {
                 data {
                   attributes {
@@ -82,8 +90,16 @@ export default async function fetchSatelliteInfo({
             graphqlData?.data?.satellites?.data[0]?.attributes
                 ?.catalogNumberNORAD ?? undefined,
         launchDate:
-            graphqlData.data.satellites?.data[0]?.attributes?.launchDate ??
+            graphqlData.data.satellites?.data[0]?.attributes?.launchDate ?? "",
+        missionStatus:
+            graphqlData?.data?.satellites?.data[0]?.attributes?.missionStatus ??
             undefined,
+        massKg:
+            graphqlData?.data?.satellites?.data[0]?.attributes?.massKg ??
+            undefined,
+        satelliteImage:
+            graphqlData?.data?.satellites?.data[0]?.attributes?.satelliteImage
+                ?.data?.attributes?.url ?? undefined,
     };
 
     return satelliteInfo;
