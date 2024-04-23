@@ -67,9 +67,9 @@ export async function satLoader(satName: string): Promise<SatelliteData> {
         !(satName in cachedData.data)
     ) {
         // Fetch the data and update the cache
-        // const newDataArray = await fetchSatelliteData(satName);
-        const newDataArray = mapTleToSatData(exampleData);
-        const satExample = newDataArray.find((sat) => sat.name == satName);
+        const newDataArray = await fetchSatelliteData(satName);
+        //const newDataArray = mapTleToSatData(exampleData);
+        const satExample = newDataArray.find((sat: any) => sat.name == satName);
         const newData = satExample || newDataArray[0];
 
         cachedData = {
