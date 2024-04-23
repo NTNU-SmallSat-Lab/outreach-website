@@ -13,7 +13,8 @@ export default function SatelliteStatsTableRow({
     satName: string;
     handleRowClick: () => void;
 }) {
-    const { satelliteData, setSelectedSatellite } = useSatelliteStore();
+    const { SatelliteNameToData: satelliteData, setSelectedSatellite } =
+        useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );

@@ -7,7 +7,8 @@ import { flag } from "country-emoji";
 const updateInterval = 50;
 
 export default function SatelliteDataHome() {
-    const { satelliteData, selectedSatellite } = useSatelliteStore();
+    const { SatelliteNameToData: satelliteData, selectedSatellite } =
+        useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );

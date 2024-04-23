@@ -11,7 +11,7 @@ import {
 const updateInterval = 100;
 
 export default function Map2d({ satName }: { satName: string }) {
-    const { satelliteData } = useSatelliteStore();
+    const { SatelliteNameToData: satelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );

@@ -13,7 +13,7 @@ export default function SatelliteStatsTable({
     satName: string;
     missionStatus: string;
 }) {
-    const { satelliteData } = useSatelliteStore();
+    const { SatelliteNameToData: satelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );

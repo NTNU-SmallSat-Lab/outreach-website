@@ -14,7 +14,7 @@ export default function SatelliteGlobe() {
     const globeRef = useRef<GlobeInstance>();
     const { satelliteData, selectedSatellite, setSelectedSatellite } =
         useSatelliteStore((state) => ({
-            satelliteData: state.satelliteData,
+            satelliteData: state.SatelliteNameToData,
             selectedSatellite: state.selectedSatellite,
             setSelectedSatellite: state.setSelectedSatellite,
         }));

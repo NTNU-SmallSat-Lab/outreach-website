@@ -2,25 +2,28 @@
 import { create } from "zustand";
 import type { SatelliteData } from "@/lib/getSatelliteData";
 
+type SatelliteName = string;
+type SatelliteId = number;
+
 // Satellite entry for setSatellites
 interface SatelliteEntry {
-    name: string;
-    id: string;
+    name: SatelliteName;
+    id: SatelliteId;
     data?: SatelliteData;
 }
 
 // Define the state
 interface SatelliteState {
-    satelliteData: Record<string, SatelliteData>;
-    satelliteNameToId: Record<string, string>;
-    satelliteNames: string[];
-    selectedSatellite: string;
+    SatelliteNameToData: Record<SatelliteName, SatelliteData>;
+    satelliteNameToId: Record<SatelliteName, SatelliteId>;
+    satelliteNames: SatelliteName[];
+    selectedSatellite: SatelliteId | undefined;
 }
 
 // Define the actions
 interface SatelliteActions {
-    setSatelliteData: (satName: string, data: SatelliteData) => void;
-    setSelectedSatellite: (satName: string) => void;
+    setSatelliteData: (satName: SatelliteName, data: SatelliteData) => void;
+    setSelectedSatellite: (SatId: SatelliteId) => void;
     setSatellites: (satellites: SatelliteEntry[]) => void;
 }
 
@@ -28,25 +31,24 @@ type SatelliteStore = SatelliteState & SatelliteActions;
 
 // Create satellite store
 export const useSatelliteStore = create<SatelliteStore>((set) => ({
-    satelliteData: {},
+    SatelliteNameToData: {},
     satelliteNames: [],
     satelliteNameToId: {},
-    selectedSatellite: "",
+    selectedSatellite: undefined,
 
     // Set the satellite names and id mapping, and selected satellite
     setSatellites: (satellites) => {
         set((state) => {
             const newNames = satellites.map((sat) => sat.name);
-            const newNameToId = satellites.reduce<Record<string, string>>(
-                (acc, sat) => {
-                    acc[sat.name] = sat.id;
-                    return acc;
-                },
-                {},
-            );
+            const newNameToId = satellites.reduce<
+                Record<SatelliteName, SatelliteId>
+            >((acc, sat) => {
+                acc[sat.name] = sat.id;
+                return acc;
+            }, {});
 
             const newSatelliteData = satellites.reduce<
-                Record<string, SatelliteData>
+                Record<SatelliteName, SatelliteData>
             >(
                 (acc, sat) => {
                     if (sat.data) {
@@ -54,7 +56,7 @@ export const useSatelliteStore = create<SatelliteStore>((set) => ({
                     }
                     return acc;
                 },
-                { ...state.satelliteData },
+                { ...state.SatelliteNameToData },
             );
 
             const mergedNames = Array.from(
@@ -64,21 +66,25 @@ export const useSatelliteStore = create<SatelliteStore>((set) => ({
                 ...state.satelliteNameToId,
                 ...newNameToId,
             };
-            const selectedSatellite = state.selectedSatellite || newNames[0];
+            const selectedSatellite =
+                state.selectedSatellite || satellites[0].id;
 
             return {
                 satelliteNames: mergedNames,
                 satelliteNameToId: mergedNameToId,
-                satelliteData: newSatelliteData,
+                SatelliteNameToData: newSatelliteData,
                 selectedSatellite: selectedSatellite,
             };
         });
     },
 
     // Set the satellite data for a specific satellite
-    setSatelliteData: (satName, data) => {
+    setSatelliteData: (satName: SatelliteName, data: SatelliteData) => {
         set((state) => ({
-            satelliteData: { ...state.satelliteData, [satName]: data },
+            SatelliteNameToData: {
+                ...state.SatelliteNameToData,
+                [satName]: data,
+            },
         }));
     },
 
