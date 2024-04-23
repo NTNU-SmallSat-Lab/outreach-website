@@ -1,6 +1,44 @@
 # Developing
 
-### GraphQL Type generation
+## Requirements
+
+This project requires you have installed [Node.js 20 LTS](https://nodejs.org/en/download). We recommend using [nvm](https://github.com/nvm-sh/nvm) to install multiple versions of node if necessary.
+
+## Running the project
+
+To install all requirements simply do the following from the project root:
+
+`npm i && cd ./frontend && npm i && cd ../backend && npm i && cd ..` This will run npm install in all the folders necessary.
+
+Then do `npm run dev` from the root dir to run both the client and the server at the same time.
+
+If this doesn't work you might have to enter and build the backend (strapi) first.
+`cd backend` then `npm run build`
+
+-   The frontend should be accessible at http://localhost:3000
+
+-   The backend should be accesible at http://localhost:1337/admin
+    -   Here, you can create an admin user.
+
+## Strapi First time boot
+
+Goto Settings > Users & Permissions plugin > Roles > Public > Article, and enable `find` and `findOne`. You need to do this for every publically available content type. Theese include but are not limited to:
+
+-   Article
+-   Author
+-   Hero
+-   Most-recent-image
+-   Project
+-   Satellite
+
+The following should **NOT** be made publicly available:
+
+-   Email
+-   i18n
+-   Upload
+-   User-permissions
+
+## GraphQL Type generation
 
 If you're using GraphQL, then you need to run `npm run compile` from `/frontend` whenever you update a schema or define a new graphQL request in the code. Make sure to import the correct `gql` as
 
@@ -12,23 +50,6 @@ import { gql } from"@/generated/gql";
 
 > [https://www.apollographql.com/docs/react/development-testing/static-typing/](https://www.apollographql.com/docs/react/development-testing/static-typing/)
 
-### Strapi First time boot
-
-Goto Settings > Users & Permissions plugin > Roles > Public > Article, and enable `find` and `findOne`. You need to do this for every publically available content type. Theese include but are not limited to:
-- Article
-- Author
-- Hero
-- Most-recent-image
-- Project
-- Satellite
-
-The following should **NOT** be made publicly available:
-- Email
-- i18n
-- Upload
-- User-permissions
-
-
-
+## Strapi invite others
 
 You can invite new admin users in `Settings > Administration panel > Users > Invite new user`
