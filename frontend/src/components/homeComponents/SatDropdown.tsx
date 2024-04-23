@@ -26,7 +26,7 @@ export default function SatDropdown({
     selectedSatelliteName,
 }: DropdownProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [noradID, setNoradID] = useState<number | undefined>();
+    const [noradID, setNoradID] = useState<number>();
     const [error, setError] = useState("");
 
     const toggleDropdown = () => {
@@ -51,7 +51,8 @@ export default function SatDropdown({
                 const newSatellite = {
                     name: data.name,
                     num: noradID,
-                    data: data,
+                    satrec: data.satrec,
+                    timestamp: data.timestamp,
                 };
                 setSatellites([newSatellite]);
                 setSelectedSatellite(newSatellite.num);
@@ -92,9 +93,7 @@ export default function SatDropdown({
         const value = event.target.value;
         // Allow only numeric input
         if (/^\d*$/.test(value)) {
-            if (noradID) {
-                setNoradID(Number(value));
-            }
+            setNoradID(Number(value));
         }
     };
 
