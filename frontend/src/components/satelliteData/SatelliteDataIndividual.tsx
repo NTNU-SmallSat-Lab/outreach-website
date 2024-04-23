@@ -6,8 +6,11 @@ import { useSatelliteStore } from "@/lib/store";
 const updateInterval = 50;
 
 export default function SatelliteDataIndividual() {
-    const { SatelliteNameToEntry: satelliteData, selectedSatellite } =
-        useSatelliteStore();
+    const {
+        SatelliteNameToEntry: satelliteData,
+        selectedSatellite,
+        satNumToEntry,
+    } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -17,7 +20,7 @@ export default function SatelliteDataIndividual() {
         const intervalId = setInterval(() => {
             if (selectedSatellite) {
                 // Access satellite data by name
-                const satData = satelliteData[selectedSatellite];
+                const satData = satNumToEntry[selectedSatellite];
                 if (satData && satData.satrec) {
                     // Check if satData.satrec is not undefined
                     const updatedInfo = convertSatrec(

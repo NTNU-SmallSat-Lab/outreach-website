@@ -12,12 +12,17 @@ const EARTH_RADIUS_KM = 6371; // Earth radius in kilometers
 export default function SatelliteGlobe() {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
-    const { satelliteData, selectedSatellite, setSelectedSatellite } =
-        useSatelliteStore((state) => ({
-            satelliteData: state.SatelliteNameToEntry,
-            selectedSatellite: state.selectedSatellite,
-            setSelectedSatellite: state.setSelectedSatellite,
-        }));
+    const {
+        satelliteData,
+        selectedSatellite,
+        setSelectedSatellite,
+        satNumToEntry,
+    } = useSatelliteStore((state) => ({
+        satelliteData: state.SatelliteNameToEntry,
+        selectedSatellite: state.selectedSatellite,
+        setSelectedSatellite: state.setSelectedSatellite,
+        satNumToEntry: state.satNumToEntry,
+    }));
 
     // Initialize the globe
     useEffect(() => {
@@ -169,16 +174,13 @@ export default function SatelliteGlobe() {
         }, UPDATE_INTERVAL_MS);
 
         // Set the point of view to the selected satellite
-        if (
-            selectedSatellite !== undefined &&
-            satelliteData[selectedSatellite]
-        ) {
+        if (selectedSatellite !== undefined) {
             if (
                 selectedSatellite !== undefined &&
-                satelliteData[selectedSatellite]?.satrec
+                satNumToEntry[selectedSatellite].satrec
             ) {
                 const targetPosition = convertSatrec(
-                    satelliteData[selectedSatellite].satrec,
+                    satNumToEntry[selectedSatellite].satrec,
                     new Date().toISOString(),
                 );
 
