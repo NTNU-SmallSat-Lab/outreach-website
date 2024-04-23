@@ -1,23 +1,22 @@
 "use client";
-import { useSatelliteStore } from "@/lib/store";
+import { SatelliteEntry, useSatelliteStore } from "@/lib/store";
 import { useEffect } from "react";
 
-interface SatelliteInitialFetchProps {
-    satData: { name: string; id: string; data: any; selected?: boolean }[]; // Adjusted to possibly include 'selected'
+interface SatelliteInitialClientFetchProps {
+    satData: SatelliteEntry[]; // Adjusted to possibly include 'selected'
 }
 
-export default function SatelliteInitialFetch({
+export default function SatelliteInitialClientFetch({
     satData,
-}: SatelliteInitialFetchProps) {
+}: SatelliteInitialClientFetchProps) {
     const setSatellites = useSatelliteStore((state) => state.setSatellites);
 
     useEffect(() => {
         // Convert incoming data to the expected format by the store
         const satellites = satData.map((sat) => ({
             name: sat.name,
-            id: sat.id,
+            num: sat.num,
             data: sat.data, // Assuming data is optional and handled correctly by setSatellites
-            selected: sat.selected, // Optional, handle as boolean; ensure it's true for exactly one sat or none
         }));
 
         // Set the satellite data in the store with potential initial data and selected satellite

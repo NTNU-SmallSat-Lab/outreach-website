@@ -6,7 +6,7 @@ import { useSatelliteStore } from "@/lib/store";
 const updateInterval = 50;
 
 export default function SatelliteDataIndividual() {
-    const { SatelliteNameToData: satelliteData, selectedSatellite } =
+    const { SatelliteNameToEntry: satelliteData, selectedSatellite } =
         useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,

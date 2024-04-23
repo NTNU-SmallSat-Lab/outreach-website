@@ -3,18 +3,20 @@ import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import { TableCell, TableRow } from "@/components/shadcn/table";
+import type { SatelliteNumber, SatelliteName } from "@/lib/store";
 
 const updateInterval = 50;
 
 export default function SatelliteStatsTableRow({
     satName,
+    SatId,
     handleRowClick,
 }: {
-    satName: string;
+    satName: SatelliteName;
+    SatId: SatelliteNumber;
     handleRowClick: () => void;
 }) {
-    const { SatelliteNameToData: satelliteData, setSelectedSatellite } =
-        useSatelliteStore();
+    const { SatelliteNameToEntry, setSelectedSatellite } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -23,16 +25,21 @@ export default function SatelliteStatsTableRow({
     useEffect(() => {
         const intervalId = setInterval(() => {
             // Access satellite data by name //Fix this to work!
-            const satData = satelliteData[satName];
+            const satData = SatelliteNameToEntry[satName];
             if (satData) {
-                const updatedInfo = convertSatrec(satData.satrec, satData.name);
-                setSatelliteInfo(updatedInfo);
+                if (satData.satrec) {
+                    const updatedInfo = convertSatrec(
+                        satData.satrec,
+                        satData.name,
+                    );
+                    setSatelliteInfo(updatedInfo);
+                }
             }
         }, updateInterval);
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, satName]);
+    }, [SatelliteNameToEntry, satName]);
 
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {
@@ -62,7 +69,7 @@ export default function SatelliteStatsTableRow({
         <TableRow
             className="cursor-pointer hover:bg-white hover:text-black"
             onClick={() => {
-                setSelectedSatellite(satName);
+                setSelectedSatellite(SatId);
                 handleRowClick();
             }}
         >
