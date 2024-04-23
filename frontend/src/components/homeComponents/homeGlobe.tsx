@@ -43,7 +43,7 @@ export default function SatelliteGlobe() {
                     );
                 })
                 .onObjectClick((obj: any) => {
-                    setSelectedSatellite(obj.name);
+                    setSelectedSatellite(obj.satNumber);
                 });
 
             // Set initial POV after globe instantiation

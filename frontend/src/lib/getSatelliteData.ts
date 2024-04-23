@@ -30,7 +30,9 @@ function mapTleToSatData(tleString: string): SatelliteEntry[] {
 }
 
 // fetch satellite data from celestrak by id
-async function fetchSatelliteDataById(satNum: SatelliteNumber): Promise<any> {
+async function fetchSatelliteDataById(
+    satNum: SatelliteNumber,
+): Promise<SatelliteEntry[]> {
     const response = await fetch(
         `https://celestrak.org/NORAD/elements/gp.php?CATNR=${satNum}&FORMAT=TLE`,
         {

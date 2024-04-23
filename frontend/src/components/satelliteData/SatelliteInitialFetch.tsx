@@ -16,7 +16,8 @@ export default function SatelliteInitialClientFetch({
         const satellites = satData.map((sat) => ({
             name: sat.name,
             num: sat.num,
-            data: sat.data, // Assuming data is optional and handled correctly by setSatellites
+            satrec: sat.satrec,
+            timestamp: sat.timestamp,
         }));
 
         // Set the satellite data in the store with potential initial data and selected satellite

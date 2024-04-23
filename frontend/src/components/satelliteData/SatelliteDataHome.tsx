@@ -19,7 +19,8 @@ export default function SatelliteDataHome() {
             if (selectedSatellite) {
                 // Access satellite data by name
                 const satData = satelliteData[selectedSatellite];
-                if (satData) {
+                if (satData && satData.satrec) {
+                    // Check if satData.satrec is defined
                     const updatedInfo = convertSatrec(
                         satData.satrec,
                         satData.name,

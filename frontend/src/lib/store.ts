@@ -8,8 +8,8 @@ export type SatelliteNumber = number;
 export interface SatelliteEntry {
     name: SatelliteName;
     num: SatelliteNumber;
-    satrec?: SatRec;
-    timestamp?: Date;
+    satrec: SatRec;
+    timestamp: Date;
 }
 
 // Define the state
@@ -68,6 +68,12 @@ export const useSatelliteStore = create<SatelliteStore>((set) => ({
                         } else {
                             previous[satEntry.name].timestamp = new Date();
                         }
+                    }
+                    else {
+                        previous[satEntry.name] = {
+                            ...satEntry,
+                            satrec: previous[satEntry.name].satrec,
+                        };
                     }
                     return previous;
                 },

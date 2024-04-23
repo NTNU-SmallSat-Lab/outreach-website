@@ -66,7 +66,7 @@ export default function Map2d({ satName }: { satName: string }) {
         if (!satelliteData[satName] || !satelliteData[satName].satrec) return;
 
         const predictions = predictFuturePositions(
-            satelliteData[satName].satrec,
+            satelliteData[satName]?.satrec,
             projectionAmount,
         );
         const futurePosTuples: [number, number][] = predictions.map(
