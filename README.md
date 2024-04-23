@@ -1,12 +1,7 @@
-# Hypso Space Outreach
+# Hypso Space Outreach Website
+The Hypso Space Outreach Website is an interactive web page developed for the general public. It includes features such as a mission tracker, mission status, maps, and an easy to use blog. 
 
-
-
-## Project Objectives
-
-* Develop an interactive web page for the general public.
-* Include features such as mission tracker, mission status, maps, and automatic posting.
-* Prioritize operational cost-effectiveness and ease of maintenance in technology and framework choices. 
+![alt text](docs/images/image.png)
 
 ## General Information  
 
@@ -15,28 +10,21 @@
 * Platform: Web  
 * Framework: React  
 * Period: Spring 2024  
-* Status: In Progress  
+* Status: Done
 
 ## Project Structure
 
-* `/docs/`: Contains technical documentation.
-* `/backend/`: Backend code and local setup instructions.
-* `/frontend/`: Frontend code and local setup instructions.
-* `/.vscode/`: IDE settings (if applicable).
-* `/.github/`: GitHub repository settings (e.g., issue templates, workflows).
+* [`/docs/`](/docs/): Contains technical documentation.
+* [`/backend/`](/backend/): Backend code and local setup instructions.
+* [`/frontend/`](/frontend/): Frontend code and local setup instructions.
+* [`/.vscode/`](/.vscode/): IDE settings (if applicable).
+* [`/.github/`](/.github/): GitHub repository settings (e.g., issue templates, workflows).
 
 ## Getting Started
 
-**Instructions:**
+Goto [`/docs/README.md`](/docs/README.md) to read more about the project.
 
-1. Clone this repository.
-2. Navigate to the `backend/` directory and follow the instructions within.
-3. Navigate to the `frontend/` directory and follow the instructions within
 
 ## Contributing
 
-We welcome contributions!
-
-## More Info
-
-If looking for more information about the project please refer to the submitted report which Small Satellite Lab should have access to as well as the documentation in the `/docs/` folder.
+Contributions are welcome, for more information, refer to the documentation in the `/docs/` folder.
