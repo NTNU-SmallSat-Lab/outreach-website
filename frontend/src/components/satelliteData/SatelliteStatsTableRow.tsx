@@ -9,31 +9,25 @@ const updateInterval = 50;
 
 export default function SatelliteStatsTableRow({
     satName,
-    SatId,
+    satNum,
     handleRowClick,
 }: {
     satName: SatelliteName;
-    SatId: SatelliteNumber;
+    satNum: SatelliteNumber;
     handleRowClick: () => void;
 }) {
     const { SatelliteNameToEntry, setSelectedSatellite } = useSatelliteStore();
-    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
-        null,
-    );
+    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo>();
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
-            // Access satellite data by name //Fix this to work!
+            // Access satellite data by name
             const satData = SatelliteNameToEntry[satName];
+
             if (satData) {
-                if (satData.satrec) {
-                    const updatedInfo = convertSatrec(
-                        satData.satrec,
-                        satData.name,
-                    );
-                    setSatelliteInfo(updatedInfo);
-                }
+                const updatedInfo = convertSatrec(satData.satrec, satData.name);
+                setSatelliteInfo(updatedInfo);
             }
         }, updateInterval);
 
@@ -69,7 +63,7 @@ export default function SatelliteStatsTableRow({
         <TableRow
             className="cursor-pointer hover:bg-white hover:text-black"
             onClick={() => {
-                setSelectedSatellite(SatId);
+                setSelectedSatellite(satNum);
                 handleRowClick();
             }}
         >

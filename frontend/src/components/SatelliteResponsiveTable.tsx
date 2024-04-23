@@ -72,6 +72,9 @@ export default function SatelliteResponsiveTable({
                               <SatelliteStatsTableRow
                                   key={satellite.attributes.catalogNumberNORAD}
                                   satName={satellite.attributes.name}
+                                  satNum={
+                                      satellite.attributes.catalogNumberNORAD
+                                  }
                                   handleRowClick={() =>
                                       handleRowClick(satellite.attributes.slug)
                                   }

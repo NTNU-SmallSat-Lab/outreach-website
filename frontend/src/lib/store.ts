@@ -55,26 +55,7 @@ export const useSatelliteStore = create<SatelliteStore>((set) => ({
                 Record<SatelliteName, SatelliteEntry>
             >(
                 (previous, satEntry) => {
-                    // If the satrec exists, update the entry
-                    if (satEntry.satrec) {
-                        previous[satEntry.name] = {
-                            ...satEntry,
-                            satrec: satEntry.satrec,
-                        };
-                        // Update the timestamp if it doesn't exist
-                        if (!satEntry.timestamp) {
-                            previous[satEntry.name].timestamp =
-                                satEntry.timestamp;
-                        } else {
-                            previous[satEntry.name].timestamp = new Date();
-                        }
-                    }
-                    else {
-                        previous[satEntry.name] = {
-                            ...satEntry,
-                            satrec: previous[satEntry.name].satrec,
-                        };
-                    }
+                    previous[satEntry.name] = satEntry;
                     return previous;
                 },
                 { ...state.SatelliteNameToEntry },
