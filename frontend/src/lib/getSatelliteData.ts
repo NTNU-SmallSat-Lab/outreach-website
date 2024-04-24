@@ -1,5 +1,5 @@
 import { twoline2satrec } from "satellite.js";
-import { SatelliteEntry, SatelliteNumber } from "./store";
+import { SatelliteEntry, SatelliteName, SatelliteNumber } from "./store";
 
 // Satellite data interfac
 
@@ -18,11 +18,11 @@ function mapTleToSatData(tleString: string): SatelliteEntry[] {
     const lines = tleString.trim().split("\n");
     const satellites: SatelliteEntry[] = [];
     for (let i = 0; i < lines.length; i += 3) {
-        const name = lines[i].trim();
+        const name: SatelliteName = lines[i].trim() as SatelliteName;
         const line1 = lines[i + 1].trim();
         const line2 = lines[i + 2].trim();
         const satrec = twoline2satrec(line1, line2);
-        const num = Number(satrec.satnum);
+        const num: SatelliteNumber = Number(satrec.satnum) as SatelliteNumber;
         const timestamp = new Date();
         satellites.push({ satrec, name, timestamp, num });
     }
