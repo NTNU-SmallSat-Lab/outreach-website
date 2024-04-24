@@ -12,10 +12,6 @@ export default function SatelliteSelector() {
     );
     const setSatellites = useSatelliteStore((state) => state.setSatellites);
 
-    const satelliteNameToNums = useSatelliteStore(
-        (state) => state.satelliteNameToNum,
-    );
-
     const satNumToEntry = useSatelliteStore((state) => state.satNumToEntry);
 
     let selectedSatelliteName = undefined;
@@ -27,11 +23,11 @@ export default function SatelliteSelector() {
     return (
         <div className="m-0 w-full border-b border-gray-600 p-0">
             <SatDropdown
-                satelliteNameToNum={satelliteNameToNums}
                 selectedSatellite={selectedSatellite}
                 setSelectedSatellite={setSelectedSatellite}
                 setSatellites={setSatellites}
                 selectedSatelliteName={selectedSatelliteName}
+                satNumToEntry={satNumToEntry}
             />
         </div>
     );

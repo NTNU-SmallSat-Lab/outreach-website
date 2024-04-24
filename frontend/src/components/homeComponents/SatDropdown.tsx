@@ -11,22 +11,22 @@ import {
 } from "@/lib/store";
 
 type DropdownProps = {
-    satelliteNameToNum: SatelliteState["satelliteNameToNum"];
     selectedSatellite: SatelliteState["selectedSatellite"];
     setSelectedSatellite: SatelliteActions["setSelectedSatellite"];
     setSatellites: SatelliteActions["setSatellites"];
     selectedSatelliteName?: SatelliteName;
+    satNumToEntry: SatelliteState["satNumToEntry"];
 };
 
 export default function SatDropdown({
-    satelliteNameToNum,
     selectedSatellite,
     setSelectedSatellite,
     setSatellites,
     selectedSatelliteName,
+    satNumToEntry,
 }: DropdownProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [noradID, setNoradID] = useState<number>();
+    const [noradID, setNoradID] = useState<SatelliteNumber>();
     const [error, setError] = useState("");
 
     const toggleDropdown = () => {
@@ -39,7 +39,7 @@ export default function SatDropdown({
         setIsOpen(false);
     };
 
-    const handleAddSatellite = async (noradID: number) => {
+    const handleAddSatellite = async (noradID: SatelliteNumber) => {
         if (!noradID) {
             setError("Please enter a valid NORAD ID.");
             return;
@@ -93,7 +93,7 @@ export default function SatDropdown({
         const value = event.target.value;
         // Allow only numeric input
         if (/^\d*$/.test(value)) {
-            setNoradID(Number(value));
+            setNoradID(Number(value) as SatelliteNumber);
         }
     };
 
@@ -127,16 +127,19 @@ export default function SatDropdown({
                 variants={variants}
                 transition={{ duration: 0.5 }}
             >
-                {Object.entries(satelliteNameToNum).map(([name, num]) => {
+                {Object.entries(satNumToEntry).map(([num]) => {
                     return (
                         <div
                             key={num}
                             className="cursor-pointer p-2 text-white hover:bg-gray-700"
-                            onClick={() => handleSelect(num)}
+                            onClick={() =>
+                                handleSelect(Number(num) as SatelliteNumber)
+                            }
                         >
-                            {num !== selectedSatellite
-                                ? name
-                                : `${name} (Selected)`}
+                            {(Number(num) as SatelliteNumber) !==
+                            selectedSatellite
+                                ? num
+                                : `${num} (Selected)`}
                         </div>
                     );
                 })}
