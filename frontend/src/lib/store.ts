@@ -1,3 +1,6 @@
+// A zustand store for satellite data
+// https://github.com/pmndrs/zustand
+
 /* eslint-disable no-unused-vars */
 import { SatRec } from "satellite.js";
 import { create } from "zustand";
