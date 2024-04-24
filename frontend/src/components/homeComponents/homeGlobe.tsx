@@ -94,13 +94,7 @@ export default function SatelliteGlobe() {
 
             // Set initial positions of satellites
             let currentDate = new Date().toISOString();
-            const initialPositions: {
-                lat: number;
-                lng: number;
-                alt: number;
-                name: string;
-                satNumber: number;
-            }[] = Object.entries(satelliteData)
+            const initialPositions = Object.entries(satelliteData)
                 .map(([satName, sat]) => {
                     if (sat.satrec) {
                         return {
