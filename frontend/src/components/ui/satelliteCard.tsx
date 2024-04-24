@@ -11,30 +11,26 @@ import {
 import SatelliteStatsTable from "@/components/satelliteData/SatelliteStatsTable";
 // Import OuiImage or your placeholder image component here
 import { OuiImage } from "@/components/fullBlogCard";
-//import { useSatelliteStore } from "@/lib/store";
+import { SatelliteName, SatelliteNumber } from "@/lib/store";
 
 interface SatelliteCardProps {
-    satelliteName: string;
+    satelliteName: SatelliteName;
     missionStatus: string;
     satelliteImage?: string; // Optional
-    satelliteId: Number;
+    satelliteNumber: SatelliteNumber;
 }
 
 const SatelliteCard: React.FC<SatelliteCardProps> = ({
     satelliteName,
     missionStatus,
     satelliteImage,
-    satelliteId,
+    satelliteNumber,
 }) => {
-    /*const setSelectedSatellite = useSatelliteStore(
-        (state) => state.setSelectedSatellite,
-    );*/
-
     return (
         <Link
             href={"/satellites/" + satelliteName}
             className="w-1/1.5 transition-transform duration-300 ease-in-out hover:scale-105 hover:transform md:w-1/3"
-            key={satelliteId.toString()}
+            key={satelliteNumber.toString()}
         >
             <Card className="flex h-full w-full flex-col">
                 <CardHeader className="flex flex-col items-center justify-center">
@@ -44,6 +40,7 @@ const SatelliteCard: React.FC<SatelliteCardProps> = ({
                     <SatelliteStatsTable
                         satName={satelliteName}
                         missionStatus={missionStatus}
+                        satNum={satelliteNumber}
                     />
                     {satelliteImage ? (
                         <Image

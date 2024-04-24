@@ -1,19 +1,21 @@
 "use client";
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
-import { useSatelliteStore } from "@/lib/store";
+import { SatelliteNumber, useSatelliteStore } from "@/lib/store";
 import { Table, TableBody, TableCell, TableRow } from "@shadcn/table";
 
 const updateInterval = 50;
 
 export default function SatelliteStatsTable({
     satName,
+    satNum,
     missionStatus,
 }: {
     satName: string;
+    satNum: SatelliteNumber;
     missionStatus: string;
 }) {
-    const { SatelliteNameToEntry: satelliteData } = useSatelliteStore();
+    const { satNumToEntry } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -22,7 +24,7 @@ export default function SatelliteStatsTable({
     useEffect(() => {
         const intervalId = setInterval(() => {
             // Access satellite data by name
-            const satData = satelliteData[satName];
+            const satData = satNumToEntry[satNum];
             if (satData) {
                 const updatedInfo = convertSatrec(satData.satrec, satData.name);
                 setSatelliteInfo(updatedInfo);
@@ -31,7 +33,7 @@ export default function SatelliteStatsTable({
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, satName]);
+    }, [satNumToEntry, satName, satNum]);
 
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {

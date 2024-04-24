@@ -16,14 +16,14 @@ export default function SatelliteStatsTableRow({
     satNum: SatelliteNumber;
     handleRowClick: () => void;
 }) {
-    const { SatelliteNameToEntry, setSelectedSatellite } = useSatelliteStore();
+    const { satNumToEntry, setSelectedSatellite } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo>();
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
             // Access satellite data by name
-            const satData = SatelliteNameToEntry[satName];
+            const satData = satNumToEntry[satNum];
 
             if (satData) {
                 const updatedInfo = convertSatrec(satData.satrec, satData.name);
@@ -33,7 +33,7 @@ export default function SatelliteStatsTableRow({
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [SatelliteNameToEntry, satName]);
+    }, [satNumToEntry, satName, satNum]);
 
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {
