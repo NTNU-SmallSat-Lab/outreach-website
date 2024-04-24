@@ -27,9 +27,6 @@ export interface SatelliteEntry {
 
 // Define the state
 export interface SatelliteState {
-    SatelliteNameToEntry: Record<SatelliteName, SatelliteEntry>;
-    satelliteNameToNum: Record<SatelliteName, SatelliteNumber>;
-    satelliteNames: SatelliteName[];
     selectedSatellite: SatelliteNumber | undefined;
     satNumToEntry: Record<SatelliteNumber, SatelliteEntry>;
 }
@@ -38,7 +35,6 @@ export interface SatelliteState {
 /* eslint-disable no-unused-vars */
 // Define the actions
 export interface SatelliteActions {
-    setSatelliteData: (satName: SatelliteName, data: SatelliteEntry) => void;
     setSelectedSatellite: (SatId: SatelliteNumber) => void;
     setSatellites: (satellites: SatelliteEntry[]) => void;
 }
@@ -48,42 +44,12 @@ type SatelliteStore = SatelliteState & SatelliteActions;
 
 // Create satellite store
 export const useSatelliteStore = create<SatelliteStore>()((set) => ({
-    SatelliteNameToEntry: {},
-    satelliteNames: [],
-    satelliteNameToNum: {},
     selectedSatellite: undefined,
     satNumToEntry: {},
 
     // Set the satellite names and id mapping, and selected satellite
     setSatellites: (satellites) => {
         set((state) => {
-            const newNames = satellites.map((sat) => sat.name);
-            const newNameToId = satellites.reduce<
-                Record<SatelliteName, SatelliteNumber>
-            >((acc, sat) => {
-                acc[sat.name] = sat.num;
-                return acc;
-            }, {});
-
-            // Create a new SatelliteNameToEntry object
-            // Combines the new satellites with the existing ones
-            const newSatelliteData = satellites.reduce<
-                Record<SatelliteName, SatelliteEntry>
-            >(
-                (previous, satEntry) => {
-                    previous[satEntry.name] = satEntry;
-                    return previous;
-                },
-                { ...state.SatelliteNameToEntry },
-            );
-
-            const mergedNames = Array.from(
-                new Set([...state.satelliteNames, ...newNames]),
-            );
-            const mergedNameToId = {
-                ...state.satelliteNameToNum,
-                ...newNameToId,
-            };
             const selectedSatellite =
                 state.selectedSatellite || satellites.length > 0
                     ? satellites[0].num
@@ -100,23 +66,10 @@ export const useSatelliteStore = create<SatelliteStore>()((set) => ({
             );
 
             return {
-                satelliteNames: mergedNames,
-                satelliteNameToNum: mergedNameToId,
-                SatelliteNameToEntry: newSatelliteData,
                 selectedSatellite: selectedSatellite,
                 satNumToEntry: satNumToEntry,
             };
         });
-    },
-
-    // Set the satellite data for a specific satellite
-    setSatelliteData: (satName: SatelliteName, data: SatelliteEntry) => {
-        set((state) => ({
-            SatelliteNameToEntry: {
-                ...state.SatelliteNameToEntry,
-                [satName]: data,
-            },
-        }));
     },
 
     // Set the selected satellite
