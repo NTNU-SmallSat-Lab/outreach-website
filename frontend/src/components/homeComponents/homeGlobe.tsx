@@ -101,8 +101,6 @@ export default function SatelliteGlobe() {
             }
 
             // Set initial positions of satellites
-            let currentDate = new Date().toISOString();
-
             let initialPositions: initpostype[] = Object.entries(satelliteData)
                 .map(([satName, sat]) => {
                     if (sat.satrec) {
@@ -116,7 +114,7 @@ export default function SatelliteGlobe() {
                             ),
                             alt:
                                 parseFloat(
-                                    convertSatrec(sat.satrec, currentDate)
+                                    convertSatrec(sat.satrec, sat.name)
                                         .altitude,
                                 ) / EARTH_RADIUS_KM,
                             name: satName,
@@ -141,7 +139,6 @@ export default function SatelliteGlobe() {
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
         const intervalId = setInterval(() => {
-            const currentDate = new Date().toISOString();
             if (globeRef.current) {
                 const newPositions = Object.entries(satelliteData)
                     .map(([satName, sat]) => {
@@ -157,7 +154,7 @@ export default function SatelliteGlobe() {
                                 ),
                                 alt:
                                     parseFloat(
-                                        convertSatrec(sat.satrec, currentDate)
+                                        convertSatrec(sat.satrec, sat.name)
                                             .altitude,
                                     ) / EARTH_RADIUS_KM,
                                 name: satName,
@@ -184,7 +181,7 @@ export default function SatelliteGlobe() {
             ) {
                 const targetPosition = convertSatrec(
                     satNumToEntry[selectedSatellite].satrec,
-                    new Date().toISOString(),
+                    satNumToEntry[selectedSatellite].name,
                 );
 
                 globeRef?.current?.pointOfView(

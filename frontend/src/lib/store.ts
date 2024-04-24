@@ -1,12 +1,22 @@
 // A zustand store for satellite data
 // https://github.com/pmndrs/zustand
 
-/* eslint-disable no-unused-vars */
 import { SatRec } from "satellite.js";
 import { create } from "zustand";
 
-export type SatelliteName = string;
-export type SatelliteNumber = number;
+// Define nominal types for satellite name and number
+// Nominal types are used to create a new type that is distinct from an existing type
+// This is useful for type safety and to prevent bugs
+// For more information on nominal types, see the following blog post or github issue:
+//https://dnlytras.com/blog/nominal-types or https://github.com/Microsoft/Typescript/issues/202
+
+declare const __nominal__type: unique symbol;
+export type Nominal<Type, Identifier> = Type & {
+    readonly [__nominal__type]: Identifier;
+};
+
+export type SatelliteName = Nominal<string, "SatelliteName">;
+export type SatelliteNumber = Nominal<number, "SatelliteNumber">;
 // Satellite entry for setSatellites
 export interface SatelliteEntry {
     name: SatelliteName;
@@ -24,17 +34,20 @@ export interface SatelliteState {
     satNumToEntry: Record<SatelliteNumber, SatelliteEntry>;
 }
 
+// Disable unused variables as the store actions defined here are used in other files
+/* eslint-disable no-unused-vars */
 // Define the actions
 export interface SatelliteActions {
     setSatelliteData: (satName: SatelliteName, data: SatelliteEntry) => void;
     setSelectedSatellite: (SatId: SatelliteNumber) => void;
     setSatellites: (satellites: SatelliteEntry[]) => void;
 }
+/* eslint-enable no-unused-vars */
 
 type SatelliteStore = SatelliteState & SatelliteActions;
 
 // Create satellite store
-export const useSatelliteStore = create<SatelliteStore>((set) => ({
+export const useSatelliteStore = create<SatelliteStore>()((set) => ({
     SatelliteNameToEntry: {},
     satelliteNames: [],
     satelliteNameToNum: {},
