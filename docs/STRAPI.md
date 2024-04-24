@@ -1,6 +1,6 @@
 ## Strapi
 
-It is advisable to have some knowledge about strapi before using this application. Please reffer to this introduction:
+It is advisable to have some knowledge about strapi before using this application. Please refer to this introduction:
 
 https://docs.strapi.io/dev-docs/intro
 
@@ -18,7 +18,7 @@ DatePublished is the date when the article was published or written.
 
 CoverImage is the image that is displayed on the preview.
 
-Body is the content that is displayed when looking at a specific blog. In Blog you can add images, and text.
+Body is the content that is displayed when clicking on a specific blog. In Blog you can add images, and text.
 
 ![alt text](Images/StrapiBody.png)
 
@@ -28,14 +28,14 @@ In the body, you are also able to add youtube videos. To be able to do that, you
 2. Click on share button ![Share button](Images/StrapiYTVideo1.png)
 3. Click on embed button ![Embed button](Images/StrapiYTVideo2.png)
 4. Copy the source ![Copy src](Images/StrapiYTVideo3.png)
-5. Click on link button ![Click link button](Images/StrapiYTVideo4.png)
+5. Click on the link button in the body field ![Click link button](Images/StrapiYTVideo4.png)
 6. Final step is to add the link you copied from step 4.
 
 Author is a relation to another author collection type.
 
-Tag is a tag that can be used for querying the blogs by tags.
+Tag is a tag that can be used for filtering the blogs by tags.
 
-Preview title is the preview title.
+Preview title is the title only dislayed on the blog-card.
 
 ## Author
 
@@ -61,10 +61,10 @@ In project there are 5 fields:
 4. Content
 5. Preview Image
 
-Title is the title of the project
+Title will only be displayed on the project preview card (same as article)
 
 Slug is an identifier for the project
 
 Satellites are the related satellites
 
-Content is the content of the project. Here you can also add images and youtube embeddings. Reffer to this [^1]: tutorial to add youtube embeddings.
+Content is the content of the project. Here you can also add images and youtube embeddings. Refer to this [^1]: tutorial to add youtube embeddings.
