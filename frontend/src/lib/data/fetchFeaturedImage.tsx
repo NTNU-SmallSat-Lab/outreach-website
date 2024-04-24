@@ -1,7 +1,7 @@
 import { gql } from "@/__generated__/gql";
 import { getClient } from "../ApolloClient";
 import Image from "next/image";
-import { OuiImage } from "@/components/fullBlogCard";
+import { PlaceholderImage } from "@/components/fullBlogCard";
 
 const STRAPI_URL = process.env.STRAPI_URL;
 
@@ -73,7 +73,7 @@ export default async function fetchFeaturedImage() {
                 </div>
             ) : (
                 <div className="relative flex h-[300px] w-[300px] items-center justify-center object-contain">
-                    <OuiImage />
+                    <PlaceholderImage />
                 </div>
             )}
         </div>

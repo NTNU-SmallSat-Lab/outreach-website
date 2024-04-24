@@ -8,7 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shadcn/card";
-import { OuiImage } from "@/components/fullBlogCard";
+import { PlaceholderImage } from "@/components/fullBlogCard";
 
 export default function RelatedProjectsAndSatellites({
     project,
@@ -45,7 +45,7 @@ export default function RelatedProjectsAndSatellites({
                             />
                         ) : (
                             <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                                <OuiImage />
+                                <PlaceholderImage />
                             </div>
                         )}
                     </div>

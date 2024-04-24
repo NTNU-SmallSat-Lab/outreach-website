@@ -14,7 +14,7 @@ import {
     PageHeaderAndSubtitle,
     PageSubtitle,
 } from "@/components/PageHeader";
-import { OuiImage } from "@/components/fullBlogCard";
+import { PlaceholderImage } from "@/components/fullBlogCard";
 const STRAPI_URL = process.env.STRAPI_URL;
 
 const GET_PROJECTS = gql(`
@@ -102,7 +102,7 @@ export default async function ProjectsPage() {
                                             />
                                         ) : (
                                             <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                                                <OuiImage />
+                                                <PlaceholderImage />
                                             </div>
                                         )}
                                     </div>
