@@ -10,7 +10,7 @@ jobs:
         node-version: [20.x]
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Stop and remove containers and images, using docker compose down
         run: docker-compose down --rmi "all"
       - name: Create .env files
