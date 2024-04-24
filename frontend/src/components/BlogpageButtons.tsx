@@ -32,16 +32,17 @@ export default function BlogpageButtons({ className }: { className?: string }) {
                 All Posts
             </Button>
             <Button
-                className={`border border-white hover:bg-primary ${activeButton === "Updates" ? "bg-primary" : "bg-transparent"}`}
-                onClick={() => handleParameterChange("Updates")}
+                className={`border border-white hover:bg-primary ${activeButton === "Satellites" ? "bg-primary" : "bg-transparent"}`}
+                onClick={() => handleParameterChange("Satellites")}
+                data-testid="blogsSatellitesButton"
             >
-                Updates
+                Satellites
             </Button>
             <Button
-                className={`border border-white hover:bg-primary ${activeButton === "News" ? "bg-primary" : "bg-transparent"}`}
-                onClick={() => handleParameterChange("News")}
+                className={`border border-white hover:bg-primary ${activeButton === "Projects" ? "bg-primary" : "bg-transparent"}`}
+                onClick={() => handleParameterChange("Projects")}
             >
-                News
+                Projects
             </Button>
         </div>
     );

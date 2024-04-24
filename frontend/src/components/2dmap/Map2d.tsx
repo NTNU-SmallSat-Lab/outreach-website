@@ -8,10 +8,10 @@ import {
     predictFuturePositions,
 } from "@/lib/convertSatrec";
 
-const updateInterval = 50;
+const updateInterval = 100;
 
 export default function Map2d({ satName }: { satName: string }) {
-    const { satelliteData, fetchAndSetSatelliteData } = useSatelliteStore();
+    const { satelliteData } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -22,11 +22,6 @@ export default function Map2d({ satName }: { satName: string }) {
     const [inputValue, setInputValue] = useState(120);
     const containerRef = useRef<HTMLDivElement>(null);
     const [size, setSize] = useState({ width: 0, height: 0 });
-
-    // Fetch satellite data on component mount
-    useEffect(() => {
-        fetchAndSetSatelliteData(satName);
-    }, [fetchAndSetSatelliteData, satName]);
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
@@ -85,7 +80,7 @@ export default function Map2d({ satName }: { satName: string }) {
     }, [satelliteData, satName, projectionAmount]);
 
     // Function to handle projection amount change
-    const handleInputChange = (event: { target: { value: any } }) => {
+    const handleSliderChange = (event: { target: { value: any } }) => {
         const value = event.target.value;
         // Update the inputValue state
         setInputValue(value);
@@ -99,21 +94,23 @@ export default function Map2d({ satName }: { satName: string }) {
 
     return (
         <div ref={containerRef} className="w-full">
-            <div className="flex items-center justify-between border-b-2 border-gray-600 bg-black px-6 py-4">
-                <h1 className="text-lg font-semibold text-white">
-                    Current and Predicted Satellite Position
+            <div className="flex flex-col items-center justify-between bg-black px-6 py-4 md:flex-row">
+                <h1 className="text-center text-lg font-semibold text-white md:text-left">
+                    Satellite Position
                 </h1>
                 <div className="flex flex-col items-end">
                     <input
-                        type="number"
+                        type="range"
+                        min="0"
+                        max="1440"
+                        step="60"
                         value={inputValue}
-                        onChange={handleInputChange}
-                        className="focus:primary rounded-lg bg-gray-200 px-3 py-2 text-black focus:outline-none focus:ring"
-                        placeholder="Enter projection amount"
+                        onChange={handleSliderChange}
+                        className="w-full rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
                     />
                     <p className="mt-2 font-thin">
-                        Positions {projectionAmount} minutes into the{" "}
-                        {projectionAmount >= 0 ? "future" : "past"}
+                        Projected positions {projectionAmount / 60} hours into
+                        the {projectionAmount >= 0 ? "future" : "past"}
                     </p>
                 </div>
             </div>

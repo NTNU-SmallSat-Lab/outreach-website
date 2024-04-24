@@ -18,7 +18,8 @@ query Projects($projectFilters: ProjectFiltersInput) {
             id
             attributes {
               name
-              previewImage {
+              slug
+              satelliteImage {
                 data {
                   attributes {
                     url
@@ -73,36 +74,38 @@ export default async function Page({
         projectTitle = STRAPI_URL + projectTitle;
     }
     return (
-        <div className="flex flex-col items-center gap-4">
+        <div className="mt-8 flex flex-col items-center gap-4">
             <BlockRendererClient content={content} />
             {graphqlData.data.projects?.data[0].attributes?.satellites?.data
                 .length != 0 && (
-                <h1 className="mb-2 mt-2 text-xl font-bold">
-                    Related Satellites
-                </h1>
+                <>
+                    <div className="prose prose-invert mb-1 lg:prose-xl">
+                        <h2>Related Satellites</h2>
+                    </div>
+                    <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
+                        {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
+                            (satellite: any) => {
+                                const satelliteImage =
+                                    satellite?.attributes?.satelliteImage?.data
+                                        ?.attributes?.url ?? undefined;
+                                const satelliteObject: ProjectOrSatellite = {
+                                    id: satellite.id,
+                                    title: satellite.attributes.name,
+                                    previewImage: satelliteImage,
+                                    slug: satellite.attributes.slug,
+                                    isProject: false,
+                                };
+                                return (
+                                    <RelatedProjectsAndSatellites
+                                        project={satelliteObject}
+                                        key={satellite.id}
+                                    />
+                                );
+                            },
+                        )}
+                    </div>
+                </>
             )}
-            <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
-                    (satellite: any) => {
-                        const previewImage =
-                            satellite?.attributes?.previewImage?.data
-                                ?.attributes?.url ?? undefined;
-                        const satelliteObject: ProjectOrSatellite = {
-                            id: satellite.id,
-                            title: satellite.attributes.name,
-                            previewImage: previewImage,
-                            slug: satellite.attributes.name,
-                            isProject: false,
-                        };
-                        return (
-                            <RelatedProjectsAndSatellites
-                                project={satelliteObject}
-                                key={satellite.id}
-                            />
-                        );
-                    },
-                )}
-            </div>
         </div>
     );
 }

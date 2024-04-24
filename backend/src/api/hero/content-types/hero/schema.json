@@ -25,6 +25,10 @@
     },
     "text": {
       "type": "text"
+    },
+    "title": {
+      "type": "string",
+      "required": false
     }
   }
 }

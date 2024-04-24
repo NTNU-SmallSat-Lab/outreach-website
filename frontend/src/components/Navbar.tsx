@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@shadcn/button";
@@ -6,6 +7,7 @@ import {
     Drawer,
     DrawerContent,
     DrawerTrigger,
+    DrawerClose,
 } from "@/components/shadcn/drawer";
 import Image from "next/image";
 
@@ -120,7 +122,7 @@ export function CodiconGithubProject(props: SVGProps<SVGSVGElement>) {
 export default function Navbar() {
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {
-        if (path === pathname) {
+        if (pathname.includes(path)) {
             return;
         }
         return "ghost";
@@ -132,10 +134,9 @@ export default function Navbar() {
                 <Link href="/">
                     <Image
                         width={256}
-                        height={0}
+                        height={70}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
-                        className="w-64 min-w-64"
                     />
                 </Link>
             </div>
@@ -149,29 +150,35 @@ export default function Navbar() {
                             href="/blog"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <Button variant={"ghost"} className="text-left">
-                                <MingcuteEdit4Line />
-                                Blog
-                            </Button>
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <MingcuteEdit4Line />
+                                    Blog
+                                </Button>
+                            </DrawerClose>
                         </Link>
 
                         <Link
                             href="/projects"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <Button variant={"ghost"} className="text-left">
-                                <CodiconGithubProject />
-                                Projects
-                            </Button>
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <CodiconGithubProject />
+                                    Projects
+                                </Button>
+                            </DrawerClose>
                         </Link>
                         <Link
                             href="/satellites"
                             className="py-5 duration-200 hover:bg-primary"
                         >
-                            <Button variant={"ghost"} className="text-left">
-                                <SolarSatelliteLineDuotone />
-                                Satellites
-                            </Button>
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <SolarSatelliteLineDuotone />
+                                    Satellites
+                                </Button>
+                            </DrawerClose>
                         </Link>
                     </div>
                 </DrawerContent>

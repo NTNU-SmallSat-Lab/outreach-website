@@ -63,7 +63,10 @@ export default function FullBlogCard({
                     </div>
                 )}
                 <div className="flex gap-2">
-                    <p className="flex items-center rounded-md bg-primary p-2 text-center text-xs text-white">
+                    <p
+                        className="flex items-center rounded-md bg-primary p-2 text-center text-xs text-white"
+                        data-testid="articleTag"
+                    >
                         {article.tag ? article.tag : "General"}
                     </p>
                     <p className="flex w-fit items-center text-center text-xs text-white">
@@ -74,6 +77,7 @@ export default function FullBlogCard({
                     <Link
                         className="hover:underline"
                         href={"/blog/" + article.slug}
+                        data-testid="blogCardLink"
                     >
                         {article.title}
                     </Link>

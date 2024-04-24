@@ -1,16 +1,16 @@
 import { gql } from "@/__generated__/gql";
-import SatelliteStatsTableRow from "@/components/satelliteData/SatelliteStatsTableRow";
 import { getClient } from "@/lib/ApolloClient";
+import SatelliteResponsiveTable from "@/components/SatelliteResponsiveTable";
+
 const GET_SATELLITES = gql(`
 query GET_SATELLITES {
     satellites {
       data {
         id
         attributes {
-          celestrakURL
           catalogNumberNORAD
           name
-          previewImage {
+          satelliteImage {
             data {
               attributes {
                 url
@@ -19,6 +19,7 @@ query GET_SATELLITES {
           }
           missionStatus
           slug
+          massKg
         }
       }
     }
@@ -31,41 +32,36 @@ export default async function Satellites() {
             query: GET_SATELLITES,
         });
 
+        const noNoradIdArray = graphqlData.data.satellites?.data.filter(
+            (data) => data.attributes?.catalogNumberNORAD == null,
+        );
+
         return (
-            <div className="flex w-full flex-col items-center justify-center">
-                <h1 className="my-10 text-4xl font-extrabold  text-white">
-                    Satellites
-                </h1>
-                <table className="w-4/5 table-auto border-collapse rounded-md border-b border-white shadow">
-                    <thead>
-                        <tr className="border-y border-white px-3 py-2 text-left text-white">
-                            <th className="px-6">Satellite</th>
-                            <th className="px-6">Speed</th>
-                            <th className="px-6">Altitude</th>
-                            <th className="px-6">Latitude</th>
-                            <th className="px-6">Longitude</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {graphqlData?.data?.satellites?.data?.map(
-                            (satellite: any) => {
-                                let satelliteName =
-                                    satellite?.attributes?.name ?? "";
-                                return (
-                                    <SatelliteStatsTableRow
-                                        key={satellite.id}
-                                        satName={satelliteName}
-                                        slug={satellite?.attributes?.slug}
-                                    />
-                                );
-                            },
+            <>
+                {/* Table for satellites in orbit */}
+                <SatelliteResponsiveTable
+                    satellites={graphqlData.data.satellites?.data.filter(
+                        (data) => data.attributes?.catalogNumberNORAD !== null,
+                    )}
+                    inOrbit={true}
+                ></SatelliteResponsiveTable>
+
+                <div className="mt-12" />
+
+                {/* Table for satellites not in orbit */}
+                {noNoradIdArray != undefined && noNoradIdArray.length > 0 ? (
+                    <SatelliteResponsiveTable
+                        satellites={graphqlData.data.satellites?.data.filter(
+                            (data) =>
+                                data.attributes?.catalogNumberNORAD == null,
                         )}
-                    </tbody>
-                </table>
-            </div>
+                        inOrbit={false}
+                    ></SatelliteResponsiveTable>
+                ) : null}
+            </>
         );
     } catch (error) {
-        console.error("Error fetching satellites:", error);
+        console.error("Error fetching satellites from strapi: ", error);
         return <div>Error fetching satellites</div>;
     }
 }

@@ -17,10 +17,6 @@
       "required": true,
       "unique": true
     },
-    "celestrakURL": {
-      "type": "string",
-      "unique": true
-    },
     "catalogNumberNORAD": {
       "type": "string",
       "unique": true
@@ -28,7 +24,7 @@
     "content": {
       "type": "blocks"
     },
-    "previewImage": {
+    "satelliteImage": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -42,19 +38,19 @@
       "target": "api::project.project",
       "mappedBy": "satellites"
     },
-    "most_recent_images": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::most-recent-image.most-recent-image",
-      "mappedBy": "satellite"
-    },
     "missionStatus": {
       "type": "string"
+    },
+    "launchDate": {
+      "type": "datetime"
     },
     "slug": {
       "type": "uid",
       "targetField": "name",
       "required": true
+    },
+    "massKg": {
+      "type": "float"
     }
   }
 }

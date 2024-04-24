@@ -1,35 +1,62 @@
-# Hypso Outreach Portal
+# Hypso Space Outreach Website
+The Hypso Space Outreach Website is an interactive web page developed for the general public. It includes features such as a mission tracker, mission status, maps, and an easy to use blog. 
 
-## General Information  
-Project Code: P.01  
-Country: 🇳🇴 Norway  
-Customer: NTNU SmallSat Lab  
-Platform: Web  
-Framework: React  
-Period: Spring 2024  
-Status: In Progress  
+![alt text](docs/images/image.png)
 
-## Project Title
-Hypso Outreach Portal
+## General Information
 
-## Description
-In January 2022, NTNU SmallSatLab launched Norway's first research satellite, the 6U HYPSO-1 CubeSat, equipped with a hyperspectral camera for ocean observation. Later the same year, Orbit NTNU launched the SelfieSat. With several more satellites planned, we aim to develop an interactive webpage for public outreach about our project. This page will showcase various elements such as a mission tracker, mission status with nerdy counters, satellite maps, and the possibility to post blogs or images.
+* Country: 🇳🇴 Norway  
+* Customer: NTNU SmallSat Lab  
+* Platform: Web  
+* Framework: React  
+* Period: Spring 2024  
+* Status: Done
 
-## Project Objectives
-- Develop an interactive web page for the general public.
-- Consider elements like mission tracker, mission status, maps, and automatic posting features.
-- Evaluate technology and framework choices, considering operational cost and maintenance simplicity.
+## Project Structure
 
-## Additional Notes
-- Location: Trondheim, with potential work at SmallSatLab.
-- Encouragement to join SmallSatLab team events.
-- Usage of NTNU-hosted web server and GitHub for code deployment.
+* [`/docs/`](/docs/): Contains technical documentation.
+* [`/backend/`](/backend/): Backend code and local setup instructions.
+* [`/frontend/`](/frontend/): Frontend code and local setup instructions.
+* [`/.vscode/`](/.vscode/): IDE settings (if applicable).
+* [`/.github/`](/.github/): GitHub repository settings (e.g., issue templates, workflows).
 
-## Group Members
-- Mads Hermansen
-- Lukas Ringdalen Thrane
-- Magnus Alexander Strømseng
-- Jakob Grøtan Gregusson
-- Lucas Tran
-- Mats Nyfløt
-- Elias Schrøder Knudsen
+## Getting Started
+
+Goto [`/docs/README.md`](/docs/README.md) to read more about the project.
+
+1. Clone this repository.
+2. Navigate to the `backend/` directory and follow the instructions [here](./backend/README.md).
+3. Navigate to the `frontend/` directory and follow the instructions [here](./frontend/README.md).
+
+## Contributing
+
+To ensure a consistent coding style, we have used Prettier to enforce code formatting.
+Please install the Prettier extension for VSCode. Prettier can be configured to run on save, or it can be ran manually with the command
+
+```
+npx prettier --write
+```
+
+This will automatically format the code according to the rules set up for this project. The specific formatting rules have been defined here:
+
+```
+./frontend/.prettierrc
+```
+
+Prettier has been integrated into the CI/CD pipeline to automatically check code formatting during pull requests.
+
+We have also used ESLint to maintain code quality. It can be run manually with the command
+
+```
+npm run lint
+```
+
+ESLint has also been integratd into the CI/CD pipeline to automatically check code quality during pull requests. The specific linting rules have been defined here:
+
+```
+./frontend/.eslintrc.json
+```
+
+## More Info
+
+If looking for more information about the project please refer to the submitted report which Small Satellite Lab should have access to as well as the documentation in the `/docs/` folder.

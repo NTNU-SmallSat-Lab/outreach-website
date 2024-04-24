@@ -5,11 +5,23 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import Map2d from "@/components/2dmap/Map2d";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
+import LaunchDateCountDown from "@/components/ui/launchDateCountDown";
+import {
+    PageHeader,
+    PageSubtitle,
+    PageHeaderAndSubtitle,
+} from "@/components/PageHeader";
+import Image from "next/image";
 
 export interface SatelliteInfo {
+    launchDate: string | undefined;
     name: string;
     content: BlocksContent;
     relatedProjects?: ProjectOrSatellite[];
+    noradId: string | undefined;
+    missionStatus: string | undefined;
+    massKg: number | undefined;
+    satelliteImage: string | undefined;
 }
 
 export interface ProjectOrSatellite {
@@ -19,6 +31,8 @@ export interface ProjectOrSatellite {
     slug: string;
     isProject: boolean;
 }
+
+const STRAPI_URL = process.env.STRAPI_URL;
 
 export default async function SatelliteInfoPage({
     params,
@@ -31,61 +45,113 @@ export default async function SatelliteInfoPage({
 
     if (!satelliteInfo) return <div>Loading...</div>;
 
+    let imageURL = undefined;
+    if (STRAPI_URL && satelliteInfo.satelliteImage) {
+        imageURL = STRAPI_URL + satelliteInfo.satelliteImage;
+    }
+
     return (
-        <div className="my-12 flex min-h-screen items-center justify-center">
-            <div className="flex w-2/3 flex-col">
-                <div className="flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
-                    {/* Container for satname, stats and sat image */}
-                    <div className="flex w-full flex-col bg-gray-600 p-0.5 xl:flex-row">
+        <>
+            <div className="flex flex-col items-center">
+                <PageHeaderAndSubtitle>
+                    <PageHeader>{satelliteInfo.name}</PageHeader>
+                    <PageSubtitle>
+                        {satelliteInfo.missionStatus
+                            ? "Mission Status: " + satelliteInfo.missionStatus
+                            : null}
+                    </PageSubtitle>
+                </PageHeaderAndSubtitle>
+
+                {/* Container for satname, stats and sat image */}
+                {satelliteInfo.noradId ? (
+                    <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
                         {/* Stats Container */}
-                        <div className="z-10 flex w-full flex-col">
-                            <div className="bg-black p-5">
-                                <h1 className="text-xl font-bold tracking-wide">
-                                    {satelliteInfo.name}
-                                </h1>
+                        <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
+                            <div className="border-b border-gray-600 bg-black p-5">
+                                {satelliteInfo.noradId ? (
+                                    <div className="flex flex-row">
+                                        <p>NORAD ID: </p>
+                                        <a
+                                            href={`https://www.n2yo.com/satellite/?s=${satelliteInfo.noradId}`}
+                                            target="_blank"
+                                            className="ml-2 underline"
+                                        >
+                                            {satelliteInfo.noradId}
+                                        </a>
+                                    </div>
+                                ) : null}
+                                <p className="text-gray-400">
+                                    {satelliteInfo.massKg
+                                        ? "Mass: " +
+                                          satelliteInfo.massKg +
+                                          " kg"
+                                        : null}
+                                </p>
                             </div>
-                            <div className="mt-0.5">
+                            <div>
                                 <SatelliteDataHome />
                             </div>
                         </div>
-
                         {/* Image container */}
-                        <div className="z-0 ml-0.5 w-full">
+                        <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
                             <div className="flex h-full w-full items-center justify-center bg-black">
-                                <h1>Satellite Image</h1>
+                                {imageURL ? (
+                                    <Image
+                                        src={imageURL}
+                                        alt={satelliteInfo.name}
+                                        width={1600} // Set according to the aspect ratio of the image
+                                        height={0}
+                                        layout="responsive"
+                                        className="p-2"
+                                    />
+                                ) : null}
                             </div>
                         </div>
                     </div>
+                ) : null}
 
-                    {/* Container for map */}
+                {/* Container for map */}
+                {satelliteInfo.noradId ? (
                     <div className="mt-6 w-full">
                         <Map2d satName={satelliteInfo.name} />
                     </div>
+                ) : null}
 
-                    {/* Container for body content */}
-                    <div className="mt-6">
-                        <BlockRendererClient content={satelliteInfo.content} />
+                {/* Container for launch date */}
+                {satelliteInfo.launchDate ? (
+                    <div className="w-full">
+                        <LaunchDateCountDown
+                            launchDateString={satelliteInfo.launchDate}
+                        ></LaunchDateCountDown>
                     </div>
-                </div>
+                ) : null}
 
-                {/* Related projects */}
-                <div className="mt-8 flex w-full flex-col items-center border-2 border-gray-600 bg-black p-4">
-                    {satelliteInfo.relatedProjects?.length != 0 ? (
-                        <h1 className="text-xl font-bold">Related Projects</h1>
-                    ) : null}
-
-                    <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
-                        {satelliteInfo.relatedProjects?.map(
-                            (project: ProjectOrSatellite) => (
-                                <RelatedProjectsAndSatellites
-                                    project={project}
-                                    key={project.id}
-                                />
-                            ),
-                        )}
-                    </div>
+                {/* Container for body content */}
+                <div className="mt-6 px-4 sm:px-0">
+                    <BlockRendererClient content={satelliteInfo.content} />
                 </div>
             </div>
-        </div>
+
+            {/* Related projects */}
+            <div className="mt-8 flex w-full flex-col items-center">
+                {satelliteInfo.relatedProjects?.length != 0 ? (
+                    <>
+                        <div className="prose prose-invert mb-1 lg:prose-xl">
+                            <h3>Related Projects</h3>
+                        </div>
+                        <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
+                            {satelliteInfo.relatedProjects?.map(
+                                (project: ProjectOrSatellite) => (
+                                    <RelatedProjectsAndSatellites
+                                        project={project}
+                                        key={project.id}
+                                    />
+                                ),
+                            )}
+                        </div>
+                    </>
+                ) : null}
+            </div>
+        </>
     );
 }
