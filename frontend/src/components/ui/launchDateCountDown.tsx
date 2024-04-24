@@ -1,5 +1,4 @@
-"use client"; // This directive marks the component for client-side execution
-
+"use client";
 import React, { useState, useEffect } from "react";
 
 type LaunchDateCountDownProps = {
@@ -62,11 +61,11 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
                 )}
             </div>
 
-            <div className="flex justify-center pt-3">
-                <hr className="w-32 self-center border-white"></hr>
+            <div className="mt-8 flex justify-center">
+                <hr className="w-full max-w-[350px] self-center border-white"></hr>
             </div>
 
-            <div className="pt-5">
+            <div className="mt-4">
                 <div className="rounded-lg p-4 text-center text-4xl tracking-widest text-white shadow-md">
                     {displayTime.length > 0 && (
                         <div className="flex justify-center">
