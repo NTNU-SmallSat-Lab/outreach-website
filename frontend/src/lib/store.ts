@@ -11,7 +11,7 @@ import { create } from "zustand";
 //https://dnlytras.com/blog/nominal-types or https://github.com/Microsoft/Typescript/issues/202
 
 declare const __nominal__type: unique symbol;
-export type Nominal<Type, Identifier> = Type & {
+type Nominal<Type, Identifier> = Type & {
     readonly [__nominal__type]: Identifier;
 };
 
