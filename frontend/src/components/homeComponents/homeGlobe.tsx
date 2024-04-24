@@ -20,17 +20,12 @@ interface initpostype {
 export default function SatelliteGlobe() {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
-    const {
-        satelliteData,
-        selectedSatellite,
-        setSelectedSatellite,
-        satNumToEntry,
-    } = useSatelliteStore((state) => ({
-        satelliteData: state.SatelliteNameToEntry,
-        selectedSatellite: state.selectedSatellite,
-        setSelectedSatellite: state.setSelectedSatellite,
-        satNumToEntry: state.satNumToEntry,
-    }));
+    const { selectedSatellite, setSelectedSatellite, satNumToEntry } =
+        useSatelliteStore((state) => ({
+            selectedSatellite: state.selectedSatellite,
+            setSelectedSatellite: state.setSelectedSatellite,
+            satNumToEntry: state.satNumToEntry,
+        }));
 
     // Initialize the globe
     useEffect(() => {
@@ -101,7 +96,7 @@ export default function SatelliteGlobe() {
             }
 
             // Set initial positions of satellites
-            let initialPositions: initpostype[] = Object.entries(satelliteData)
+            let initialPositions: initpostype[] = Object.entries(satNumToEntry)
                 .map(([satName, sat]) => {
                     if (sat.satrec) {
                         return {
@@ -134,13 +129,13 @@ export default function SatelliteGlobe() {
                 }
             };
         }
-    }, [satelliteData, setSelectedSatellite]);
+    }, [satNumToEntry, setSelectedSatellite]);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
         const intervalId = setInterval(() => {
             if (globeRef.current) {
-                const newPositions = Object.entries(satelliteData)
+                const newPositions = Object.entries(satNumToEntry)
                     .map(([satName, sat]) => {
                         if (sat.satrec) {
                             return {
@@ -198,7 +193,7 @@ export default function SatelliteGlobe() {
         }
 
         return () => clearInterval(intervalId);
-    }, [satNumToEntry, satelliteData, selectedSatellite]);
+    }, [satNumToEntry, selectedSatellite]);
 
     return <div id="chart" className="" ref={chart}></div>;
 }

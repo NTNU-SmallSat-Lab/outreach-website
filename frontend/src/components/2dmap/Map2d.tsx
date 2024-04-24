@@ -1,6 +1,6 @@
 "use client";
 import Map2dNaturalProjection from "./2dMapProjection";
-import { useSatelliteStore } from "@/lib/store";
+import { SatelliteNumber, useSatelliteStore } from "@/lib/store";
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import {
     SatelliteInfo,
@@ -10,8 +10,8 @@ import {
 
 const updateInterval = 100;
 
-export default function Map2d({ satName }: { satName: string }) {
-    const { SatelliteNameToEntry: satelliteData } = useSatelliteStore();
+export default function Map2d({ satNum }: { satNum: SatelliteNumber }) {
+    const { satNumToEntry } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -27,7 +27,7 @@ export default function Map2d({ satName }: { satName: string }) {
     useEffect(() => {
         const intervalId = setInterval(() => {
             // Access satellite data by name
-            const satData = satelliteData[satName];
+            const satData = satNumToEntry[satNum];
             if (satData && satData.satrec) {
                 const updatedInfo = convertSatrec(satData.satrec, satData.name);
                 setSatelliteInfo(updatedInfo);
@@ -36,7 +36,7 @@ export default function Map2d({ satName }: { satName: string }) {
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, satName]);
+    }, [satNumToEntry, satNum]);
 
     // Calculate and update size based on the container's width
     useLayoutEffect(() => {
@@ -63,10 +63,10 @@ export default function Map2d({ satName }: { satName: string }) {
 
     // Get future satellite positions on component mount
     useEffect(() => {
-        if (!satelliteData[satName] || !satelliteData[satName].satrec) return;
+        if (!satNumToEntry[satNum] || !satNumToEntry[satNum].satrec) return;
 
         const predictions = predictFuturePositions(
-            satelliteData[satName]?.satrec,
+            satNumToEntry[satNum]?.satrec,
             projectionAmount,
         );
         const futurePosTuples: [number, number][] = predictions.map(
@@ -77,7 +77,7 @@ export default function Map2d({ satName }: { satName: string }) {
         ) as [number, number][];
 
         setFuturePositions(futurePosTuples);
-    }, [satelliteData, satName, projectionAmount]);
+    }, [satNum, projectionAmount, satNumToEntry]);
 
     // Function to handle projection amount change
     const handleSliderChange = (event: { target: { value: any } }) => {
