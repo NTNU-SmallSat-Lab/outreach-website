@@ -34,7 +34,7 @@ export default function SatelliteDataIndividual() {
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, selectedSatellite]);
+    }, [satNumToEntry, satelliteData, selectedSatellite]);
 
     return (
         <div className="w-full bg-black">

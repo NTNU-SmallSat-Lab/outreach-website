@@ -35,7 +35,7 @@ export default function SatelliteDataHome() {
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, selectedSatellite]);
+    }, [satNumToEntry, satelliteData, selectedSatellite]);
 
     return (
         <div>

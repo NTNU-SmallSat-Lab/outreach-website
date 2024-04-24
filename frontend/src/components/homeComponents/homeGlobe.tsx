@@ -9,6 +9,14 @@ const SAT_RADIUS = 5; // Relative size of the satellite for visualization
 const UPDATE_INTERVAL_MS = 100; // Update interval in milliseconds
 const EARTH_RADIUS_KM = 6371; // Earth radius in kilometers
 
+interface initpostype {
+    lat: number;
+    lng: number;
+    alt: number;
+    name: string;
+    satNumber: number;
+}
+
 export default function SatelliteGlobe() {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
@@ -94,7 +102,8 @@ export default function SatelliteGlobe() {
 
             // Set initial positions of satellites
             let currentDate = new Date().toISOString();
-            const initialPositions = Object.entries(satelliteData)
+
+            let initialPositions: initpostype[] = Object.entries(satelliteData)
                 .map(([satName, sat]) => {
                     if (sat.satrec) {
                         return {
@@ -115,7 +124,7 @@ export default function SatelliteGlobe() {
                         };
                     }
                 })
-                .filter((sat) => sat !== undefined);
+                .filter((sat) => sat !== undefined) as initpostype[];
 
             if (initialPositions.length > 0 && globeRef.current) {
                 globeRef.current.objectsData(initialPositions);
@@ -127,7 +136,7 @@ export default function SatelliteGlobe() {
                 }
             };
         }
-    }, [satelliteData]);
+    }, [satelliteData, setSelectedSatellite]);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
@@ -161,7 +170,7 @@ export default function SatelliteGlobe() {
                             };
                         }
                     })
-                    .filter((sat) => sat !== undefined);
+                    .filter((sat) => sat !== undefined) as initpostype[];
 
                 globeRef.current.objectsData(newPositions);
             }
@@ -192,7 +201,7 @@ export default function SatelliteGlobe() {
         }
 
         return () => clearInterval(intervalId);
-    }, [satelliteData, selectedSatellite]);
+    }, [satNumToEntry, satelliteData, selectedSatellite]);
 
     return <div id="chart" className="" ref={chart}></div>;
 }
