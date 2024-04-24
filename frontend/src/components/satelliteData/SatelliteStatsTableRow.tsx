@@ -36,7 +36,12 @@ export default function SatelliteStatsTableRow({
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {
         return (
-            <TableRow>
+            <TableRow
+                className="cursor-pointer hover:bg-white hover:text-black"
+                onClick={() => {
+                    handleRowClick();
+                }}
+            >
                 <TableCell className="w-1/5 px-6">{satName}</TableCell>
                 <TableCell className="hidden w-1/5 sm:table-cell">
                     Loading...

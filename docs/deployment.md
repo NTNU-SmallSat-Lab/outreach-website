@@ -1,81 +1,86 @@
-See the following docs for more info about strapi deployment:
-[https://docs.strapi.io/dev-docs/deployment](https://docs.strapi.io/dev-docs/deployment)
+# Deployment
 
-### Setting up ntnu halfadministrated server
+See the Strapi [docs](https://docs.strapi.io/dev-docs/deployment) for more info about deployment
 
-#### Firewall
+See [here](https://nextjs.org/docs/app/building-your-application/deploying) for information regarding Next.js deployment with app router.
 
-We have created firewall rules to access website and api.
+## Setting up ntnu semi-managed server
 
-`/etc/local/firewall.d $ touch ipv4-magnastr-docker-website-git-autodeply.conf`
+Look [here](https://www.ntnu.no/wiki/display/ntnuitubuntu/Semi-managed+Linux+servers) for more info about semi-managed servers
 
-do `sudo nano ipv4-magnastr-docker-website-git-autodeply.conf` to enter the file and edit the content
+### Firewall
 
-paste the lines
+We have created firewall rules to make the website accesible.
 
-```
--I INPUT -p tcp -m tcp --dport 3000 -j ACCEPT
+1. Goto
+   `cd /etc/local/firewall.d`
 
-# Frontend (next.js node) Open TCP port 3000 for the world:
--I DOCKER-USER -p tcp -m conntrack --ctorigdstport 3000 -j ACCEPT
+2. If they don't exist yet, do `touch ipv4-outreach.conf`
 
-# Open port 80 for HTTP
--I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+3. do `sudo nano ipv4-outreach.conf` to enter the file and edit the content to the following:
 
-# Open port 443 for HTTPS
--I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+    ```
+    # Open port 80 for HTTP
+    -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 
-# Backend (strapi) Open TCP port 1337 for world:
--I DOCKER-USER -p tcp -m conntrack --ctorigdstport 1337 -j ACCEPT
+    # Open port 443 for HTTPS
+    -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+    ```
 
-```
+4. then run `sudo /local/admin/bin/install-firewall.sh`
 
-#### PKGSYNC
+5. and `sudo iptables-save`
+
+### PKGSYNC
 
 Make sure docker compose is installed on the server.
 
 Can be checked by running `docker compose version`
 
-#### Github Runner
+### Github Runner
 
 Setup a self hosted GitHub runner for the repository.
 
+We first need to create a user that our action runner will run as.
+
 > Ansible (our current configuration system) will manage users and groups with UID/GID above 300. If you need to create local system users or groups, use free UID/GID between 100 and 299.
 
-Create a user with UID 200:  
-`sudo useradd -u 200 outreach-github-runner`  
-Add it to the docker group so it can run docker commands without sudo:  
-`sudo usermod -a -G docker outreach-github-runner`
+1. Create a user with UID 200:
+   `sudo useradd -u 200 outreach-github-runner`
+2. Add it to the docker group so it can run docker commands without sudo:
+   `sudo usermod -a -G docker outreach-github-runner`
 
-Now follow the official guide on github to add the runner to a repository, but only do theese steps
+You might also have to give it permission to access the runner folder and home dircetory.
 
--   Create the folder
--   Download latest runner package
--   Validate the hash
--   Extract the installer
--   Create the runner and start config experience. Just press enter for all options.
+1. `sudo chown outreach-github-runner /actions-runner/ -R`
+2. `sudo chown outreach-github-runner /home/outreach-github-runner/ -R`
 
-No need to run it manually. We will install it as a service running as the user we created previously.
+To add an action runner to the repo, goto the github repository then `Settings > Actions > Runners > New self-hosted runner`.
 
-`./svc.sh install outreach-github-runner`
+Now follow the official guide on github to add the runner to a repository, **but don't run it manually**
 
-`sudo ./svc.sh start`
+1. Create the folder
+2. Download latest runner package
+3. Validate the hash
+4. Extract the installer
+5. Create the runner and start config experience. Just press enter for all options.
 
-`sudo chown outreach-github-runner /actions-runner/ -R`
+**There is no need to run it manually.** We will install it as a service running as the user we created previously.
 
-`sudo chown outreach-github-runner /home/outreach-github-runner/ -R`
+1. `./svc.sh install outreach-github-runner` install it as a service
+2. `sudo ./svc.sh start` start the service
 
-#### Secrets and variables
+### Secrets and variables
 
 The secrets should all be filled in and generated using `openssl rand -base64 32`
 
 The GitHub repo should define the following secrets:
 
--   ADMIN_JWT_SECRET
--   API_TOKEN_SALT
--   APP_KEYS
--   JWT_SECRET
--   TRANSFER_TOKEN_SALT
+-   APP_KEYS="toBeModified1,toBeModified2"
+-   API_TOKEN_SALT=tobemodified
+-   ADMIN_JWT_SECRET=tobemodified
+-   TRANSFER_TOKEN_SALT=tobemodified
+-   JWT_SECRET=tobemodified
 
 And the following variables:
 
@@ -85,22 +90,32 @@ And the following variables:
 -   STRAPI_URL=http://backend-app:1337
 -   PORT=1337
 
-#### Logs and errors
+### Apache
 
-##### Action runner
+TODO @madshermansen
+
+## Troubleshooting
+
+### Action runner
 
 If the action runner is having issues, try running this command to check out its logs.
 
-`sudo journalctl -u actions.runner.ITP2-SmallSatLab-Hypso-IT2901-SmallSatLab-Hypso.smallsat01.service -f`
+`sudo journalctl -u actions.runner.NTNU-SmallSat-Lab-outreach-website.smallsat01.service -f`
 
-If the command does not work, try reading this [Monitoring and troubleshooting self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/monitoring-and-troubleshooting-self-hosted-runners).  
-Keep in mind, the name might be something else than what is shown in the command.
+If the command does not work, try reading this [Monitoring and troubleshooting self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/monitoring-and-troubleshooting-self-hosted-runners).
+Keep in mind, the name might be something else than what is shown in the command. You can run `cat /actions-runner/.service` to check the name
 
-##### Docker
+### Logs and errors
 
-If there are any issues with docker. You can run the following commands to see logs:
+1. Run `cd /actions-runner/_work/outreach-website/outreach-website`
+2. Then `sudo docker compose logs` to see the logs from each container.
 
--   `sudo docker ps -a` to see all running conatiners.
--   `sudo docker logs <hash>`, with the hash of the container (you usually only need to type in the first few letters), to see the logs printed to console.
+If the above doesn't work, you can run the following commands to see logs:
 
-Log `outreach:backend` for strapi, and `outreach:frontend` for next.js.
+1.  `sudo docker ps -a` to see all running conatiners.
+2.  `sudo docker logs <hash>`, with the hash of the container (you usually only need to type in the first few letters), to see the logs printed to console.
+    -   Log `outreach:backend` for strapi, and `outreach:frontend` for next.js.
+
+## SSL Certification
+
+TODO @madshermansen

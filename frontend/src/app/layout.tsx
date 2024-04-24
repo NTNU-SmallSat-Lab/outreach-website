@@ -34,8 +34,16 @@ export default async function RootLayout({
     if (satellites) {
         for (const sat of satellites) {
             if (sat.id) {
-                const data = await satLoaderById(sat.id);
-                satData.push({ name: sat.name, id: sat.id, data });
+                try {
+                    const data = await satLoaderById(sat.id);
+                    satData.push({ name: sat.name, id: sat.id, data });
+                } catch (e) {
+                    console.error(
+                        "Either CelesTrak has IP banned the server, or the satellite data is not available for the provided NORAD ID: " +
+                            sat.id +
+                            ", or CelesTrak is down.",
+                    );
+                }
             }
         }
     }
