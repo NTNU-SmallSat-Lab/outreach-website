@@ -64,6 +64,7 @@ export default function SatelliteStatsTableRow({
                 setSelectedSatellite(satName);
                 handleRowClick();
             }}
+            data-testid="satellitesTableRow"
         >
             <TableCell className="w-1/5 px-6">{satName}</TableCell>
             <TableCell className="hidden w-1/5 sm:table-cell">
