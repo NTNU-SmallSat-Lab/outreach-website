@@ -13,7 +13,9 @@ test.describe("Blogs pages test", () => {
         await expect(page.getByTestId("pageSubtitle")).toBeVisible();
         await page.getByTestId("blogsSatellitesButton").click();
         await expect(page).toHaveURL("/blog?page=1&tag=Satellites");
-        await expect(page.getByTestId("articleTag").first()).toHaveText("Satellites");
+        await expect(page.getByTestId("articleTag").first()).toHaveText(
+            "Satellites",
+        );
         await page.getByTestId("blogCardLink").first().click();
         await expect(page).toHaveURL(/\/blog\/.+$/);
     });
