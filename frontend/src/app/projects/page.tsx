@@ -18,32 +18,33 @@ import { graphql } from "@/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECTS = graphql(`
- query GET_PROJECTS {
-    projects(sort: ["publishedAt:desc"]) {
-        data {
-          id
-          attributes {
-            title
-            content
-            satellites {
-              data {
+    query GET_PROJECTS {
+        projects(sort: ["publishedAt:desc"]) {
+            data {
+                id
                 attributes {
-                  catalogNumberNORAD
+                    title
+                    content
+                    satellites {
+                        data {
+                            attributes {
+                                catalogNumberNORAD
+                            }
+                        }
+                    }
+                    slug
+                    previewImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
                 }
-              }
             }
-            slug
-            previewImage {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-          }
         }
-      }
-  }`);
+    }
+`);
 
 export default async function ProjectsPage() {
     const graphqlData = await getClient().query({
