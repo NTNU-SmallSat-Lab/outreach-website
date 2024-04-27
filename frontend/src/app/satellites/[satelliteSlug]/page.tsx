@@ -111,19 +111,19 @@ export default async function SatelliteInfoPage({
                     </div>
                 ) : null}
 
-                {/* Container for map */}
-                {satelliteInfo.noradId ? (
-                    <div className="mt-6 w-full">
-                        <Map2d satNum={satelliteInfo.noradId} />
-                    </div>
-                ) : null}
-
                 {/* Container for launch date */}
                 {satelliteInfo.launchDate ? (
                     <div className="w-full">
                         <LaunchDateCountDown
                             launchDateString={satelliteInfo.launchDate}
                         ></LaunchDateCountDown>
+                    </div>
+                ) : null}
+
+                {/* Container for map */}
+                {satelliteInfo.noradId ? (
+                    <div className="mt-6 w-full">
+                        <Map2d satNum={satelliteInfo.noradId} />
                     </div>
                 ) : null}
 
