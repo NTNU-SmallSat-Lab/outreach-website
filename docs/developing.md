@@ -30,12 +30,13 @@ If this doesn't work you might have to enter and build the backend (strapi) firs
 
 ## Strapi First time boot
 
-Goto Settings > Users & Permissions plugin > Roles > Public > Article, and enable `find` and `findOne`. You need to do this for every publically available content type. Theese include but are not limited to:
+Goto `Settings > Users & Permissions plugin > Roles > Public > Article`, and enable `find` and `findOne`. You need to do this for every publically available content type. Theese include but are not limited to:
 
 -   Article
 -   Author
 -   Hero
--   Most-recent-image
+-   Featured-image
+-   Hero
 -   Project
 -   Satellite
 
