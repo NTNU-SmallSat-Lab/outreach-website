@@ -15,7 +15,7 @@ jobs:
               run: docker-compose down --rmi "all"
             - name: Create .env files
               run: |
-                  # Create .env with all variables except HOST_URL Backend
+                  # Create .env for the backend strapi
                   echo "HOST=${{ vars.HOST }}" >> .env
                   echo "PORT=${{ vars.PORT }}" >> .env
                   echo "DATABASE_CLIENT=${{ vars.DATABASE_CLIENT }}" >> .env
@@ -27,8 +27,9 @@ jobs:
                   echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
                   echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
 
-                  # Create .env.production with HOST_URL Frontend
+                  # Create .env.production for the frontend nextjs
                   echo "BACKEND_INTERNAL_URL=${{ vars.BACKEND_INTERNAL_URL }}" >> .env.production
+                  echo "STRAPI_URL=${{ vars.STRAPI_URL }}" >> .env.production
             - name: Docker build
               run: docker-compose build
             - name: Docker up
