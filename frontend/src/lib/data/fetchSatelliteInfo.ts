@@ -4,6 +4,7 @@ import {
     SatelliteInfo,
 } from "@/app/satellites/[satelliteSlug]/page";
 import { getClient } from "../ApolloClient";
+import { SatelliteName, SatelliteNumber } from "../store";
 
 const GET_SATELLITE_INFO =
     gql(`query GET_SATELLITE_INFO($filters: SatelliteFiltersInput) {
@@ -82,13 +83,17 @@ export default async function fetchSatelliteInfo({
     );
 
     satelliteInfo = {
-        name: graphqlData?.data?.satellites?.data[0]?.attributes?.name ?? "",
+        name:
+            (graphqlData?.data?.satellites?.data[0]?.attributes
+                ?.name as SatelliteName) ?? "",
         content:
             graphqlData?.data?.satellites?.data[0]?.attributes?.content ?? "",
         relatedProjects: projects ?? [],
         noradId:
-            graphqlData?.data?.satellites?.data[0]?.attributes
-                ?.catalogNumberNORAD ?? undefined,
+            (Number(
+                graphqlData?.data?.satellites?.data[0]?.attributes
+                    ?.catalogNumberNORAD,
+            ) as SatelliteNumber) ?? undefined,
         launchDate:
             graphqlData.data.satellites?.data[0]?.attributes?.launchDate ?? "",
         missionStatus:
