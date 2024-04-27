@@ -4,7 +4,7 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import { Enum_Article_Tag } from "@/__generated__/graphql";
 import { BlogPost } from "@/app/blog/page";
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_ARTICLES = gql(`
 query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {

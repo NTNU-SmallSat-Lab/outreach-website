@@ -6,8 +6,9 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import ShareButtons from "@/components/ShareButtons";
 import NextImage from "next/image";
+import fullNameToInitials from "@/lib/helpers";
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_ARTICLE_BY_SLUG = gql(
     `query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {
@@ -100,11 +101,10 @@ export default async function Page({
                             )}
                             {!avatarURL && (
                                 <AvatarFallback>
-                                    {// Get initials from author name
-                                    authorName
-                                        ?.split(" ")
-                                        .map((name: any) => name[0])
-                                        .join("")}
+                                    {
+                                        // Get initials from author name
+                                        fullNameToInitials(authorName)
+                                    }
                                 </AvatarFallback>
                             )}
                         </Avatar>

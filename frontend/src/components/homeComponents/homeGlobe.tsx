@@ -9,14 +9,22 @@ const SAT_RADIUS = 5; // Relative size of the satellite for visualization
 const UPDATE_INTERVAL_MS = 100; // Update interval in milliseconds
 const EARTH_RADIUS_KM = 6371; // Earth radius in kilometers
 
+interface initpostype {
+    lat: number;
+    lng: number;
+    alt: number;
+    name: string;
+    satNumber: number;
+}
+
 export default function SatelliteGlobe() {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
-    const { satelliteData, selectedSatellite, setSelectedSatellite } =
+    const { selectedSatellite, setSelectedSatellite, satNumToEntry } =
         useSatelliteStore((state) => ({
-            satelliteData: state.satelliteData,
             selectedSatellite: state.selectedSatellite,
             setSelectedSatellite: state.setSelectedSatellite,
+            satNumToEntry: state.satNumToEntry,
         }));
 
     // Initialize the globe
@@ -43,7 +51,7 @@ export default function SatelliteGlobe() {
                     );
                 })
                 .onObjectClick((obj: any) => {
-                    setSelectedSatellite(obj.name);
+                    setSelectedSatellite(obj.satNumber);
                 });
 
             // Set initial POV after globe instantiation
@@ -88,24 +96,32 @@ export default function SatelliteGlobe() {
             }
 
             // Set initial positions of satellites
-            let currentDate = new Date().toISOString();
-            const initialPositions = Object.entries(satelliteData).map(
-                ([satName, sat]) => ({
-                    lat: parseFloat(
-                        convertSatrec(sat.satrec, currentDate).latitudeDeg,
-                    ),
-                    lng: parseFloat(
-                        convertSatrec(sat.satrec, currentDate).longitudeDeg,
-                    ),
-                    alt:
-                        parseFloat(
-                            convertSatrec(sat.satrec, currentDate).altitude,
-                        ) / EARTH_RADIUS_KM,
-                    name: satName,
-                }),
-            );
+            let initialPositions: initpostype[] = Object.entries(satNumToEntry)
+                .map(([satName, sat]) => {
+                    if (sat.satrec) {
+                        return {
+                            lat: parseFloat(
+                                convertSatrec(sat.satrec, sat.name).latitudeDeg,
+                            ),
+                            lng: parseFloat(
+                                convertSatrec(sat.satrec, sat.name)
+                                    .longitudeDeg,
+                            ),
+                            alt:
+                                parseFloat(
+                                    convertSatrec(sat.satrec, sat.name)
+                                        .altitude,
+                                ) / EARTH_RADIUS_KM,
+                            name: satName,
+                            satNumber: Number(sat.satrec.satnum),
+                        };
+                    }
+                })
+                .filter((sat) => sat !== undefined) as initpostype[];
 
-            globeRef.current.objectsData(initialPositions);
+            if (initialPositions.length > 0 && globeRef.current) {
+                globeRef.current.objectsData(initialPositions);
+            }
 
             return () => {
                 if (typeof window !== "undefined") {
@@ -113,57 +129,71 @@ export default function SatelliteGlobe() {
                 }
             };
         }
-    }, [satelliteData]);
+    }, [satNumToEntry, setSelectedSatellite]);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
         const intervalId = setInterval(() => {
-            const currentDate = new Date().toISOString();
-
             if (globeRef.current) {
-                const newPositions = Object.entries(satelliteData).map(
-                    ([satName, sat]) => ({
-                        lat: parseFloat(
-                            convertSatrec(sat.satrec, currentDate).latitudeDeg,
-                        ),
-                        lng: parseFloat(
-                            convertSatrec(sat.satrec, currentDate).longitudeDeg,
-                        ),
-                        alt:
-                            parseFloat(
-                                convertSatrec(sat.satrec, currentDate).altitude,
-                            ) / EARTH_RADIUS_KM,
-                        name: satName,
-                        color:
-                            selectedSatellite === satName ? "red" : "palegreen",
-                    }),
-                );
+                const newPositions = Object.entries(satNumToEntry)
+                    .map(([satName, sat]) => {
+                        if (sat.satrec) {
+                            return {
+                                lat: parseFloat(
+                                    convertSatrec(sat.satrec, sat.name)
+                                        .latitudeDeg,
+                                ),
+                                lng: parseFloat(
+                                    convertSatrec(sat.satrec, sat.name)
+                                        .longitudeDeg,
+                                ),
+                                alt:
+                                    parseFloat(
+                                        convertSatrec(sat.satrec, sat.name)
+                                            .altitude,
+                                    ) / EARTH_RADIUS_KM,
+                                name: satName,
+                                satNumber: Number(sat.satrec.satnum),
+                                color:
+                                    selectedSatellite ===
+                                    Number(sat.satrec.satnum)
+                                        ? "red"
+                                        : "palegreen",
+                            };
+                        }
+                    })
+                    .filter((sat) => sat !== undefined) as initpostype[];
 
                 globeRef.current.objectsData(newPositions);
             }
         }, UPDATE_INTERVAL_MS);
 
-        if (satelliteData[selectedSatellite] === undefined) {
-            return;
+        // Set the point of view to the selected satellite
+        if (selectedSatellite !== undefined) {
+            if (
+                selectedSatellite !== undefined &&
+                satNumToEntry[selectedSatellite].satrec
+            ) {
+                const targetPosition = convertSatrec(
+                    satNumToEntry[selectedSatellite].satrec,
+                    satNumToEntry[selectedSatellite].name,
+                );
+
+                globeRef?.current?.pointOfView(
+                    {
+                        lat: Number(targetPosition.latitudeDeg),
+                        lng: Number(targetPosition.longitudeDeg),
+                        altitude:
+                            Number(targetPosition.altitude) / EARTH_RADIUS_KM +
+                            3.5,
+                    },
+                    1700,
+                );
+            }
         }
 
-        const targetPosition = convertSatrec(
-            satelliteData[selectedSatellite].satrec,
-            new Date().toISOString(),
-        );
-
-        globeRef?.current?.pointOfView(
-            {
-                lat: Number(targetPosition.latitudeDeg),
-                lng: Number(targetPosition.longitudeDeg),
-                altitude:
-                    Number(targetPosition.altitude) / EARTH_RADIUS_KM + 3.5,
-            },
-            1700,
-        );
-
         return () => clearInterval(intervalId);
-    }, [satelliteData, selectedSatellite]);
+    }, [satNumToEntry, selectedSatellite]);
 
     return <div id="chart" className="" ref={chart}></div>;
 }

@@ -4,7 +4,6 @@ import { useSatelliteStore } from "@/lib/store";
 import SatDropdown from "@/components/homeComponents/SatDropdown";
 
 export default function SatelliteSelector() {
-    const satelliteNames = useSatelliteStore((state) => state.satelliteNames);
     const selectedSatellite = useSatelliteStore(
         (state) => state.selectedSatellite,
     );
@@ -13,13 +12,22 @@ export default function SatelliteSelector() {
     );
     const setSatellites = useSatelliteStore((state) => state.setSatellites);
 
+    const satNumToEntry = useSatelliteStore((state) => state.satNumToEntry);
+
+    let selectedSatelliteName = undefined;
+
+    if (selectedSatellite) {
+        selectedSatelliteName = satNumToEntry[selectedSatellite]?.name;
+    }
+
     return (
         <div className="m-0 w-full border-b border-gray-600 p-0">
             <SatDropdown
-                satelliteNames={satelliteNames}
                 selectedSatellite={selectedSatellite}
                 setSelectedSatellite={setSelectedSatellite}
                 setSatellites={setSatellites}
+                selectedSatelliteName={selectedSatelliteName}
+                satNumToEntry={satNumToEntry}
             />
         </div>
     );

@@ -7,7 +7,7 @@ import { flag } from "country-emoji";
 const updateInterval = 50;
 
 export default function SatelliteDataHome() {
-    const { satelliteData, selectedSatellite } = useSatelliteStore();
+    const { selectedSatellite, satNumToEntry } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -17,8 +17,9 @@ export default function SatelliteDataHome() {
         const intervalId = setInterval(() => {
             if (selectedSatellite) {
                 // Access satellite data by name
-                const satData = satelliteData[selectedSatellite];
-                if (satData) {
+                const satData = satNumToEntry[selectedSatellite];
+                if (satData && satData.satrec) {
+                    // Check if satData.satrec is defined
                     const updatedInfo = convertSatrec(
                         satData.satrec,
                         satData.name,
@@ -30,7 +31,7 @@ export default function SatelliteDataHome() {
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, selectedSatellite]);
+    }, [satNumToEntry, selectedSatellite]);
 
     return (
         <div>

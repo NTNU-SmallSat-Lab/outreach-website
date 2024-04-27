@@ -12,13 +12,14 @@ import {
     PageHeaderAndSubtitle,
 } from "@/components/PageHeader";
 import Image from "next/image";
+import { SatelliteName, SatelliteNumber } from "@/lib/store";
 
 export interface SatelliteInfo {
     launchDate: string | undefined;
-    name: string;
+    name: SatelliteName;
     content: BlocksContent;
     relatedProjects?: ProjectOrSatellite[];
-    noradId: string | undefined;
+    noradId: SatelliteNumber | undefined;
     missionStatus: string | undefined;
     massKg: number | undefined;
     satelliteImage: string | undefined;
@@ -32,7 +33,7 @@ export interface ProjectOrSatellite {
     isProject: boolean;
 }
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 export default async function SatelliteInfoPage({
     params,
@@ -113,7 +114,7 @@ export default async function SatelliteInfoPage({
                 {/* Container for map */}
                 {satelliteInfo.noradId ? (
                     <div className="mt-6 w-full">
-                        <Map2d satName={satelliteInfo.name} />
+                        <Map2d satNum={satelliteInfo.noradId} />
                     </div>
                 ) : null}
 

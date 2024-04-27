@@ -3,24 +3,30 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { satLoaderById } from "@/lib/getSatelliteData";
+import {
+    SatelliteActions,
+    SatelliteName,
+    SatelliteNumber,
+    SatelliteState,
+} from "@/lib/store";
 
 type DropdownProps = {
-    satelliteNames: string[];
-    selectedSatellite: string;
-    // eslint-disable-next-line no-unused-vars
-    setSelectedSatellite: (satellite: string) => void;
-    // eslint-disable-next-line no-unused-vars
-    setSatellites: (satellites: any) => void;
+    selectedSatellite: SatelliteState["selectedSatellite"];
+    setSelectedSatellite: SatelliteActions["setSelectedSatellite"];
+    setSatellites: SatelliteActions["setSatellites"];
+    selectedSatelliteName?: SatelliteName;
+    satNumToEntry: SatelliteState["satNumToEntry"];
 };
 
 export default function SatDropdown({
-    satelliteNames,
     selectedSatellite,
     setSelectedSatellite,
     setSatellites,
+    selectedSatelliteName,
+    satNumToEntry,
 }: DropdownProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [noradID, setNoradID] = useState("");
+    const [noradID, setNoradID] = useState<SatelliteNumber>();
     const [error, setError] = useState("");
 
     const toggleDropdown = () => {
@@ -28,12 +34,12 @@ export default function SatDropdown({
         setIsOpen(!isOpen);
     };
 
-    const handleSelect = (satellite: string) => {
+    const handleSelect = (satellite: SatelliteNumber) => {
         setSelectedSatellite(satellite);
         setIsOpen(false);
     };
 
-    const handleAddSatellite = async (noradID: string) => {
+    const handleAddSatellite = async (noradID: SatelliteNumber) => {
         if (!noradID) {
             setError("Please enter a valid NORAD ID.");
             return;
@@ -44,11 +50,12 @@ export default function SatDropdown({
             if (data) {
                 const newSatellite = {
                     name: data.name,
-                    id: noradID,
-                    data: data,
+                    num: noradID,
+                    satrec: data.satrec,
+                    timestamp: data.timestamp,
                 };
                 setSatellites([newSatellite]);
-                setSelectedSatellite(newSatellite.name);
+                setSelectedSatellite(newSatellite.num);
                 setError("");
             } else {
                 throw new Error("No data returned for the provided NORAD ID.");
@@ -76,7 +83,9 @@ export default function SatDropdown({
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            handleAddSatellite(noradID);
+            if (noradID) {
+                handleAddSatellite(noradID);
+            }
         }
     };
 
@@ -84,7 +93,7 @@ export default function SatDropdown({
         const value = event.target.value;
         // Allow only numeric input
         if (/^\d*$/.test(value)) {
-            setNoradID(value);
+            setNoradID(Number(value) as SatelliteNumber);
         }
     };
 
@@ -100,7 +109,7 @@ export default function SatDropdown({
                 onClick={toggleDropdown}
             >
                 <div className="flex flex-col">
-                    <div>{selectedSatellite || "Select a Satellite"}</div>
+                    <div>{selectedSatelliteName || "Select a Satellite"}</div>
                     <p className=" text-gray-400">Selected Satellite</p>
                 </div>
                 <svg
@@ -122,17 +131,22 @@ export default function SatDropdown({
                 variants={variants}
                 transition={{ duration: 0.5 }}
             >
-                {satelliteNames.map((satellite) => (
-                    <div
-                        key={satellite}
-                        className="cursor-pointer p-2 text-white hover:bg-gray-700"
-                        onClick={() => handleSelect(satellite)}
-                    >
-                        {satellite !== selectedSatellite
-                            ? satellite
-                            : `${satellite} (Selected)`}
-                    </div>
-                ))}
+                {Object.entries(satNumToEntry).map(([num]) => {
+                    return (
+                        <div
+                            key={num}
+                            className="cursor-pointer p-2 text-white hover:bg-gray-700"
+                            onClick={() =>
+                                handleSelect(Number(num) as SatelliteNumber)
+                            }
+                        >
+                            {(Number(num) as SatelliteNumber) !==
+                            selectedSatellite
+                                ? num
+                                : `${num} (Selected)`}
+                        </div>
+                    );
+                })}
                 <div className="mb-2 flex w-full items-center gap-4">
                     <div className="flex flex-grow items-center rounded bg-black text-white">
                         <span className="p-2 pr-0">
@@ -158,7 +172,11 @@ export default function SatDropdown({
                         />
                     </div>
                     <button
-                        onClick={() => handleAddSatellite(noradID)}
+                        onClick={() => {
+                            if (noradID) {
+                                handleAddSatellite(noradID);
+                            }
+                        }}
                         className=" mr-2 whitespace-nowrap rounded border bg-white p-1 text-black transition duration-150 ease-in-out hover:bg-gray-300"
                     >
                         Add Satellite

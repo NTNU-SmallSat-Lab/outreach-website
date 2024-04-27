@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import React from "react";
 import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
-import SatelliteInitialFetch from "@/components/satelliteData/SatelliteInitialFetch";
+import SatelliteInitialClientFetch from "@/components/satelliteData/SatelliteInitialFetch";
 
 // imports to get satellites from strapi and fetch the data serverside
 import fetchSatelliteNamesAndId from "@/lib/data/fetchSatelliteNamesAndId";
@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 
 import ErrorBoundaryNavigation from "@/components/ErrorBoundaryNavigation";
 import Starfield from "@/components/starBackground/Starfield";
+import { SatelliteEntry } from "@/lib/store";
 
 export default async function RootLayout({
     children,
@@ -29,18 +30,18 @@ export default async function RootLayout({
 }>) {
     // fetch satellite names and id to be set in the store in the navbar
     const satellites = await fetchSatelliteNamesAndId();
-    let satData: any[] = [];
+    let satData: SatelliteEntry[] = [];
 
     if (satellites) {
         for (const sat of satellites) {
-            if (sat.id) {
+            if (sat.num) {
                 try {
-                    const data = await satLoaderById(sat.id);
-                    satData.push({ name: sat.name, id: sat.id, data });
+                    const entry = await satLoaderById(sat.num);
+                    satData.push(entry);
                 } catch (e) {
                     console.error(
                         "Either CelesTrak has IP banned the server, or the satellite data is not available for the provided NORAD ID: " +
-                            sat.id +
+                            sat.num +
                             ", or CelesTrak is down.",
                     );
                 }
@@ -52,7 +53,7 @@ export default async function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={cn("flex min-h-screen flex-col", inter.className)}>
                 <ApolloWrapper>
-                    <SatelliteInitialFetch satData={satData} />
+                    <SatelliteInitialClientFetch satData={satData} />
                     <Navbar />
                     <ErrorBoundaryNavigation>
                         <main className="flex grow flex-col">

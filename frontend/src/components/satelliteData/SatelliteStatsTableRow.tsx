@@ -3,26 +3,28 @@ import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import { TableCell, TableRow } from "@/components/shadcn/table";
+import type { SatelliteNumber, SatelliteName } from "@/lib/store";
 
 const updateInterval = 50;
 
 export default function SatelliteStatsTableRow({
     satName,
+    satNum,
     handleRowClick,
 }: {
-    satName: string;
+    satName: SatelliteName;
+    satNum: SatelliteNumber;
     handleRowClick: () => void;
 }) {
-    const { satelliteData, setSelectedSatellite } = useSatelliteStore();
-    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
-        null,
-    );
+    const { satNumToEntry, setSelectedSatellite } = useSatelliteStore();
+    const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo>();
 
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
-            // Access satellite data by name //Fix this to work!
-            const satData = satelliteData[satName];
+            // Access satellite data by name
+            const satData = satNumToEntry[satNum];
+
             if (satData) {
                 const updatedInfo = convertSatrec(satData.satrec, satData.name);
                 setSatelliteInfo(updatedInfo);
@@ -31,7 +33,7 @@ export default function SatelliteStatsTableRow({
 
         // Clear interval on component unmount
         return () => clearInterval(intervalId);
-    }, [satelliteData, satName]);
+    }, [satNumToEntry, satName, satNum]);
 
     // Display loading message if satellite info is not available
     if (!satelliteInfo) {
@@ -61,7 +63,7 @@ export default function SatelliteStatsTableRow({
         <TableRow
             className="cursor-pointer hover:bg-white hover:text-black"
             onClick={() => {
-                setSelectedSatellite(satName);
+                setSelectedSatellite(satNum);
                 handleRowClick();
             }}
             data-testid="satellitesTableRow"

@@ -9,6 +9,7 @@ import * as turf from "@turf/turf";
 import { point } from "@turf/helpers";
 // @ts-ignore
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
+import { SatelliteName } from "./store";
 
 interface SatelliteInfo {
     [key: string]: any;
@@ -49,7 +50,7 @@ const findCountry = (latitudeDeg: number, longitudeDeg: number): string => {
 // Convert satellite record to satellite info, including latitude, longitude, altitude, velocity, and country
 export const convertSatrec = (
     satrec: SatRec,
-    satName: string,
+    satName: SatelliteName,
 ): SatelliteInfo => {
     if (!satrec) {
         return {

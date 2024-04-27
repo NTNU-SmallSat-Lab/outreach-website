@@ -12,7 +12,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SVGProps } from "react";
 
-export function OuiImage(props: SVGProps<SVGSVGElement>) {
+export function PlaceholderImage(props: SVGProps<SVGSVGElement>) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@ export default function FullBlogCard({
                     />
                 ) : (
                     <div className="flex aspect-video max-h-[250px] w-full items-center justify-center">
-                        <OuiImage />
+                        <PlaceholderImage />
                     </div>
                 )}
                 <div className="flex gap-2">

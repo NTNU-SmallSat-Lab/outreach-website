@@ -10,7 +10,7 @@ import {
     SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 // have a function to create a client for you
 function makeClient() {

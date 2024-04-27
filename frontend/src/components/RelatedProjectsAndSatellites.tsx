@@ -1,14 +1,14 @@
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
 import Link from "next/link";
 import Image from "next/image";
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 import {
     Card,
     CardContent,
     CardHeader,
     CardTitle,
 } from "@/components/shadcn/card";
-import { OuiImage } from "@/components/fullBlogCard";
+import { PlaceholderImage } from "@/components/fullBlogCard";
 
 export default function RelatedProjectsAndSatellites({
     project,
@@ -45,7 +45,7 @@ export default function RelatedProjectsAndSatellites({
                             />
                         ) : (
                             <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                                <OuiImage />
+                                <PlaceholderImage />
                             </div>
                         )}
                     </div>

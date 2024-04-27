@@ -1,91 +1,81 @@
-/* eslint-disable no-unused-vars */
-import { create } from "zustand";
-import type { SatelliteData } from "@/lib/getSatelliteData";
+// A zustand store for satellite data
+// https://github.com/pmndrs/zustand
 
+import { SatRec } from "satellite.js";
+import { create } from "zustand";
+
+// Define nominal types for satellite name and number
+// Nominal types are used to create a new type that is distinct from an existing type
+// This is useful for type safety and to prevent bugs
+// For more information on nominal types, see the following blog post or github issue:
+//https://dnlytras.com/blog/nominal-types or https://github.com/Microsoft/Typescript/issues/202
+
+declare const __nominal__type: unique symbol;
+type Nominal<Type, Identifier> = Type & {
+    readonly [__nominal__type]: Identifier;
+};
+
+export type SatelliteName = Nominal<string, "SatelliteName">;
+export type SatelliteNumber = Nominal<number, "SatelliteNumber">;
 // Satellite entry for setSatellites
-interface SatelliteEntry {
-    name: string;
-    id: string;
-    data?: SatelliteData;
+export interface SatelliteEntry {
+    name: SatelliteName;
+    num: SatelliteNumber;
+    satrec: SatRec;
+    timestamp: Date;
 }
 
 // Define the state
-interface SatelliteState {
-    satelliteData: Record<string, SatelliteData>;
-    satelliteNameToId: Record<string, string>;
-    satelliteNames: string[];
-    selectedSatellite: string;
+export interface SatelliteState {
+    selectedSatellite: SatelliteNumber | undefined;
+    satNumToEntry: Record<SatelliteNumber, SatelliteEntry>;
 }
 
+// Disable unused variables as the store actions defined here are used in other files
+/* eslint-disable no-unused-vars */
 // Define the actions
-interface SatelliteActions {
-    setSatelliteData: (satName: string, data: SatelliteData) => void;
-    setSelectedSatellite: (satName: string) => void;
+export interface SatelliteActions {
+    setSelectedSatellite: (SatId: SatelliteNumber) => void;
     setSatellites: (satellites: SatelliteEntry[]) => void;
 }
+/* eslint-enable no-unused-vars */
 
 type SatelliteStore = SatelliteState & SatelliteActions;
 
 // Create satellite store
-export const useSatelliteStore = create<SatelliteStore>((set) => ({
-    satelliteData: {},
-    satelliteNames: [],
-    satelliteNameToId: {},
-    selectedSatellite: "",
+export const useSatelliteStore = create<SatelliteStore>()((set) => ({
+    selectedSatellite: undefined,
+    satNumToEntry: {},
 
     // Set the satellite names and id mapping, and selected satellite
     setSatellites: (satellites) => {
         set((state) => {
-            const newNames = satellites.map((sat) => sat.name);
-            const newNameToId = satellites.reduce<Record<string, string>>(
-                (acc, sat) => {
-                    acc[sat.name] = sat.id;
-                    return acc;
-                },
-                {},
-            );
+            const selectedSatellite =
+                state.selectedSatellite || satellites.length > 0
+                    ? satellites[0].num
+                    : undefined;
 
-            const newSatelliteData = satellites.reduce<
-                Record<string, SatelliteData>
+            const satNumToEntry = satellites.reduce<
+                Record<SatelliteNumber, SatelliteEntry>
             >(
-                (acc, sat) => {
-                    if (sat.data) {
-                        acc[sat.name] = sat.data;
-                    }
-                    return acc;
+                (previous, entry) => {
+                    previous[entry.num] = entry;
+                    return previous;
                 },
-                { ...state.satelliteData },
+                { ...state.satNumToEntry },
             );
-
-            const mergedNames = Array.from(
-                new Set([...state.satelliteNames, ...newNames]),
-            );
-            const mergedNameToId = {
-                ...state.satelliteNameToId,
-                ...newNameToId,
-            };
-            const selectedSatellite = state.selectedSatellite || newNames[0];
 
             return {
-                satelliteNames: mergedNames,
-                satelliteNameToId: mergedNameToId,
-                satelliteData: newSatelliteData,
                 selectedSatellite: selectedSatellite,
+                satNumToEntry: satNumToEntry,
             };
         });
     },
 
-    // Set the satellite data for a specific satellite
-    setSatelliteData: (satName, data) => {
-        set((state) => ({
-            satelliteData: { ...state.satelliteData, [satName]: data },
-        }));
-    },
-
     // Set the selected satellite
-    setSelectedSatellite: (satName) => {
+    setSelectedSatellite: (satNum: SatelliteNumber) => {
         set(() => ({
-            selectedSatellite: satName,
+            selectedSatellite: satNum,
         }));
     },
 }));
