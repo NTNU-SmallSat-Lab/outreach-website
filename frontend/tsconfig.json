@@ -16,12 +16,18 @@
             {
                 "name": "next",
             },
+            {
+                "name": "@0no-co/graphqlsp",
+                "schema": "http://localhost:1337/graphql",
+                "tadaOutputLocation": "./src/tada/graphql-env.d.ts",
+            },
         ],
         "paths": {
             "@/*": ["./src/*"],
             "@components/*": ["./src/components/*"],
             "@customTypes/*": ["./src/types/*"],
             "@shadcn/*": ["./src/components/shadcn/*"],
+            "@lib/*": ["./src/lib/*"],
         },
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -47,6 +47,7 @@
         "country-emoji": "^1.5.6",
         "framer-motion": "^11.0.24",
         "globe.gl": "^2.32.2",
+        "gql.tada": "^1.6.2",
         "gsap": "^3.12.5",
         "lucide-react": "^0.314.0",
         "luxon": "^3.4.4",
@@ -75,6 +76,7 @@
         "zustand": "^4.5.2"
     },
     "devDependencies": {
+        "@0no-co/graphqlsp": "^1.12.1",
         "@cloudflare/next-on-pages": "^1.8.3",
         "@graphql-codegen/cli": "^5.0.0",
         "@graphql-codegen/client-preset": "^4.1.0",
