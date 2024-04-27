@@ -33,7 +33,7 @@ export interface ProjectOrSatellite {
     isProject: boolean;
 }
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 export default async function SatelliteInfoPage({
     params,

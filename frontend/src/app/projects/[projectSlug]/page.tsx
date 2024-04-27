@@ -4,7 +4,7 @@ import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECT_BY_SLUG = gql(`
 query Projects($projectFilters: ProjectFiltersInput) {

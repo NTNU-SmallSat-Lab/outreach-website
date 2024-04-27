@@ -2,7 +2,7 @@ import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import Hero from "@components/ui/hero";
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_HERO_DATA = gql(`
 query Query($publicationState: PublicationState) {

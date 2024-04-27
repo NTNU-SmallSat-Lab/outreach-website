@@ -7,5 +7,5 @@ module.exports = ({ env }) => ({
   webhooks: {
     populateRelations: env.bool("WEBHOOKS_POPULATE_RELATIONS", false),
   },
-  url: "https://hypso.space/strapi/",
+  url: env("STRAPI_URL", "http://localhost:1337"),
 });

@@ -8,7 +8,7 @@ import ShareButtons from "@/components/ShareButtons";
 import NextImage from "next/image";
 import fullNameToInitials from "@/lib/helpers";
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_ARTICLE_BY_SLUG = gql(
     `query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {

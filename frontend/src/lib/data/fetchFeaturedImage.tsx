@@ -3,7 +3,7 @@ import { getClient } from "../ApolloClient";
 import Image from "next/image";
 import { PlaceholderImage } from "@/components/fullBlogCard";
 
-const STRAPI_URL = process.env.STRAPI_URL;
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_FEATURED_IMAGE = gql(`
 query FeaturedImage {
