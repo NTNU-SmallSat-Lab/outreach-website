@@ -1,54 +1,60 @@
-import { gql } from "@/__generated__/gql";
 import { getClient } from "../ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import { Enum_Article_Tag } from "@/__generated__/graphql";
 import { BlogPost } from "@/app/blog/page";
+import { graphql } from "@/tada/graphql";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_ARTICLES = gql(`
-query GET_ARTICLES($pagination: PaginationArg, $filters: ArticleFiltersInput) {
-    articles(sort: ["datePublished:desc"], pagination: $pagination, filters: $filters) {
-        data {
-            id
-            attributes {
-                author {
-                    data {
-                        attributes {
-                            name
-                            avatar {
-                                data {
-                                    attributes {
-                                        url
+const GET_ARTICLES = graphql(`
+    query GET_ARTICLES(
+        $pagination: PaginationArg
+        $filters: ArticleFiltersInput
+    ) {
+        articles(
+            sort: ["datePublished:desc"]
+            pagination: $pagination
+            filters: $filters
+        ) {
+            data {
+                id
+                attributes {
+                    author {
+                        data {
+                            attributes {
+                                name
+                                avatar {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                previewTitle
-                datePublished
-                body
-                coverImage {
-                    data {
-                        attributes {
-                            url
+                    previewTitle
+                    datePublished
+                    body
+                    coverImage {
+                        data {
+                            attributes {
+                                url
+                            }
                         }
                     }
+                    createdAt
+                    publishedAt
+                    slug
+                    Tag
                 }
-                createdAt
-                publishedAt
-                slug
-                Tag
             }
-        }
-        meta {
-            pagination {
-                total
+            meta {
+                pagination {
+                    total
+                }
             }
         }
     }
-}
 `);
 
 export default async function fetchArticlePages({
@@ -111,8 +117,7 @@ export default async function fetchArticlePages({
 
         const authorName: string | undefined =
             article?.attributes?.author?.data?.attributes?.name;
-        const tag: Enum_Article_Tag | null | undefined =
-            article?.attributes?.Tag;
+        const tag: string | null | undefined = article?.attributes?.Tag;
         const datePublished: any = article?.attributes?.datePublished;
         let coverImage: string | undefined =
             article?.attributes?.coverImage?.data?.attributes?.url;

@@ -1,8 +1,8 @@
 import { getClient } from "@/lib/ApolloClient";
-import { gql } from "@/__generated__/gql";
 import { SatelliteName, SatelliteNumber } from "../store";
+import { graphql } from "@/tada/graphql";
 
-const GET_SATELLITE_NAMES_AND_ID = gql(`
+const GET_SATELLITE_NAMES_AND_ID = graphql(`
     query GET_SATELLITE_NAMES_AND_ID {
         satellites {
             data {

@@ -9,8 +9,6 @@
         "lint": "next lint",
         "prettierWrite": "npx prettier . --write",
         "prettierCheck": "npx prettier . --check",
-        "compileTypes": "graphql-codegen",
-        "watchTypes": " graphql-codegen -w",
         "test": "npx playwright test",
         "testui": "npx playwright test --ui",
         "codegen": "npx playwright codegen",
@@ -78,8 +76,6 @@
     "devDependencies": {
         "@0no-co/graphqlsp": "^1.12.1",
         "@cloudflare/next-on-pages": "^1.8.3",
-        "@graphql-codegen/cli": "^5.0.0",
-        "@graphql-codegen/client-preset": "^4.1.0",
         "@graphql-typed-document-node/core": "^3.2.0",
         "@iconify-icon/react": "^2.0.1",
         "@iconify/react": "^4.1.1",

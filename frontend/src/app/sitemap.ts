@@ -4,6 +4,9 @@ import { env } from "process";
 import { graphql } from "@/tada/graphql";
 import { TadaDocumentNode } from "gql.tada";
 
+// Needs to be dynamic as we use the rsc apollo client
+export const dynamic = "force-dynamic";
+
 const GET_ARTICLE_SLUGS = graphql(`
     query GetAllArticleSlugs {
         articles {

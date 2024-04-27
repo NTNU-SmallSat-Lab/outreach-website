@@ -1,4 +1,3 @@
-import { gql } from "@/__generated__/gql";
 import {
     Card,
     CardContent,
@@ -15,9 +14,10 @@ import {
     PageSubtitle,
 } from "@/components/PageHeader";
 import { PlaceholderImage } from "@/components/fullBlogCard";
+import { graphql } from "@/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_PROJECTS = gql(`
+const GET_PROJECTS = graphql(`
  query GET_PROJECTS {
     projects(sort: ["publishedAt:desc"]) {
         data {
