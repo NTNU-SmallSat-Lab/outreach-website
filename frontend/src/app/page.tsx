@@ -1,5 +1,4 @@
 import { Button } from "@shadcn/button";
-import ColoredSection from "@/components/ui/coloredSection";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -23,6 +22,7 @@ export default async function Home() {
 
     return (
         <>
+            {/* Globe Section */}
             <div className="flex min-h-[calc(100vh-73px)] flex-col gap-0 sm:flex-row">
                 {/* Stats Container */}
                 <div className="z-10 flex w-full flex-col border-b-2 border-l-2 border-r-2 border-t-2 border-gray-600 bg-black md:min-w-[500px] xl:w-1/3">
@@ -38,9 +38,10 @@ export default async function Home() {
                 </div>
             </div>
 
-            <ColoredSection
+            {/* About Us Section */}
+            <div
                 id="about-us"
-                className="flex flex-col items-center px-8 py-12"
+                className="flex w-full flex-col items-center bg-black bg-opacity-50 px-8 py-12"
             >
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1>
@@ -73,7 +74,9 @@ export default async function Home() {
                         </div>
                     </div>
                 </div>
-            </ColoredSection>
+            </div>
+
+            {/* Projects Section */}
             <div className="flex flex-col items-center px-8 py-12 text-center">
                 <div className="prose prose-invert">
                     <h1 className="">Projects</h1>
@@ -95,14 +98,16 @@ export default async function Home() {
                 </div>
             </div>
 
-            <ColoredSection className="flex flex-col items-center px-8 py-12">
+            {/* Featured Image Section */}
+            <div className="flex w-full flex-col items-center bg-black bg-opacity-50 px-8 py-12">
                 <div className="prose prose-invert flex flex-col items-center text-center prose-img:rounded-xl">
                     <h1 className="">Featured Satellite Image</h1>
                     {featuredImageURL}
                 </div>
-            </ColoredSection>
+            </div>
 
-            <HeroWrapper></HeroWrapper>
+            {/* Contact Section */}
+            <HeroWrapper />
         </>
     );
 }
