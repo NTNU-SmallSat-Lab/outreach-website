@@ -10,6 +10,8 @@ To install all requirements simply do the following from the project root:
 
 `npm i && cd ./frontend && npm i && cd ../backend && npm i && cd ..` This will run npm install in all the folders necessary.
 
+Goto `/backend` and copy the `.env.example` file and paste it as a `.env`.
+
 Then do `npm run dev` from the root dir to run both the client and the server at the same time.
 
 If this doesn't work you might have to enter and build the backend (strapi) first.

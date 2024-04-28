@@ -132,6 +132,7 @@ export default function SatDropdown({
                 transition={{ duration: 0.5 }}
             >
                 {Object.entries(satNumToEntry).map(([num]) => {
+                    let satNum = Number(num) as SatelliteNumber;
                     return (
                         <div
                             key={num}
@@ -140,10 +141,9 @@ export default function SatDropdown({
                                 handleSelect(Number(num) as SatelliteNumber)
                             }
                         >
-                            {(Number(num) as SatelliteNumber) !==
-                            selectedSatellite
-                                ? num
-                                : `${num} (Selected)`}
+                            {satNum !== selectedSatellite
+                                ? satNumToEntry[satNum].name
+                                : `${satNumToEntry[satNum].name} (Selected)`}
                         </div>
                     );
                 })}
