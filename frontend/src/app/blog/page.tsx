@@ -30,6 +30,8 @@ export default async function BlogPage({
 }: {
     searchParams?: { [key: string]: string | undefined };
 }) {
+    await new Promise((r) => setTimeout(r, 100000));
+
     const page = searchParams?.page;
     const currentPage = parseInt(page ?? "1", 10);
     const tag = searchParams?.tag ?? null;
