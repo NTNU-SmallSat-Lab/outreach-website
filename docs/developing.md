@@ -53,7 +53,7 @@ The following should **NOT** be made publicly available:
 
 To explore the schema, use the [apollo sandbox](https://studio.apollographql.com/sandbox/explorer/) with `http://localhost:1337/graphql` as the url.
 
-Generation of types types is done with [gql.tada](https://github.com/0no-co/gql.tada)
+Generation of types types is done with [gql.tada](https://github.com/0no-co/gql.tada). All you need to do is accept using the workspace typescript version.
 
 
 ## Strapi invite others
