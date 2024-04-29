@@ -1,51 +1,52 @@
-import { gql } from "@/__generated__/gql";
 import {
     ProjectOrSatellite,
     SatelliteInfo,
 } from "@/app/satellites/[satelliteSlug]/page";
 import { getClient } from "../ApolloClient";
 import { SatelliteName, SatelliteNumber } from "../store";
+import { graphql } from "@/tada/graphql";
+import { BlocksContent } from "@strapi/blocks-react-renderer";
 
-const GET_SATELLITE_INFO =
-    gql(`query GET_SATELLITE_INFO($filters: SatelliteFiltersInput) {
-      satellites(filters: $filters) {
-        data {
-            id
-            attributes {
-                catalogNumberNORAD
-                content
-                name
-                massKg
-                missionStatus
-                satelliteImage {
-                  data {
-                    attributes {
-                      url
-                    }
-                  }
-                }
-              projects {
-                data {
-                  attributes {
-                    title
-                    previewImage {
-                      data {
-                        attributes {
-                          url
+const GET_SATELLITE_INFO = graphql(`
+    query GET_SATELLITE_INFO($filters: SatelliteFiltersInput) {
+        satellites(filters: $filters) {
+            data {
+                id
+                attributes {
+                    catalogNumberNORAD
+                    content
+                    name
+                    massKg
+                    missionStatus
+                    satelliteImage {
+                        data {
+                            attributes {
+                                url
+                            }
                         }
-                      }
                     }
-                    slug
-                  }
-                  id
+                    projects {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                                slug
+                            }
+                            id
+                        }
+                    }
+                    launchDate
                 }
-              }
-              launchDate
             }
         }
-      }
     }
-  `);
+`);
 
 export default async function fetchSatelliteInfo({
     params,
@@ -86,8 +87,8 @@ export default async function fetchSatelliteInfo({
         name:
             (graphqlData?.data?.satellites?.data[0]?.attributes
                 ?.name as SatelliteName) ?? "",
-        content:
-            graphqlData?.data?.satellites?.data[0]?.attributes?.content ?? "",
+        content: graphqlData?.data?.satellites?.data[0]?.attributes
+            ?.content as BlocksContent,
         relatedProjects: projects ?? [],
         noradId:
             (Number(
@@ -95,7 +96,8 @@ export default async function fetchSatelliteInfo({
                     ?.catalogNumberNORAD,
             ) as SatelliteNumber) ?? undefined,
         launchDate:
-            graphqlData.data.satellites?.data[0]?.attributes?.launchDate ?? "",
+            (graphqlData.data.satellites?.data[0]?.attributes
+                ?.launchDate as string) ?? "",
         missionStatus:
             graphqlData?.data?.satellites?.data[0]?.attributes?.missionStatus ??
             undefined,

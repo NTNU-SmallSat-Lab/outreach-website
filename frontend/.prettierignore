@@ -2,5 +2,5 @@
 build
 coverage
 
-# Ignore graphQL codegen generated types
-src/__generated__/*
+# Ignore gql.tada generated types
+src/tada/graphql-env.d.ts

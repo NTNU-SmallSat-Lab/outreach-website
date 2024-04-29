@@ -1,29 +1,29 @@
-import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import SatelliteResponsiveTable from "@/components/SatelliteResponsiveTable";
+import { graphql } from "@/tada/graphql";
 
-const GET_SATELLITES = gql(`
-query GET_SATELLITES {
-    satellites {
-      data {
-        id
-        attributes {
-          catalogNumberNORAD
-          name
-          satelliteImage {
+const GET_SATELLITES = graphql(`
+    query GET_SATELLITES {
+        satellites {
             data {
-              attributes {
-                url
-              }
+                id
+                attributes {
+                    catalogNumberNORAD
+                    name
+                    satelliteImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    missionStatus
+                    slug
+                    massKg
+                }
             }
-          }
-          missionStatus
-          slug
-          massKg
         }
-      }
     }
-  }
 `);
 
 export default async function Satellites() {

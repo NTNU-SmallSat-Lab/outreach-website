@@ -49,17 +49,12 @@ The following should **NOT** be made publicly available:
 -   Upload
 -   User-permissions
 
-## GraphQL Type generation
+## GraphQL
 
-If you're using GraphQL, then you need to run `npm run compile` from `/frontend` whenever you update a schema or define a new graphQL request in the code. Make sure to import the correct `gql` as
+To explore the schema, use the [apollo sandbox](https://studio.apollographql.com/sandbox/explorer/) with `http://localhost:1337/graphql` as the url.
 
-```
-import { gql } from"@/generated/gql";
-```
+Generation of types types is done with [gql.tada](https://github.com/0no-co/gql.tada)
 
-> Any errors in your code other than the GraphQL types, can result in the codegen not working, so make sure to fix all other errors before running the codegen.
-
-> [https://www.apollographql.com/docs/react/development-testing/static-typing/](https://www.apollographql.com/docs/react/development-testing/static-typing/)
 
 ## Strapi invite others
 

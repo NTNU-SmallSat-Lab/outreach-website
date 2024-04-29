@@ -1,47 +1,48 @@
-import { gql } from "@/__generated__/gql";
 import BlockRendererClient from "@/components/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
+import { graphql } from "@/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_PROJECT_BY_SLUG = gql(`
-query Projects($projectFilters: ProjectFiltersInput) {
-  projects(filters: $projectFilters) {
-    data {
-      attributes {
-        title
-        content
-        satellites {
-          data {
-            id
-            attributes {
-              name
-              slug
-              satelliteImage {
-                data {
-                  attributes {
-                    url
-                  }
+const GET_PROJECT_BY_SLUG = graphql(`
+    query Projects($projectFilters: ProjectFiltersInput) {
+        projects(filters: $projectFilters) {
+            data {
+                attributes {
+                    title
+                    content
+                    satellites {
+                        data {
+                            id
+                            attributes {
+                                name
+                                slug
+                                satelliteImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    slug
+                    previewImage {
+                        data {
+                            id
+                            attributes {
+                                url
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-        slug
-        previewImage {
-          data {
-            id
-            attributes {
-              url
-            }
-          }
-        }
-      }
     }
-  }
-}`);
+`);
 
 export default async function Page({
     params,
@@ -66,7 +67,8 @@ export default async function Page({
     }
 
     const projects = graphqlData.data.projects?.data[0];
-    const content: BlocksContent = projects?.attributes?.content ?? [];
+    const content: BlocksContent = projects?.attributes
+        ?.content as BlocksContent;
 
     let projectTitle = projects?.attributes?.slug;
 

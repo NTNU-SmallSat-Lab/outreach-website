@@ -1,7 +1,6 @@
 import BlogPaginator from "@/components/BlogPaginator";
 import BlogDataCards from "./blogDataCards";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import { Enum_Article_Tag } from "@/__generated__/graphql";
 import fetchArticlePages from "@/lib/data/fetchArticleInfo";
 import {
     PageHeaderAndSubtitle,
@@ -19,7 +18,7 @@ export interface BlogPost {
     content: BlocksContent;
     coverImage?: string;
     datePublished: any;
-    tag?: Enum_Article_Tag | null | undefined;
+    tag?: string | null | undefined;
     HOST_URL?: string;
     authorName?: string;
     avatarURL?: string;
