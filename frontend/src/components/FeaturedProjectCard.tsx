@@ -1,10 +1,3 @@
-import {
-    Card,
-    CardContent,
-    CardTitle,
-    CardHeader,
-    CardFooter,
-} from "@/components/shadcn/card";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -23,20 +16,19 @@ export default function FeaturedProjectCard({
         return null;
     }
 
-    console.log(content);
-
     return (
         <Link href={"/projects/" + projectSlug}>
-            <div className="flex h-full w-full flex-col border-2 bg-red-600 hover:border-blue-500">
-                <Image
-                    src={imageURL}
-                    alt="Project Image"
-                    width={500}
-                    height={500}
-                />
-                <div className="prose prose-invert text-center">
-                    {" "}
-                    <h1 className="mb-2 mt-6">{title}</h1>
+            <div className="flex h-full w-full flex-col border-2 bg-white hover:border-blue-500">
+                <div className="relative h-[30vh] w-full">
+                    <Image
+                        src={imageURL}
+                        alt="Project Image"
+                        layout="fill"
+                        objectFit="cover"
+                    />
+                </div>
+                <div className="prose p-4">
+                    <h2 className="mb-2">{title}</h2>
                     <p className="break-words">{content}</p>
                 </div>
             </div>

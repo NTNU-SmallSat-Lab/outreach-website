@@ -6,12 +6,28 @@ import { Button } from "./shadcn/button";
 export default async function FeaturedProjects() {
     const featuredProjects = await fetchFeaturedProjects();
 
-    console.log(featuredProjects.featuredProjects)
+    console.log(featuredProjects.featuredProjects);
 
     return (
         <div className="flex w-full flex-col justify-center bg-black bg-opacity-50 px-8 py-12 sm:flex-row">
-            <div className="flex w-full flex-col sm:w-3/5">
-                <div className="grid h-full w-full grid-cols-3 gap-4">
+            <div className="prose prose-invert relative left-32 flex w-full flex-col p-4 text-center sm:w-1/5 sm:text-left">
+                <h1>
+                    {featuredProjects.title
+                        ? featuredProjects.title
+                        : "Projects"}
+                </h1>
+                <p>
+                    {featuredProjects.textContent
+                        ? featuredProjects.textContent
+                        : "Here are some of our projects"}
+                </p>
+                <Link href={"/projects"} className="">
+                    <Button id="">View more</Button>
+                </Link>
+            </div>
+
+            <div className="relative left-64 flex w-full flex-col sm:w-4/5">
+                <div className="grid w-full grid-cols-3 gap-4">
                     {featuredProjects.featuredProjects.map(
                         (project: any, index: number) => {
                             return (
@@ -26,22 +42,6 @@ export default async function FeaturedProjects() {
                         },
                     )}
                 </div>
-            </div>
-
-            <div className="prose prose-invert flex w-full flex-col p-4 text-center sm:w-2/5 sm:text-left">
-                <h1>
-                    {featuredProjects.title
-                        ? featuredProjects.title
-                        : "Projects"}
-                </h1>
-                <p>
-                    {featuredProjects.textContent
-                        ? featuredProjects.textContent
-                        : "Here are some of our projects"}
-                </p>
-                <Link href={"/projects"} className="">
-                    <Button id="">View more</Button>
-                </Link>
             </div>
         </div>
     );
