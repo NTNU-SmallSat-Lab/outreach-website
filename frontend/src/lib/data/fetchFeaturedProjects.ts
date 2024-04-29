@@ -20,6 +20,7 @@ query HomeFeaturedProjects {
                               }
                             }
                             slug
+                            content
                         }
                     }
                 }
@@ -35,6 +36,7 @@ query HomeFeaturedProjects {
                               }
                             }
                             slug
+                            content
                         }
                     }
                 }
@@ -50,6 +52,7 @@ query HomeFeaturedProjects {
                               }
                             }
                             slug
+                            content
                         }
                     }
                 }
@@ -59,6 +62,15 @@ query HomeFeaturedProjects {
 }
 `);
 
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
+
+type FeaturedProject = {
+    title: string;
+    content: string;
+    imageURL: string;
+    projectSlug: string;
+};
+
 export default async function fetchFeaturedProjects() {
     const graphqlData = await getClient().query({
         query: GET_FEATURED_PROJECTS,
@@ -67,21 +79,33 @@ export default async function fetchFeaturedProjects() {
     let title = graphqlData.data.homeFeaturedProjects?.data?.attributes?.title;
     let textContent =
         graphqlData.data.homeFeaturedProjects?.data?.attributes?.textContent;
-    let featuredProject1 =
+
+    // Collect all featured projects into an array
+    let featuredProjectsData = [
         graphqlData.data.homeFeaturedProjects?.data?.attributes
-            ?.featuredProject1?.data?.attributes;
-    let featuredProject2 =
+            ?.featuredProject1?.data?.attributes,
         graphqlData.data.homeFeaturedProjects?.data?.attributes
-            ?.featuredProject2?.data?.attributes;
-    let featuredProject3 =
+            ?.featuredProject2?.data?.attributes,
         graphqlData.data.homeFeaturedProjects?.data?.attributes
-            ?.featuredProject3?.data?.attributes;
+            ?.featuredProject3?.data?.attributes,
+    ];
+
+    // Map over the array to transform the data into the desired structure
+    let featuredProjects = featuredProjectsData.map((project) => {
+        console.log(project?.content[0].children[0].text);
+        return {
+            title: project?.title ?? "",
+            content: project?.content[0].children[0].text ?? "",
+            imageURL:
+                STRAPI_URL +
+                (project?.previewImage?.data?.attributes?.url ?? ""),
+            projectSlug: project?.slug ?? "",
+        };
+    });
 
     return {
         title,
         textContent,
-        featuredProject1,
-        featuredProject2,
-        featuredProject3,
+        featuredProjects,
     };
 }

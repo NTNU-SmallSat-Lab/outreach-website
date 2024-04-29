@@ -39,7 +39,7 @@ export default function SatelliteResponsiveTable({
                 <PageSubtitle>
                     {inOrbit
                         ? "Here are some satellites we have worked on that are in orbit. Click on a satellite to view more information."
-                        : "Here are some satellites currently being worked on."}
+                        : "Here are some satellites we have worked on that are not currently in orbit."}
                 </PageSubtitle>
             </PageHeaderAndSubtitle>
             <Table className="table-auto border-collapse border-b border-white shadow">
