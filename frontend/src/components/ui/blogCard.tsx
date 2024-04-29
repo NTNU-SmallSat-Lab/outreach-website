@@ -9,7 +9,7 @@ const BlogCard = React.forwardRef<
     <div
         ref={ref}
         className={cn(
-            "flex flex-col border bg-background p-5 text-card-foreground",
+            "flex flex-col bg-background text-card-foreground",
             className,
         )}
         {...props}
