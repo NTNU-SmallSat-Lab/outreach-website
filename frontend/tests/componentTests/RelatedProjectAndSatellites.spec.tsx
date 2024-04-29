@@ -9,7 +9,6 @@ test("should work", async ({ mount }) => {
         previewImage: "test",
         slug: "test",
         isProject: true,
-        // Add other required properties
     };
 
     const component = await mount(
