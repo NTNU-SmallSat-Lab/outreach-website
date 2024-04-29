@@ -18,7 +18,7 @@ export default function FeaturedProjectCard({
 
     return (
         <Link href={"/projects/" + projectSlug}>
-            <div className="flex h-full w-full flex-col border-2 bg-white hover:border-blue-500">
+            <div className="flex h-full w-full flex-col border-2 bg-white hover:border-primary">
                 <div className="relative h-[30vh] w-full">
                     <Image
                         src={imageURL}

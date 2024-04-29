@@ -125,7 +125,7 @@ export default function Navbar() {
         if (pathname.includes(path)) {
             return;
         }
-        return "ghost";
+        return "navbarLink";
     };
 
     return (
@@ -137,6 +137,7 @@ export default function Navbar() {
                         height={70}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
+                        className="hover:opacity-80 duration-200"
                     />
                 </Link>
             </div>

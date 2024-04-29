@@ -9,6 +9,7 @@ import {
     SatelliteNumber,
     SatelliteState,
 } from "@/lib/store";
+import Link from "next/link";
 
 type DropdownProps = {
     selectedSatellite: SatelliteState["selectedSatellite"];
@@ -25,7 +26,9 @@ export default function SatDropdown({
     selectedSatelliteName,
     satNumToEntry,
 }: DropdownProps) {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const isLargeScreen = () => window.matchMedia("(min-width: 768px)").matches;
+
+    const [isOpen, setIsOpen] = useState<boolean>(isLargeScreen());
     const [noradID, setNoradID] = useState<SatelliteNumber>();
     const [error, setError] = useState("");
 
@@ -36,7 +39,6 @@ export default function SatDropdown({
 
     const handleSelect = (satellite: SatelliteNumber) => {
         setSelectedSatellite(satellite);
-        setIsOpen(false);
     };
 
     const handleAddSatellite = async (noradID: SatelliteNumber) => {
@@ -110,7 +112,9 @@ export default function SatDropdown({
             >
                 <div className="flex flex-col">
                     <div>{selectedSatelliteName || "Select a Satellite"}</div>
-                    <p className=" text-gray-400">Selected Satellite</p>
+                    <p className="text-gray-400">
+                        {selectedSatelliteName ? "Selected Satellite" : null}
+                    </p>
                 </div>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -136,14 +140,15 @@ export default function SatDropdown({
                     return (
                         <div
                             key={num}
-                            className="cursor-pointer p-2 text-white hover:bg-gray-700"
+                            className={cn(
+                                "cursor-pointer p-2 text-white hover:bg-gray-700",
+                                satNum === selectedSatellite && "bg-gray-800",
+                            )}
                             onClick={() =>
                                 handleSelect(Number(num) as SatelliteNumber)
                             }
                         >
-                            {satNum !== selectedSatellite
-                                ? satNumToEntry[satNum].name
-                                : `${satNumToEntry[satNum].name} (Selected)`}
+                            {satNumToEntry[satNum].name}
                         </div>
                     );
                 })}
@@ -177,7 +182,7 @@ export default function SatDropdown({
                                 handleAddSatellite(noradID);
                             }
                         }}
-                        className=" mr-2 whitespace-nowrap rounded border bg-white p-1 text-black transition duration-150 ease-in-out hover:bg-gray-300"
+                        className="mr-2 whitespace-nowrap rounded-md border bg-primary p-1 text-white duration-200 ease-in-out hover:opacity-80"
                     >
                         Add Satellite
                     </button>

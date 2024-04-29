@@ -1,18 +1,17 @@
-import { gql } from "@/__generated__/gql";
+import { graphql } from "@/tada/graphql";
 import { getClient } from "../ApolloClient";
 
-const GET_MISSION_STATEMENT = gql(`
-query HomeMissionStatement {
-    homeMissionStatement {
-        data {
-            attributes {
-                title
-                textContent
+const GET_MISSION_STATEMENT = graphql(`
+    query HomeMissionStatement {
+        homeMissionStatement {
+            data {
+                attributes {
+                    title
+                    textContent
+                }
             }
         }
     }
-
-}
 `);
 
 export default async function fetchMissionStatement() {

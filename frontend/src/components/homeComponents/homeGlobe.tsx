@@ -157,8 +157,8 @@ export default function SatelliteGlobe() {
                                 color:
                                     selectedSatellite ===
                                     Number(sat.satrec.satnum)
-                                        ? "red"
-                                        : "palegreen",
+                                        ? "#2860f1"
+                                        : "#56876d",
                             };
                         }
                     })

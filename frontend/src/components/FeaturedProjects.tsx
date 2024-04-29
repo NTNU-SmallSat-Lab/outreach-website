@@ -22,7 +22,7 @@ export default async function FeaturedProjects() {
                         : "Here are some of our projects"}
                 </p>
                 <Link href={"/projects"} className="">
-                    <Button id="">View more</Button>
+                    <Button variant={"link"} size={"link"}>View more</Button>
                 </Link>
             </div>
 

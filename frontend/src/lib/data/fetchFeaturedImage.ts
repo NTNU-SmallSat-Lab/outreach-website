@@ -1,6 +1,4 @@
 import { getClient } from "../ApolloClient";
-import Image from "next/image";
-import { PlaceholderImage } from "@/components/fullBlogCard";
 import { graphql } from "@/tada/graphql";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
@@ -22,6 +20,7 @@ const GET_FEATURED_IMAGE = graphql(`
                             attributes {
                                 catalogNumberNORAD
                                 name
+                                slug
                             }
                         }
                     }

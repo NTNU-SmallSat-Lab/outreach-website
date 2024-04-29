@@ -1,8 +1,7 @@
 import fetchMissionStatement from "@/lib/data/fetchMissionStatement";
+import fetchFeaturedImage from "@/lib/data/fetchFeaturedImage";
 import Image from "next/image";
 import Link from "next/link";
-
-import fetchFeaturedImage from "@/lib/data/fetchFeaturedImage";
 
 export default async function MissionStatement() {
     const missionStatement = await fetchMissionStatement();
@@ -40,7 +39,7 @@ export default async function MissionStatement() {
                         Image Taken by{" "}
                         <Link
                             href={`/satellites/${featuredImage.imageSatelliteSlug}`}
-                            className="text-blue-500 underline"
+                            className="text-primary no-underline hover:underline"
                         >
                             {featuredImage.imageSatelliteName}
                         </Link>

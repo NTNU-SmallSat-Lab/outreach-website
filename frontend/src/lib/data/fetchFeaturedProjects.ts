@@ -1,80 +1,75 @@
-import { gql } from "@/__generated__/gql";
+import { graphql } from "@/tada/graphql";
 import { getClient } from "../ApolloClient";
 
-const GET_FEATURED_PROJECTS = gql(`
-query HomeFeaturedProjects {
-    homeFeaturedProjects {
-        data {
-            attributes {
-                title
-                textContent
-                featuredProject1 {
-                    data {
-                        attributes {
-                            title
-                            previewImage {
-                              data {
-                                attributes {
-                                  url
+const GET_FEATURED_PROJECTS = graphql(`
+    query HomeFeaturedProjects {
+        homeFeaturedProjects {
+            data {
+                attributes {
+                    title
+                    textContent
+                    featuredProject1 {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
                                 }
-                              }
+                                slug
+                                content
                             }
-                            slug
-                            content
                         }
                     }
-                }
-                featuredProject2 {
-                    data {
-                        attributes {
-                            title
-                            previewImage {
-                              data {
-                                attributes {
-                                  url
+                    featuredProject2 {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
                                 }
-                              }
+                                slug
+                                content
                             }
-                            slug
-                            content
                         }
                     }
-                }
-                featuredProject3 {
-                    data {
-                        attributes {
-                            title
-                            previewImage {
-                              data {
-                                attributes {
-                                  url
+                    featuredProject3 {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
                                 }
-                              }
+                                slug
+                                content
                             }
-                            slug
-                            content
                         }
                     }
                 }
             }
         }
     }
-}
 `);
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
-
-type FeaturedProject = {
-    title: string;
-    content: string;
-    imageURL: string;
-    projectSlug: string;
-};
 
 export default async function fetchFeaturedProjects() {
     const graphqlData = await getClient().query({
         query: GET_FEATURED_PROJECTS,
     });
+
+    console.log(graphqlData.data.homeFeaturedProjects?.data);
 
     let title = graphqlData.data.homeFeaturedProjects?.data?.attributes?.title;
     let textContent =

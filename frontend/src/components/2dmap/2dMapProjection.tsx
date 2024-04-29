@@ -49,7 +49,7 @@ export default function Map2dNaturalProjection({
     // Function to interpolate the green color based on the index
     const interPolateColor = (index: number, total: number) => {
         const startColor = { r: 40, g: 96, b: 241 };
-        const endColor = { r: 241, g: 0, b: 20 };
+        const endColor = { r: 241, g: 20, b: 40 };
         const ratio = index / total;
         const r = Math.round((1 - ratio) * startColor.r + ratio * endColor.r);
         const g = Math.round((1 - ratio) * startColor.g + ratio * endColor.g);
@@ -96,7 +96,7 @@ export default function Map2dNaturalProjection({
                                                     key={`future-position-${i}`}
                                                     cx={point[0]}
                                                     cy={point[1]}
-                                                    r="3"
+                                                    r={width < 500 ? 3 : 5}
                                                     fill={interPolateColor(
                                                         i,
                                                         futurePositions.length -
@@ -110,7 +110,7 @@ export default function Map2dNaturalProjection({
                                     <circle
                                         cx={satPoint[0]}
                                         cy={satPoint[1]}
-                                        r="8"
+                                        r={width < 500 ? 5 : 10}
                                         fill={interPolateColor(0, 1)}
                                         stroke="black"
                                         strokeWidth="1"

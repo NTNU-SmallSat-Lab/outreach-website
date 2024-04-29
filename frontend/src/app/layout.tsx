@@ -23,6 +23,8 @@ import ErrorBoundaryNavigation from "@/components/ErrorBoundaryNavigation";
 import Starfield from "@/components/starBackground/Starfield";
 import { SatelliteEntry } from "@/lib/store";
 
+import TransitionWrapper from "@/components/animation/TransitionWrappers";
+
 export default async function RootLayout({
     children,
 }: Readonly<{
@@ -40,9 +42,8 @@ export default async function RootLayout({
                     satData.push(entry);
                 } catch (e) {
                     console.error(
-                        "Either CelesTrak has IP banned the server, or the satellite data is not available for the provided NORAD ID: " +
-                            sat.num +
-                            ", or CelesTrak is down.",
+                        "Either CelesTrak has IP banned the server, or CelesTrak is down, or the satellite data is not available for the provided NORAD ID: " +
+                            sat.num,
                     );
                 }
             }
