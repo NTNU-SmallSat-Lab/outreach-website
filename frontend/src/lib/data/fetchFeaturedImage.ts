@@ -1,7 +1,5 @@
 import { gql } from "@/__generated__/gql";
 import { getClient } from "../ApolloClient";
-import Image from "next/image";
-import { PlaceholderImage } from "@/components/fullBlogCard";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
@@ -22,6 +20,7 @@ query FeaturedImage {
               attributes {
                 catalogNumberNORAD
                 name
+                slug
                 }
               }
             }
@@ -50,32 +49,16 @@ export default async function fetchFeaturedImage() {
         featuredImageURL = "";
     }
 
-    const imageSatelliteRelation =
+    const imageSatelliteName =
         graphqlData.data.featuredImage?.data?.attributes?.satellite?.data
             ?.attributes?.name;
+    const imageSatelliteSlug =
+        graphqlData.data.featuredImage?.data?.attributes?.satellite?.data
+            ?.attributes?.slug;
 
-    return (
-        <div>
-            {featuredImageURL ? (
-                <div>
-                    <div className="relative h-[300px] w-[300px]">
-                        <Image
-                            alt="Featured satellite image"
-                            src={featuredImageURL}
-                            className="m-0"
-                            layout="fill"
-                            objectFit="cover"
-                        />
-                    </div>
-                    <div className="">
-                        <p>Taken by {imageSatelliteRelation}</p>
-                    </div>
-                </div>
-            ) : (
-                <div className="relative flex h-[300px] w-[300px] items-center justify-center object-contain">
-                    <PlaceholderImage />
-                </div>
-            )}
-        </div>
-    );
+    return {
+        featuredImageURL,
+        imageSatelliteName,
+        imageSatelliteSlug,
+    };
 }

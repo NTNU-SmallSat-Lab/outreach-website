@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_mission_statements",
+  "info": {
+    "singularName": "home-mission-statement",
+    "pluralName": "home-mission-statements",
+    "displayName": "HomeMissionStatement"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "textContent": {
+      "type": "text"
+    }
+  }
+}
