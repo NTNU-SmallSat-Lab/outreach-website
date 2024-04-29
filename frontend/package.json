@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "@apollo/client": "^3.9.0-alpha.5",
-        "@apollo/experimental-nextjs-app-support": "^0.6.0",
+        "@apollo/experimental-nextjs-app-support": "^0.7.0",
         "@gsap/react": "^2.1.0",
         "@radix-ui/react-avatar": "^1.0.4",
         "@radix-ui/react-dialog": "^1.0.5",
