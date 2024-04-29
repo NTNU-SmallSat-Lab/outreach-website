@@ -58,7 +58,8 @@ export default function SatelliteGlobe() {
             globeRef.current.controls().enablePan = false;
             globeRef.current.controls().enableRotate = true;
 
-            const setGlobeSize = () => {
+            // lock the initial height of the globe
+            const setInitialGlobeSize = () => {
                 if (globeRef.current && chart.current) {
                     const { width, height } =
                         chart.current.getBoundingClientRect();
@@ -68,7 +69,15 @@ export default function SatelliteGlobe() {
             };
 
             // Initially set the globe size to match the container
-            setGlobeSize();
+            setInitialGlobeSize();
+
+            // set globesize on screen resize
+            const setGlobeSize = () => {
+                if (globeRef.current && chart.current) {
+                    const { width } = chart.current.getBoundingClientRect();
+                    globeRef.current.width(width);
+                }
+            };
 
             // Resize listener to update the globe size
             if (typeof window !== "undefined") {

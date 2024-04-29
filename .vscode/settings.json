@@ -1,4 +1,4 @@
 {
-    "conventionalCommits.scopes": ["backend", "frontend", "ide", "ci/cd"],
-    "eslint.workingDirectories": ["./frontend"]
+  "conventionalCommits.scopes": ["backend", "ide", "frontend", "docs", "ci/cd"],
+  "eslint.workingDirectories": ["./frontend"]
 }

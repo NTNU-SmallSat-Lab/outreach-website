@@ -122,7 +122,7 @@ export function CodiconGithubProject(props: SVGProps<SVGSVGElement>) {
 export default function Navbar() {
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {
-        if (path === pathname) {
+        if (pathname.includes(path)) {
             return;
         }
         return "ghost";

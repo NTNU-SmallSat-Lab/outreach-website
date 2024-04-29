@@ -11,6 +11,7 @@ export default function SatelliteSelector() {
     const setSelectedSatellite = useSatelliteStore(
         (state) => state.setSelectedSatellite,
     );
+    const setSatellites = useSatelliteStore((state) => state.setSatellites);
 
     return (
         <div className="m-0 w-full border-b border-gray-600 p-0">
@@ -18,6 +19,7 @@ export default function SatelliteSelector() {
                 satelliteNames={satelliteNames}
                 selectedSatellite={selectedSatellite}
                 setSelectedSatellite={setSelectedSatellite}
+                setSatellites={setSatellites}
             />
         </div>
     );

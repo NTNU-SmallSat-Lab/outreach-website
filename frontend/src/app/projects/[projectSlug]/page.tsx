@@ -18,6 +18,7 @@ query Projects($projectFilters: ProjectFiltersInput) {
             id
             attributes {
               name
+              slug
               satelliteImage {
                 data {
                   attributes {
@@ -91,7 +92,7 @@ export default async function Page({
                                     id: satellite.id,
                                     title: satellite.attributes.name,
                                     previewImage: satelliteImage,
-                                    slug: satellite.attributes.name,
+                                    slug: satellite.attributes.slug,
                                     isProject: false,
                                 };
                                 return (
