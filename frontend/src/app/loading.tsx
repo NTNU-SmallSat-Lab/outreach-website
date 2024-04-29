@@ -4,7 +4,6 @@ import styles from "./loading.module.css";
 export default function Loading() {
     return (
         <div className="flex grow items-center justify-center">
-            {/* Two circular divs, one circling around the other */}
             <svg
                 className="h-1/4 w-1/4"
                 viewBox="0 0 100 100"
