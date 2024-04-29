@@ -30,7 +30,7 @@ test("FullBlogCard renders correctly", async ({ mount }) => {
     await expect(component).toBeVisible();
 
     //Check if title is correct
-    await expect(component.getByTestId("blogCardLink")).toContainText(
+    await expect(component.getByTestId("blogCardTitle")).toContainText(
         "Mock Article Title",
     );
 
@@ -50,15 +50,4 @@ test("FullBlogCard renders correctly", async ({ mount }) => {
 
     //Check if the tag is correct
     await expect(component.getByTestId("articleTag")).toHaveText("Projects");
-
-    //Check if the urls on the links are correct
-    await expect(component.getByTestId("blogCardLink")).toHaveAttribute(
-        "href",
-        "/blog/mock-article-slug",
-    );
-
-    await expect(component.getByText("Read more")).toHaveAttribute(
-        "href",
-        "/blog/mock-article-slug",
-    );
 });

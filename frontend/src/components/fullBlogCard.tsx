@@ -48,8 +48,8 @@ export default function FullBlogCard({
     return (
         <Link
             href={"/blog/" + article.slug}
-            data-testid="blogCardLink"
             className="flex flex-col border bg-background p-5 text-card-foreground hover:border-primary"
+            data-testid="blogCardLink"
         >
             <BlogCard className={cn(className, "")}>
                 <BlogCardHeader>
@@ -77,7 +77,9 @@ export default function FullBlogCard({
                             {formatDate(article.datePublished)}
                         </p>
                     </div>
-                    <BlogCardTitle>{article.title}</BlogCardTitle>
+                    <BlogCardTitle data-testid="blogCardTitle">
+                        {article.title}
+                    </BlogCardTitle>
                 </BlogCardHeader>
                 <BlogCardContent>
                     <p className="break-words">
