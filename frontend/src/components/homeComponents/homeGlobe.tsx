@@ -135,8 +135,8 @@ export default function SatelliteGlobe() {
     useEffect(() => {
         const intervalId = setInterval(() => {
             if (globeRef.current) {
-                const newPositions = Object.entries(satNumToEntry)
-                    .map(([satName, sat]) => {
+                const newPositions = Object.values(satNumToEntry)
+                    .map((sat) => {
                         if (sat.satrec) {
                             return {
                                 lat: parseFloat(
@@ -152,7 +152,7 @@ export default function SatelliteGlobe() {
                                         convertSatrec(sat.satrec, sat.name)
                                             .altitude,
                                     ) / EARTH_RADIUS_KM,
-                                name: satName,
+                                name: sat.name,
                                 satNumber: Number(sat.satrec.satnum),
                                 color:
                                     selectedSatellite ===
