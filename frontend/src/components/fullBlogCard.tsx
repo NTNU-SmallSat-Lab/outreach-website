@@ -1,7 +1,6 @@
 import {
     BlogCard,
     BlogCardContent,
-    BlogCardFooter,
     BlogCardHeader,
     BlogCardTitle,
 } from "@/components/ui/blogCard";
@@ -47,52 +46,47 @@ export default function FullBlogCard({
     }
 
     return (
-        <BlogCard className={cn(className)}>
-            <BlogCardHeader>
-                {article.coverImage ? (
-                    <Image
-                        src={article.coverImage}
-                        alt={article.coverImage}
-                        width={500}
-                        height={0}
-                        className="aspect-video max-h-[250px] w-full object-cover"
-                    />
-                ) : (
-                    <div className="flex aspect-video max-h-[250px] w-full items-center justify-center">
-                        <PlaceholderImage />
+        <Link
+            href={"/blog/" + article.slug}
+            className="flex flex-col border bg-background p-5 text-card-foreground hover:border-primary"
+            data-testid="blogCardLink"
+        >
+            <BlogCard className={cn(className, "")}>
+                <BlogCardHeader>
+                    {article.coverImage ? (
+                        <Image
+                            src={article.coverImage}
+                            alt={article.coverImage}
+                            width={500}
+                            height={0}
+                            className="aspect-video max-h-[250px] w-full object-cover"
+                        />
+                    ) : (
+                        <div className="flex aspect-video max-h-[250px] w-full items-center justify-center">
+                            <PlaceholderImage />
+                        </div>
+                    )}
+                    <div className="flex gap-2">
+                        <p
+                            className="flex items-center rounded-md bg-primary p-2 text-center text-xs text-white"
+                            data-testid="articleTag"
+                        >
+                            {article.tag ? article.tag : "General"}
+                        </p>
+                        <p className="flex w-fit items-center text-center text-xs text-white">
+                            {formatDate(article.datePublished)}
+                        </p>
                     </div>
-                )}
-                <div className="flex gap-2">
-                    <p
-                        className="flex items-center rounded-md bg-primary p-2 text-center text-xs text-white"
-                        data-testid="articleTag"
-                    >
-                        {article.tag ? article.tag : "General"}
-                    </p>
-                    <p className="flex w-fit items-center text-center text-xs text-white">
-                        {formatDate(article.datePublished)}
-                    </p>
-                </div>
-                <BlogCardTitle>
-                    <Link
-                        className="hover:underline"
-                        href={"/blog/" + article.slug}
-                        data-testid="blogCardLink"
-                    >
+                    <BlogCardTitle data-testid="blogCardTitle">
                         {article.title}
-                    </Link>
-                </BlogCardTitle>
-            </BlogCardHeader>
-            <BlogCardContent>
-                <p className="break-words">
-                    {SlicePreviewText(article.content)}
-                </p>
-            </BlogCardContent>
-            <BlogCardFooter>
-                <Link href={"/blog/" + article.slug} className="text-primary">
-                    Read more →
-                </Link>
-            </BlogCardFooter>
-        </BlogCard>
+                    </BlogCardTitle>
+                </BlogCardHeader>
+                <BlogCardContent>
+                    <p className="break-words">
+                        {SlicePreviewText(article.content)}
+                    </p>
+                </BlogCardContent>
+            </BlogCard>
+        </Link>
     );
 }

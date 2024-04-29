@@ -1,37 +1,37 @@
-import { gql } from "@/__generated__/gql";
 import { getClient } from "../ApolloClient";
+import Image from "next/image";
+import { PlaceholderImage } from "@/components/fullBlogCard";
+import { graphql } from "@/tada/graphql";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_FEATURED_IMAGE = gql(`
-query FeaturedImage {
-    featuredImage {
-      data {
-        attributes {
-          featuredImage {
+const GET_FEATURED_IMAGE = graphql(`
+    query FeaturedImage {
+        featuredImage {
             data {
                 attributes {
-                    url
+                    featuredImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    satellite {
+                        data {
+                            attributes {
+                                catalogNumberNORAD
+                                name
+                            }
+                        }
+                    }
+                    createdAt
+                    updatedAt
+                    publishedAt
                 }
             }
-          }
-          satellite {
-            data {
-              attributes {
-                catalogNumberNORAD
-                name
-                slug
-                }
-              }
-            }
-            createdAt
-            updatedAt
-            publishedAt
-          }
         }
     }
-}
-
 `);
 
 export default async function fetchFeaturedImage() {

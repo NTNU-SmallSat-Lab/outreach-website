@@ -1,4 +1,3 @@
-import { gql } from "@/__generated__/gql";
 import {
     Card,
     CardContent,
@@ -15,35 +14,37 @@ import {
     PageSubtitle,
 } from "@/components/PageHeader";
 import { PlaceholderImage } from "@/components/fullBlogCard";
+import { graphql } from "@/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_PROJECTS = gql(`
- query GET_PROJECTS {
-    projects(sort: ["publishedAt:desc"]) {
-        data {
-          id
-          attributes {
-            title
-            content
-            satellites {
-              data {
+const GET_PROJECTS = graphql(`
+    query GET_PROJECTS {
+        projects(sort: ["publishedAt:desc"]) {
+            data {
+                id
                 attributes {
-                  catalogNumberNORAD
+                    title
+                    content
+                    satellites {
+                        data {
+                            attributes {
+                                catalogNumberNORAD
+                            }
+                        }
+                    }
+                    slug
+                    previewImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
                 }
-              }
             }
-            slug
-            previewImage {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-          }
         }
-      }
-  }`);
+    }
+`);
 
 export default async function ProjectsPage() {
     const graphqlData = await getClient().query({
@@ -88,7 +89,7 @@ export default async function ProjectsPage() {
                             key={project.id}
                             data-testid="projectCard"
                         >
-                            <Card className="h-full w-full hover:border-blue-500">
+                            <Card className="h-full w-full hover:border-primary">
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="w-full">

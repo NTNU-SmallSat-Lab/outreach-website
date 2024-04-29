@@ -1,3 +1,4 @@
+import { env } from "process";
 import NTNULogo from "./ntnu/NTNULogo";
 
 export default function Footer() {
@@ -40,6 +41,14 @@ export default function Footer() {
                                 className="hover:underline"
                             >
                                 Contact
+                            </a>
+                        </div>
+                        <div className="flex flex-row justify-center">
+                            <a
+                                href={env.STRAPI_URL + "/admin"}
+                                className="hover:underline"
+                            >
+                                Admin panel
                             </a>
                         </div>
                         <p>&copy; 2021 NTNU Small Satellite Lab</p>

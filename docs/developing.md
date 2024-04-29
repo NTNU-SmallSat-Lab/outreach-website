@@ -4,6 +4,14 @@
 
 This project requires you have installed [Node.js 20 LTS](https://nodejs.org/en/download). We recommend using [nvm](https://github.com/nvm-sh/nvm) to install multiple versions of node if necessary.
 
+## VSCode extensions
+
+We recommend using the following vscode extensions for the best experience.
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [GraphQL: Syntax Highlighting](https://marketplace.visualstudio.com/items?itemName=GraphQL.vscode-graphql-syntax)
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+
 ## Running the project
 
 To install all requirements simply do the following from the project root:
@@ -24,12 +32,13 @@ If this doesn't work you might have to enter and build the backend (strapi) firs
 
 ## Strapi First time boot
 
-Goto Settings > Users & Permissions plugin > Roles > Public > Article, and enable `find` and `findOne`. You need to do this for every publically available content type. Theese include but are not limited to:
+Goto `Settings > Users & Permissions plugin > Roles > Public > Article`, and enable `find` and `findOne`. You need to do this for every publically available content type. Theese include but are not limited to:
 
 -   Article
 -   Author
 -   Hero
--   Most-recent-image
+-   Featured-image
+-   Hero
 -   Project
 -   Satellite
 
@@ -40,17 +49,12 @@ The following should **NOT** be made publicly available:
 -   Upload
 -   User-permissions
 
-## GraphQL Type generation
+## GraphQL
 
-If you're using GraphQL, then you need to run `npm run compile` from `/frontend` whenever you update a schema or define a new graphQL request in the code. Make sure to import the correct `gql` as
+To explore the schema, use the [apollo sandbox](https://studio.apollographql.com/sandbox/explorer/) with `http://localhost:1337/graphql` as the url.
 
-```
-import { gql } from"@/generated/gql";
-```
+Generation of types types is done with [gql.tada](https://github.com/0no-co/gql.tada)
 
-> Any errors in your code other than the GraphQL types, can result in the codegen not working, so make sure to fix all other errors before running the codegen.
-
-> [https://www.apollographql.com/docs/react/development-testing/static-typing/](https://www.apollographql.com/docs/react/development-testing/static-typing/)
 
 ## Strapi invite others
 

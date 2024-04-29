@@ -76,19 +76,21 @@ The secrets should all be filled in and generated using `openssl rand -base64 32
 
 The GitHub repo should define the following secrets:
 
--   APP_KEYS="toBeModified1,toBeModified2"
--   API_TOKEN_SALT=tobemodified
--   ADMIN_JWT_SECRET=tobemodified
--   TRANSFER_TOKEN_SALT=tobemodified
--   JWT_SECRET=tobemodified
+-   APP_KEYS="toBeGenerated1,toBeGenerated2"
+-   API_TOKEN_SALT=toBeGenerated
+-   ADMIN_JWT_SECRET=toBeGenerated
+-   TRANSFER_TOKEN_SALT=toBeGenerated
+-   JWT_SECRET=toBeGenerated
 
 And the following variables:
 
+-   BACKEND_INTERNAL_URL=http://backend:1337
 -   DATABASE_CLIENT=sqlite
 -   DATABASE_FILENAME=/var/data/outreach-strapi.db
 -   HOST=0.0.0.0
--   STRAPI_URL=http://backend-app:1337
+-   OUTWARD_FACING_URL=https://hypso.space
 -   PORT=1337
+-   STRAPI_URL=https://hypso.space/strapi
 
 ### Apache
 

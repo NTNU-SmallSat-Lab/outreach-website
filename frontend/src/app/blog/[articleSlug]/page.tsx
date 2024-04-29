@@ -2,51 +2,49 @@ import { Avatar, AvatarFallback } from "@shadcn/avatar";
 
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import BlockRendererClient from "@/components/BlockRendererClient";
-import { gql } from "@/__generated__/gql";
 import { getClient } from "@/lib/ApolloClient";
 import ShareButtons from "@/components/ShareButtons";
 import NextImage from "next/image";
 import fullNameToInitials from "@/lib/helpers";
+import { graphql } from "@/tada/graphql";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_ARTICLE_BY_SLUG = gql(
-    `query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {
-    articles(filters: $articlesFilters) {
-      data {
-        id
-        attributes {
-          author {
+const GET_ARTICLE_BY_SLUG = graphql(`
+    query ArticleWithSlug($articlesFilters: ArticleFiltersInput) {
+        articles(filters: $articlesFilters) {
             data {
-              attributes {
-                name
-                avatar {
-                  data {
-                    attributes {
-                      url
+                id
+                attributes {
+                    author {
+                        data {
+                            attributes {
+                                name
+                                avatar {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
+                    body
+                    coverImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    datePublished
+                    previewTitle
                 }
-              }
             }
-          }
-          body
-          coverImage {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-          datePublished
-          previewTitle
         }
-      }
     }
-  }
-  
-  `,
-);
+`);
 
 export default async function Page({
     params,
@@ -81,8 +79,8 @@ export default async function Page({
     const article = graphqlData.data.articles?.data[0];
 
     const authorName = article?.attributes?.author?.data?.attributes?.name;
-    const datePublished = article?.attributes?.datePublished;
-    const content: BlocksContent = article?.attributes?.body ?? [];
+    const datePublished = article?.attributes?.datePublished as String;
+    const content: BlocksContent = article?.attributes?.body as BlocksContent;
 
     return (
         <div className="flex flex-col items-center gap-4">
@@ -111,7 +109,7 @@ export default async function Page({
                     )}
                     <div className="flex flex-col justify-center">
                         <p>{authorName}</p>
-                        <p>{datePublished}</p>
+                        <p>{datePublished as String}</p>
                     </div>
                 </div>
                 <div className="flex flex-1 justify-end gap-1">
