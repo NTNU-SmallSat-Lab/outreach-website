@@ -29,4 +29,8 @@ Our networking stack uses [Docker Compose](https://docs.docker.com/compose/) to 
 
 The containers communiate using [GraphQL](https://graphql.org/) and [Apollo Client](https://www.apollographql.com/docs/react/)
 
-![network view](./images/networkView.svg)
+![network view](./images/excalidraw/networkView.excalidraw.svg)
+
+The server has other services running on it, so you have to take care when updating apache configs. Here are the services we had to keep in mind when developing:
+
+![environment view](./images/excalidraw/environment.excalidraw.svg)
