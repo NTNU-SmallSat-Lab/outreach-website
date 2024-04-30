@@ -6,7 +6,7 @@ https://docs.strapi.io/dev-docs/intro
 
 When first loading up strapi, you will see see 7 different types.
 
-![alt text](Images/StrapiTypes.png)
+![alt text](images/strapi/StrapiTypes.png)
 
 ## Article
 
@@ -20,15 +20,15 @@ CoverImage is the image that is displayed on the preview.
 
 Body is the content that is displayed when clicking on a specific blog. In Blog you can add images, and text.
 
-![alt text](Images/StrapiBody.png)
+![alt text](images/strapi/StrapiBody.png)
 
 In the body, you are also able to add youtube videos. To be able to do that, you need to do the following[^1]:
 
 1. Find a youtube video
-2. Click on share button ![Share button](Images/StrapiYTVideo1.png)
-3. Click on embed button ![Embed button](Images/StrapiYTVideo2.png)
-4. Copy the source ![Copy src](Images/StrapiYTVideo3.png)
-5. Click on the link button in the body field ![Click link button](Images/StrapiYTVideo4.png)
+2. Click on share button ![Share button](images/strapi/StrapiYTVideo1.png)
+3. Click on embed button ![Embed button](images/strapi/StrapiYTVideo2.png)
+4. Copy the source ![Copy src](images/strapi/StrapiYTVideo3.png)
+5. Click on the link button in the body field ![Click link button](images/strapi/StrapiYTVideo4.png)
 6. Final step is to add the link you copied from step 4.
 
 Author is a relation to another author collection type.
