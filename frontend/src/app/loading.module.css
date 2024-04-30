@@ -1,0 +1,12 @@
+#small {
+    transform-origin: 50px 50px;
+    animation: moveAround 4s infinite linear;
+}
+@keyframes moveAround {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

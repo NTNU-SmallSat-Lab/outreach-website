@@ -1,42 +1,26 @@
-import {
-    Skeleton,
-    SkeletonHero,
-    SkeletonSection,
-    EmptySection,
-} from "@shadcn/skeleton";
 import React from "react";
+import styles from "./loading.module.css";
 
 export default function Loading() {
     return (
-        <div>
-            {/* Full width div, split into two equal portions */}
-            <div className="flex w-full flex-col-reverse gap-2 p-4 md:h-[calc(100vh-73px)] md:flex-row">
-                {/* Square */}
-                <div className="flex h-full w-full flex-col gap-2">
-                    <Skeleton className="h-24 w-full" />
-                    <div className="flex flex-row gap-2">
-                        <Skeleton className="h-24 w-full" />
-                        <Skeleton className="h-24 w-full" />
-                    </div>
-                    <div className="flex flex-row gap-2">
-                        <Skeleton className="h-24 w-full" />
-                        <Skeleton className="h-24 w-full" />
-                    </div>
-                    <div className="flex flex-row gap-2">
-                        <Skeleton className="h-24 w-full" />
-                        <Skeleton className="h-24 w-full" />
-                    </div>
-                    <Skeleton className="h-48 w-full" />
-                    <Skeleton className="h-48 w-full" />
-                </div>
-                <div className="h-full w-full">
-                    {/* Circle */}
-                    <Skeleton className="aspect-square w-full rounded-full" />
-                </div>
-            </div>
-            <SkeletonHero />
-            <SkeletonSection />
-            <EmptySection />
+        <div className="flex grow items-center justify-center">
+            <svg
+                className="h-1/4 w-1/4"
+                viewBox="0 0 100 100"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <g id="circles">
+                    <circle id="big" cx="50" cy="50" r="30" fill="#010101" />
+                    <circle
+                        id={styles.small}
+                        cx="90"
+                        cy="50"
+                        r="5"
+                        fill="#010101"
+                    />
+                </g>
+            </svg>
         </div>
     );
 }
