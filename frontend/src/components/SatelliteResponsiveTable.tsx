@@ -15,6 +15,8 @@ import {
 } from "@/components/shadcn/table";
 import { useRouter } from "next/navigation";
 
+import { motion } from "framer-motion";
+
 export default function SatelliteResponsiveTable({
     satellites,
     inOrbit,
@@ -24,7 +26,7 @@ export default function SatelliteResponsiveTable({
 }) {
     const router = useRouter();
     const handleRowClick = (slug: string) => {
-        // This will update the URL without triggering a full page refresh
+        // This will update the URL without triggering a full page refresh, must be used because Link element does not work here.
         router.push(`/satellites/${slug}`, undefined);
     };
 

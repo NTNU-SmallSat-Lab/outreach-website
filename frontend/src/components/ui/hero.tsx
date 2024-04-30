@@ -19,8 +19,8 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         width={0}
                         height={0}
                         sizes="100vm"
-                        style={{ width: "70%", height: "auto" }}
-                    ></Image>
+                        className="w-[70%] h-auto"
+                    />
                     <p className="self-center"> {description}</p>
                     {children}
                 </div>

@@ -73,27 +73,13 @@ export default function SatelliteGlobe() {
                         chart.current.getBoundingClientRect();
                     globeRef.current.width(width);
                     globeRef.current.height(height - 76);
+
+                    console.log(width, height);
                 }
             };
 
             // Initially set the globe size to match the container
             setInitialGlobeSize();
-
-            // set globesize on screen resize
-            const setGlobeSize = () => {
-                if (globeRef.current && chart.current) {
-                    const { width } = chart.current.getBoundingClientRect();
-                    globeRef.current.width(width);
-                }
-            };
-
-            // Resize listener to update the globe size
-            if (typeof window !== "undefined") {
-                window.addEventListener("resize", setGlobeSize);
-                return () => {
-                    window.removeEventListener("resize", setGlobeSize);
-                };
-            }
 
             // Set initial positions of satellites
             let initialPositions: initpostype[] = Object.entries(satNumToEntry)
@@ -123,13 +109,29 @@ export default function SatelliteGlobe() {
                 globeRef.current.objectsData(initialPositions);
             }
 
+            // Function to update the globe size based on the current size of the chart
+            const setGlobeSize = () => {
+                if (globeRef.current && chart.current) {
+                    const { width, height } =
+                        chart.current.getBoundingClientRect();
+                    globeRef.current.width(width);
+                    globeRef.current.height(width <= 640 ? width : height - 76);
+                }
+            };
+
+            // Add resize event listener if the window is defined (i.e., in client-side environment)
+            if (typeof window !== "undefined") {
+                window.addEventListener("resize", setGlobeSize);
+            }
+
+            // Cleanup function to remove the resize event listener
             return () => {
                 if (typeof window !== "undefined") {
                     window.removeEventListener("resize", setGlobeSize);
                 }
             };
         }
-    }, [satNumToEntry, setSelectedSatellite]);
+    }, []);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {

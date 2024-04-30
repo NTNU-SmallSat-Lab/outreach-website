@@ -18,7 +18,7 @@ export default function FeaturedProjectCard({
 
     return (
         <Link href={"/projects/" + projectSlug}>
-            <div className="flex h-full w-full flex-col border-2 bg-white hover:border-primary">
+            <div className="flex h-full w-full flex-col border-2 bg-black hover:border-primary">
                 <div className="relative h-[30vh] w-full">
                     <Image
                         src={imageURL}
@@ -27,9 +27,9 @@ export default function FeaturedProjectCard({
                         objectFit="cover"
                     />
                 </div>
-                <div className="prose p-4">
+                <div className="prose prose-invert p-4">
                     <h2 className="mb-2">{title}</h2>
-                    <p className="break-words">{content}</p>
+                    <p className="break-words truncate">{content}</p>
                 </div>
             </div>
         </Link>

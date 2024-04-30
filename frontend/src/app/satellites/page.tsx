@@ -10,16 +10,7 @@ const GET_SATELLITES = graphql(`
                 attributes {
                     catalogNumberNORAD
                     name
-                    satelliteImage {
-                        data {
-                            attributes {
-                                url
-                            }
-                        }
-                    }
-                    missionStatus
                     slug
-                    massKg
                 }
             }
         }

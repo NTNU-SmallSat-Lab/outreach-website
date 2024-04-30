@@ -23,8 +23,6 @@ import ErrorBoundaryNavigation from "@/components/ErrorBoundaryNavigation";
 import Starfield from "@/components/starBackground/Starfield";
 import { SatelliteEntry } from "@/lib/store";
 
-import TransitionWrapper from "@/components/animation/TransitionWrappers";
-
 export default async function RootLayout({
     children,
 }: Readonly<{

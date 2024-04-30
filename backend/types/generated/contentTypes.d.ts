@@ -906,7 +906,7 @@ export interface ApiHeroHero extends Schema.SingleType {
   info: {
     singularName: 'hero';
     pluralName: 'heroes';
-    displayName: 'Hero';
+    displayName: 'HomeTeamSection';
     description: '';
   };
   options: {
