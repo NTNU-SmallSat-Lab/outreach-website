@@ -1,7 +1,7 @@
 # Hypso Space Outreach Website
 The Hypso Space Outreach Website is an interactive web page developed for the general public. It includes features such as a mission tracker, mission status, maps, and an easy to use blog. 
 
-![alt text](docs/images/image.png)
+![alt text](docs/images/routes/frontpage.png)
 
 ## General Information
 
