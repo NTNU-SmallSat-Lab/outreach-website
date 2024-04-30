@@ -9,7 +9,6 @@ import {
     SatelliteNumber,
     SatelliteState,
 } from "@/lib/store";
-import Link from "next/link";
 
 type DropdownProps = {
     selectedSatellite: SatelliteState["selectedSatellite"];

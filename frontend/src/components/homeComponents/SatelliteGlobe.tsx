@@ -17,7 +17,11 @@ interface initpostype {
     satNumber: number;
 }
 
-export default function SatelliteGlobe({isFullscreen = false}: {isFullscreen?: boolean}) {
+export default function SatelliteGlobe({
+    isFullscreen = false,
+}: {
+    isFullscreen?: boolean;
+}) {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
     const { selectedSatellite, setSelectedSatellite, satNumToEntry } =

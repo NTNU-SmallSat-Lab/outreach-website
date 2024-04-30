@@ -19,7 +19,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         width={0}
                         height={0}
                         sizes="100vm"
-                        className="w-[70%] h-auto"
+                        className="h-auto w-[70%]"
                     />
                     <p className="self-center"> {description}</p>
                     {children}

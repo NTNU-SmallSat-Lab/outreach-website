@@ -1,7 +1,6 @@
 import { getClient } from "@/lib/ApolloClient";
 import { graphql } from "@/tada/graphql";
 import Image from "next/image";
-import { Button } from "./shadcn/button";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
@@ -52,7 +51,7 @@ export default async function TeamSection() {
 
     return (
         <>
-            <div className="flex w-full flex-col justify-center px-8 py-12 sm:flex-row sm:px-52 bg-black bg-opacity-50">
+            <div className="flex w-full flex-col justify-center bg-black bg-opacity-50 px-8 py-12 sm:flex-row sm:px-52">
                 <div className="flex w-full flex-col p-4 sm:w-1/2">
                     <Image
                         alt={teamAttributes.title || ""}
@@ -60,7 +59,7 @@ export default async function TeamSection() {
                         width={0}
                         height={0}
                         sizes="100vm"
-                        className="sm:max-h-[50vh] w-full object-cover"
+                        className="w-full object-cover sm:max-h-[50vh]"
                     />
                 </div>
                 <div className="prose prose-invert flex w-full flex-col p-4 text-center sm:w-1/2 sm:text-left">

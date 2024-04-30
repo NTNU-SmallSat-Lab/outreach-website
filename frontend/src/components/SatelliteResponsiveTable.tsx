@@ -15,8 +15,6 @@ import {
 } from "@/components/shadcn/table";
 import { useRouter } from "next/navigation";
 
-import { motion } from "framer-motion";
-
 export default function SatelliteResponsiveTable({
     satellites,
     inOrbit,

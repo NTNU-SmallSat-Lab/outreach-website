@@ -137,7 +137,7 @@ export default function Navbar() {
                         height={70}
                         src="/images/ntnu-white-logo.svg"
                         alt="logo"
-                        className="hover:opacity-80 duration-200"
+                        className="duration-200 hover:opacity-80"
                     />
                 </Link>
             </div>

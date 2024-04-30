@@ -6,39 +6,45 @@ export default function ProjectCarousel() {
     const projects = ["Allah", "Wallah", "Inshallah"];
     const [projectOrder, setProjectOrder] = useState(projects);
     const [isRotating, setIsRotating] = useState(false);
-    const [direction, setDirection] = useState('');
+    const [direction, setDirection] = useState("");
 
     // Effect to handle automatic reset of the carousel offset after rotation
     useEffect(() => {
         if (isRotating) {
             const timeout = setTimeout(() => {
                 setIsRotating(false);
-                setDirection('');
-            }, 500);  // Timeout should match the animation duration
+                setDirection("");
+            }, 500); // Timeout should match the animation duration
             return () => clearTimeout(timeout);
         }
     }, [isRotating]);
 
-    const handleDragEnd = (event: any, info: { offset: { x: any; }; velocity: { x: any; }; }) => {
+    const handleDragEnd = (
+        event: any,
+        info: { offset: { x: any }; velocity: { x: any } },
+    ) => {
         const offset = info.offset.x;
         const velocity = info.velocity.x;
         const threshold = 100; // Drag threshold
 
         if (offset < -threshold || velocity < -500) {
-            setDirection('left');
-            rotateProjects('left');
+            setDirection("left");
+            rotateProjects("left");
         } else if (offset > threshold || velocity > 500) {
-            setDirection('right');
-            rotateProjects('right');
+            setDirection("right");
+            rotateProjects("right");
         }
     };
 
     const rotateProjects = (direction: string) => {
         setIsRotating(true);
-        if (direction === 'left') {
-            setProjectOrder(prev => [...prev.slice(1), prev[0]]);
+        if (direction === "left") {
+            setProjectOrder((prev) => [...prev.slice(1), prev[0]]);
         } else {
-            setProjectOrder(prev => [prev[prev.length - 1], ...prev.slice(0, -1)]);
+            setProjectOrder((prev) => [
+                prev[prev.length - 1],
+                ...prev.slice(0, -1),
+            ]);
         }
     };
 
@@ -56,12 +62,22 @@ export default function ProjectCarousel() {
                     <motion.div
                         drag="x"
                         onDragEnd={handleDragEnd}
-                        className="flex gap-4 cursor-grab w-full"
+                        className="flex w-full cursor-grab gap-4"
                         dragConstraints={{ left: 0, right: 0 }}
-                        animate={{ x: isRotating ? (direction === 'left' ? '-33.33vw' : '33.33vw') : 0 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        animate={{
+                            x: isRotating
+                                ? direction === "left"
+                                    ? "-33.33vw"
+                                    : "33.33vw"
+                                : 0,
+                        }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 30,
+                        }}
                     >
-                        {projectOrder.map((title, index) => (
+                        {projectOrder.map((title) => (
                             <ProjectCard key={title} title={title} />
                         ))}
                     </motion.div>
@@ -75,10 +91,10 @@ export default function ProjectCarousel() {
 function ProjectCard({ title }: { title: string }) {
     return (
         <motion.div
-            layout  // Enable automatic layout animations
+            layout // Enable automatic layout animations
             className="flex h-full w-full flex-col border-2 bg-white hover:border-primary"
             whileHover={{ scale: 1.05 }}
-            style={{ flex: "0 0 33.33vw" }}  // Make each card take up one-third of the viewport width
+            style={{ flex: "0 0 33.33vw" }} // Make each card take up one-third of the viewport width
         >
             <div className="relative h-[30vh] w-full">
                 <img

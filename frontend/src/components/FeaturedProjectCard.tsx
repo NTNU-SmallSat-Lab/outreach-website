@@ -19,7 +19,7 @@ export default function FeaturedProjectCard({
     return (
         <Link href={"/projects/" + projectSlug}>
             <div className="flex h-full w-full flex-col border-2 bg-black hover:border-primary">
-                <div className="relative h-[30vh] sm:h-[30vw] max-h-[40vh] w-full">
+                <div className="relative h-[30vh] max-h-[40vh] w-full sm:h-[30vw]">
                     <Image
                         src={imageURL}
                         alt="Project Image"
@@ -29,7 +29,7 @@ export default function FeaturedProjectCard({
                 </div>
                 <div className="prose prose-invert p-4">
                     <h2 className="mb-2">{title}</h2>
-                    <p className="break-words truncate">{content}</p>
+                    <p className="truncate break-words">{content}</p>
                 </div>
             </div>
         </Link>
