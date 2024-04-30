@@ -34,15 +34,16 @@ interface QueryResponse {
 
 export default async function fetchMissionStatement() {
     const client = getClient(); // Ensure getClient properly typed to return ApolloClient
-    const response = await client.query<QueryResponse>({ // This ensures that TypeScript expects the right structure
-      query: GET_MISSION_STATEMENT,
+    const response = await client.query<QueryResponse>({
+        // This ensures that TypeScript expects the right structure
+        query: GET_MISSION_STATEMENT,
     });
-  
-    const missionStatement = response.data.homeMissionStatement?.data?.attributes;
-  
+
+    const missionStatement =
+        response.data.homeMissionStatement?.data?.attributes;
+
     return {
-      title: missionStatement?.title ?? "",
-      textContent: missionStatement?.textContent ?? "",
+        title: missionStatement?.title ?? "",
+        textContent: missionStatement?.textContent ?? "",
     };
-  }
-  
+}
