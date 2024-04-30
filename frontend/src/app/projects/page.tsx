@@ -15,6 +15,10 @@ import {
 } from "@/components/PageHeader";
 import { PlaceholderImage } from "@/components/fullBlogCard";
 import { graphql } from "@/tada/graphql";
+import { PagePadding } from "@/components/PageLayout";
+import { BlocksContent } from "@strapi/blocks-react-renderer";
+import ProjectCards from "@/components/ProjectCards";
+
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECTS = graphql(`
@@ -25,13 +29,6 @@ const GET_PROJECTS = graphql(`
                 attributes {
                     title
                     content
-                    satellites {
-                        data {
-                            attributes {
-                                catalogNumberNORAD
-                            }
-                        }
-                    }
                     slug
                     previewImage {
                         data {
@@ -45,6 +42,28 @@ const GET_PROJECTS = graphql(`
         }
     }
 `);
+
+interface PreviewImageAttributes {
+    url: string | null;
+}
+
+interface PreviewImageData {
+    data: {
+        attributes: PreviewImageAttributes | null;
+    } | null;
+}
+
+interface ProjectAttributes {
+    title: string;
+    content: BlocksContent;
+    slug: string;
+    previewImage: PreviewImageData | null;
+}
+
+export interface ProjectPost {
+    id: string | null;
+    attributes: ProjectAttributes;
+}
 
 export default async function ProjectsPage() {
     const graphqlData = await getClient().query({
@@ -61,71 +80,22 @@ export default async function ProjectsPage() {
     }
 
     return (
-        <div className="mx-auto w-full max-w-6xl grow bg-opacity-50 px-4 py-8 sm:px-8 md:px-10">
-            <div className="flex flex-col items-center justify-center">
+        <>
+            <PagePadding>
                 <PageHeaderAndSubtitle>
-                    <PageHeader data-testid="projectHeading">
-                        Our Projects
-                    </PageHeader>
+                    <PageHeader>Projects</PageHeader>
                     <PageSubtitle>
-                        Information about our various projects are shown here.
+                        Here you can find all of the projects we are working on.
                     </PageSubtitle>
                 </PageHeaderAndSubtitle>
-            </div>
-
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {graphqlData.data.projects.data.map((project: any) => {
-                    let previewImage =
-                        project?.attributes?.previewImage?.data?.attributes
-                            ?.url;
-
-                    if (STRAPI_URL && previewImage != undefined) {
-                        previewImage = STRAPI_URL + previewImage;
-                    }
-                    return (
-                        <Link
-                            className="h-full sm:m-4"
-                            href={"/projects/" + project?.attributes?.slug}
-                            key={project.id}
-                            data-testid="projectCard"
-                        >
-                            <Card className="h-full w-full hover:border-primary">
-                                <CardHeader></CardHeader>
-                                <CardContent>
-                                    <div className="w-full">
-                                        {previewImage ? (
-                                            <Image
-                                                className="max-h-full max-w-full object-contain"
-                                                src={previewImage}
-                                                alt={previewImage}
-                                                width={500}
-                                                height={0}
-                                            />
-                                        ) : (
-                                            <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                                                <PlaceholderImage />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="prose prose-invert">
-                                        <CardTitle className="mb-2 mt-6">
-                                            {project?.attributes?.title}
-                                        </CardTitle>
-                                        <p className="break-words">
-                                            <span>
-                                                {SlicePreviewText(
-                                                    project?.attributes
-                                                        ?.content ?? [],
-                                                )}
-                                            </span>
-                                        </p>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </Link>
-                    );
-                })}
-            </div>
-        </div>
+                <div className="flex flex-col justify-center">
+                    <ProjectCards
+                        projects={
+                            graphqlData.data.projects.data as ProjectPost[]
+                        }
+                    />
+                </div>
+            </PagePadding>
+        </>
     );
 }
