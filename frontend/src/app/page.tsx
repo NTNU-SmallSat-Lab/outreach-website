@@ -1,7 +1,7 @@
 import TeamSection from "@/components/TeamSection";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import MissionStatement from "@/components/MissionStatement";
-import GlobePage from "@/app/globe/page";
+import GlobeWithStats from "@/components/homeComponents/GlobeWithStats";
 
 export default function Home() {
     return (
@@ -13,7 +13,7 @@ export default function Home() {
             <FeaturedProjects />
 
             {/* Globe Section */}
-            <GlobePage />
+            <GlobeWithStats homePage={true} />
 
             {/* Contact Section */}
             <TeamSection />

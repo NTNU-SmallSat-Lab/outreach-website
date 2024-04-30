@@ -17,7 +17,7 @@ interface initpostype {
     satNumber: number;
 }
 
-export default function SatelliteGlobe() {
+export default function SatelliteGlobe({isFullscreen = false}: {isFullscreen?: boolean}) {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
     const { selectedSatellite, setSelectedSatellite, satNumToEntry } =
@@ -131,7 +131,7 @@ export default function SatelliteGlobe() {
                 }
             };
         }
-    }, []);
+    }, [isFullscreen]);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {
