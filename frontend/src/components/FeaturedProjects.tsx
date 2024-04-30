@@ -29,7 +29,7 @@ export default async function FeaturedProjects() {
                     </div>
                 </div>
 
-                <div className="flex w-full flex-col mt-8">
+                <div className="flex w-full flex-col mt-8 px-8 sm:px-0">
                     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
                         {featuredProjects.featuredProjects.map(
                             (project: any, index: number) => {

@@ -19,7 +19,7 @@ export default function FeaturedProjectCard({
     return (
         <Link href={"/projects/" + projectSlug}>
             <div className="flex h-full w-full flex-col border-2 bg-black hover:border-primary">
-                <div className="relative h-[30vh] w-full">
+                <div className="relative h-[30vh] sm:h-[30vw] max-h-[40vh] w-full">
                     <Image
                         src={imageURL}
                         alt="Project Image"

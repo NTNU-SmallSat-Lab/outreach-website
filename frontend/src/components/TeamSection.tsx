@@ -60,7 +60,7 @@ export default async function TeamSection() {
                         width={0}
                         height={0}
                         sizes="100vm"
-                        className="max-h-[40vw] w-full object-cover"
+                        className="sm:max-h-[50vh] w-full object-cover"
                     />
                 </div>
                 <div className="prose prose-invert flex w-full flex-col p-4 text-center sm:w-1/2 sm:text-left">

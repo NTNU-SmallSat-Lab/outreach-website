@@ -63,7 +63,7 @@ export default async function MissionStatement() {
                         </Link>
                     </h2>
                 </div>
-                <div className="w-full overflow-hidden mt-8">
+                <div className="w-full overflow-hidden mt-8 flex">
                     <Image
                         alt="Featured Satellite Image"
                         src={featuredImage.featuredImageURL}
