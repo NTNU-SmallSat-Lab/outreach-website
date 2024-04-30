@@ -8,7 +8,7 @@ export default async function FeaturedProjects() {
 
     return (
         <>
-            <div className="flex w-full flex-col justify-center bg-black bg-opacity-20 px-8 py-12">
+            <div className="flex w-full flex-col justify-center py-12 sm:px-52">
                 <div className="flex w-full flex-col items-center p-4 pt-0 text-center sm:text-left sm:items-start">
                     <div className="prose prose-invert">
                         <h1>

@@ -52,8 +52,8 @@ export default async function TeamSection() {
 
     return (
         <>
-            <div className="flex w-full flex-col justify-center bg-black bg-opacity-20 px-8 pt-12 sm:flex-row">
-                <div className="flex w-full flex-col p-4 sm:w-2/3">
+            <div className="flex w-full flex-col justify-center px-8 py-12 sm:flex-row sm:px-52 bg-black bg-opacity-50">
+                <div className="flex w-full flex-col p-4 sm:w-1/2">
                     <Image
                         alt={teamAttributes.title || ""}
                         src={imageUrl}
@@ -63,7 +63,7 @@ export default async function TeamSection() {
                         className="max-h-[40vw] w-full object-cover"
                     />
                 </div>
-                <div className="prose prose-invert mb-12 flex w-full flex-col p-4 text-center sm:w-1/3 sm:text-left">
+                <div className="prose prose-invert flex w-full flex-col p-4 text-center sm:w-1/2 sm:text-left">
                     <h1>{teamAttributes.title}</h1>
                     {teamAttributes.text &&
                         teamAttributes.text
@@ -73,15 +73,6 @@ export default async function TeamSection() {
                                     {paragraph}
                                 </p>
                             ))}
-                    <div className="flex w-full justify-center sm:justify-start">
-                        {/* Add this div around the button */}
-                        <Button
-                            className="mt-8 w-1/2 sm:w-1/3"
-                            variant={"default"}
-                        >
-                            Contact
-                        </Button>
-                    </div>
                 </div>
             </div>
         </>

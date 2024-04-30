@@ -5,18 +5,18 @@ import GlobeWithStats from "@/components/homeComponents/GlobeWithStats";
 
 export default function Home() {
     return (
-        <>
+        <div>
             {/* Mission Statement Section */}
             <MissionStatement />
 
             {/* Projects Section */}
             <FeaturedProjects />
 
+            {/* Team Section */}
+            <TeamSection />
+
             {/* Globe Section */}
             <GlobeWithStats homePage={true} />
-
-            {/* Contact Section */}
-            <TeamSection />
-        </>
+        </div>
     );
 }

@@ -16,7 +16,7 @@ export default async function MissionStatement() {
     const featuredImage = await fetchFeaturedImage();
 
     return (
-        <div className="flex w-full flex-col justify-center bg-black bg-opacity-50 px-8 pt-12 sm:flex-row">
+        <div className="flex w-full flex-col justify-center bg-black bg-opacity-50 px-8 py-12 sm:flex-row sm:px-52">
             <div className="prose prose-invert flex w-full flex-col p-4 text-center sm:text-left">
                 <h1>
                     {missionStatement.title
@@ -52,18 +52,7 @@ export default async function MissionStatement() {
             </div>
 
             <div className="flex w-full flex-col items-center justify-center p-4 text-center">
-                <div className="w-full overflow-hidden">
-                    <Image
-                        alt="Featured Satellite Image"
-                        src={featuredImage.featuredImageURL}
-                        layout="responsive"
-                        width={900}
-                        height={600}
-                        objectFit="contain"
-                        className="bg-black-900 w-full"
-                    />
-                </div>
-                <div className="prose prose-invert p-4">
+                <div className="prose prose-invert">
                     <h2>
                         Image Taken by{" "}
                         <Link
@@ -73,6 +62,17 @@ export default async function MissionStatement() {
                             {featuredImage.imageSatelliteName}
                         </Link>
                     </h2>
+                </div>
+                <div className="w-full overflow-hidden mt-8">
+                    <Image
+                        alt="Featured Satellite Image"
+                        src={featuredImage.featuredImageURL}
+                        layout="responsive"
+                        width={900}
+                        height={600}
+                        objectFit="contain"
+                        className="bg-black-900 w-full"
+                    />
                 </div>
             </div>
         </div>
