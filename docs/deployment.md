@@ -148,6 +148,7 @@ This will redirect all traffic to the https version of the website and proxy the
 8. Make sure the SSL certificate is set up correctly more info [here](#ssl-certification)
 9. Make sure the website is running on the correct port and that the proxy is set up correctly.
 
+More info about the apache configuration running on the server can be found [here](https://github.com/NTNU-SmallSat-Lab/apache2-server-configs)
 
 ## Troubleshooting
 
