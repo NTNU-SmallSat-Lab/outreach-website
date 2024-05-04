@@ -19,13 +19,13 @@ We have created firewall rules to make the website accesible.
 
 3. do `sudo nano ipv4-outreach.conf` to enter the file and edit the content to the following:
 
-    ```
-    # Open port 80 for HTTP
-    -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+   ```
+   # Open port 80 for HTTP
+   -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 
-    # Open port 443 for HTTPS
-    -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-    ```
+   # Open port 443 for HTTPS
+   -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+   ```
 
 4. then run `sudo /local/admin/bin/install-firewall.sh`
 
@@ -76,25 +76,79 @@ The secrets should all be filled in and generated using `openssl rand -base64 32
 
 The GitHub repo should define the following secrets:
 
--   APP_KEYS="toBeGenerated1,toBeGenerated2"
--   API_TOKEN_SALT=toBeGenerated
--   ADMIN_JWT_SECRET=toBeGenerated
--   TRANSFER_TOKEN_SALT=toBeGenerated
--   JWT_SECRET=toBeGenerated
+```yaml
+APP_KEYS="toBeGenerated1,toBeGenerated2"
+API_TOKEN_SALT=toBeGenerated
+ADMIN_JWT_SECRET=toBeGenerated
+TRANSFER_TOKEN_SALT=toBeGenerated
+JWT_SECRET=toBeGenerated
+```
 
 And the following variables:
 
--   BACKEND_INTERNAL_URL=http://backend:1337
--   DATABASE_CLIENT=sqlite
--   DATABASE_FILENAME=/var/data/outreach-strapi.db
--   HOST=0.0.0.0
--   OUTWARD_FACING_URL=https://hypso.space
--   PORT=1337
--   STRAPI_URL=https://hypso.space/strapi
+```shell
+BACKEND_INTERNAL_URL=http://backend:1337
+DATABASE_CLIENT=sqlite
+DATABASE_FILENAME=/var/data/outreach-strapi.db
+HOST=0.0.0.0
+OUTWARD_FACING_URL=https://hypso.space
+PORT=1337
+STRAPI_URL=https://hypso.space/strapi
+```
 
 ### Apache
 
-TODO @madshermansen
+Assuming there is an exisiting apache server running on the server, we need to add a new virtual host for the website.
+
+1.  `cd /etc/apache2/sites-available`
+2.  `sudo touch outreach.conf`
+3.  `sudo nano outreach.conf` to edit the file and add the following content:
+
+```apache
+<VirtualHost hypso.space:80>
+   ServerName hypso.space
+   DocumentRoot /var/www/html/outreach
+
+   RewriteEngine on
+   RewriteCond %{REQUEST_URI} !^/.well-known/acme-challenge/
+   RewriteRule ^/(.*)$ https://hypso.space/$1 [L,R=301]
+
+</VirtualHost>
+
+<IfModule ssl_module>
+   <VirtualHost hypso.space:443>
+   ServerName hypso.space
+
+   SSLEngine on
+   ProxyRequests off
+   ProxyPreserveHost On
+   SSLCertificateFile "/etc/letsencrypt/live/hypso.space/fullchain.pem"
+   SSLCertificateKeyFile "/etc/letsencrypt/live/hypso.space/privkey.pem"
+
+<Location />
+   ProxyPass http://127.0.0.1:3000/
+   ProxyPassReverse http://127.0.0.1:3000/
+</Location>
+
+<Location /strapi>
+   ProxyPass http://127.0.0.1:1337
+   ProxyPassReverse http://127.0.0.1:1337
+   ProxyPreserveHost On
+   </Location>
+   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
+   </VirtualHost>
+</IfModule>
+```
+This will redirect all traffic to the https version of the website and proxy the traffic to the correct ports as well as supporting SSL renewal on port 80
+
+4.  Make sure to replace all relevant information with the correct values. Check port numbers, domain names, and paths.
+5.  `sudo a2ensite outreach.conf` to create a symlink to the sites-enabled folder
+6.  `sudo systemctl reload apache2`
+7. Make sure firewall rules are set up correctly, services are running as intended on the right ports and that the DNS is set up correctly.
+8. Make sure the SSL certificate is set up correctly more info [here](#ssl-certification)
+9. Make sure the website is running on the correct port and that the proxy is set up correctly.
+
+More info about the apache configuration running on the server can be found [here](https://github.com/NTNU-SmallSat-Lab/apache2-server-configs)
 
 ## Troubleshooting
 
@@ -116,8 +170,16 @@ If the above doesn't work, you can run the following commands to see logs:
 
 1.  `sudo docker ps -a` to see all running conatiners.
 2.  `sudo docker logs <hash>`, with the hash of the container (you usually only need to type in the first few letters), to see the logs printed to console.
-    -   Log `outreach:backend` for strapi, and `outreach:frontend` for next.js.
+    - Log `outreach:backend` for strapi, and `outreach:frontend` for next.js.
 
 ## SSL Certification
 
-TODO @madshermansen
+The SSL certificate is managed by certbot. The certificate is renewed automatically every 3 months. The certificate is stored in `/etc/letsencrypt/live/hypso.space/` and is used by the apache server to serve the website over HTTPS.
+
+To renew the certificate manually, run `sudo certbot renew` or `sudo certbot renew --dry-run` to test the renewal process.
+
+To set up the certificate, follow the instructions on [certbot](https://certbot.eff.org/lets-encrypt/). Or follow the quick guide below specific for NTNUS semi-managed servers.
+
+1. Follow the guide [here](https://www.ntnu.no/wiki/display/ntnuitubuntu/Semi-managed+Linux+servers) to install the nessecary software packages. These should include `certbot`, `python3-certbot-apache` or `python3-certbot-nginx` depending on the server setup.
+2. Run `sudo certbot certonly --apache` to generate the certificate.
+3. Make sure the certificate is set up correctly in the apache configuration file.
