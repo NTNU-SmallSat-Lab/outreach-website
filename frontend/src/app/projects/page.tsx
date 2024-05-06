@@ -58,7 +58,6 @@ export default async function ProjectsPage() {
         graphqlData.data.projects === null
     ) {
         return <div>There are no projects to show.</div>;
-
     }
 
     return (
@@ -113,10 +112,10 @@ export default async function ProjectsPage() {
                                             {project?.attributes?.title}
                                         </CardTitle>
                                         <p className="break-words">
-                                                {SlicePreviewText(
-                                                    project?.attributes
-                                                        ?.content ?? [],
-                                                )}
+                                            {SlicePreviewText(
+                                                project?.attributes?.content ??
+                                                    [],
+                                            )}
                                         </p>
                                     </div>
                                 </CardContent>
