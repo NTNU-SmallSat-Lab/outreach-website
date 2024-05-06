@@ -23,7 +23,7 @@ export default function BlogPaginator({
     let currentPage = parseInt(page ?? "1", 10);
     currentPage = currentPage > 1 ? currentPage : 1;
 
-    const pageSize = 7;
+    const pageSize = 9;
     const totalPages = Math.ceil(Number(totalArticles) / pageSize);
 
     function handlePageChange(page: number) {
