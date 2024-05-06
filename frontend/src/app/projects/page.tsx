@@ -89,7 +89,7 @@ export default async function ProjectsPage() {
                             key={project.id}
                             data-testid="projectCard"
                         >
-                            <Card className="h-full w-full hover:border-primary">
+                            <Card className="h-full w-full bg-background hover:border-primary">
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="w-full">
