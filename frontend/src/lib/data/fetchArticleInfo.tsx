@@ -66,7 +66,6 @@ export default async function fetchArticlePages({
     pageSize: number;
     tag: string | null;
 }) {
-
     let graphqlData;
 
     if (!tag) {
@@ -146,7 +145,6 @@ export default async function fetchArticlePages({
             avatarURL,
             slug: article.attributes.slug,
         });
-
     });
 
     const totalArticles = graphqlData.data?.articles?.meta?.pagination?.total;
