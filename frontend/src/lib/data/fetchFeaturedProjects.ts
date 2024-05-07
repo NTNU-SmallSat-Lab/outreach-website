@@ -1,4 +1,4 @@
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 import { getClient } from "../ApolloClient";
 
 const GET_FEATURED_PROJECTS = graphql(`

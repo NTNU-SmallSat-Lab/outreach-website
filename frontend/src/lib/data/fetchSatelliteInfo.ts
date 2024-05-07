@@ -4,7 +4,7 @@ import {
 } from "@/app/satellites/[satelliteSlug]/page";
 import { getClient } from "../ApolloClient";
 import { SatelliteName, SatelliteNumber } from "../store";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 
 const GET_SATELLITE_INFO = graphql(`

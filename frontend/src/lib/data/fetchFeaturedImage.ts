@@ -1,5 +1,5 @@
 import { getClient } from "../ApolloClient";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
