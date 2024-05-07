@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PlaceholderImage } from "@/components/fullBlogCard";
+import { PlaceholderImage } from "@/components/shared/CardWithContent";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 

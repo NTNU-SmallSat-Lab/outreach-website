@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { getClient } from "@lib/ApolloClient";
 import { env } from "process";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 import { TadaDocumentNode } from "gql.tada";
 
 // Needs to be dynamic as we use the rsc apollo client

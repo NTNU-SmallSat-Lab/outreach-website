@@ -1,7 +1,7 @@
 import fetchFeaturedProjects from "@/lib/data/fetchFeaturedProjects";
 import Link from "next/link";
-import { Button } from "../shadcn/button";
-import CardWithContent from "../shared/CardWithContent";
+import { Button } from "@components/shadcn/button";
+import CardWithContent from "@components/shared/CardWithContent";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 

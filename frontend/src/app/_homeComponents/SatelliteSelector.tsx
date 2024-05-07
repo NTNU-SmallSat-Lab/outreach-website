@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import SatDropdown from "@/components/homeComponents/SatDropdown";
+import SatDropdown from "./SatDropdown";
 
 export default function SatelliteSelector() {
     return (
