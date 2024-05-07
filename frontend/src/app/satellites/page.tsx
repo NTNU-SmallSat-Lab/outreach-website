@@ -1,6 +1,6 @@
 import { getClient } from "@/lib/ApolloClient";
-import SatelliteResponsiveTable from "@/components/SatelliteResponsiveTable";
-import { graphql } from "@/tada/graphql";
+import SatelliteResponsiveTable from "./SatelliteResponsiveTable";
+import { graphql } from "@/lib/tada/graphql";
 
 const GET_SATELLITES = graphql(`
     query GET_SATELLITES {

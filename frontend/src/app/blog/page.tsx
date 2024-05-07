@@ -1,15 +1,15 @@
-import BlogPaginator from "@/components/BlogPaginator";
+import BlogPaginator from "./BlogPaginator";
 import BlogDataCards from "./blogDataCards";
 import {
     PageHeaderAndSubtitle,
     PageSubtitle,
     PageHeader,
-} from "@/components/PageHeader";
+} from "@/components/layout/PageHeader";
 
-import { PagePadding } from "@/components/PageLayout";
+import { PagePadding } from "@/components/layout/PageLayout";
 import React from "react";
 import { getClient } from "@/lib/ApolloClient";
-import { ResultOf, graphql } from "@/tada/graphql";
+import { ResultOf, graphql } from "@/lib/tada/graphql";
 
 type articlesFetchType = ResultOf<typeof GET_ARTICLES>;
 export type ArticlesDataType = NonNullable<

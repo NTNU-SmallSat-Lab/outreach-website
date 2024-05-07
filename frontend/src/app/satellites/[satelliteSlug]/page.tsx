@@ -1,16 +1,16 @@
 import React from "react";
-import BlockRendererClient from "@/components/BlockRendererClient";
+import BlockRendererClient from "@/components/shared/BlockRendererClient";
 import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
-import Map2d from "@/components/2dmap/Map2d";
+import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
+import Map2d from "@/app/satellites/[satelliteSlug]/_2dmap/Map2d";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import LaunchDateCountDown from "@/components/ui/launchDateCountDown";
 import {
     PageHeader,
     PageSubtitle,
     PageHeaderAndSubtitle,
-} from "@/components/PageHeader";
+} from "@/components/layout/PageHeader";
 import Image from "next/image";
 import { SatelliteName, SatelliteNumber } from "@/lib/store";
 

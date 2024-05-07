@@ -19,8 +19,8 @@
             {
                 "name": "@0no-co/graphqlsp",
                 "schema": "http://localhost:1337/graphql",
-                "tadaOutputLocation": "./src/tada/graphql-env.d.ts",
-                "tadaTurboLocation": "./src/tada/graphql-turbo.d.ts",
+                "tadaOutputLocation": "./src/lib/tada/graphql-env.d.ts",
+                "tadaTurboLocation": "./src/lib/tada/graphql-turbo.d.ts",
             },
         ],
         "paths": {

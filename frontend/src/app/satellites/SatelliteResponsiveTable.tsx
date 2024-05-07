@@ -3,7 +3,7 @@ import {
     PageHeaderAndSubtitle,
     PageHeader,
     PageSubtitle,
-} from "@/components/PageHeader";
+} from "@/components/layout/PageHeader";
 import SatelliteStatsTableRow from "@/components/satelliteData/SatelliteStatsTableRow";
 import {
     Table,

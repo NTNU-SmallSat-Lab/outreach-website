@@ -1,12 +1,12 @@
 import { Avatar, AvatarFallback } from "@shadcn/avatar";
 
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import BlockRendererClient from "@/components/BlockRendererClient";
+import BlockRendererClient from "@/components/shared/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
-import ShareButtons from "@/components/ShareButtons";
+import ShareButtons from "./ShareButtons";
 import NextImage from "next/image";
 import fullNameToInitials from "@/lib/helpers";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 

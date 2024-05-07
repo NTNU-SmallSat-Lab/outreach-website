@@ -1,9 +1,9 @@
-import BlogpageButtons from "@/components/BlogpageButtons";
+import BlogpageButtons from "./BlogpageButtons";
 import React from "react";
-import CardWithContent from "@/components/CardWithContent";
+import CardWithContent from "@/components/shared/CardWithContent";
 import type { ArticlesDataType } from "@/app/blog/page";
-import { slicePreviewText } from "@/components/SlicePreviewText";
-import CardGrid from "@/components/CardGrid";
+import { slicePreviewText } from "@lib/SlicePreviewText";
+import CardGrid from "@/components/shared/CardGrid";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 

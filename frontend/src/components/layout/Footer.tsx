@@ -1,5 +1,5 @@
 import { env } from "process";
-import NTNULogo from "./ntnu/NTNULogo";
+import NTNULogo from "./NTNULogo";
 
 export default function Footer() {
     return (

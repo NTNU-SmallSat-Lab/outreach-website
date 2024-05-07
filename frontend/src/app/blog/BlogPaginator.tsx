@@ -7,7 +7,7 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from "./shadcn/pagination";
+} from "../../components/shadcn/pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function BlogPaginator({

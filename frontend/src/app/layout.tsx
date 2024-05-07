@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import React from "react";
 import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
 import InitializeZustandWithSatEntries from "@/components/satelliteData/SatelliteInitialFetch";
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     description: "NTNU Small Satellite Lab",
 };
 
-import ErrorBoundaryNavigation from "@/components/ErrorBoundaryNavigation";
-import Starfield from "@/components/starBackground/Starfield";
+import ErrorBoundaryNavigation from "@/components/layout/ErrorBoundaryNavigation";
+import Starfield from "@/components/layout/Starfield";
 import { SatelliteEntry } from "@/lib/store";
 
 export default async function RootLayout({

@@ -1,7 +1,7 @@
-import TeamSection from "@/components/TeamSection";
-import FeaturedProjects from "@/components/FeaturedProjects";
-import MissionStatement from "@/components/MissionStatement";
-import GlobeWithStats from "@/components/homeComponents/GlobeWithStats";
+import TeamSection from "./_homeComponents/TeamSection";
+import FeaturedProjects from "./_homeComponents/FeaturedProjects";
+import MissionStatement from "./_homeComponents/MissionStatement";
+import GlobeWithStats from "./_homeComponents/GlobeWithStats";
 
 export default function Home() {
     return (

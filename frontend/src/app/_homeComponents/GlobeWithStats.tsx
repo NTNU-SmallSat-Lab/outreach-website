@@ -1,17 +1,14 @@
 "use client";
-import SatelliteSelector from "@/components/homeComponents/SatelliteSelector";
+import SatelliteSelector from "./SatelliteSelector";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import dynamic from "next/dynamic";
 
 import Link from "next/link";
-import { Button } from "../shadcn/button";
+import { Button } from "@components/shadcn/button";
 
-const SatelliteGlobeNoSSR = dynamic(
-    () => import("@/components/homeComponents/SatelliteGlobe"),
-    {
-        ssr: false,
-    },
-);
+const SatelliteGlobeNoSSR = dynamic(() => import("./SatelliteGlobe"), {
+    ssr: false,
+});
 
 export default function GlobeWithStats({
     homePage = false,

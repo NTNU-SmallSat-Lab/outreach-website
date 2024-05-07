@@ -1,9 +1,9 @@
-import BlockRendererClient from "@/components/BlockRendererClient";
+import BlockRendererClient from "@/components/shared/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
+import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECT_BY_SLUG = graphql(`

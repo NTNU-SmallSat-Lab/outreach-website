@@ -1,13 +1,13 @@
 import { getClient } from "@/lib/ApolloClient";
-import { slicePreviewText } from "@/components/SlicePreviewText";
+import { slicePreviewText } from "@lib/SlicePreviewText";
 import {
     PageHeader,
     PageHeaderAndSubtitle,
     PageSubtitle,
-} from "@/components/PageHeader";
-import CardWithContent from "@/components/CardWithContent";
-import { graphql } from "@/tada/graphql";
-import CardGrid from "@/components/CardGrid";
+} from "@/components/layout/PageHeader";
+import CardWithContent from "@/components/shared/CardWithContent";
+import { graphql } from "@/lib/tada/graphql";
+import CardGrid from "@/components/shared/CardGrid";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECTS = graphql(`
