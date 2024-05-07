@@ -7,10 +7,10 @@ export default function FeaturedProjectCard({
     imageURL,
     projectSlug,
 }: {
-    title: string | undefined;
-    content: any | undefined;
-    imageURL: string | undefined;
-    projectSlug: string | undefined;
+    title?: string;
+    content?: any;
+    imageURL?: string;
+    projectSlug?: string;
 }) {
     if (!title || !content || !imageURL || !projectSlug) {
         return null;
