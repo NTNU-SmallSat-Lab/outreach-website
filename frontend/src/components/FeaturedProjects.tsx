@@ -3,6 +3,8 @@ import FeaturedProjectCard from "@/components/FeaturedProjectCard";
 import Link from "next/link";
 import { Button } from "./shadcn/button";
 
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
+
 export default async function FeaturedProjects() {
     const featuredProjects = await fetchFeaturedProjects();
 
@@ -41,14 +43,22 @@ export default async function FeaturedProjects() {
 
                 <div className="mt-8 flex w-full flex-col px-8 sm:px-0">
                     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
-                        {threeProjects.map((project: any, index: number) => {
+                        {threeProjects.map((project, index: number) => {
                             return (
                                 <FeaturedProjectCard
                                     key={index}
-                                    title={project.title}
-                                    content={project.content}
-                                    imageURL={project.imageURL}
-                                    projectSlug={project.projectSlug}
+                                    title={project?.data?.attributes?.title}
+                                    content={project?.data?.attributes?.content}
+                                    imageURL={
+                                        STRAPI_URL ??
+                                        "" +
+                                            project?.data?.attributes
+                                                ?.previewImage?.data?.attributes
+                                                ?.url
+                                    }
+                                    projectSlug={
+                                        project?.data?.attributes?.slug
+                                    }
                                 />
                             );
                         })}
