@@ -77,7 +77,7 @@ export default async function BlogPage({
     const currentPage = parseInt(page ?? "1", 10);
     const tag = searchParams?.tag ?? undefined;
 
-    const pageSize = 7;
+    const pageSize = 6;
 
     let { data, error } = await getClient().query({
         query: GET_ARTICLES,
@@ -100,7 +100,7 @@ export default async function BlogPage({
     }
 
     const result = data?.articles?.data;
-    const amount = result?.length ?? 0;
+    const amount = data.articles?.meta.pagination.total ?? 0;
 
     if (!result) {
         return <div>Error fetching articles</div>;
