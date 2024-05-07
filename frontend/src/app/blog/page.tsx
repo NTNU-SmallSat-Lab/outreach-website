@@ -77,7 +77,7 @@ export default async function BlogPage({
     const currentPage = parseInt(page ?? "1", 10);
     const tag = searchParams?.tag ?? undefined;
 
-    const pageSize = 6;
+    const pageSize = 9;
 
     let { data, error } = await getClient().query({
         query: GET_ARTICLES,
