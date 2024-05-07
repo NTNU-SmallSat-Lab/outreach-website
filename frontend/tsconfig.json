@@ -19,7 +19,7 @@
             {
                 "name": "@0no-co/graphqlsp",
                 "schema": "http://localhost:1337/graphql",
-                "tadaOutputLocation": "./src/tada/graphql-env.d.ts",
+                "tadaOutputLocation": "./src/tada/graphql-env.ts",
             },
         ],
         "paths": {

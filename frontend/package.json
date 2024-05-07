@@ -13,7 +13,8 @@
         "testui": "npx playwright test --ui",
         "codegen": "npx playwright codegen",
         "test-ct": "playwright test -c playwright-ct.config.ts",
-        "find-unused-files": "knip"
+        "find-unused-files": "knip",
+        "forceTadaGenerateTypes": "npx gql.tada generate output"
     },
     "dependencies": {
         "@apollo/client": "^3.9.0-alpha.5",
