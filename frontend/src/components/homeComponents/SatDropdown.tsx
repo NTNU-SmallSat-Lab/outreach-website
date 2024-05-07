@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { satLoaderById } from "@/lib/getSatelliteData";
@@ -25,9 +25,17 @@ export default function SatDropdown({
     selectedSatelliteName,
     satNumToEntry,
 }: DropdownProps) {
-    const isLargeScreen = () => window.matchMedia("(min-width: 768px)").matches;
+    let isLargeScreen = useRef<boolean>(false);
 
-    const [isOpen, setIsOpen] = useState<boolean>(isLargeScreen());
+    // Useeffect to check window type
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            isLargeScreen.current =
+                window.matchMedia("(min-width: 768px)").matches;
+        }
+    }, []);
+
+    const [isOpen, setIsOpen] = useState<boolean>(isLargeScreen.current);
     const [noradID, setNoradID] = useState<SatelliteNumber>();
     const [error, setError] = useState("");
 
