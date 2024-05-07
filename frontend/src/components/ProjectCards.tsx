@@ -65,6 +65,8 @@ export default function ProjectCards({
 
                                     {Array.isArray(satellites) && satellites.length > 0 ? (
                                         <div className="prose prose-invert mb-1 lg:prose-xl">
+                                            <br />
+                                            <h5>Related satellites:</h5>
                                             <ul>
                                                 {satellites.length > 0 && satellites.map(
                                                     (satellite, index) => (
