@@ -74,7 +74,7 @@ export default async function ProjectsPage() {
             </div>
 
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {graphqlData.data.projects.data.map((project: any) => {
+                {graphqlData.data.projects.data.map((project) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
                             ?.url;
