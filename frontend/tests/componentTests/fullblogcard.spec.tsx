@@ -1,7 +1,6 @@
 import { test, expect } from "@playwright/experimental-ct-react";
 import FullBlogCard from "@/components/fullBlogCard";
 import { BlogPost } from "@/app/blog/page";
-import { Enum_Article_Tag } from "@/__generated__/graphql";
 
 test("FullBlogCard renders correctly", async ({ mount }) => {
     const mockArticle: BlogPost = {
@@ -20,7 +19,7 @@ test("FullBlogCard renders correctly", async ({ mount }) => {
         ],
         coverImage: "mock-cover-image.jpg",
         datePublished: "2024-04-13",
-        tag: Enum_Article_Tag.Projects,
+        tag: "Projects",
         slug: "mock-article-slug",
     };
     // Mount the FullBlogCard component with mock data
