@@ -67,11 +67,9 @@ export default async function MissionStatement() {
                     <Image
                         alt="Featured Satellite Image"
                         src={featuredImage.featuredImageURL}
-                        layout="responsive"
                         width={900}
                         height={600}
-                        objectFit="contain"
-                        className="bg-black-900 w-full"
+                        className="bg-black-900 w-full object-contain"
                     />
                 </div>
             </div>

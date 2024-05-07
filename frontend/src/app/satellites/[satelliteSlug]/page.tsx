@@ -102,7 +102,6 @@ export default async function SatelliteInfoPage({
                                         alt={satelliteInfo.name}
                                         width={1600} // Set according to the aspect ratio of the image
                                         height={0}
-                                        layout="responsive"
                                         className="p-2"
                                     />
                                 ) : null}

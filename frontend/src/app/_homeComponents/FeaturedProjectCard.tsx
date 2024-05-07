@@ -21,9 +21,8 @@ export default function FeaturedProjectCard({
                     {imageURL ? (
                         <Image
                             src={STRAPI_URL ?? "" + imageURL}
+                            className="object-cover"
                             alt="Project Image"
-                            layout="fill"
-                            objectFit="cover"
                         />
                     ) : (
                         <div className="flex items-center justify-center">
