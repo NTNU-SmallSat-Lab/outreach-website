@@ -40,19 +40,18 @@ export default function CardWithContent({
     link: string;
     className?: string;
     tag?: string;
-    datePublished?: string;
+    datePublished?: string | Date;
     imageURL?: string;
 }) {
-    function formatDate(dateString: string) {
-        const date = new Date(dateString);
+    function formatDate(date: string | Date) {
+        let newDate = new Date(date);
         const options: Intl.DateTimeFormatOptions = {
             month: "long",
             day: "numeric",
             year: "numeric",
         };
-        return date.toLocaleDateString("en-US", options);
+        return newDate.toLocaleDateString("en-US", options);
     }
-
     if (datePublished) {
         datePublished = formatDate(datePublished);
     }
