@@ -76,21 +76,16 @@ export default async function ProjectsPage() {
                         previewImage = STRAPI_URL + previewImage;
                     }
                     return (
-                        <Link
-                            className="h-full sm:m-4"
-                            href={"/projects/" + project?.attributes?.slug}
+                        <CardWithContent
                             key={project.id}
                             data-testid="projectCard"
-                        >
-                            <CardWithContent
-                                title={project?.attributes?.title ?? ""}
-                                link={"/projects/" + project?.attributes?.slug}
-                                imageURL={previewImage}
-                                description={slicePreviewText(
-                                    project?.attributes?.content ?? [],
-                                )}
-                            ></CardWithContent>
-                        </Link>
+                            title={project?.attributes?.title ?? ""}
+                            link={"/projects/" + project?.attributes?.slug}
+                            imageURL={previewImage}
+                            description={slicePreviewText(
+                                project?.attributes?.content ?? [],
+                            )}
+                        ></CardWithContent>
                     );
                 })}
             </div>

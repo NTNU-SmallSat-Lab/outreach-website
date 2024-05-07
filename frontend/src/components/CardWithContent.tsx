@@ -59,7 +59,7 @@ export default function CardWithContent({
     return (
         <Link
             href={link}
-            className="flex flex-col border bg-background p-5 text-card-foreground hover:border-primary "
+            className="flex  flex-col border bg-background p-5 text-card-foreground hover:border-primary"
             data-testid="blogCardLink"
         >
             <Card className={cn(className, "")}>
