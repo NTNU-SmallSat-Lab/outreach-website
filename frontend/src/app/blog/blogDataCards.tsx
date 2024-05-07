@@ -3,6 +3,7 @@ import React from "react";
 import CardWithContent from "@/components/CardWithContent";
 import type { ArticlesDataType } from "@/app/blog/page";
 import { slicePreviewText } from "@/components/SlicePreviewText";
+import CardGrid from "@/components/CardGrid";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
@@ -21,7 +22,7 @@ export default async function BlogDataCards({
 
     return (
         <>
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <CardGrid>
                 <BlogpageButtons className="col-span-full" />
                 {articles.map((article) => {
                     let imgurl = undefined;
@@ -49,7 +50,7 @@ export default async function BlogDataCards({
                         ></CardWithContent>
                     );
                 })}
-            </div>
+            </CardGrid>
         </>
     );
 }

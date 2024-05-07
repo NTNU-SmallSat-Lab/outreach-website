@@ -1,5 +1,4 @@
 import { getClient } from "@/lib/ApolloClient";
-import Link from "next/link";
 import { slicePreviewText } from "@/components/SlicePreviewText";
 import {
     PageHeader,
@@ -8,6 +7,7 @@ import {
 } from "@/components/PageHeader";
 import CardWithContent from "@/components/CardWithContent";
 import { graphql } from "@/tada/graphql";
+import CardGrid from "@/components/CardGrid";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECTS = graphql(`
@@ -66,7 +66,7 @@ export default async function ProjectsPage() {
                 </PageHeaderAndSubtitle>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <CardGrid>
                 {graphqlData.data.projects.data.map((project) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
@@ -88,7 +88,7 @@ export default async function ProjectsPage() {
                         ></CardWithContent>
                     );
                 })}
-            </div>
+            </CardGrid>
         </div>
     );
 }
