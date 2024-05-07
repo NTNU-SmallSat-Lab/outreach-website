@@ -1,19 +1,9 @@
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/shadcn/card";
 import { getClient } from "@/lib/ApolloClient";
-import Link from "next/link";
-import Image from "next/image";
-import { SlicePreviewText } from "@/components/SlicePreviewText";
 import {
     PageHeader,
     PageHeaderAndSubtitle,
     PageSubtitle,
 } from "@/components/PageHeader";
-import { PlaceholderImage } from "@/components/fullBlogCard";
 import { graphql } from "@/tada/graphql";
 import { PagePadding } from "@/components/PageLayout";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
@@ -37,6 +27,14 @@ const GET_PROJECTS = graphql(`
                             }
                         }
                     }
+                    satellites {
+                        data {
+                            id
+                            attributes {
+                                name
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -53,11 +51,21 @@ interface PreviewImageData {
     } | null;
 }
 
+interface RelatedSatellite {
+    data: {
+        id: string;
+        attributes: {
+            name: string;
+        };
+    };
+}
+
 interface ProjectAttributes {
     title: string;
     content: BlocksContent;
     slug: string;
     previewImage: PreviewImageData | null;
+    satellites: RelatedSatellite | null;
 }
 
 export interface ProjectPost {
