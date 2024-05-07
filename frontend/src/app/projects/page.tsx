@@ -89,7 +89,7 @@ export default async function ProjectsPage() {
                             key={project.id}
                             data-testid="projectCard"
                         >
-                            <Card className="h-full w-full hover:border-primary">
+                            <Card className="h-full w-full bg-background hover:border-primary">
                                 <CardHeader></CardHeader>
                                 <CardContent>
                                     <div className="w-full">
@@ -112,12 +112,10 @@ export default async function ProjectsPage() {
                                             {project?.attributes?.title}
                                         </CardTitle>
                                         <p className="break-words">
-                                            <span>
-                                                {SlicePreviewText(
-                                                    project?.attributes
-                                                        ?.content ?? [],
-                                                )}
-                                            </span>
+                                            {SlicePreviewText(
+                                                project?.attributes?.content ??
+                                                    [],
+                                            )}
                                         </p>
                                     </div>
                                 </CardContent>

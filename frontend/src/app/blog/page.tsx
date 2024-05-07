@@ -36,7 +36,7 @@ export default async function BlogPage({
 
     const result = await fetchArticlePages({
         currentPage: currentPage,
-        pageSize: 7,
+        pageSize: 9,
         tag: tag,
     });
 

@@ -66,8 +66,6 @@ export default async function fetchArticlePages({
     pageSize: number;
     tag: string | null;
 }) {
-    let firstArticle = true;
-
     let graphqlData;
 
     if (!tag) {
@@ -137,7 +135,6 @@ export default async function fetchArticlePages({
 
         articleList.push({
             key: article.id,
-            firstArticle: firstArticle,
             title,
             content,
             coverImage,
@@ -148,8 +145,6 @@ export default async function fetchArticlePages({
             avatarURL,
             slug: article.attributes.slug,
         });
-
-        firstArticle = false;
     });
 
     const totalArticles = graphqlData.data?.articles?.meta?.pagination?.total;
