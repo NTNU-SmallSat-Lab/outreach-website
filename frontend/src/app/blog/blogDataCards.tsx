@@ -41,7 +41,7 @@ export default async function BlogDataCards({
                             title={article.attributes?.previewTitle ?? ""}
                             link={"/blog/" + article.attributes?.slug}
                             imageURL={imgurl}
-                            tag={article.attributes?.Tag ?? undefined}
+                            tag={article.attributes?.Tag ?? "General"}
                             description={slicePreviewText(
                                 article.attributes?.body,
                             )}
