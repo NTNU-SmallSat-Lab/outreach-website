@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import React from "react";
 import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
-import SatelliteInitialClientFetch from "@/components/satelliteData/SatelliteInitialFetch";
+import InitializeZustandWithSatEntries from "@/components/satelliteData/SatelliteInitialFetch";
 
 // imports to get satellites from strapi and fetch the data serverside
 import fetchSatelliteNamesAndId from "@/lib/data/fetchSatelliteNamesAndId";
@@ -52,7 +52,7 @@ export default async function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={cn("flex min-h-screen flex-col", inter.className)}>
                 <ApolloWrapper>
-                    <SatelliteInitialClientFetch satData={satData} />
+                    <InitializeZustandWithSatEntries satData={satData} />
                     <Navbar />
                     <ErrorBoundaryNavigation>
                         <main className="flex grow flex-col">
