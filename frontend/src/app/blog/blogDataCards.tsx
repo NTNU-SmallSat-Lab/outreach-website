@@ -1,12 +1,14 @@
-import FullBlogCard from "@/components/fullBlogCard";
 import BlogpageButtons from "@/components/BlogpageButtons";
-import { BlogPost } from "./page";
 import React from "react";
+import CardWithContent from "@/components/CardWithContent";
+import type { ArticlesDataType } from "@/app/blog/page";
+
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 export default async function BlogDataCards({
     articles,
 }: {
-    articles: BlogPost[] | null;
+    articles: ArticlesDataType;
 }) {
     if (articles === null || articles === undefined) {
         return (
@@ -20,28 +22,23 @@ export default async function BlogDataCards({
         <>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <BlogpageButtons className="col-span-full" />
-                {/* Only map fist article */}
-                {articles.map((article: BlogPost) => {
-                    if (article.firstArticle) {
-                        return (
-                            <React.Fragment key={article.key}>
-                                <FullBlogCard
-                                    className="col-span-full"
-                                    article={article}
-                                />
-                            </React.Fragment>
-                        );
+                {articles.map((article) => {
+                    let imgurl = undefined;
+                    if (STRAPI_URL) {
+                        imgurl =
+                            STRAPI_URL +
+                            article.attributes?.coverImage?.data?.attributes
+                                ?.url;
                     }
-                })}
 
-                {articles.map((article: BlogPost) => {
-                    if (article.firstArticle) {
-                        return;
-                    }
                     return (
-                        <React.Fragment key={article.key}>
-                            <FullBlogCard article={article} />
-                        </React.Fragment>
+                        <CardWithContent
+                            key={article.id}
+                            title={article.attributes?.previewTitle ?? ""}
+                            link={"/blog/" + article.attributes?.slug}
+                            imageURL={imgurl}
+                            tag={article.attributes?.Tag ?? undefined}
+                        ></CardWithContent>
                     );
                 })}
             </div>

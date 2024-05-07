@@ -8,7 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/shadcn/card";
-import { PlaceholderImage } from "@/components/fullBlogCard";
+import { PlaceholderImage } from "@/components/CardWithContent";
 
 export default function RelatedProjectsAndSatellites({
     project,

@@ -13,7 +13,7 @@ import {
     PageHeaderAndSubtitle,
     PageSubtitle,
 } from "@/components/PageHeader";
-import { PlaceholderImage } from "@/components/fullBlogCard";
+import { PlaceholderImage } from "@/components/CardWithContent";
 import { graphql } from "@/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 

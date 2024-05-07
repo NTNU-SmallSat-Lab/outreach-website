@@ -47,8 +47,6 @@ export default async function TeamSection() {
 
     const imageUrl = STRAPI_URL! + teamAttributes.image?.data?.attributes?.url;
 
-    console.log(teamAttributes.text);
-
     return (
         <>
             <div className="flex w-full flex-col justify-center bg-black bg-opacity-50 px-8 py-12 sm:flex-row sm:px-52">

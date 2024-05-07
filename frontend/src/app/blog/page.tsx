@@ -1,7 +1,5 @@
 import BlogPaginator from "@/components/BlogPaginator";
 import BlogDataCards from "./blogDataCards";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
-import fetchArticlePages from "@/lib/data/fetchArticleInfo";
 import {
     PageHeaderAndSubtitle,
     PageSubtitle,
@@ -10,20 +8,65 @@ import {
 
 import { PagePadding } from "@/components/PageLayout";
 import React from "react";
+import { getClient } from "@/lib/ApolloClient";
+import { ResultOf, graphql } from "@/tada/graphql";
 
-export interface BlogPost {
-    key: string | null | undefined;
-    firstArticle?: boolean | null | undefined;
-    title: string | undefined;
-    content: BlocksContent;
-    coverImage?: string;
-    datePublished: any;
-    tag?: string | null | undefined;
-    HOST_URL?: string;
-    authorName?: string;
-    avatarURL?: string;
-    slug: string | undefined;
-}
+type articlesFetchType = ResultOf<typeof GET_ARTICLES>;
+export type ArticlesDataType = NonNullable<
+    articlesFetchType["articles"]
+>["data"];
+
+const GET_ARTICLES = graphql(`
+    query GET_ARTICLES(
+        $pagination: PaginationArg
+        $filters: ArticleFiltersInput
+    ) {
+        articles(
+            sort: ["datePublished:desc"]
+            pagination: $pagination
+            filters: $filters
+        ) {
+            data {
+                id
+                attributes {
+                    author {
+                        data {
+                            attributes {
+                                name
+                                avatar {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    previewTitle
+                    datePublished
+                    body
+                    coverImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    createdAt
+                    publishedAt
+                    slug
+                    Tag
+                }
+            }
+            meta {
+                pagination {
+                    total
+                }
+            }
+        }
+    }
+`);
 
 export default async function BlogPage({
     searchParams,
@@ -34,18 +77,34 @@ export default async function BlogPage({
     const currentPage = parseInt(page ?? "1", 10);
     const tag = searchParams?.tag ?? null;
 
-    const result = await fetchArticlePages({
-        currentPage: currentPage,
-        pageSize: 7,
-        tag: tag,
+    const pageSize = 7;
+
+    let { data, error } = await getClient().query({
+        query: GET_ARTICLES,
+        variables: {
+            pagination: {
+                pageSize: pageSize,
+                page: currentPage,
+            },
+            filters: {
+                Tag: {
+                    contains: tag,
+                },
+            },
+        },
     });
 
-    if (!result) {
+    if (error || !data) {
         // Handle the case where fetchArticlePages returns null
         return <div>Error fetching articles</div>;
     }
 
-    const { articleList, totalArticles } = result;
+    const result = data?.articles?.data;
+    const amount = result?.length ?? 0;
+
+    if (!result) {
+        return <div>Error fetching articles</div>;
+    }
 
     return (
         <>
@@ -59,8 +118,8 @@ export default async function BlogPage({
                 </PageHeaderAndSubtitle>
                 <div className="flex flex-col justify-center">
                     {/* <BlogDataCards articles={articleCache[currentPage]} /> */}
-                    <BlogDataCards articles={articleList} />
-                    <BlogPaginator totalArticles={totalArticles} />
+                    <BlogDataCards articles={result} />
+                    <BlogPaginator totalArticles={amount} />
                 </div>
             </PagePadding>
         </>

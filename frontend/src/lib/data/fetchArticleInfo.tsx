@@ -3,59 +3,7 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import { BlogPost } from "@/app/blog/page";
 import { graphql } from "@/tada/graphql";
 
-const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_ARTICLES = graphql(`
-    query GET_ARTICLES(
-        $pagination: PaginationArg
-        $filters: ArticleFiltersInput
-    ) {
-        articles(
-            sort: ["datePublished:desc"]
-            pagination: $pagination
-            filters: $filters
-        ) {
-            data {
-                id
-                attributes {
-                    author {
-                        data {
-                            attributes {
-                                name
-                                avatar {
-                                    data {
-                                        attributes {
-                                            url
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    previewTitle
-                    datePublished
-                    body
-                    coverImage {
-                        data {
-                            attributes {
-                                url
-                            }
-                        }
-                    }
-                    createdAt
-                    publishedAt
-                    slug
-                    Tag
-                }
-            }
-            meta {
-                pagination {
-                    total
-                }
-            }
-        }
-    }
-`);
 
 export default async function fetchArticlePages({
     currentPage,
@@ -81,20 +29,7 @@ export default async function fetchArticlePages({
             },
         });
     } else {
-        graphqlData = await getClient().query({
-            query: GET_ARTICLES,
-            variables: {
-                pagination: {
-                    pageSize: pageSize,
-                    page: currentPage,
-                },
-                filters: {
-                    Tag: {
-                        contains: tag,
-                    },
-                },
-            },
-        });
+        
     }
     if (
         graphqlData.data === null ||

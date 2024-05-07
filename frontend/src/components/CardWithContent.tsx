@@ -1,12 +1,10 @@
 import {
-    BlogCard,
-    BlogCardContent,
-    BlogCardHeader,
-    BlogCardTitle,
+    BlogCard as Card,
+    BlogCardContent as CardContent,
+    BlogCardHeader as CardHeader,
+    BlogCardTitle as CardTitle,
 } from "@/components/ui/blogCard";
 import Link from "next/link";
-import { SlicePreviewText } from "./SlicePreviewText";
-import { BlogPost } from "@/app/blog/page";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SVGProps } from "react";
@@ -28,12 +26,22 @@ export function PlaceholderImage(props: SVGProps<SVGSVGElement>) {
     );
 }
 
-export default function FullBlogCard({
-    article,
+export default function CardWithContent({
+    title,
+    description,
+    link,
     className,
+    tag,
+    datePublished,
+    imageURL,
 }: {
-    article: BlogPost;
+    title: string;
+    description?: string;
+    link: string;
     className?: string;
+    tag?: string;
+    datePublished?: string;
+    imageURL?: string;
 }) {
     function formatDate(dateString: string) {
         const date = new Date(dateString);
@@ -45,18 +53,22 @@ export default function FullBlogCard({
         return date.toLocaleDateString("en-US", options);
     }
 
+    if (datePublished) {
+        datePublished = formatDate(datePublished);
+    }
+
     return (
         <Link
-            href={"/blog/" + article.slug}
+            href={link}
             className="flex flex-col border bg-background p-5 text-card-foreground hover:border-primary"
             data-testid="blogCardLink"
         >
-            <BlogCard className={cn(className, "")}>
-                <BlogCardHeader>
-                    {article.coverImage ? (
+            <Card className={cn(className, "")}>
+                <CardHeader>
+                    {imageURL ? (
                         <Image
-                            src={article.coverImage}
-                            alt={article.coverImage}
+                            src={imageURL}
+                            alt={imageURL}
                             width={500}
                             height={0}
                             className="aspect-video max-h-[250px] w-full object-cover"
@@ -67,26 +79,23 @@ export default function FullBlogCard({
                         </div>
                     )}
                     <div className="flex gap-2">
-                        <p
-                            className="flex items-center rounded-md bg-primary p-2 text-center text-xs text-white"
-                            data-testid="articleTag"
-                        >
-                            {article.tag ? article.tag : "General"}
-                        </p>
+                        {tag ? (
+                            <p
+                                className="flex items-center rounded-md bg-primary p-2 text-center text-xs text-white"
+                                data-testid="articleTag"
+                            >
+                                {tag}
+                            </p>
+                        ) : null}
+
                         <p className="flex w-fit items-center text-center text-xs text-white">
-                            {formatDate(article.datePublished)}
+                            {datePublished}
                         </p>
                     </div>
-                    <BlogCardTitle data-testid="blogCardTitle">
-                        {article.title}
-                    </BlogCardTitle>
-                </BlogCardHeader>
-                <BlogCardContent>
-                    <p className="break-words">
-                        {SlicePreviewText(article.content)}
-                    </p>
-                </BlogCardContent>
-            </BlogCard>
+                    <CardTitle data-testid="blogCardTitle">{title}</CardTitle>
+                </CardHeader>
+                <CardContent className="break-words">{description}</CardContent>
+            </Card>
         </Link>
     );
 }

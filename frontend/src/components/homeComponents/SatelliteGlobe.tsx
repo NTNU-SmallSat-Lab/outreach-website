@@ -135,7 +135,7 @@ export default function SatelliteGlobe({
                 }
             };
         }
-    }, [isFullscreen]);
+    }, [isFullscreen, satNumToEntry, setSelectedSatellite]);
 
     // Update satellite positions periodically, or when satelliteData changes
     useEffect(() => {

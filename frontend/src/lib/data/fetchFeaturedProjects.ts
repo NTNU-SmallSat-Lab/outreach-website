@@ -20,7 +20,6 @@ const GET_FEATURED_PROJECTS = graphql(`
                                     }
                                 }
                                 slug
-                                content
                             }
                         }
                     }
@@ -36,7 +35,6 @@ const GET_FEATURED_PROJECTS = graphql(`
                                     }
                                 }
                                 slug
-                                content
                             }
                         }
                     }
@@ -52,7 +50,6 @@ const GET_FEATURED_PROJECTS = graphql(`
                                     }
                                 }
                                 slug
-                                content
                             }
                         }
                     }
