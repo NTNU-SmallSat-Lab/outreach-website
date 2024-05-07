@@ -3,28 +3,22 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { satLoaderById } from "@/lib/getSatelliteData";
-import {
-    SatelliteActions,
-    SatelliteName,
-    SatelliteNumber,
-    SatelliteState,
-} from "@/lib/store";
+import { SatelliteNumber } from "@/lib/store";
+import { useSatelliteStore } from "@/lib/store";
+export default function SatDropdown() {
+    const selectedSatellite = useSatelliteStore(
+        (state) => state.selectedSatellite,
+    );
+    const setSelectedSatellite = useSatelliteStore(
+        (state) => state.setSelectedSatellite,
+    );
+    const setSatellites = useSatelliteStore((state) => state.setSatellites);
+    const satNumToEntry = useSatelliteStore((state) => state.satNumToEntry);
+    let selectedSatelliteName = undefined;
+    if (selectedSatellite) {
+        selectedSatelliteName = satNumToEntry[selectedSatellite]?.name;
+    }
 
-type DropdownProps = {
-    selectedSatellite: SatelliteState["selectedSatellite"];
-    setSelectedSatellite: SatelliteActions["setSelectedSatellite"];
-    setSatellites: SatelliteActions["setSatellites"];
-    selectedSatelliteName?: SatelliteName;
-    satNumToEntry: SatelliteState["satNumToEntry"];
-};
-
-export default function SatDropdown({
-    selectedSatellite,
-    setSelectedSatellite,
-    setSatellites,
-    selectedSatelliteName,
-    satNumToEntry,
-}: DropdownProps) {
     let isLargeScreen = useRef<boolean>(false);
 
     // Useeffect to check window type
