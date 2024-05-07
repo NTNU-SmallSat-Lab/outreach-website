@@ -1,6 +1,6 @@
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 
-function SlicePreviewText(content: BlocksContent): string {
+function slicePreviewText(content: BlocksContent): string {
     let text = "";
     for (const block of content) {
         if (block.type === "paragraph") {
@@ -13,7 +13,11 @@ function SlicePreviewText(content: BlocksContent): string {
                 continue;
             }
 
-            text = paragraphBlock.children[0].text.slice(0, 100) + "...";
+            text = paragraphBlock.children[0].text.slice(0, 100);
+
+            if (text.length < paragraphBlock.children[0].text.length) {
+                text += "...";
+            }
 
             break;
         }
@@ -21,4 +25,4 @@ function SlicePreviewText(content: BlocksContent): string {
     return text;
 }
 
-export { SlicePreviewText };
+export { slicePreviewText };

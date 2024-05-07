@@ -2,6 +2,7 @@ import BlogpageButtons from "@/components/BlogpageButtons";
 import React from "react";
 import CardWithContent from "@/components/CardWithContent";
 import type { ArticlesDataType } from "@/app/blog/page";
+import { slicePreviewText } from "@/components/SlicePreviewText";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
@@ -24,7 +25,10 @@ export default async function BlogDataCards({
                 <BlogpageButtons className="col-span-full" />
                 {articles.map((article) => {
                     let imgurl = undefined;
-                    if (STRAPI_URL) {
+                    if (
+                        STRAPI_URL &&
+                        article.attributes?.coverImage?.data?.attributes?.url
+                    ) {
                         imgurl =
                             STRAPI_URL +
                             article.attributes?.coverImage?.data?.attributes
@@ -38,6 +42,10 @@ export default async function BlogDataCards({
                             link={"/blog/" + article.attributes?.slug}
                             imageURL={imgurl}
                             tag={article.attributes?.Tag ?? undefined}
+                            description={slicePreviewText(
+                                article.attributes?.body,
+                            )}
+                            datePublished={article.attributes?.datePublished}
                         ></CardWithContent>
                     );
                 })}

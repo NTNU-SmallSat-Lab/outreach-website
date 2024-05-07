@@ -1,19 +1,12 @@
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/shadcn/card";
 import { getClient } from "@/lib/ApolloClient";
 import Link from "next/link";
-import Image from "next/image";
-import { SlicePreviewText } from "@/components/SlicePreviewText";
+import { slicePreviewText } from "@/components/SlicePreviewText";
 import {
     PageHeader,
     PageHeaderAndSubtitle,
     PageSubtitle,
 } from "@/components/PageHeader";
-import { PlaceholderImage } from "@/components/CardWithContent";
+import CardWithContent from "@/components/CardWithContent";
 import { graphql } from "@/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
@@ -89,39 +82,14 @@ export default async function ProjectsPage() {
                             key={project.id}
                             data-testid="projectCard"
                         >
-                            <Card className="h-full w-full hover:border-primary">
-                                <CardHeader></CardHeader>
-                                <CardContent>
-                                    <div className="w-full">
-                                        {previewImage ? (
-                                            <Image
-                                                className="max-h-full max-w-full object-contain"
-                                                src={previewImage}
-                                                alt={previewImage}
-                                                width={500}
-                                                height={0}
-                                            />
-                                        ) : (
-                                            <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                                                <PlaceholderImage />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="prose prose-invert">
-                                        <CardTitle className="mb-2 mt-6">
-                                            {project?.attributes?.title}
-                                        </CardTitle>
-                                        <p className="break-words">
-                                            <span>
-                                                {SlicePreviewText(
-                                                    project?.attributes
-                                                        ?.content ?? [],
-                                                )}
-                                            </span>
-                                        </p>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                            <CardWithContent
+                                title={project?.attributes?.title ?? ""}
+                                link={"/projects/" + project?.attributes?.slug}
+                                imageURL={previewImage}
+                                description={slicePreviewText(
+                                    project?.attributes?.content ?? [],
+                                )}
+                            ></CardWithContent>
                         </Link>
                     );
                 })}

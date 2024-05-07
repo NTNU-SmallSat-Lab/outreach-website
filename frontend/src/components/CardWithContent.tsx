@@ -60,7 +60,7 @@ export default function CardWithContent({
     return (
         <Link
             href={link}
-            className="flex flex-col border bg-background p-5 text-card-foreground hover:border-primary"
+            className="flex flex-col border bg-background p-5 text-card-foreground hover:border-primary "
             data-testid="blogCardLink"
         >
             <Card className={cn(className, "")}>
@@ -94,7 +94,9 @@ export default function CardWithContent({
                     </div>
                     <CardTitle data-testid="blogCardTitle">{title}</CardTitle>
                 </CardHeader>
-                <CardContent className="break-words">{description}</CardContent>
+                <CardContent className="prose prose-invert break-words">
+                    <p>{description}</p>
+                </CardContent>
             </Card>
         </Link>
     );

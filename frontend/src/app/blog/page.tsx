@@ -75,7 +75,7 @@ export default async function BlogPage({
 }) {
     const page = searchParams?.page;
     const currentPage = parseInt(page ?? "1", 10);
-    const tag = searchParams?.tag ?? null;
+    const tag = searchParams?.tag ?? undefined;
 
     const pageSize = 7;
 
