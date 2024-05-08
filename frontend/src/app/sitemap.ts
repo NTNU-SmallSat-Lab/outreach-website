@@ -51,6 +51,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         routes.push({ url: env.OUTWARD_FACING_URL });
     }
 
+    // Add all root routes for blo, projects and satellites
+    routes.push({ url: `${env.OUTWARD_FACING_URL}/blog` });
+    routes.push({ url: `${env.OUTWARD_FACING_URL}/projects` });
+    routes.push({ url: `${env.OUTWARD_FACING_URL}/satellites` });
+
     // Add the blog posts
     let articleSlugs = await getSlugs(GET_ARTICLE_SLUGS);
 
