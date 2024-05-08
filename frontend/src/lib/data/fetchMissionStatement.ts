@@ -14,27 +14,9 @@ const GET_MISSION_STATEMENT = graphql(`
     }
 `);
 
-interface MissionStatementAttributes {
-    title?: string;
-    textContent?: string;
-}
-
-interface MissionStatementData {
-    attributes?: MissionStatementAttributes;
-}
-
-interface HomeMissionStatementData {
-    homeMissionStatement?: MissionStatementData;
-}
-
-interface QueryResponse {
-    homeMissionStatement: any;
-    data: HomeMissionStatementData;
-}
-
 export default async function fetchMissionStatement() {
     const client = getClient(); // Ensure getClient properly typed to return ApolloClient
-    const response = await client.query<QueryResponse>({
+    const response = await client.query({
         // This ensures that TypeScript expects the right structure
         query: GET_MISSION_STATEMENT,
     });
@@ -43,7 +25,7 @@ export default async function fetchMissionStatement() {
         response.data.homeMissionStatement?.data?.attributes;
 
     return {
-        title: missionStatement?.title ?? "",
-        textContent: missionStatement?.textContent ?? "",
+        title: missionStatement?.title,
+        textContent: missionStatement?.textContent,
     };
 }
