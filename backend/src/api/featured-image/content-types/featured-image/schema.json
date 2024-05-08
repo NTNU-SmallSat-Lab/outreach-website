@@ -4,7 +4,8 @@
   "info": {
     "singularName": "featured-image",
     "pluralName": "featured-images",
-    "displayName": "featuredImage"
+    "displayName": "featuredImage",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,20 +13,23 @@
   "pluginOptions": {},
   "attributes": {
     "featuredImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false,
-      "required": true
+      ]
     },
     "satellite": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::satellite.satellite"
+    },
+    "description": {
+      "type": "string"
     }
   }
 }

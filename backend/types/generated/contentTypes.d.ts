@@ -872,6 +872,7 @@ export interface ApiFeaturedImageFeaturedImage extends Schema.SingleType {
     singularName: 'featured-image';
     pluralName: 'featured-images';
     displayName: 'featuredImage';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -883,6 +884,7 @@ export interface ApiFeaturedImageFeaturedImage extends Schema.SingleType {
       'oneToOne',
       'api::satellite.satellite'
     >;
+    description: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

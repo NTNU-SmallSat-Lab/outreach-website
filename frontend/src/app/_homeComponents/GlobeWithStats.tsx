@@ -3,18 +3,11 @@ import SatelliteSelector from "./SatelliteSelector";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import dynamic from "next/dynamic";
 
-import Link from "next/link";
-import { Button } from "@components/shadcn/button";
-
 const SatelliteGlobeNoSSR = dynamic(() => import("./SatelliteGlobe"), {
     ssr: false,
 });
 
-export default function GlobeWithStats({
-    homePage = false,
-}: {
-    homePage: boolean;
-}) {
+export default function GlobeWithStats() {
     return (
         <>
             <div
@@ -23,18 +16,6 @@ export default function GlobeWithStats({
                 <div className="z-10 flex w-full flex-col border-b-2 border-l-2 border-r-2 border-t-2 border-gray-600 bg-black md:min-w-[500px] xl:w-1/3">
                     <SatelliteSelector />
                     <SatelliteDataHome />
-                    {homePage ? (
-                        <Link
-                            href={"/globe"}
-                            className="invisible m-4 sm:visible"
-                        >
-                            <Button>Fullscreen</Button>
-                        </Link>
-                    ) : (
-                        <Link href={"/"} className="invisible m-4 sm:visible">
-                            <Button>Out of Fullscreen</Button>
-                        </Link>
-                    )}
                 </div>
 
                 <div className="relative z-0 h-full w-full grow overflow-x-hidden border-b-2 border-l-2 border-r-2 border-t-0 border-gray-600 bg-black sm:border-l-0 sm:border-t-2 xl:w-2/3">
