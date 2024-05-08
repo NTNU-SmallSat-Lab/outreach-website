@@ -3,10 +3,12 @@ import FeaturedProjects from "./_homeComponents/FeaturedProjects";
 import MissionStatement from "./_homeComponents/MissionStatement";
 import FeaturedImage from "./_homeComponents/FeaturedImage";
 import GlobeWithStats from "./_homeComponents/GlobeWithStats";
+import ScrollIndicator from "./_homeComponents/ScrollIndicator";
 
 export default async function Home() {
     return (
-        <div>
+        <>
+            <ScrollIndicator></ScrollIndicator>
             {/* Globe */}
             <div className="snap-end">
                 <GlobeWithStats />
@@ -24,6 +26,6 @@ export default async function Home() {
 
             {/* Featured image */}
             <FeaturedImage />
-        </div>
+        </>
     );
 }
