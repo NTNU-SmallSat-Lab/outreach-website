@@ -14,7 +14,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             {...props}
             className={`flex min-h-svh w-full flex-col items-center justify-center ${className}`}
         >
-            <h1 className="text-center  text-5xl font-bold sm:text-7xl md:text-8xl">
+            <h1 className="mb-4  text-center text-5xl font-bold sm:text-7xl md:text-8xl">
                 {title}
             </h1>
             <div className="prose prose-invert flex flex-col items-center space-y-4 text-center">
