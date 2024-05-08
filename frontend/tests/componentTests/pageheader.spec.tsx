@@ -3,7 +3,7 @@ import {
     PageHeader,
     PageHeaderAndSubtitle,
     PageSubtitle,
-} from "@/components/PageHeader";
+} from "@/components/layout/PageHeader";
 
 // Mock data
 const headerText = "Welcome to our Page";

@@ -1,6 +1,6 @@
 // Import necessary dependencies
 import { test, expect } from "@playwright/experimental-ct-react";
-import ShareButtons from "@/components/ShareButtons";
+import ShareButtons from "@/app/blog/[articleSlug]/ShareButtons";
 
 // Define the test
 test("Check ShareButtons component", async ({ mount }) => {

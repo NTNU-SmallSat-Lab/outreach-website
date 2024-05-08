@@ -1,4 +1,4 @@
-import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
+import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
 import { test, expect } from "@playwright/experimental-ct-react";
 
 test("should work", async ({ mount }) => {

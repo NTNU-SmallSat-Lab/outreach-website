@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/experimental-ct-react";
-import { SlicePreviewText } from "@/components/SlicePreviewText";
+import { slicePreviewText } from "@/lib/SlicePreviewText";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 
 test("Check SlicePreviewText function", async () => {
@@ -44,7 +44,7 @@ test("Check SlicePreviewText function", async () => {
         },
     ];
 
-    const slicedText = SlicePreviewText(mockContent);
+    const slicedText = slicePreviewText(mockContent);
 
     // Assert that the sliced text contains the expected content
     expect(slicedText).toContain(
