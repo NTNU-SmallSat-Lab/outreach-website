@@ -16,7 +16,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Small Satellite Lab",
-    description: "NTNU Small Satellite Lab",
+    description:
+        "NTNU Organization with a focus in small satellite systems, hyperspectral cameras, AI for space, and advanced communications. Pushing the boundaries of space technology from our university lab.",
     verification: {
         google: "JTCGP84XF7D1ZdhzYT6JkJ1vYX7WZru_1Wsw7Ax13fU",
     },
