@@ -17,6 +17,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "Small Satellite Lab",
     description: "NTNU Small Satellite Lab",
+    verification: {
+        google: "JTCGP84XF7D1ZdhzYT6JkJ1vYX7WZru_1Wsw7Ax13fU",
+    },
 };
 
 import ErrorBoundaryNavigation from "@/components/layout/ErrorBoundaryNavigation";
