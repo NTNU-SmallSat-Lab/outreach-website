@@ -2,6 +2,7 @@ import fetchFeaturedProjects from "@/lib/data/fetchFeaturedProjects";
 import Link from "next/link";
 import { Button } from "@components/shadcn/button";
 import CardWithContent from "@components/shared/CardWithContent";
+import { PagePaddingOnlyHorizontal } from "@/components/layout/PageLayout";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
@@ -23,8 +24,8 @@ export default async function FeaturedProjects() {
     }
 
     return (
-        <>
-            <div className="flex w-full flex-col justify-center gap-2 py-12 sm:px-52">
+        <PagePaddingOnlyHorizontal>
+            <div className="mb-16 flex w-full flex-col justify-center gap-2">
                 <div className="flex w-full flex-col items-center p-4 pt-0 text-center sm:items-start sm:text-left">
                     <div className="prose prose-invert">
                         <h1>
@@ -39,8 +40,7 @@ export default async function FeaturedProjects() {
                         </p>
                     </div>
                 </div>
-
-                <div className="mt-8 flex w-full flex-col px-8 sm:px-0">
+                <div className="mt-8 flex w-full flex-col">
                     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
                         {threeProjects.map((project, index) => {
                             if (!project?.data?.attributes?.title) {
@@ -60,12 +60,12 @@ export default async function FeaturedProjects() {
                         })}
                     </div>
                 </div>
-                <Link href={"/projects"} className="mt-0">
-                    <Button variant={"link"} size={"link"} className="mt-0">
-                        View all projects
-                    </Button>
-                </Link>
+                <div className="mt-4 flex flex-col items-center justify-center">
+                    <Link href={"/projects"} className="mt-0">
+                        <Button className="mt-0">View all projects</Button>
+                    </Link>
+                </div>
             </div>
-        </>
+        </PagePaddingOnlyHorizontal>
     );
 }

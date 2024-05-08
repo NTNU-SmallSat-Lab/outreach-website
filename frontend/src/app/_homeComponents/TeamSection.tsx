@@ -48,9 +48,9 @@ export default async function TeamSection() {
     const imageUrl = STRAPI_URL! + teamAttributes.image?.data?.attributes?.url;
 
     return (
-        <>
-            <div className="flex w-full flex-col justify-center bg-black bg-opacity-50 px-8 py-12 sm:flex-row sm:px-52">
-                <div className="flex w-full flex-col p-4 sm:w-1/2">
+        <div className="flex w-full flex-col items-center justify-center bg-black bg-opacity-50 py-12">
+            <div className=" flex max-w-6xl flex-col justify-center px-8 md:flex-row md:px-10">
+                <div className="flex w-full flex-col p-4">
                     <Image
                         alt={teamAttributes.title || ""}
                         src={imageUrl}
@@ -60,18 +60,18 @@ export default async function TeamSection() {
                         className="w-full object-cover sm:max-h-[50vh]"
                     />
                 </div>
-                <div className="prose prose-invert flex w-full flex-col p-4 text-center sm:w-1/2 sm:text-left">
+                <div className="prose prose-invert flex w-full flex-col p-4 text-center md:text-left">
                     <h1>{teamAttributes.title}</h1>
                     {teamAttributes.text &&
                         teamAttributes.text
                             .split("\n")
                             .map((paragraph, index) => (
-                                <p key={index} className="mb-0">
+                                <p key={index} className="">
                                     {paragraph}
                                 </p>
                             ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 }

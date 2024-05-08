@@ -9,6 +9,16 @@ function PagePadding({ children }: { children: React.ReactNode }) {
     );
 }
 
+function PagePaddingOnlyHorizontal({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <div className="mx-auto w-full max-w-6xl px-8 md:px-10">{children}</div>
+    );
+}
+
 // Used for pages that require a colored transparent background
 function PageColoredBackground({ children }: { children: React.ReactNode }) {
     return (
@@ -18,4 +28,4 @@ function PageColoredBackground({ children }: { children: React.ReactNode }) {
     );
 }
 
-export { PageColoredBackground, PagePadding };
+export { PageColoredBackground, PagePadding, PagePaddingOnlyHorizontal };

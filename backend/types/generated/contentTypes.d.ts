@@ -885,6 +885,7 @@ export interface ApiFeaturedImageFeaturedImage extends Schema.SingleType {
       'api::satellite.satellite'
     >;
     description: Attribute.String;
+    title: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

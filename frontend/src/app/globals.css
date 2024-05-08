@@ -60,8 +60,9 @@
 
     body {
         @apply bg-background text-foreground;
-        overflow-x: hidden;
-        /* Prevent horizontal scrolling */
-        width: 100%;
+    }
+
+    html {
+        @apply snap-y snap-proximity;
     }
 }

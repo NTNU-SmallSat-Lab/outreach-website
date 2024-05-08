@@ -10,8 +10,8 @@ export default function Footer() {
                 </div>
 
                 <div className="flex flex-1 justify-center">
-                    <div className="flex flex-col text-center">
-                        <div className="flex flex-row gap-4">
+                    <div className="flex flex-col gap-2 text-center">
+                        <div className="flex flex-wrap justify-center gap-x-4">
                             <a
                                 href="https://www.x.com/NTNU"
                                 className="hover:underline"
@@ -36,12 +36,6 @@ export default function Footer() {
                             >
                                 Youtube
                             </a>
-                            <a
-                                href="mailto:roger.birkeland@ntnu.no"
-                                className="hover:underline"
-                            >
-                                Contact
-                            </a>
                         </div>
                         <div className="flex flex-row justify-center">
                             <a
@@ -51,7 +45,9 @@ export default function Footer() {
                                 Admin panel
                             </a>
                         </div>
-                        <p>&copy; 2021 NTNU Small Satellite Lab</p>
+                        <p className="hidden lg:inline">
+                            &copy; 2021 NTNU Small Satellite Lab
+                        </p>
                     </div>
                 </div>
 
@@ -60,6 +56,9 @@ export default function Footer() {
                         <span className="">NTNU Small Satellite Lab</span>
                         <span className="">Trondheim, Norway</span>
                         <p>Norwegian University of Science and Technology</p>
+                        <p className="lg:hidden">
+                            &copy; 2021 NTNU Small Satellite Lab
+                        </p>
                     </div>
                 </div>
             </div>
