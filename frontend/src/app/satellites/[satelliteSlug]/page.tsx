@@ -46,9 +46,15 @@ export default async function SatelliteInfoPage({
 
     if (!satelliteInfo) return <div>Loading...</div>;
 
+    console.log(satelliteInfo);
+
     let imageURL = undefined;
     if (STRAPI_URL && satelliteInfo.satelliteImage) {
         imageURL = STRAPI_URL + satelliteInfo.satelliteImage;
+    }
+
+    if (Number.isNaN(satelliteInfo.noradId)) {
+        return <div className="flex justify-center">Satellite not found</div>;
     }
 
     return (

@@ -64,9 +64,10 @@ export default async function Page({
         graphqlData.data === null ||
         graphqlData.data === undefined ||
         graphqlData.data.articles === undefined ||
-        graphqlData.data.articles === null
+        graphqlData.data.articles === null ||
+        graphqlData.data.articles.data.length === 0
     ) {
-        return <div>Article not found</div>;
+        return <div className="flex justify-center">Article not found</div>;
     }
     let avatarURL =
         graphqlData.data.articles?.data[0]?.attributes?.author?.data?.attributes
