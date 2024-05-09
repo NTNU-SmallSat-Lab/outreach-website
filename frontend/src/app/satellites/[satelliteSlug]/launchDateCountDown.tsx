@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from "react";
 
 type LaunchDateCountDownProps = {
-    launchDateString: string | undefined;
+    launchDate: string | Date | undefined;
 };
 
 const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
-    launchDateString,
+    launchDate: launchDateString,
 }) => {
     const [displayTime, setDisplayTime] = useState<string[]>([
         "0 days",

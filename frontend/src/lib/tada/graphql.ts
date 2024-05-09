@@ -6,6 +6,7 @@ export const graphql = initGraphQLTada<{
     scalars: {
         JSON: any;
         Date: Date | string;
+        DateTime: Date | string;
     };
 }>();
 

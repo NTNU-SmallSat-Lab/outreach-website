@@ -1,7 +1,5 @@
 import React from "react";
 import BlockRendererClient from "@/components/shared/BlockRendererClient";
-import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
-import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
 import Map2d from "@/app/satellites/[satelliteSlug]/_2dmap/Map2d";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
@@ -12,18 +10,9 @@ import {
     PageHeaderAndSubtitle,
 } from "@/components/layout/PageHeader";
 import Image from "next/image";
-import { SatelliteName, SatelliteNumber } from "@/lib/store";
-
-export interface SatelliteInfo {
-    launchDate: string | undefined;
-    name: SatelliteName;
-    content: BlocksContent;
-    relatedProjects?: ProjectOrSatellite[];
-    noradId: SatelliteNumber | undefined;
-    missionStatus: string | undefined;
-    massKg: number | undefined;
-    satelliteImage: string | undefined;
-}
+import { SatelliteNumber } from "@/lib/store";
+import { graphql } from "@/lib/tada/graphql";
+import { getClient } from "@/lib/ApolloClient";
 
 export interface ProjectOrSatellite {
     id: string;
@@ -40,57 +29,84 @@ export default async function SatelliteInfoPage({
 }: {
     params: { satelliteSlug: string };
 }) {
-    const satelliteInfo: SatelliteInfo = await fetchSatelliteInfo({
-        params: params,
+    const graphqlData = await getClient().query({
+        query: GET_SATELLITE_INFO,
+        variables: {
+            filters: {
+                slug: {
+                    eq: params.satelliteSlug,
+                },
+            },
+        },
     });
 
-    if (!satelliteInfo) return <div>Loading...</div>;
+    // Map all related projects
+    let relatedProjects: ProjectOrSatellite[] = [];
+    graphqlData?.data?.satellites?.data[0]?.attributes?.projects?.data.map(
+        (project: any) => {
+            relatedProjects.push({
+                id: project.id,
+                title: project.attributes?.title,
+                previewImage:
+                    project.attributes?.previewImage?.data?.attributes?.url,
+                slug: project.attributes?.slug,
+                isProject: true,
+            });
+        },
+    );
 
-    console.log(satelliteInfo);
+    // Get the satellite attributes
+    let satAttributes = graphqlData?.data?.satellites?.data[0]?.attributes;
 
-    let imageURL = undefined;
-    if (STRAPI_URL && satelliteInfo.satelliteImage) {
-        imageURL = STRAPI_URL + satelliteInfo.satelliteImage;
+    // If the satellite is not found return a message
+    if (!satAttributes?.catalogNumberNORAD) {
+        return <div className="flex justify-center">Satellite not found</div>;
     }
 
-    if (Number.isNaN(satelliteInfo.noradId)) {
-        return <div className="flex justify-center">Satellite not found</div>;
+    // Get the NORAD ID
+    let noradId = Number(satAttributes?.catalogNumberNORAD) as SatelliteNumber;
+
+    // Get the satellite image
+    let satelliteImage = satAttributes?.satelliteImage?.data?.attributes?.url;
+    let imageURL = undefined;
+    if (STRAPI_URL && satelliteImage) {
+        imageURL = STRAPI_URL + satelliteImage;
     }
 
     return (
         <>
             <div className="flex flex-col items-center">
                 <PageHeaderAndSubtitle>
-                    <PageHeader>{satelliteInfo.name}</PageHeader>
+                    <PageHeader>{satAttributes?.name}</PageHeader>
                     <PageSubtitle>
-                        {satelliteInfo.missionStatus
-                            ? "Mission Status: " + satelliteInfo.missionStatus
+                        {satAttributes?.missionStatus
+                            ? "Mission Status: " + satAttributes?.missionStatus
                             : null}
                     </PageSubtitle>
                 </PageHeaderAndSubtitle>
 
                 {/* Container for satname, stats and sat image */}
-                {satelliteInfo.noradId ? (
+                {noradId ? (
                     <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
                         {/* Stats Container */}
                         <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
                             <div className="border-b border-gray-600 bg-black p-5">
-                                {satelliteInfo.noradId ? (
+                                {noradId ? (
                                     <div className="flex flex-row">
                                         <p>NORAD ID: </p>
                                         <a
-                                            href={`https://www.n2yo.com/satellite/?s=${satelliteInfo.noradId}`}
+                                            href={`https://www.n2yo.com/satellite/?s=${noradId}`}
                                             target="_blank"
                                             className="ml-2 underline"
                                         >
-                                            {satelliteInfo.noradId}
+                                            {noradId}
                                         </a>
                                     </div>
                                 ) : null}
                                 <p className="text-gray-400">
-                                    {satelliteInfo.massKg
+                                    {satAttributes?.massKg
                                         ? "Mass: " +
-                                          satelliteInfo.massKg +
+                                          satAttributes?.massKg +
                                           " kg"
                                         : null}
                                 </p>
@@ -105,7 +121,7 @@ export default async function SatelliteInfoPage({
                                 {imageURL ? (
                                     <Image
                                         src={imageURL}
-                                        alt={satelliteInfo.name}
+                                        alt={satAttributes?.name ?? ""}
                                         width={1600} // Set according to the aspect ratio of the image
                                         height={0}
                                         className="p-2"
@@ -117,36 +133,36 @@ export default async function SatelliteInfoPage({
                 ) : null}
 
                 {/* Container for launch date */}
-                {satelliteInfo.launchDate ? (
+                {satAttributes?.launchDate ? (
                     <div className="w-full">
                         <LaunchDateCountDown
-                            launchDateString={satelliteInfo.launchDate}
+                            launchDate={satAttributes?.launchDate}
                         ></LaunchDateCountDown>
                     </div>
                 ) : null}
 
                 {/* Container for map */}
-                {satelliteInfo.noradId ? (
+                {noradId ? (
                     <div className="mt-6 w-full">
-                        <Map2d satNum={satelliteInfo.noradId} />
+                        <Map2d satNum={noradId} />
                     </div>
                 ) : null}
 
                 {/* Container for body content */}
                 <div className="mt-6 px-4 sm:px-0">
-                    <BlockRendererClient content={satelliteInfo.content} />
+                    <BlockRendererClient content={satAttributes?.content} />
                 </div>
             </div>
 
             {/* Related projects */}
             <div className="mt-8 flex w-full flex-col items-center">
-                {satelliteInfo.relatedProjects?.length != 0 ? (
+                {relatedProjects?.length != 0 ? (
                     <>
                         <div className="prose prose-invert mb-1 lg:prose-xl">
                             <h3>Related Projects</h3>
                         </div>
                         <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
-                            {satelliteInfo.relatedProjects?.map(
+                            {relatedProjects?.map(
                                 (project: ProjectOrSatellite) => (
                                     <RelatedProjectsAndSatellites
                                         project={project}
@@ -161,3 +177,44 @@ export default async function SatelliteInfoPage({
         </>
     );
 }
+
+const GET_SATELLITE_INFO = graphql(`
+    query GET_SATELLITE_INFO($filters: SatelliteFiltersInput) {
+        satellites(filters: $filters) {
+            data {
+                id
+                attributes {
+                    catalogNumberNORAD
+                    content
+                    name
+                    massKg
+                    missionStatus
+                    satelliteImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    projects {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                                slug
+                            }
+                            id
+                        }
+                    }
+                    launchDate
+                }
+            }
+        }
+    }
+`);
