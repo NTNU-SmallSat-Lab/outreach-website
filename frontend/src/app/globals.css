@@ -61,8 +61,4 @@
     body {
         @apply bg-background text-foreground;
     }
-
-    html {
-        @apply snap-y snap-proximity;
-    }
 }

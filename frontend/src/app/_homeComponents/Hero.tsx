@@ -16,7 +16,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         <div
             ref={ref}
             {...props}
-            className={`flex min-h-svh w-full flex-col items-center justify-center ${className}`}
+            className={`flex min-h-dvh w-full flex-col items-center justify-center ${className}`}
         >
             <h1 className="mb-4  text-center text-5xl font-bold sm:text-7xl md:text-8xl">
                 {title}
