@@ -32,7 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // fetch satellite names and id to be set in the store in the navbar
+    // fetch satellite names and id to be set in the store
     const satellites = await fetchSatelliteNamesAndId();
     let satData: SatelliteEntry[] = [];
 

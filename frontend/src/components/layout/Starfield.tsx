@@ -9,6 +9,7 @@ interface Props {
     starCount?: number;
 }
 
+// Creates a canvas with moving stars. Used as our background
 export default function Starfield(props: Props) {
     const {
         speedFactor = 0.05,
