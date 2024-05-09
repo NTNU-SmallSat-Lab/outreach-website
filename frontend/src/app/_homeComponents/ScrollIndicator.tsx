@@ -1,7 +1,6 @@
 "use client";
 import { motion, useScroll } from "framer-motion";
 import React, { useEffect, useRef } from "react";
-import React, { useEffect, useRef } from "react";
 import type { SVGProps } from "react";
 import { inView } from "framer-motion";
 
