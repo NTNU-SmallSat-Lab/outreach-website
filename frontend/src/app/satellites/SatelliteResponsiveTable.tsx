@@ -14,12 +14,22 @@ import {
     TableCell,
 } from "@/components/shadcn/table";
 import { useRouter } from "next/navigation";
+import { SatellitesResult } from "./page";
+import { SatelliteName, SatelliteNumber } from "@/lib/store";
 
+/**
+ * Renders a table displaying satellite information that updates continuously.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array} props.satellites - The array of satellite objects to display.
+ * @param {boolean} props.inOrbit - Indicates whether the satellites are in orbit or not.
+ * @returns {JSX.Element} The rendered SatelliteResponsiveTable component.
+ */
 export default function SatelliteResponsiveTable({
     satellites,
     inOrbit,
 }: {
-    satellites: any;
+    satellites: SatellitesResult | undefined;
     inOrbit: boolean;
 }) {
     const router = useRouter();
@@ -66,33 +76,43 @@ export default function SatelliteResponsiveTable({
                         )}
                     </TableRow>
                 </TableHeader>
-                <TableBody className="">
+                <TableBody>
                     {inOrbit
-                        ? satellites.map((satellite: any) => (
+                        ? (satellites ?? []).map((satellite) => (
                               <SatelliteStatsTableRow
-                                  key={satellite.attributes.catalogNumberNORAD}
-                                  satName={satellite.attributes.name}
+                                  key={satellite.attributes?.catalogNumberNORAD}
+                                  satName={
+                                      satellite.attributes
+                                          ?.name as SatelliteName
+                                  }
                                   satNum={
-                                      satellite.attributes.catalogNumberNORAD
+                                      Number(
+                                          satellite.attributes
+                                              ?.catalogNumberNORAD,
+                                      ) as SatelliteNumber
                                   }
                                   handleRowClick={() =>
-                                      handleRowClick(satellite.attributes.slug)
+                                      handleRowClick(
+                                          satellite.attributes?.slug ?? "",
+                                      )
                                   }
                               />
                           ))
-                        : satellites.map((satellite: any) => (
+                        : (satellites ?? []).map((satellite) => (
                               <TableRow
                                   className="cursor-pointer hover:bg-white hover:text-black"
-                                  key={satellite.attributes.catalogNumberNORAD}
+                                  key={satellite.attributes?.catalogNumberNORAD}
                                   onClick={() =>
-                                      handleRowClick(satellite.attributes.slug)
+                                      handleRowClick(
+                                          satellite.attributes?.slug ?? "",
+                                      )
                                   }
                               >
                                   <TableCell className="px-6">
-                                      {satellite.attributes.name}
+                                      {satellite.attributes?.name}
                                   </TableCell>
                                   <TableCell>
-                                      {satellite.attributes.missionStatus
+                                      {satellite.attributes?.missionStatus
                                           ? satellite.attributes.missionStatus
                                           : "Unknown"}
                                   </TableCell>

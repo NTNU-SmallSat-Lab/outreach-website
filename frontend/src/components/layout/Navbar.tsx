@@ -13,6 +13,10 @@ import Image from "next/image";
 
 import type { SVGProps } from "react";
 
+/**
+ * The Navbar component displays the navigation bar at the top of the page.
+ * It includes a logo, a drawer for smaller screens, and navigation links.
+ */
 export default function Navbar() {
     const pathname = usePathname();
     const getButtonVariant = (path: string) => {

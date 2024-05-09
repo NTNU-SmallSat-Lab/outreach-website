@@ -10,35 +10,11 @@ import { graphql } from "@/lib/tada/graphql";
 import CardGrid from "@/components/shared/CardGrid";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_PROJECTS = graphql(`
-    query GET_PROJECTS {
-        projects(sort: ["publishedAt:desc"]) {
-            data {
-                id
-                attributes {
-                    title
-                    content
-                    satellites {
-                        data {
-                            attributes {
-                                catalogNumberNORAD
-                            }
-                        }
-                    }
-                    slug
-                    previewImage {
-                        data {
-                            attributes {
-                                url
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-`);
-
+/**
+ * Renders the Projects page.
+ * Retrieves project data from the GraphQL API and displays it in a grid of cards.
+ * If there are no projects to show, a message is displayed instead.
+ */
 export default async function ProjectsPage() {
     const graphqlData = await getClient().query({
         query: GET_PROJECTS,
@@ -92,3 +68,32 @@ export default async function ProjectsPage() {
         </div>
     );
 }
+
+const GET_PROJECTS = graphql(`
+    query GET_PROJECTS {
+        projects(sort: ["publishedAt:desc"]) {
+            data {
+                id
+                attributes {
+                    title
+                    content
+                    satellites {
+                        data {
+                            attributes {
+                                catalogNumberNORAD
+                            }
+                        }
+                    }
+                    slug
+                    previewImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`);

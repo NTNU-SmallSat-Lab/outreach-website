@@ -1,6 +1,10 @@
 import { env } from "process";
 import NTNULogo from "./NTNULogo";
 
+/**
+ * The footer component at the bottom of the page.
+ * It includes the NTNU logo, social media links, and contact information.
+ */
 export default function Footer() {
     return (
         <footer className="flex flex-col items-center border-t bg-background p-4 text-foreground">
