@@ -28,7 +28,6 @@
         "@radix-ui/react-separator": "^1.0.3",
         "@radix-ui/react-slot": "^1.0.2",
         "@strapi/blocks-react-renderer": "^1.0.0",
-        "@strapi/strapi": "^4.24.1",
         "@turf/boolean-point-in-polygon": "^6.5.0",
         "@turf/helpers": "^6.5.0",
         "@turf/nearest-point-to-line": "^6.5.0",
