@@ -1,6 +1,7 @@
 import { getClient } from "@/lib/ApolloClient";
 import SatelliteResponsiveTable from "./SatelliteResponsiveTable";
 import { graphql } from "@/lib/tada/graphql";
+import { ResultOf } from "@/lib/tada/graphql";
 
 const GET_SATELLITES = graphql(`
     query GET_SATELLITES {
@@ -11,12 +12,24 @@ const GET_SATELLITES = graphql(`
                     catalogNumberNORAD
                     name
                     slug
+                    missionStatus
                 }
             }
         }
     }
 `);
 
+// Type for the result of the GET_SATELLITES query
+// Used in SateliteResponsiveTable.tsx
+export type SatellitesResult = NonNullable<
+    ResultOf<typeof GET_SATELLITES>["satellites"]
+>["data"];
+
+/**
+ * Renders the Satellites page.
+ * This page fetches satellite data from the server and displays it in two tables:
+ * one for satellites in orbit and another for satellites not in orbit.
+ */
 export default async function Satellites() {
     try {
         const graphqlData = await getClient().query({
@@ -27,13 +40,18 @@ export default async function Satellites() {
             (data) => data.attributes?.catalogNumberNORAD == null,
         );
 
+        let satellitesInOrbit = graphqlData.data.satellites?.data.filter(
+            (data) => data.attributes?.catalogNumberNORAD !== null,
+        );
+        let satellitesNotInOrbit = graphqlData.data.satellites?.data.filter(
+            (data) => data.attributes?.catalogNumberNORAD == null,
+        );
+
         return (
             <>
                 {/* Table for satellites in orbit */}
                 <SatelliteResponsiveTable
-                    satellites={graphqlData.data.satellites?.data.filter(
-                        (data) => data.attributes?.catalogNumberNORAD !== null,
-                    )}
+                    satellites={satellitesInOrbit}
                     inOrbit={true}
                 ></SatelliteResponsiveTable>
 
@@ -42,10 +60,7 @@ export default async function Satellites() {
                 {/* Table for satellites not in orbit */}
                 {noNoradIdArray != undefined && noNoradIdArray.length > 0 ? (
                     <SatelliteResponsiveTable
-                        satellites={graphqlData.data.satellites?.data.filter(
-                            (data) =>
-                                data.attributes?.catalogNumberNORAD == null,
-                        )}
+                        satellites={satellitesNotInOrbit}
                         inOrbit={false}
                     ></SatelliteResponsiveTable>
                 ) : null}

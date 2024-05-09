@@ -2,11 +2,18 @@
 import React, { useState, useEffect } from "react";
 
 type LaunchDateCountDownProps = {
-    launchDateString: string | undefined;
+    launchDate: string | Date | undefined;
 };
 
+/**
+ * Countdown component that displays the time remaining until a launch date or the time since a launch has occurred.
+ *
+ * @component
+ * @param {string} props.launchDate - The launch date in string format.
+ * @returns {JSX.Element} - The countdown component.
+ */
 const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
-    launchDateString,
+    launchDate: launchDateString,
 }) => {
     const [displayTime, setDisplayTime] = useState<string[]>([
         "0 days",

@@ -4,6 +4,13 @@ import { Button } from "../../components/shadcn/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders a set of buttons for filtering blog posts.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - The CSS class names for the component.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function BlogpageButtons({ className }: { className?: string }) {
     const [activeButton, setActiveButton] = useState("All Posts");
     const router = useRouter();

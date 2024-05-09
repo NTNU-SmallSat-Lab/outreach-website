@@ -7,6 +7,16 @@ import type { SatelliteNumber, SatelliteName } from "@/lib/store";
 
 const updateInterval = 50;
 
+/**
+ * Represents a table row displaying satellite statistics.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {SatelliteName} props.satName - The name of the satellite.
+ * @param {SatelliteNumber} props.satNum - The number of the satellite.
+ * @param {Function} props.handleRowClick - The callback function to handle row click event.
+ * @returns {JSX.Element} The rendered table row component.
+ */
 export default function SatelliteStatsTableRow({
     satName,
     satNum,

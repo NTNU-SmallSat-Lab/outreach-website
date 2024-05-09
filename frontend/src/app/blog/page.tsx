@@ -5,69 +5,23 @@ import {
     PageSubtitle,
     PageHeader,
 } from "@/components/layout/PageHeader";
-
 import { PagePadding } from "@/components/layout/PageLayout";
 import React from "react";
 import { getClient } from "@/lib/ApolloClient";
 import { ResultOf, graphql } from "@/lib/tada/graphql";
 
+// Type for the result of the GET_ARTICLES query
+// Used in BlogDataCards.tsx
 type articlesFetchType = ResultOf<typeof GET_ARTICLES>;
 export type ArticlesDataType = NonNullable<
     articlesFetchType["articles"]
 >["data"];
 
-const GET_ARTICLES = graphql(`
-    query GET_ARTICLES(
-        $pagination: PaginationArg
-        $filters: ArticleFiltersInput
-    ) {
-        articles(
-            sort: ["datePublished:desc"]
-            pagination: $pagination
-            filters: $filters
-        ) {
-            data {
-                id
-                attributes {
-                    author {
-                        data {
-                            attributes {
-                                name
-                                avatar {
-                                    data {
-                                        attributes {
-                                            url
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    previewTitle
-                    datePublished
-                    body
-                    coverImage {
-                        data {
-                            attributes {
-                                url
-                            }
-                        }
-                    }
-                    createdAt
-                    publishedAt
-                    slug
-                    Tag
-                }
-            }
-            meta {
-                pagination {
-                    total
-                }
-            }
-        }
-    }
-`);
-
+/**
+ * Renders the Blog page.
+ * Retrieves blog posts from the GraphQL API and displays them in a grid of cards.
+ * If there are no blog posts to show, a message is displayed instead.
+ */
 export default async function BlogPage({
     searchParams,
 }: {
@@ -125,3 +79,55 @@ export default async function BlogPage({
         </>
     );
 }
+
+const GET_ARTICLES = graphql(`
+    query GET_ARTICLES(
+        $pagination: PaginationArg
+        $filters: ArticleFiltersInput
+    ) {
+        articles(
+            sort: ["datePublished:desc"]
+            pagination: $pagination
+            filters: $filters
+        ) {
+            data {
+                id
+                attributes {
+                    author {
+                        data {
+                            attributes {
+                                name
+                                avatar {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    previewTitle
+                    datePublished
+                    body
+                    coverImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    createdAt
+                    publishedAt
+                    slug
+                    Tag
+                }
+            }
+            meta {
+                pagination {
+                    total
+                }
+            }
+        }
+    }
+`);

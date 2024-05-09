@@ -21,6 +21,10 @@ interface SatelliteNameAndNum {
     num: SatelliteNumber;
 }
 
+/**
+ * Fetches satellite names and IDs from the server. Used in the root Layout to fetch all satellite data
+ * @returns A promise that resolves to an array of `SatelliteNameAndNum` objects.
+ */
 export default async function fetchSatelliteNamesAndId(): Promise<
     SatelliteNameAndNum[]
 > {

@@ -17,6 +17,11 @@ interface initpostype {
     satNumber: number;
 }
 
+/**
+ * Renders a 3D globe with satellite positions and allows interaction with the satellites.
+ * Uses the globe.gl library to render the globe and satellites.
+ * https://github.com/vasturiano/globe.gl
+ */
 export default function SatelliteGlobe() {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
@@ -30,6 +35,7 @@ export default function SatelliteGlobe() {
     // Initialize the globe
     useEffect(() => {
         if (chart.current && !globeRef.current) {
+            // Create the globe instance
             globeRef.current = Globe()(chart.current)
                 .globeImageUrl("/images/earth-blue-marble.jpg")
                 .backgroundImageUrl("/images/night-sky.png")
@@ -57,6 +63,7 @@ export default function SatelliteGlobe() {
                 }
             });
 
+            // Enable globe controls
             globeRef.current.controls().enabled = true;
             globeRef.current.controls().enableZoom = false;
             globeRef.current.controls().enablePan = false;

@@ -4,23 +4,9 @@ import React, { useEffect, useRef } from "react";
 import type { SVGProps } from "react";
 import { inView } from "framer-motion";
 
-export function UiwDown(props: SVGProps<SVGSVGElement>) {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1em"
-            height="1em"
-            viewBox="0 0 20 20"
-            {...props}
-        >
-            <path
-                fill="currentColor"
-                d="M10.103 12.778L16.81 6.08a.69.69 0 0 1 .99.012a.726.726 0 0 1-.012 1.012l-7.203 7.193a.69.69 0 0 1-.985-.006L2.205 6.72a.727.727 0 0 1 0-1.01a.69.69 0 0 1 .99 0z"
-            ></path>
-        </svg>
-    );
-}
-
+/**
+ * Renders a arrow pointing down to indicate that the user can scroll down.
+ */
 export default function ScrollIndicator() {
     const ref = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -55,5 +41,22 @@ export default function ScrollIndicator() {
                 }
             />
         </motion.div>
+    );
+}
+
+export function UiwDown(props: SVGProps<SVGSVGElement>) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 20 20"
+            {...props}
+        >
+            <path
+                fill="currentColor"
+                d="M10.103 12.778L16.81 6.08a.69.69 0 0 1 .99.012a.726.726 0 0 1-.012 1.012l-7.203 7.193a.69.69 0 0 1-.985-.006L2.205 6.72a.727.727 0 0 1 0-1.01a.69.69 0 0 1 .99 0z"
+            ></path>
+        </svg>
     );
 }

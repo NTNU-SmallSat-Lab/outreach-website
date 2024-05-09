@@ -6,6 +6,12 @@ import {
     type BlocksContent,
 } from "@strapi/blocks-react-renderer";
 
+/**
+ * Renders Strapi rich text blocks
+ *
+ * @param content - The content blocks to render.
+ * @returns The rendered content blocks.
+ */
 export default function BlockRendererClient({
     content,
 }: {

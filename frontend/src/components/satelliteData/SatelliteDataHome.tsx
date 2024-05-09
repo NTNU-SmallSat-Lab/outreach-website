@@ -4,8 +4,12 @@ import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
 import { useSatelliteStore } from "@/lib/store";
 import { flag } from "country-emoji";
 
-const updateInterval = 50;
+const updateInterval = 50; // in ms
 
+/**
+ * Renders the SatelliteDataHome component.
+ * This component displays information about a selected satellite, such as velocity, altitude, latitude, longitude, and country.
+ */
 export default function SatelliteDataHome() {
     const { selectedSatellite, satNumToEntry } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(

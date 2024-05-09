@@ -7,6 +7,9 @@ import Footer from "@/components/layout/Footer";
 import React from "react";
 import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
 import InitializeZustandWithSatEntries from "@/components/satelliteData/SatelliteInitialFetch";
+import ErrorBoundaryNavigation from "@/components/layout/ErrorBoundaryNavigation";
+import Starfield from "@/components/layout/Starfield";
+import { SatelliteEntry } from "@/lib/store";
 
 // imports to get satellites from strapi and fetch the data serverside
 import fetchSatelliteNamesAndId from "@/lib/data/fetchSatelliteNamesAndId";
@@ -23,16 +26,12 @@ export const metadata: Metadata = {
     },
 };
 
-import ErrorBoundaryNavigation from "@/components/layout/ErrorBoundaryNavigation";
-import Starfield from "@/components/layout/Starfield";
-import { SatelliteEntry } from "@/lib/store";
-
 export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // fetch satellite names and id to be set in the store in the navbar
+    // fetch satellite names and id to be set in the store
     const satellites = await fetchSatelliteNamesAndId();
     let satData: SatelliteEntry[] = [];
 

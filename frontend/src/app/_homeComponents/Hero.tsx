@@ -7,6 +7,10 @@ interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;
 }
 
+/**
+ * Represents a Hero component that displays a title, description, and optional image.
+ * Spans the whole height of the viewport.
+ */
 const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     ({ title, description, imageUrl, className, children, ...props }, ref) => (
         <div

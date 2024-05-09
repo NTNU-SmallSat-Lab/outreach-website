@@ -7,6 +7,10 @@ const SatelliteGlobeNoSSR = dynamic(() => import("./SatelliteGlobe"), {
     ssr: false,
 });
 
+/**
+ * Renders a 3D Globe with statistics next to it.
+ * Allows the user to select a satellite to view.
+ */
 export default function GlobeWithStats() {
     return (
         <>

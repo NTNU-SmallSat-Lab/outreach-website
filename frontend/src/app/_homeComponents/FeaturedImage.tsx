@@ -5,34 +5,10 @@ import { getClient } from "@/lib/ApolloClient";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_FEATURED_IMAGE = graphql(`
-    query FeaturedImage {
-        featuredImage {
-            data {
-                attributes {
-                    description
-                    featuredImage {
-                        data {
-                            attributes {
-                                url
-                            }
-                        }
-                    }
-                    satellite {
-                        data {
-                            attributes {
-                                name
-                                slug
-                            }
-                        }
-                    }
-                    title
-                }
-            }
-        }
-    }
-`);
-
+/**
+ * Retrieves the featured image data from the GraphQL API and renders it on the page.
+ * @returns The JSX element representing the featured image component.
+ */
 export default async function featuredImage() {
     const graphqlData = await getClient().query({
         query: GET_FEATURED_IMAGE,
@@ -85,3 +61,31 @@ export default async function featuredImage() {
         </div>
     );
 }
+
+const GET_FEATURED_IMAGE = graphql(`
+    query FeaturedImage {
+        featuredImage {
+            data {
+                attributes {
+                    description
+                    featuredImage {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                    satellite {
+                        data {
+                            attributes {
+                                name
+                                slug
+                            }
+                        }
+                    }
+                    title
+                }
+            }
+        }
+    }
+`);

@@ -1,11 +1,15 @@
-import fetchFeaturedProjects from "@/lib/data/fetchFeaturedProjects";
 import Link from "next/link";
 import { Button } from "@components/shadcn/button";
 import CardWithContent from "@components/shared/CardWithContent";
 import { PagePaddingOnlyHorizontal } from "@/components/layout/PageLayout";
+import { graphql } from "@/lib/tada/graphql";
+import { getClient } from "@lib/ApolloClient";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
+/**
+ * Displays the title and text content from Strapi, alongside three featured projects as cards.
+ */
 export default async function FeaturedProjects() {
     const featuredProjects = await fetchFeaturedProjects();
 
@@ -68,4 +72,71 @@ export default async function FeaturedProjects() {
             </div>
         </PagePaddingOnlyHorizontal>
     );
+}
+
+const GET_FEATURED_PROJECTS = graphql(`
+    query HomeFeaturedProjects {
+        homeFeaturedProjects {
+            data {
+                attributes {
+                    title
+                    textContent
+                    featuredProject1 {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                                slug
+                            }
+                        }
+                    }
+                    featuredProject2 {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                                slug
+                            }
+                        }
+                    }
+                    featuredProject3 {
+                        data {
+                            attributes {
+                                title
+                                previewImage {
+                                    data {
+                                        attributes {
+                                            url
+                                        }
+                                    }
+                                }
+                                slug
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`);
+
+async function fetchFeaturedProjects() {
+    const client = getClient();
+    const { data } = await client.query({
+        query: GET_FEATURED_PROJECTS,
+    });
+
+    return data.homeFeaturedProjects?.data?.attributes;
 }

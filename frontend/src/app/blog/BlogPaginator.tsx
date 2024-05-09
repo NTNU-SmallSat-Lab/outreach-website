@@ -10,11 +10,18 @@ import {
 } from "../../components/shadcn/pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 
+/**
+ * Renders a pagination component for a blog page.
+ * The component allows the user to navigate between pages of blog articles.
+ *
+ * @param totalArticles - The total number of articles.
+ */
 export default function BlogPaginator({
     totalArticles,
 }: {
     totalArticles: Number;
 }) {
+    // Get the current search parameters
     const searchParams = useSearchParams();
     const router = useRouter();
     const tag = useSearchParams().get("tag");

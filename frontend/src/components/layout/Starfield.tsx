@@ -9,7 +9,19 @@ interface Props {
     starCount?: number;
 }
 
-export default function Starfield(props: Props) {
+/**
+ * Renders a starfield effect of moving stars on a canvas element.
+ * Used as our background
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {number} [props.speedFactor=0.05] - The speed factor of the starfield animation.
+ * @param {string} [props.backgroundColor="black"] - The background color of the starfield.
+ * @param {number[]} [props.starColor=[255, 255, 255]] - The color of the stars in RGB format.
+ * @param {number} [props.starCount=5000] - The number of stars to render.
+ * @returns {JSX.Element} The rendered starfield canvas.
+ */
+export default function Starfield(props: Props): React.JSX.Element {
     const {
         speedFactor = 0.05,
         backgroundColor = "black",

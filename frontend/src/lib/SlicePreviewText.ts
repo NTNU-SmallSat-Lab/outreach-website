@@ -1,5 +1,12 @@
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 
+/**
+ * Returns a preview text by slicing the content of the first paragraph block.
+ * If the text exceeds 100 characters, it appends "..." at the end.
+ *
+ * @param content - The BlocksContent to extract the preview text from.
+ * @returns The preview text.
+ */
 function slicePreviewText(content: BlocksContent): string {
     let text = "";
     for (const block of content) {
