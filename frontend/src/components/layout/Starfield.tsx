@@ -10,7 +10,7 @@ interface Props {
 }
 
 /**
- * Renders a starfield effect of moving stars on a canvas element.  
+ * Renders a starfield effect of moving stars on a canvas element.
  * Used as our background
  *
  * @component

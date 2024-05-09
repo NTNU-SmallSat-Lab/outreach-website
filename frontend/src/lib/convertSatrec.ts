@@ -125,7 +125,7 @@ export const convertSatrec = (
 
 /**
  * Predicts the future positions of a satellite based on its current state.
- * 
+ *
  * @param satrec - The satellite's state information.
  * @param projectionAmount - The number of minutes to project into the future.
  * @returns An array of future positions of the satellite.

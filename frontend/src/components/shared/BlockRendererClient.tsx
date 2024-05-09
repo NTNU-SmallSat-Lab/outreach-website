@@ -7,7 +7,7 @@ import {
 } from "@strapi/blocks-react-renderer";
 
 /**
- * Renders Strapi rich text blocks  
+ * Renders Strapi rich text blocks
  *
  * @param content - The content blocks to render.
  * @returns The rendered content blocks.
