@@ -32,7 +32,7 @@ export default function ScrollIndicator() {
             ref={ref}
             transition={{ duration: 0.3 }}
             style={{ opacity: scrollYProgress }}
-            className="absolute -bottom-3 left-1/2 z-50 text-center"
+            className="absolute -bottom-3 z-50 hidden self-center text-center md:block"
         >
             <UiwDown
                 className={

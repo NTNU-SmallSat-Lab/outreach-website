@@ -65,7 +65,7 @@ export default async function featuredImage() {
                     src={STRAPI_URL + featuredImageURL}
                     width={900}
                     height={900}
-                    className="bg-black-900 max-w-screen-xs object-contain sm:max-w-screen-sm md:max-w-screen-md "
+                    className="bg-black-900 max-w-screen-xxs object-contain sm:max-w-screen-sm md:max-w-screen-md "
                 />
 
                 {satelliteName && satelliteSlug ? (
