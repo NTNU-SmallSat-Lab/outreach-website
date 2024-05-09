@@ -20,7 +20,6 @@ interface initpostype {
 export default function SatelliteGlobe() {
     const chart = useRef<HTMLDivElement>(null);
     const globeRef = useRef<GlobeInstance>();
-    const wrapperRef = useRef<HTMLDivElement>(null);
     const { selectedSatellite, setSelectedSatellite, satNumToEntry } =
         useSatelliteStore((state) => ({
             selectedSatellite: state.selectedSatellite,
@@ -65,7 +64,7 @@ export default function SatelliteGlobe() {
 
             // lock the initial height of the globe
             const setGlobeSize = () => {
-                if (globeRef.current && chart.current && wrapperRef.current) {
+                if (globeRef.current && chart.current) {
                     const { width } = chart.current.getBoundingClientRect();
 
                     globeRef.current.width(width);
@@ -73,12 +72,12 @@ export default function SatelliteGlobe() {
                         let windowWidth = window.innerWidth;
                         let windowHeight = window.innerHeight;
 
-                        // If the window width is less than 640, disable controls
+                        // If the window width is less than 768, disable controls and set height to window height
                         if (windowWidth <= 768) {
                             globeRef.current.controls().enabled = false;
                             globeRef.current.controls().enableRotate = false;
                             globeRef.current.height(windowWidth); // Minus navbar height and stats height
-                            // Enable touch action
+                            // Set touch action to auto to allow for scrolling on mobile
                             let globeElement =
                                 globeRef.current.renderer().domElement;
                             globeElement.style.touchAction = "auto";
@@ -200,13 +199,5 @@ export default function SatelliteGlobe() {
         return () => clearInterval(intervalId);
     }, [satNumToEntry, selectedSatellite]);
 
-    return (
-        <div
-            className="h-full w-full"
-            ref={wrapperRef}
-            onTouchMove={(e) => e.stopPropagation()}
-        >
-            <div id="chart" ref={chart}></div>
-        </div>
-    );
+    return <div id="chart" ref={chart}></div>;
 }
