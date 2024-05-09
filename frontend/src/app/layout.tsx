@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import React from "react";
 import { ApolloWrapper } from "@/components/wrappers/ApolloWrapper";
-import SatelliteInitialClientFetch from "@/components/satelliteData/SatelliteInitialFetch";
+import InitializeZustandWithSatEntries from "@/components/satelliteData/SatelliteInitialFetch";
 
 // imports to get satellites from strapi and fetch the data serverside
 import fetchSatelliteNamesAndId from "@/lib/data/fetchSatelliteNamesAndId";
@@ -16,11 +16,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Small Satellite Lab",
-    description: "NTNU Small Satellite Lab",
+    description:
+        "NTNU Organization with a focus in small satellite systems, hyperspectral cameras, AI for space, and advanced communications. Pushing the boundaries of space technology from our university lab.",
+    verification: {
+        google: "JTCGP84XF7D1ZdhzYT6JkJ1vYX7WZru_1Wsw7Ax13fU",
+    },
 };
 
-import ErrorBoundaryNavigation from "@/components/ErrorBoundaryNavigation";
-import Starfield from "@/components/starBackground/Starfield";
+import ErrorBoundaryNavigation from "@/components/layout/ErrorBoundaryNavigation";
+import Starfield from "@/components/layout/Starfield";
 import { SatelliteEntry } from "@/lib/store";
 
 export default async function RootLayout({
@@ -40,9 +44,8 @@ export default async function RootLayout({
                     satData.push(entry);
                 } catch (e) {
                     console.error(
-                        "Either CelesTrak has IP banned the server, or the satellite data is not available for the provided NORAD ID: " +
-                            sat.num +
-                            ", or CelesTrak is down.",
+                        "Either CelesTrak has IP banned the server, or CelesTrak is down, or the satellite data is not available for the provided NORAD ID: " +
+                            sat.num,
                     );
                 }
             }
@@ -53,7 +56,7 @@ export default async function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={cn("flex min-h-screen flex-col", inter.className)}>
                 <ApolloWrapper>
-                    <SatelliteInitialClientFetch satData={satData} />
+                    <InitializeZustandWithSatEntries satData={satData} />
                     <Navbar />
                     <ErrorBoundaryNavigation>
                         <main className="flex grow flex-col">

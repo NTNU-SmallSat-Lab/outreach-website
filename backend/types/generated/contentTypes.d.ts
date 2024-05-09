@@ -872,6 +872,7 @@ export interface ApiFeaturedImageFeaturedImage extends Schema.SingleType {
     singularName: 'featured-image';
     pluralName: 'featured-images';
     displayName: 'featuredImage';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -883,6 +884,8 @@ export interface ApiFeaturedImageFeaturedImage extends Schema.SingleType {
       'oneToOne',
       'api::satellite.satellite'
     >;
+    description: Attribute.String;
+    title: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -906,7 +909,7 @@ export interface ApiHeroHero extends Schema.SingleType {
   info: {
     singularName: 'hero';
     pluralName: 'heroes';
-    displayName: 'Hero';
+    displayName: 'HomeTeamSection';
     description: '';
   };
   options: {
@@ -922,6 +925,85 @@ export interface ApiHeroHero extends Schema.SingleType {
     createdBy: Attribute.Relation<'api::hero.hero', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::hero.hero', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiHomeFeaturedProjectsHomeFeaturedProjects
+  extends Schema.SingleType {
+  collectionName: 'home_featured_projects_plural';
+  info: {
+    singularName: 'home-featured-projects';
+    pluralName: 'home-featured-projects-plural';
+    displayName: 'HomeFeaturedProjects';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    textContent: Attribute.Text;
+    featuredProject1: Attribute.Relation<
+      'api::home-featured-projects.home-featured-projects',
+      'oneToOne',
+      'api::project.project'
+    >;
+    featuredProject2: Attribute.Relation<
+      'api::home-featured-projects.home-featured-projects',
+      'oneToOne',
+      'api::project.project'
+    >;
+    featuredProject3: Attribute.Relation<
+      'api::home-featured-projects.home-featured-projects',
+      'oneToOne',
+      'api::project.project'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::home-featured-projects.home-featured-projects',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::home-featured-projects.home-featured-projects',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiHomeMissionStatementHomeMissionStatement
+  extends Schema.SingleType {
+  collectionName: 'home_mission_statements';
+  info: {
+    singularName: 'home-mission-statement';
+    pluralName: 'home-mission-statements';
+    displayName: 'HomeMissionStatement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    textContent: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::home-mission-statement.home-mission-statement',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::home-mission-statement.home-mission-statement',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -1031,6 +1113,8 @@ declare module '@strapi/types' {
       'api::author.author': ApiAuthorAuthor;
       'api::featured-image.featured-image': ApiFeaturedImageFeaturedImage;
       'api::hero.hero': ApiHeroHero;
+      'api::home-featured-projects.home-featured-projects': ApiHomeFeaturedProjectsHomeFeaturedProjects;
+      'api::home-mission-statement.home-mission-statement': ApiHomeMissionStatementHomeMissionStatement;
       'api::project.project': ApiProjectProject;
       'api::satellite.satellite': ApiSatelliteSatellite;
     }

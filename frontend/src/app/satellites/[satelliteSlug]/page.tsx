@@ -1,16 +1,16 @@
 import React from "react";
-import BlockRendererClient from "@/components/BlockRendererClient";
+import BlockRendererClient from "@/components/shared/BlockRendererClient";
 import fetchSatelliteInfo from "@/lib/data/fetchSatelliteInfo";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
-import Map2d from "@/components/2dmap/Map2d";
+import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
+import Map2d from "@/app/satellites/[satelliteSlug]/_2dmap/Map2d";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import LaunchDateCountDown from "@/components/ui/launchDateCountDown";
 import {
     PageHeader,
     PageSubtitle,
     PageHeaderAndSubtitle,
-} from "@/components/PageHeader";
+} from "@/components/layout/PageHeader";
 import Image from "next/image";
 import { SatelliteName, SatelliteNumber } from "@/lib/store";
 
@@ -46,9 +46,15 @@ export default async function SatelliteInfoPage({
 
     if (!satelliteInfo) return <div>Loading...</div>;
 
+    console.log(satelliteInfo);
+
     let imageURL = undefined;
     if (STRAPI_URL && satelliteInfo.satelliteImage) {
         imageURL = STRAPI_URL + satelliteInfo.satelliteImage;
+    }
+
+    if (Number.isNaN(satelliteInfo.noradId)) {
+        return <div className="flex justify-center">Satellite not found</div>;
     }
 
     return (
@@ -102,7 +108,6 @@ export default async function SatelliteInfoPage({
                                         alt={satelliteInfo.name}
                                         width={1600} // Set according to the aspect ratio of the image
                                         height={0}
-                                        layout="responsive"
                                         className="p-2"
                                     />
                                 ) : null}

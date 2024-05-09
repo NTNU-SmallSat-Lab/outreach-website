@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_featured_projects_plural",
+  "info": {
+    "singularName": "home-featured-projects",
+    "pluralName": "home-featured-projects-plural",
+    "displayName": "HomeFeaturedProjects"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "textContent": {
+      "type": "text"
+    },
+    "featuredProject1": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
+    },
+    "featuredProject2": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
+    },
+    "featuredProject3": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
+    }
+  }
+}

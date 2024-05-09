@@ -1,6 +1,6 @@
 import { getClient } from "@/lib/ApolloClient";
 import { SatelliteName, SatelliteNumber } from "../store";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 
 const GET_SATELLITE_NAMES_AND_ID = graphql(`
     query GET_SATELLITE_NAMES_AND_ID {

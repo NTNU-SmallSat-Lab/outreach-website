@@ -1,12 +1,16 @@
-import FullBlogCard from "@/components/fullBlogCard";
-import BlogpageButtons from "@/components/BlogpageButtons";
-import { BlogPost } from "./page";
+import BlogpageButtons from "./BlogpageButtons";
 import React from "react";
+import CardWithContent from "@/components/shared/CardWithContent";
+import type { ArticlesDataType } from "@/app/blog/page";
+import { slicePreviewText } from "@lib/SlicePreviewText";
+import CardGrid from "@/components/shared/CardGrid";
+
+const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 export default async function BlogDataCards({
     articles,
 }: {
-    articles: BlogPost[] | null;
+    articles: ArticlesDataType;
 }) {
     if (articles === null || articles === undefined) {
         return (
@@ -18,16 +22,35 @@ export default async function BlogDataCards({
 
     return (
         <>
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <CardGrid>
                 <BlogpageButtons className="col-span-full" />
-                {articles.map((article: BlogPost) => {
+                {articles.map((article) => {
+                    let imgurl = undefined;
+                    if (
+                        STRAPI_URL &&
+                        article.attributes?.coverImage?.data?.attributes?.url
+                    ) {
+                        imgurl =
+                            STRAPI_URL +
+                            article.attributes?.coverImage?.data?.attributes
+                                ?.url;
+                    }
+
                     return (
-                        <React.Fragment key={article.key}>
-                            <FullBlogCard article={article} />
-                        </React.Fragment>
+                        <CardWithContent
+                            key={article.id}
+                            title={article.attributes?.previewTitle ?? ""}
+                            link={"/blog/" + article.attributes?.slug}
+                            imageURL={imgurl}
+                            tag={article.attributes?.Tag ?? "General"}
+                            description={slicePreviewText(
+                                article.attributes?.body,
+                            )}
+                            datePublished={article.attributes?.datePublished}
+                        ></CardWithContent>
                     );
                 })}
-            </div>
+            </CardGrid>
         </>
     );
 }

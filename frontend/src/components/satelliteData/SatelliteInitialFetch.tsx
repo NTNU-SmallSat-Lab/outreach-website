@@ -3,10 +3,15 @@ import { SatelliteEntry, useSatelliteStore } from "@/lib/store";
 import { useEffect } from "react";
 
 interface SatelliteInitialClientFetchProps {
-    satData: SatelliteEntry[]; // Adjusted to possibly include 'selected'
+    satData: SatelliteEntry[];
 }
 
-export default function SatelliteInitialClientFetch({
+/* 
+This is a component that initializes the Zustand store with satellite data
+fetched from the server. It is used in the layout to fetch satellite data
+serverside and set it in the store.
+*/
+export default function InitializeZustandWithSatEntries({
     satData,
 }: SatelliteInitialClientFetchProps) {
     const setSatellites = useSatelliteStore((state) => state.setSatellites);

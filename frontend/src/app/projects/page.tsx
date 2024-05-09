@@ -1,20 +1,13 @@
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from "@/components/shadcn/card";
 import { getClient } from "@/lib/ApolloClient";
-import Link from "next/link";
-import Image from "next/image";
-import { SlicePreviewText } from "@/components/SlicePreviewText";
+import { slicePreviewText } from "@lib/SlicePreviewText";
 import {
     PageHeader,
     PageHeaderAndSubtitle,
     PageSubtitle,
-} from "@/components/PageHeader";
-import { PlaceholderImage } from "@/components/fullBlogCard";
-import { graphql } from "@/tada/graphql";
+} from "@/components/layout/PageHeader";
+import CardWithContent from "@/components/shared/CardWithContent";
+import { graphql } from "@/lib/tada/graphql";
+import CardGrid from "@/components/shared/CardGrid";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECTS = graphql(`
@@ -73,8 +66,8 @@ export default async function ProjectsPage() {
                 </PageHeaderAndSubtitle>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {graphqlData.data.projects.data.map((project: any) => {
+            <CardGrid>
+                {graphqlData.data.projects.data.map((project) => {
                     let previewImage =
                         project?.attributes?.previewImage?.data?.attributes
                             ?.url;
@@ -83,47 +76,19 @@ export default async function ProjectsPage() {
                         previewImage = STRAPI_URL + previewImage;
                     }
                     return (
-                        <Link
-                            className="h-full sm:m-4"
-                            href={"/projects/" + project?.attributes?.slug}
+                        <CardWithContent
                             key={project.id}
                             data-testid="projectCard"
-                        >
-                            <Card className="h-full w-full bg-background hover:border-primary">
-                                <CardHeader></CardHeader>
-                                <CardContent>
-                                    <div className="w-full">
-                                        {previewImage ? (
-                                            <Image
-                                                className="max-h-full max-w-full object-contain"
-                                                src={previewImage}
-                                                alt={previewImage}
-                                                width={500}
-                                                height={0}
-                                            />
-                                        ) : (
-                                            <div className="m-0 flex aspect-video max-h-full max-w-full items-center justify-center object-contain">
-                                                <PlaceholderImage />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="prose prose-invert">
-                                        <CardTitle className="mb-2 mt-6">
-                                            {project?.attributes?.title}
-                                        </CardTitle>
-                                        <p className="break-words">
-                                            {SlicePreviewText(
-                                                project?.attributes?.content ??
-                                                    [],
-                                            )}
-                                        </p>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </Link>
+                            title={project?.attributes?.title ?? ""}
+                            link={"/projects/" + project?.attributes?.slug}
+                            imageURL={previewImage}
+                            description={slicePreviewText(
+                                project?.attributes?.content ?? [],
+                            )}
+                        ></CardWithContent>
                     );
                 })}
-            </div>
+            </CardGrid>
         </div>
     );
 }

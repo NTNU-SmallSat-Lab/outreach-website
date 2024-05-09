@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { getClient } from "@lib/ApolloClient";
 import { env } from "process";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 import { TadaDocumentNode } from "gql.tada";
 
 // Needs to be dynamic as we use the rsc apollo client
@@ -50,6 +50,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (env.OUTWARD_FACING_URL) {
         routes.push({ url: env.OUTWARD_FACING_URL });
     }
+
+    // Add all root routes for blo, projects and satellites
+    routes.push({ url: `${env.OUTWARD_FACING_URL}/blog` });
+    routes.push({ url: `${env.OUTWARD_FACING_URL}/projects` });
+    routes.push({ url: `${env.OUTWARD_FACING_URL}/satellites` });
 
     // Add the blog posts
     let articleSlugs = await getSlugs(GET_ARTICLE_SLUGS);

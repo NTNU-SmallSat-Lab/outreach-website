@@ -30,6 +30,7 @@ jobs:
                   # Create .env.production for the frontend nextjs
                   echo "BACKEND_INTERNAL_URL=${{ vars.BACKEND_INTERNAL_URL }}" >> .env.production
                   echo "STRAPI_URL=${{ vars.STRAPI_URL }}" >> .env.production
+                  echo "OUTWARD_FACING_URL=${{ vars.OUTWARD_FACING_URL }}" >> .env.production
             - name: Docker build
               run: docker-compose build
             - name: Docker up

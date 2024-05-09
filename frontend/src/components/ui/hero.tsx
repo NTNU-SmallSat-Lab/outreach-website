@@ -3,29 +3,35 @@ import Image from "next/image";
 interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     description: string;
-    imageUrl: string;
+    imageUrl?: string;
     className?: string;
 }
 
 const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     ({ title, description, imageUrl, className, children, ...props }, ref) => (
-        <section ref={ref} {...props} className={`w-full ${className}`}>
-            <div className="container px-4 md:px-6">
-                <h1>{title}</h1>
-                <div className="flex flex-col items-center space-y-4 text-center">
+        <div
+            ref={ref}
+            {...props}
+            className={`flex min-h-svh w-full flex-col items-center justify-center ${className}`}
+        >
+            <h1 className="mb-4  text-center text-5xl font-bold sm:text-7xl md:text-8xl">
+                {title}
+            </h1>
+            <div className="prose prose-invert flex flex-col items-center space-y-4 text-center">
+                {imageUrl ? (
                     <Image
                         alt={title}
                         src={imageUrl}
                         width={0}
                         height={0}
                         sizes="100vm"
-                        style={{ width: "70%", height: "auto" }}
-                    ></Image>
-                    <p className="self-center"> {description}</p>
-                    {children}
-                </div>
+                        className="h-auto w-[70%]"
+                    />
+                ) : null}
+                <p className="self-center"> {description}</p>
+                {children}
             </div>
-        </section>
+        </div>
     ),
 );
 

@@ -1,9 +1,9 @@
-import BlockRendererClient from "@/components/BlockRendererClient";
+import BlockRendererClient from "@/components/shared/BlockRendererClient";
 import { getClient } from "@/lib/ApolloClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import RelatedProjectsAndSatellites from "@/components/RelatedProjectsAndSatellites";
+import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
 import { ProjectOrSatellite } from "@/app/satellites/[satelliteSlug]/page";
-import { graphql } from "@/tada/graphql";
+import { graphql } from "@/lib/tada/graphql";
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
 const GET_PROJECT_BY_SLUG = graphql(`
@@ -57,13 +57,15 @@ export default async function Page({
             },
         },
     });
+
     if (
         graphqlData.data === null ||
         graphqlData.data === undefined ||
         graphqlData.data.projects === undefined ||
-        graphqlData.data.projects === null
+        graphqlData.data.projects === null ||
+        graphqlData.data.projects.data.length === 0
     ) {
-        return <div>Project not found</div>;
+        return <div className="flex justify-center">Project not found</div>;
     }
 
     const projects = graphqlData.data.projects?.data[0];
@@ -78,14 +80,14 @@ export default async function Page({
     return (
         <div className="mt-8 flex flex-col items-center gap-4">
             <BlockRendererClient content={content} />
-            {graphqlData.data.projects?.data[0].attributes?.satellites?.data
+            {graphqlData.data.projects?.data[0]?.attributes?.satellites?.data
                 .length != 0 && (
                 <>
                     <div className="prose prose-invert mb-1 lg:prose-xl">
                         <h2>Related Satellites</h2>
                     </div>
                     <div className="mx-10 mt-4 flex flex-wrap justify-center gap-4">
-                        {graphqlData.data.projects?.data[0].attributes?.satellites?.data.map(
+                        {graphqlData.data.projects?.data[0]?.attributes?.satellites?.data.map(
                             (satellite: any) => {
                                 const satelliteImage =
                                     satellite?.attributes?.satelliteImage?.data

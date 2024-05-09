@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/experimental-ct-react";
-import BlockRendererClient from "@/components/BlockRendererClient";
+import BlockRendererClient from "@/components/shared/BlockRendererClient";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 
 test("Check content rendering in BlockRendererClient", async ({ mount }) => {
