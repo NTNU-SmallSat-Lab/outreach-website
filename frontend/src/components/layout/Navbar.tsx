@@ -13,6 +13,97 @@ import Image from "next/image";
 
 import type { SVGProps } from "react";
 
+export default function Navbar() {
+    const pathname = usePathname();
+    const getButtonVariant = (path: string) => {
+        if (pathname.includes(path)) {
+            return;
+        }
+        return "navbarLink";
+    };
+
+    return (
+        <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
+            <div>
+                <Link href="/">
+                    <Image
+                        width={256}
+                        height={70}
+                        src="/images/ntnu-white-logo.svg"
+                        alt="logo"
+                        className="duration-200 hover:opacity-80"
+                    />
+                </Link>
+            </div>
+            {/* Drawer that only shows on smaller screens */}
+            <Drawer>
+                <DrawerTrigger className="flex justify-end md:hidden">
+                    <IconParkHamburgerButton />
+                </DrawerTrigger>
+                <DrawerContent>
+                    <div className="flex flex-col">
+                        <Link
+                            href="/blog"
+                            className="py-5 duration-200 hover:bg-primary"
+                        >
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <MingcuteEdit4Line />
+                                    Blog
+                                </Button>
+                            </DrawerClose>
+                        </Link>
+
+                        <Link
+                            href="/projects"
+                            className="py-5 duration-200 hover:bg-primary"
+                        >
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <CodiconGithubProject />
+                                    Projects
+                                </Button>
+                            </DrawerClose>
+                        </Link>
+                        <Link
+                            href="/satellites"
+                            className="py-5 duration-200 hover:bg-primary"
+                        >
+                            <DrawerClose asChild>
+                                <Button variant={"ghost"} className="text-left">
+                                    <SolarSatelliteLineDuotone />
+                                    Satellites
+                                </Button>
+                            </DrawerClose>
+                        </Link>
+                    </div>
+                </DrawerContent>
+            </Drawer>
+
+            <div className="hidden flex-1 justify-end md:flex">
+                <div className="flex items-center gap-8">
+                    <Link href="/blog">
+                        <Button variant={getButtonVariant("/blog")}>
+                            Blog
+                        </Button>
+                    </Link>
+
+                    <Link href="/projects">
+                        <Button variant={getButtonVariant("/projects")}>
+                            Projects
+                        </Button>
+                    </Link>
+                    <Link href="/satellites">
+                        <Button variant={getButtonVariant("/satellites")}>
+                            Satellites
+                        </Button>
+                    </Link>
+                </div>
+            </div>
+        </nav>
+    );
+}
+
 const iconSize = 30;
 const iconStyle = "mx-2";
 
@@ -116,95 +207,5 @@ export function CodiconGithubProject(props: SVGProps<SVGSVGElement>) {
                 <path d="M2.5 2h11l.5.5v11l-.5.5h-11l-.5-.5v-11zM3 13h10V3H3z"></path>
             </g>
         </svg>
-    );
-}
-
-export default function Navbar() {
-    const pathname = usePathname();
-    const getButtonVariant = (path: string) => {
-        if (pathname.includes(path)) {
-            return;
-        }
-        return "navbarLink";
-    };
-
-    return (
-        <nav className="flex w-full items-center justify-between border-b border-x-neutral-600 bg-background p-4 text-foreground">
-            <div>
-                <Link href="/">
-                    <Image
-                        width={256}
-                        height={70}
-                        src="/images/ntnu-white-logo.svg"
-                        alt="logo"
-                        className="duration-200 hover:opacity-80"
-                    />
-                </Link>
-            </div>
-            <Drawer>
-                <DrawerTrigger className="flex justify-end md:hidden">
-                    <IconParkHamburgerButton />
-                </DrawerTrigger>
-                <DrawerContent>
-                    <div className="flex flex-col">
-                        <Link
-                            href="/blog"
-                            className="py-5 duration-200 hover:bg-primary"
-                        >
-                            <DrawerClose asChild>
-                                <Button variant={"ghost"} className="text-left">
-                                    <MingcuteEdit4Line />
-                                    Blog
-                                </Button>
-                            </DrawerClose>
-                        </Link>
-
-                        <Link
-                            href="/projects"
-                            className="py-5 duration-200 hover:bg-primary"
-                        >
-                            <DrawerClose asChild>
-                                <Button variant={"ghost"} className="text-left">
-                                    <CodiconGithubProject />
-                                    Projects
-                                </Button>
-                            </DrawerClose>
-                        </Link>
-                        <Link
-                            href="/satellites"
-                            className="py-5 duration-200 hover:bg-primary"
-                        >
-                            <DrawerClose asChild>
-                                <Button variant={"ghost"} className="text-left">
-                                    <SolarSatelliteLineDuotone />
-                                    Satellites
-                                </Button>
-                            </DrawerClose>
-                        </Link>
-                    </div>
-                </DrawerContent>
-            </Drawer>
-
-            <div className="hidden flex-1 justify-end md:flex">
-                <div className="flex items-center gap-8">
-                    <Link href="/blog">
-                        <Button variant={getButtonVariant("/blog")}>
-                            Blog
-                        </Button>
-                    </Link>
-
-                    <Link href="/projects">
-                        <Button variant={getButtonVariant("/projects")}>
-                            Projects
-                        </Button>
-                    </Link>
-                    <Link href="/satellites">
-                        <Button variant={getButtonVariant("/satellites")}>
-                            Satellites
-                        </Button>
-                    </Link>
-                </div>
-            </div>
-        </nav>
     );
 }

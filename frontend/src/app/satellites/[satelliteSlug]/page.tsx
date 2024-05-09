@@ -5,7 +5,7 @@ import { BlocksContent } from "@strapi/blocks-react-renderer";
 import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
 import Map2d from "@/app/satellites/[satelliteSlug]/_2dmap/Map2d";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
-import LaunchDateCountDown from "@/components/ui/launchDateCountDown";
+import LaunchDateCountDown from "@/app/satellites/[satelliteSlug]/launchDateCountDown";
 import {
     PageHeader,
     PageSubtitle,

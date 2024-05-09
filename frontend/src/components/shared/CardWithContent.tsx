@@ -1,13 +1,8 @@
-import {
-    BlogCard as Card,
-    BlogCardContent as CardContent,
-    BlogCardHeader as CardHeader,
-    BlogCardTitle as CardTitle,
-} from "@/components/ui/blogCard";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SVGProps } from "react";
+import * as React from "react";
 
 export function PlaceholderImage(props: SVGProps<SVGSVGElement>) {
     return (
@@ -100,3 +95,61 @@ export default function CardWithContent({
         </Link>
     );
 }
+
+const Card = React.forwardRef<
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+    <div
+        ref={ref}
+        className={cn(
+            "flex flex-col bg-background text-card-foreground",
+            className,
+        )}
+        {...props}
+    />
+));
+Card.displayName = "Card";
+
+const CardHeader = React.forwardRef<
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+    <div
+        ref={ref}
+        className={cn("flex flex-col gap-2", className)}
+        {...props}
+    />
+));
+CardHeader.displayName = "CardHeader";
+
+const CardTitle = React.forwardRef<
+    HTMLParagraphElement,
+    React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+    <h3
+        ref={ref}
+        className={cn(
+            "hyphens-auto break-words text-2xl font-semibold",
+            className,
+        )}
+        {...props}
+    />
+));
+CardTitle.displayName = "CardTitle";
+
+const CardContent = React.forwardRef<
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+    <div ref={ref} className={cn(className)} {...props} />
+));
+CardContent.displayName = "CardContent";
+
+const CardFooter = React.forwardRef<
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+    <div ref={ref} className={cn(className)} {...props} />
+));
+CardFooter.displayName = "CardFooter";
