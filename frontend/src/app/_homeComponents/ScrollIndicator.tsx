@@ -1,7 +1,8 @@
 "use client";
 import { motion, useScroll } from "framer-motion";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import type { SVGProps } from "react";
+import { inView } from "framer-motion";
 
 export function UiwDown(props: SVGProps<SVGSVGElement>) {
     return (
@@ -26,6 +27,20 @@ export default function ScrollIndicator() {
         target: ref,
         offset: ["start start", "end end"],
     });
+
+    useEffect(() => {
+        if (ref.current) {
+            inView(ref.current, () => {
+                return () => {
+                    ref.current?.style.setProperty(
+                        "display",
+                        "none",
+                        "important",
+                    );
+                };
+            });
+        }
+    }, []);
 
     return (
         <motion.div
