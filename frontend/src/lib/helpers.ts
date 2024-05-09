@@ -1,3 +1,11 @@
+/**
+ * Converts a full name to initials.
+ * If the name is undefined, it returns the default initials "JD" for John Doe.
+ * If there are more than 3 names, it uses the first and last name initials.
+ * Otherwise, it uses the first letter of each name as initials.
+ * @param name - The full name to convert to initials.
+ * @returns The initials of the full name.
+ */
 function fullNameToInitials(name: string | undefined): string {
     // If undefined return default JD for John Doe
     if (name === undefined) {
@@ -19,3 +27,4 @@ function fullNameToInitials(name: string | undefined): string {
 }
 
 export default fullNameToInitials;
+

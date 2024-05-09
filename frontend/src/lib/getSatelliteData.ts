@@ -1,8 +1,6 @@
 import { twoline2satrec } from "satellite.js";
 import { SatelliteEntry, SatelliteName, SatelliteNumber } from "./store";
 
-// Satellite data interfac
-
 // Cache the satellite data
 let cachedData: {
     data: Record<string, SatelliteEntry>;
@@ -12,8 +10,14 @@ let cachedData: {
     timestamp: new Date(0),
 };
 
-// Map TLE data to satellite data
-// https://en.wikipedia.org/wiki/Two-line_element_set
+//
+/**
+ * Maps a TLE string to an array of SatelliteEntry objects.
+ * See https://en.wikipedia.org/wiki/Two-line_element_set
+ *
+ * @param tleString - The TLE string to be mapped.
+ * @returns An array of SatelliteEntry objects.
+ */
 function mapTleToSatData(tleString: string): SatelliteEntry[] {
     const lines = tleString.trim().split("\n");
     const satellites: SatelliteEntry[] = [];
@@ -29,7 +33,12 @@ function mapTleToSatData(tleString: string): SatelliteEntry[] {
     return satellites;
 }
 
-// fetch satellite data from celestrak by id
+/**
+ * Fetches satellite data by satellite NORAD number/id from celestrak.org.
+ * @param satNum - The satellite number.
+ * @returns A promise that resolves to an array of SatelliteEntry objects.
+ * @throws If the request fails or if access is denied.
+ */
 async function fetchSatelliteDataById(
     satNum: SatelliteNumber,
 ): Promise<SatelliteEntry[]> {
@@ -61,7 +70,13 @@ function isStale(timestamp: Date): boolean {
     return now.getTime() - timestamp.getTime() > 24 * 60 * 60 * 1000;
 }
 
-// Load satellite data by id
+/**
+ * Retrieves satellite data by satellite number.
+ * If the data is not available in the cache or is stale, it fetches the data and updates the cache.
+ *
+ * @param satNum - The satellite number.
+ * @returns A promise that resolves to the satellite entry.
+ */
 export async function satLoaderById(
     satNum: SatelliteNumber,
 ): Promise<SatelliteEntry> {

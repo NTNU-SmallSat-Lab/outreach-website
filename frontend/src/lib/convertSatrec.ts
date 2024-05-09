@@ -11,6 +11,9 @@ import { point } from "@turf/helpers";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { SatelliteName } from "./store";
 
+/**
+ * Represents information about a satellite.
+ */
 interface SatelliteInfo {
     [key: string]: any;
     name: string;
@@ -21,6 +24,9 @@ interface SatelliteInfo {
     country: string;
 }
 
+/**
+ * Represents information about a satellite's future position.
+ */
 interface SatelliteFutureInfo {
     latitudeDeg: string;
     longitudeDeg: string;
@@ -28,6 +34,12 @@ interface SatelliteFutureInfo {
 
 export type { SatelliteInfo, SatelliteFutureInfo };
 
+/**
+ * Finds the country name based on the given latitude and longitude coordinates.
+ * @param latitudeDeg - The latitude in degrees.
+ * @param longitudeDeg - The longitude in degrees.
+ * @returns The name of the country if found, otherwise "Ocean".
+ */
 const findCountry = (latitudeDeg: number, longitudeDeg: number): string => {
     const pointFeature = point([longitudeDeg, latitudeDeg]);
 
@@ -47,7 +59,13 @@ const findCountry = (latitudeDeg: number, longitudeDeg: number): string => {
     return "Ocean"; // Fallback in case no country is found
 };
 
-// Convert satellite record to satellite info, including latitude, longitude, altitude, velocity, and country
+/**
+ * Converts a SatRec object to SatelliteInfo.
+ *
+ * @param satrec - The SatRec object to convert.
+ * @param satName - The name of the satellite.
+ * @returns The converted SatelliteInfo object.
+ */
 export const convertSatrec = (
     satrec: SatRec,
     satName: SatelliteName,
@@ -105,7 +123,13 @@ export const convertSatrec = (
     };
 };
 
-// Function to predict the satellite's future positions
+/**
+ * Predicts the future positions of a satellite based on its current state.
+ * 
+ * @param satrec - The satellite's state information.
+ * @param projectionAmount - The number of minutes to project into the future.
+ * @returns An array of future positions of the satellite.
+ */
 export const predictFuturePositions = (
     satrec: SatRec,
     projectionAmount: number,

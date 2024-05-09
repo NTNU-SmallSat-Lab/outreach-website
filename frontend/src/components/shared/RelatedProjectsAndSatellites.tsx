@@ -9,12 +9,20 @@ import {
     CardTitle,
 } from "@/components/shadcn/card";
 import { PlaceholderImage } from "@/components/shared/CardWithContent";
+import { ReactNode } from "react";
 
+/**
+ * Renders a component that displays related projects or satellites as cards.
+ *
+ * @param {Object} props - The component props.
+ * @param {ProjectOrSatellite} props.project - The project or satellite object.
+ * @returns {ReactNode} The rendered component.
+ */
 export default function RelatedProjectsAndSatellites({
     project,
 }: {
     project: ProjectOrSatellite;
-}) {
+}): ReactNode {
     let previewImage = project.previewImage;
     if (STRAPI_URL && previewImage != undefined) {
         previewImage = STRAPI_URL + previewImage;

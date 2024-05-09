@@ -2,7 +2,7 @@
 // ^ this file needs the "use client" pragma
 
 import React from "react";
-import { ApolloLink, HttpLink } from "@apollo/client";
+import { ApolloLink, HttpLink, NormalizedCacheObject } from "@apollo/client";
 import {
     ApolloNextAppProvider,
     NextSSRInMemoryCache,
@@ -12,8 +12,11 @@ import {
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-// have a function to create a client for you
-function makeClient() {
+/**
+ * Creates an Apollo Client instance for making GraphQL requests.
+ * @returns The Apollo Client instance.
+ */
+function makeClient(): NextSSRApolloClient<NormalizedCacheObject> {
     const httpLink = new HttpLink({
         // this needs to be an absolute url, as relative urls cannot be used in SSR
         uri: STRAPI_URL + "/graphql",
@@ -44,7 +47,13 @@ function makeClient() {
     });
 }
 
-// you need to create a component to wrap your app in
+/**
+ * Wraps the provided children components with the ApolloNextAppProvider,
+ * which sets up the Apollo Client for the application.
+ *
+ * @param children - The components to be wrapped.
+ * @returns The wrapped components with the Apollo Client setup.
+ */
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
     return (
         <ApolloNextAppProvider makeClient={makeClient}>

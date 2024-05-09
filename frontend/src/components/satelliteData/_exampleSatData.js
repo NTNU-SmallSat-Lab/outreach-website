@@ -1,3 +1,6 @@
+// This is example data used during development
+// Keeping it for future developers
+// Consits of TLE's
 export const exampleData = `
 0 VANGUARD 2
 1    11U 59001A   22053.83197560  .00000847  00000-0  45179-3 0  9996

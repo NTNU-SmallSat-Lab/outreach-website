@@ -17,6 +17,7 @@ type Nominal<Type, Identifier> = Type & {
 
 export type SatelliteName = Nominal<string, "SatelliteName">;
 export type SatelliteNumber = Nominal<number, "SatelliteNumber">;
+
 // Satellite entry for setSatellites
 export interface SatelliteEntry {
     name: SatelliteName;
@@ -31,7 +32,7 @@ export interface SatelliteState {
     satNumToEntry: Record<SatelliteNumber, SatelliteEntry>;
 }
 
-// Disable unused variables as the store actions defined here are used in other files
+// Disable unused variables as the store actions defined here are used in other files,
 /* eslint-disable no-unused-vars */
 // Define the actions
 export interface SatelliteActions {
