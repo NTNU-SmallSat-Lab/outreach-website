@@ -1,6 +1,9 @@
 import React from "react";
 import styles from "./loading.module.css";
 
+/**
+ * Renders a loading spinner.
+ */
 export default function Loading() {
     return (
         <div className="flex grow items-center justify-center">
