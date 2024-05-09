@@ -96,7 +96,11 @@ export default function SatDropdown() {
         const value = event.target.value;
         // Allow only numeric input
         if (/^\d*$/.test(value)) {
-            setNoradID(Number(value) as SatelliteNumber);
+            if (value.length == 0) {
+                setNoradID(undefined);
+            } else {
+                setNoradID(Number(value) as SatelliteNumber);
+            }
         }
     };
 
