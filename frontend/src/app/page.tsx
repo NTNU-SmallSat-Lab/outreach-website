@@ -10,13 +10,11 @@ export default async function Home() {
         <>
             <ScrollIndicator></ScrollIndicator>
             {/* Globe */}
-            <div className="snap-end">
-                <GlobeWithStats />
-            </div>
-            <div className="snap-center">
-                {/* Mission Statement Section */}
-                <MissionStatement />
-            </div>
+
+            <GlobeWithStats />
+
+            {/* Mission Statement Section */}
+            <MissionStatement />
 
             {/* Projects Section */}
             <FeaturedProjects />

@@ -31,12 +31,8 @@ export default function SatelliteGlobe() {
     useEffect(() => {
         if (chart.current && !globeRef.current) {
             globeRef.current = Globe()(chart.current)
-                .globeImageUrl(
-                    "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
-                )
-                .backgroundImageUrl(
-                    "//unpkg.com/three-globe/example/img/night-sky.png",
-                )
+                .globeImageUrl("/images/earth-blue-marble.jpg")
+                .backgroundImageUrl("/images/night-sky.png")
                 .objectLat("lat")
                 .objectLng("lng")
                 .objectAltitude("alt")
@@ -67,19 +63,35 @@ export default function SatelliteGlobe() {
             globeRef.current.controls().enableRotate = true;
 
             // lock the initial height of the globe
-            const setInitialGlobeSize = () => {
+            const setGlobeSize = () => {
                 if (globeRef.current && chart.current) {
-                    const { width, height } =
-                        chart.current.getBoundingClientRect();
-                    globeRef.current.width(width);
-                    globeRef.current.height(height - 76);
+                    const { width } = chart.current.getBoundingClientRect();
 
-                    console.log(width, height);
+                    globeRef.current.width(width);
+                    if (typeof window !== "undefined") {
+                        let windowWidth = window.innerWidth;
+                        let windowHeight = window.innerHeight;
+
+                        // If the window width is less than 768, disable controls and set height to window height
+                        if (windowWidth <= 768) {
+                            globeRef.current.controls().enabled = false;
+                            globeRef.current.controls().enableRotate = false;
+                            globeRef.current.height(windowWidth); // Minus navbar height and stats height
+                            // Set touch action to auto to allow for scrolling on mobile
+                            let globeElement =
+                                globeRef.current.renderer().domElement;
+                            globeElement.style.touchAction = "auto";
+                        } else {
+                            globeRef.current.controls().enabled = true;
+                            globeRef.current.controls().enableRotate = true;
+                            globeRef.current.height(windowHeight - 73); // Minus navbar height
+                        }
+                    }
                 }
             };
 
             // Initially set the globe size to match the container
-            setInitialGlobeSize();
+            setGlobeSize();
 
             // Set initial positions of satellites
             let initialPositions: initpostype[] = Object.entries(satNumToEntry)
@@ -109,27 +121,17 @@ export default function SatelliteGlobe() {
                 globeRef.current.objectsData(initialPositions);
             }
 
-            // Function to update the globe size based on the current size of the chart
-            const setGlobeSize = () => {
-                if (globeRef.current && chart.current) {
-                    const { width, height } =
-                        chart.current.getBoundingClientRect();
-                    globeRef.current.width(width);
-                    globeRef.current.height(width <= 640 ? width : height - 76);
-                }
-            };
-
             // Add resize event listener if the window is defined (i.e., in client-side environment)
             if (typeof window !== "undefined") {
                 window.addEventListener("resize", setGlobeSize);
             }
 
             // Cleanup function to remove the resize event listener
-            return () => {
-                if (typeof window !== "undefined") {
-                    window.removeEventListener("resize", setGlobeSize);
-                }
-            };
+            // return () => {
+            //     if (typeof window !== "undefined") {
+            //         window.removeEventListener("resize", setGlobeSize);
+            //     }
+            // };
         }
     }, [satNumToEntry, setSelectedSatellite]);
 
@@ -197,5 +199,5 @@ export default function SatelliteGlobe() {
         return () => clearInterval(intervalId);
     }, [satNumToEntry, selectedSatellite]);
 
-    return <div id="chart" className="" ref={chart}></div>;
+    return <div id="chart" ref={chart}></div>;
 }
