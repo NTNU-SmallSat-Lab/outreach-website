@@ -7,6 +7,9 @@ import { getClient } from "@lib/ApolloClient";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
+/**
+ * Displays the title and text content from Strapi, alongside three featured projects as cards.
+ */
 export default async function FeaturedProjects() {
     const featuredProjects = await fetchFeaturedProjects();
 

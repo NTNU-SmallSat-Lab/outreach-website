@@ -5,6 +5,11 @@ import { cn } from "@/lib/utils";
 import { satLoaderById } from "@/lib/getSatelliteData";
 import { SatelliteNumber } from "@/lib/store";
 import { useSatelliteStore } from "@/lib/store";
+
+/**
+ * Renders a dropdown menu to select a satellite.
+ * Allows the user to select a satellite by NORAD ID or from a list of satellites.
+ */
 export default function SatDropdown() {
     const selectedSatellite = useSatelliteStore(
         (state) => state.selectedSatellite,

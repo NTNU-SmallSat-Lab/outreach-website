@@ -7,6 +7,13 @@ import CardGrid from "@/components/shared/CardGrid";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
+/**
+ * Renders a grid of blog data cards based on the provided articles.
+ *
+ * @param {Object} props - The component props.
+ * @param {ArticlesDataType} props.articles - The array of articles to display.
+ * @returns {JSX.Element} The rendered blog data cards.
+ */
 export default async function BlogDataCards({
     articles,
 }: {

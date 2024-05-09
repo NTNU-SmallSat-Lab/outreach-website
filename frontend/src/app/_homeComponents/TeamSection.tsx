@@ -4,26 +4,11 @@ import Image from "next/image";
 
 const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
 
-const GET_TEAM_DATA = graphql(`
-    query Query($publicationState: PublicationState) {
-        hero(publicationState: $publicationState) {
-            data {
-                attributes {
-                    title
-                    text
-                    image {
-                        data {
-                            attributes {
-                                url
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-`);
-
+/**
+ * Renders the team section of the website.
+ * Text and Image is fetched from Strapi
+ * Displays them in a flex container, either in a column or row depending on screen size.
+ */
 export default async function TeamSection() {
     const graphqlData = await getClient().query({
         query: GET_TEAM_DATA,
@@ -75,3 +60,23 @@ export default async function TeamSection() {
         </div>
     );
 }
+
+const GET_TEAM_DATA = graphql(`
+    query Query($publicationState: PublicationState) {
+        hero(publicationState: $publicationState) {
+            data {
+                attributes {
+                    title
+                    text
+                    image {
+                        data {
+                            attributes {
+                                url
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`);
