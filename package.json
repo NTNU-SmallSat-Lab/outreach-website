@@ -6,7 +6,7 @@
     "scripts": {
         "frontend": "cd frontend && npm run dev",
         "backend": "cd backend && npm run develop",
-        "dev": "concurrently \"npm run server\" \"npm run client\""
+        "dev": "concurrently \"npm run backend\" \"npm run frontend\""
     },
     "author": "",
     "license": "",
