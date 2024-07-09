@@ -6,6 +6,7 @@ import NTNULogo from "./NTNULogo";
  * It includes the NTNU logo, social media links, and contact information.
  */
 export default function Footer() {
+    const now = new Date();
     return (
         <footer className="flex flex-col items-center border-t bg-background p-4 text-foreground">
             <div className="flex w-full flex-col items-center justify-between gap-8 lg:flex-row">
@@ -50,7 +51,7 @@ export default function Footer() {
                             </a>
                         </div>
                         <p className="hidden lg:inline">
-                            &copy; 2021 NTNU Small Satellite Lab
+                            &copy; 2017 - {now.getFullYear()} NTNU Small Satellite Lab
                         </p>
                     </div>
                 </div>

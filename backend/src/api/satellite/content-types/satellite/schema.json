@@ -51,6 +51,9 @@
     },
     "massKg": {
       "type": "float"
+    },
+    "historicalOrbitalData": {
+      "type": "json"
     }
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-type LaunchDateCountDownProps = {
+export type LaunchDateCountDownProps = {
     launchDate: string | Date | undefined;
 };
 
