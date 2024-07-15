@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-interface ScrollBarThumbProps {
+export interface ScrollBarThumbProps {
     scrollBarThumbWidth: number;
     svgContainerRect: {topLeft: number, width: number, height: number};
+    handleChartScroll: (thumbX: number, svgContainerRect: ScrollBarThumbProps['svgContainerRect']) => void;
 }
 
-const ScrollBarThumb : React.FC<ScrollBarThumbProps> = ({ scrollBarThumbWidth, svgContainerRect}) => {
+const ScrollBarThumb : React.FC<ScrollBarThumbProps> = ({ scrollBarThumbWidth, svgContainerRect, handleChartScroll}) => {
     const isDragging = useRef<boolean>(false);
     {/* SB is used for ScrollBar */}
     const [sBThumbX, setSBThumbX] = useState(0);
@@ -38,9 +39,12 @@ const ScrollBarThumb : React.FC<ScrollBarThumbProps> = ({ scrollBarThumbWidth, s
                         return minX;
                     } else if (newPos >= maxX) {
                         return maxX;
-                    }
+                    }                    
                     return newPos;
                 });
+
+                // Change the displayed data on the chart
+                handleChartScroll(Math.round(thumbRef.current.getBoundingClientRect().x * 10) / 10, svgContainerRect);
             }
         }
 
