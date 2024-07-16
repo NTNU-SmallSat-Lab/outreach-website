@@ -7,7 +7,6 @@ import { LaunchDateCountDownProps } from './launchDateCountDown';
 import ScrollBarThumb, { ScrollBarThumbProps } from './_orbitDataGraphComponents/ScrollBarThumb';
 
 type OrbitDataProps = {
-  satNum : SatelliteNumber;
   launchDateString: LaunchDateCountDownProps['launchDate'];
   orbitalData: any;
 }
@@ -19,7 +18,7 @@ type ChartData = {
   semiMajorAxis: number;
 }
 
-const OrbitDataGraph : React.FC<OrbitDataProps> = ({ satNum, launchDateString, orbitalData }) => {
+const OrbitDataGraph : React.FC<OrbitDataProps> = ({ launchDateString, orbitalData }) => {
 
   // href for the svg component, tracking the size of the container
   const svgContainer = useRef<HTMLDivElement>(null);
@@ -129,7 +128,7 @@ const OrbitDataGraph : React.FC<OrbitDataProps> = ({ satNum, launchDateString, o
 
   return (
     <>
-        <div ref={svgContainer} className="w-full flex flex-col">
+        {orbitalData && <div ref={svgContainer} className="w-full flex flex-col">
           <div className="zoom-container flex items-center mb-5">
             <h2 className="mx-5 text-grey-400 text-2xl">Zoom : </h2>
             {/* Scrollbar thumb represents the zoom period selected, in case it fits bad we don't display 
@@ -193,7 +192,7 @@ const OrbitDataGraph : React.FC<OrbitDataProps> = ({ satNum, launchDateString, o
               </g>
             </svg>
           </div>
-        </div>
+        </div>}
     </>
   )
 }

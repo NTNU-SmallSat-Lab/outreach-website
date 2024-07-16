@@ -13,6 +13,7 @@
     "dependencies": {
         "@types/recharts": "^1.8.29",
         "concurrently": "^8.2.2",
+        "node-schedule": "^2.1.1",
         "openapi-typescript": "^6.7.4",
         "recharts": "^2.12.7",
         "three-glow-mesh": "^0.1.2"

@@ -160,7 +160,7 @@ export default async function SatelliteInfoPage({
                 {/*Pass the satNum and the launchDate as props to OrbitDataGraph*/}
                 { noradId? (
                     satAttributes?.launchDate ? (
-                        <OrbitDataGraph satNum={noradId} launchDateString={satAttributes?.launchDate} orbitalData={satAttributes?.historicalOrbitalData}/>
+                        <OrbitDataGraph launchDateString={satAttributes?.launchDate} orbitalData={satAttributes?.historicalOrbitalData}/>
                     ) : null
                     
                 ) : null}

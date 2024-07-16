@@ -5,6 +5,8 @@
  */
 'use strict';
 
+const { fetchOrbitalData } = require('./satelliteUtils');
+
 module.exports = {
   updateAllSatellitesData: {
     task: async ({ strapi }) => {
@@ -15,13 +17,21 @@ module.exports = {
         // Waiting for all promises to be resolved
         await Promise.all(
           satellites.map(async satellite => {
-            await strapi.service('api::satellite.satellite').fetchOrbitalData(satellite.id);
+            try {
+              setTimeout(async () => {
+                await fetchOrbitalData(strapi, satellite.id);
+              }, 10000);
+            } catch (error) {
+              console.error(error);
+            }
           })
         );
       } catch (error) {
         console.error(error);
       }
     },
-    options: new Date(Date.now() + 10000),
+    options: {
+      rule: "0 0 0 3 * *", // Every month on the 3rd at midnight
+    },
   },
 };
