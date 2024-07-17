@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useLayoutEffect, useRef } from 'react'
-import { SatelliteNumber } from '@/lib/store'
-import { XAxis, CartesianGrid, Line, LineChart, Tooltip, YAxis, Label, ResponsiveContainer, Legend } from 'recharts';
+import { XAxis, CartesianGrid, Line, LineChart, Tooltip, YAxis, ResponsiveContainer, Legend } from 'recharts';
 import { LaunchDateCountDownProps } from './launchDateCountDown';
 import ScrollBarThumb, { ScrollBarThumbProps } from './_orbitDataGraphComponents/ScrollBarThumb';
 

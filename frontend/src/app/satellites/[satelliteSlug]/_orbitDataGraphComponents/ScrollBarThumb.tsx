@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 export interface ScrollBarThumbProps {
     scrollBarThumbWidth: number;
     svgContainerRect: {topLeft: number, width: number, height: number};
+    // eslint-disable-next-line no-unused-vars
     handleChartScroll: (thumbX: number, svgContainerRect: ScrollBarThumbProps['svgContainerRect']) => void;
 }
 
@@ -18,7 +19,7 @@ const ScrollBarThumb : React.FC<ScrollBarThumbProps> = ({ scrollBarThumbWidth, s
 
     /* Be careful useEffect runs before parent props are received */
     useEffect(() => {
-        const handleMouseUp = (e: any) => {
+        const handleMouseUp = () => {
             if (thumbRef.current) {
                 isDragging.current = false;
             }
