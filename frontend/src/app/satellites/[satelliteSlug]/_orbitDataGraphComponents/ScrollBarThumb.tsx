@@ -5,11 +5,12 @@ import React, { useState, useEffect, useRef } from "react";
 export interface ScrollBarThumbProps {
     scrollBarThumbWidth: number;
     svgContainerRect: { topLeft: number; width: number; height: number };
-    // eslint-disable-next-line no-unused-vars
+    /* eslint-disable no-unused-vars*/
     handleChartScroll: (
         thumbX: number,
         svgContainerRect: ScrollBarThumbProps["svgContainerRect"],
     ) => void;
+    /* eslint-enable no-unused-vars*/
 }
 
 const ScrollBarThumb: React.FC<ScrollBarThumbProps> = ({
