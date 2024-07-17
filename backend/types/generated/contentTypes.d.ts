@@ -1073,6 +1073,7 @@ export interface ApiSatelliteSatellite extends Schema.CollectionType {
     slug: Attribute.UID<'api::satellite.satellite', 'name'> &
       Attribute.Required;
     massKg: Attribute.Float;
+    historicalOrbitalData: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
