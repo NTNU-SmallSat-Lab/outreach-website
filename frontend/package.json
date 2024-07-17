@@ -64,6 +64,7 @@
         "react-error-boundary": "^4.0.13",
         "react-markdown": "^9.0.1",
         "react-plotly.js": "^2.6.0",
+        "recharts": "^2.12.7",
         "satellite.js": "^5.0.0",
         "shadcn-ui": "^0.8.0",
         "tailwind-merge": "^2.2.0",
