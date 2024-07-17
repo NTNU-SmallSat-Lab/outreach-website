@@ -51,7 +51,8 @@ export default function Footer() {
                             </a>
                         </div>
                         <p className="hidden lg:inline">
-                            &copy; 2017 - {now.getFullYear()} NTNU Small Satellite Lab
+                            &copy; 2017 - {now.getFullYear()} NTNU Small
+                            Satellite Lab
                         </p>
                     </div>
                 </div>

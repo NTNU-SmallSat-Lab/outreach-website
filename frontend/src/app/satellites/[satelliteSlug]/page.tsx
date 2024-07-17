@@ -158,11 +158,13 @@ export default async function SatelliteInfoPage({
             {/* Orbit data */}
             <div className="mt-8 flex w-full flex-col items-center">
                 {/*Pass the satNum and the launchDate as props to OrbitDataGraph*/}
-                { noradId? (
+                {noradId ? (
                     satAttributes?.launchDate ? (
-                        <OrbitDataGraph launchDateString={satAttributes?.launchDate} orbitalData={satAttributes?.historicalOrbitalData}/>
+                        <OrbitDataGraph
+                            launchDateString={satAttributes?.launchDate}
+                            orbitalData={satAttributes?.historicalOrbitalData}
+                        />
                     ) : null
-                    
                 ) : null}
             </div>
 
