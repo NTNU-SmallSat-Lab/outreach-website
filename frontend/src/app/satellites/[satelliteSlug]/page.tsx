@@ -13,6 +13,7 @@ import Image from "next/image";
 import { SatelliteNumber } from "@/lib/store";
 import { graphql } from "@/lib/tada/graphql";
 import { getClient } from "@/lib/ApolloClient";
+import OrbitDataGraph from "./orbitDataGraph";
 
 export interface ProjectOrSatellite {
     id: string;
@@ -154,6 +155,19 @@ export default async function SatelliteInfoPage({
                 </div>
             </div>
 
+            {/* Orbit data */}
+            <div className="mt-8 flex w-full flex-col items-center">
+                {/*Pass the satNum and the launchDate as props to OrbitDataGraph*/}
+                {noradId ? (
+                    satAttributes?.launchDate ? (
+                        <OrbitDataGraph
+                            launchDateString={satAttributes?.launchDate}
+                            orbitalData={satAttributes?.historicalOrbitalData}
+                        />
+                    ) : null
+                ) : null}
+            </div>
+
             {/* Related projects */}
             <div className="mt-8 flex w-full flex-col items-center">
                 {relatedProjects?.length != 0 ? (
@@ -189,6 +203,7 @@ const GET_SATELLITE_INFO = graphql(`
                     name
                     massKg
                     missionStatus
+                    historicalOrbitalData
                     satelliteImage {
                         data {
                             attributes {

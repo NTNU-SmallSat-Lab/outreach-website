@@ -4,6 +4,9 @@
  * satellite service
  */
 
+
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::satellite.satellite');
+module.exports = {
+    ...createCoreService('api::satellite.satellite')
+};
