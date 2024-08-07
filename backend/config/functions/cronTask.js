@@ -11,27 +11,28 @@ module.exports = {
   updateAllSatellitesData: {
     task: async ({ strapi }) => {
       try {
-        // Fetching all satellites
-        const satellites = await strapi.entityService.findMany('api::satellite.satellite');
-
-        // Waiting for all promises to be resolved
-        await Promise.all(
-          satellites.map(async satellite => {
-            try {
-              setTimeout(async () => {
-                await fetchOrbitalData(strapi, satellite.id);
-              }, 10000);
-            } catch (error) {
-              console.error(error);
+        // Fetch all satellites
+        const satellites = await strapi.entityService.findMany('api::satellite.satellite', {
+          fields: ['id', 'catalogNumberNORAD'],
+          filters: {
+            catalogNumberNORAD: { $ne: null },
+          }
+        });
+        await Promise.all(satellites.map(async satellite => {
+          const historicalOrbitalData = await fetchOrbitalData(strapi, satellite.catalogNumberNORAD);
+          await strapi.entityService.update('api::satellite.satellite', satellite.id, {
+            data: {
+              historicalOrbitalData: historicalOrbitalData,
             }
           })
-        );
+        }));
       } catch (error) {
         console.error(error);
+        return;
       }
     },
     options: {
-      rule: "0 0 0 3 * *", // Every month on the 3rd at midnight
+      rule: "0 0 0 8 * *", // Every month on the 3rd at midnight
     },
   },
 };
