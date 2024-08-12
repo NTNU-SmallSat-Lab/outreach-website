@@ -11,6 +11,7 @@ async function fetchOrbitalData(noradId) {
 
     if (authResponse.status === 200) {
       // Fetching data from Space-Track
+
       const today = new Date();
       const satelliteResponse = await axios.get(`https://www.space-track.org/basicspacedata/query/class/gp_history/NORAD_CAT_ID/${noradId}/orderby/TLE_LINE1%20ASC/orderby/TLE_LINE1%20ASC/format/json`, {
         headers: {
