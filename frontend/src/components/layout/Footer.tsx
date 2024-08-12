@@ -18,28 +18,22 @@ export default function Footer() {
                     <div className="flex flex-col gap-2 text-center">
                         <div className="flex flex-wrap justify-center gap-x-4">
                             <a
-                                href="https://www.x.com/NTNU"
-                                className="hover:underline"
-                            >
-                                Twitter
-                            </a>
-                            <a
-                                href="https://www.facebook.com/ntnu.no"
+                                href="https://www.facebook.com/NTNUSmallSat"
                                 className="hover:underline"
                             >
                                 Facebook
                             </a>
                             <a
-                                href="https://www.instagram.com/ntnu"
+                                href="https://www.instagram.com/ntnusmallsat/"
                                 className="hover:underline"
                             >
                                 Instagram
                             </a>
                             <a
-                                href="https://www.youtube.com/user/ntnuinfo"
+                                href="https://www.linkedin.com/company/20559539/"
                                 className="hover:underline"
                             >
-                                Youtube
+                                LinkedIn
                             </a>
                         </div>
                         <div className="flex flex-row justify-center">

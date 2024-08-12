@@ -11,23 +11,33 @@ module.exports = {
   updateAllSatellitesData: {
     task: async ({ strapi }) => {
       try {
-        // Fetching all satellites
-        const satellites = await strapi.entityService.findMany('api::satellite.satellite');
-
-        // Waiting for all promises to be resolved
+        // Fetch all satellites
+        const satellites = await strapi.entityService.findMany('api::satellite.satellite', {
+          fields: ['id', 'catalogNumberNORAD'],
+          filters: {
+            catalogNumberNORAD: { $ne: null },
+          }
+        });
         await Promise.all(
-          satellites.map(async satellite => {
-            try {
-              setTimeout(async () => {
-                await fetchOrbitalData(strapi, satellite.id);
-              }, 10000);
-            } catch (error) {
-              console.error(error);
-            }
-          })
-        );
+          satellites.map(async (satellite) => {
+          const fetchedData = await fetchOrbitalData(satellite.catalogNumberNORAD);
+          return { id: satellite.id, historicalOrbitalData: fetchedData };
+        })).then(async (historicalOrbitalData) => {
+          await strapi.db.transaction(async (trx) => {
+            // Fetch data for each satellite
+            historicalOrbitalData.map(async (satellite) => {
+              // Update the database with the new data
+              const updatedSat = await strapi.entityService.update('api::satellite.satellite', satellite.id, {
+                data: {
+                  historicalOrbitalData: satellite.historicalOrbitalData,
+                },
+              }, { trx });
+            })
+          });
+        })
       } catch (error) {
         console.error(error);
+        return;
       }
     },
     options: {
