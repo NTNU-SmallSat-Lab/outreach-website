@@ -1,7 +1,7 @@
 // backend/utils/satelliteUtils.js
 const axios = require('axios');
 
-async function fetchOrbitalData(strapi, noradId) {
+async function fetchOrbitalData(noradId) {
   try {
     // Authentication to Space-Track
     const authResponse = await axios.post('https://www.space-track.org/ajaxauth/login', {
