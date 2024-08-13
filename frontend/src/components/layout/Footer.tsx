@@ -53,7 +53,7 @@ export default function Footer() {
 
                 <div className="flex flex-1 justify-end">
                     <div className="flex flex-col text-center lg:text-right">
-                        <span className="">NTNU Small Satellite Lab</span>
+                        <a className="hover:underline" href="http://ntnu.edu/smallsat">NTNU Small Satellite Lab</a>
                         <span className="">Trondheim, Norway</span>
                         <p>Norwegian University of Science and Technology</p>
                         <p className="lg:hidden">
