@@ -194,6 +194,11 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         <>
             {orbitalData && (
                 <div ref={svgContainer} className="flex w-full flex-col">
+                    <div className="flex mb-5">
+                        <p>Orbital parameters history (source :</p>
+                        <a className="hover:underline" href="https://www.space-track.org/">Space Track</a>
+                        <p>)</p>
+                    </div>
                     <div className="zoom-container mb-5 flex items-center">
                         <h2 className="text-grey-400 mx-5 text-2xl">Zoom : </h2>
                         {/* Scrollbar thumb represents the zoom period selected, in case it fits bad we don't display 
