@@ -155,6 +155,7 @@ export default async function SatelliteInfoPage({
                 </div>
             </div>
 
+
             {/* Container for graph of historical orbital data */}
             <div className="mt-8 flex w-full flex-col items-center">
                 {/*Pass the historicalData and the launchDate as props to OrbitDataGraph*/}
