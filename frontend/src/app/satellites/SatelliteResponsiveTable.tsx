@@ -99,14 +99,19 @@ export default function SatelliteResponsiveTable({
                               />
                           ))
                         : (satellites ?? []).map((satellite) => (
-                                <TableRow
-                                    className="cursor-pointer hover:bg-white hover:text-black"
-                                    key={satellite.attributes?.catalogNumberNORAD}
-                                    {...(satellite.attributes?.catalogNumberNORAD ? {
-                                    onClick: () =>
-                                        handleRowClick(satellite.attributes?.slug ?? "")
-                                    } : {})}
-                                >
+                              <TableRow
+                                  className="cursor-pointer hover:bg-white hover:text-black"
+                                  key={satellite.attributes?.catalogNumberNORAD}
+                                  {...(satellite.attributes?.catalogNumberNORAD
+                                      ? {
+                                            onClick: () =>
+                                                handleRowClick(
+                                                    satellite.attributes
+                                                        ?.slug ?? "",
+                                                ),
+                                        }
+                                      : {})}
+                              >
                                   <TableCell className="px-6">
                                       {satellite.attributes?.name}
                                   </TableCell>

@@ -194,9 +194,14 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         <>
             {orbitalData && (
                 <div ref={svgContainer} className="flex w-full flex-col">
-                    <div className="flex mb-5">
+                    <div className="mb-5 flex">
                         <p>Orbital parameters history (source :</p>
-                        <a className="hover:underline" href="https://www.space-track.org/">Space Track</a>
+                        <a
+                            className="hover:underline"
+                            href="https://www.space-track.org/"
+                        >
+                            Space Track
+                        </a>
                         <p>)</p>
                     </div>
                     <div className="zoom-container mb-5 flex items-center">

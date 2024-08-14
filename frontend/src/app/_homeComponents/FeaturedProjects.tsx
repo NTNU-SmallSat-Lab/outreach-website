@@ -43,8 +43,8 @@ export default async function FeaturedProjects() {
                                 return null;
                             }
                             let previewImage =
-                                project?.data?.attributes?.previewImage?.data?.attributes
-                                    ?.url;
+                                project?.data?.attributes?.previewImage?.data
+                                    ?.attributes?.url;
 
                             if (STRAPI_URL && previewImage != undefined) {
                                 previewImage = STRAPI_URL + previewImage;
