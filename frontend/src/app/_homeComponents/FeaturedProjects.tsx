@@ -19,14 +19,6 @@ export default async function FeaturedProjects() {
         featuredProjects?.featuredProject3,
     ];
 
-    let image_url = undefined;
-    if (STRAPI_URL) {
-        image_url =
-            STRAPI_URL +
-            featuredProjects?.featuredProject1?.data?.attributes?.previewImage
-                ?.data?.attributes?.url;
-    }
-
     return (
         <PagePaddingOnlyHorizontal>
             <div className="mb-16 flex w-full flex-col justify-center gap-2">
@@ -50,6 +42,13 @@ export default async function FeaturedProjects() {
                             if (!project?.data?.attributes?.title) {
                                 return null;
                             }
+                            let previewImage =
+                                project?.data?.attributes?.previewImage?.data?.attributes
+                                    ?.url;
+
+                            if (STRAPI_URL && previewImage != undefined) {
+                                previewImage = STRAPI_URL + previewImage;
+                            }
                             return (
                                 <CardWithContent
                                     key={index.toString()}
@@ -58,7 +57,7 @@ export default async function FeaturedProjects() {
                                         "/projects/" +
                                         project?.data?.attributes?.slug
                                     }
-                                    imageURL={image_url}
+                                    imageURL={previewImage}
                                 ></CardWithContent>
                             );
                         })}
