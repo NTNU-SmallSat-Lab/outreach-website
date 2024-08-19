@@ -130,7 +130,6 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         lastChartDate.setMonth(
             firstChartDate.getMonth() + scrollBarTimeFrame.current,
         );
-
         // Filtering the data to display only the data in the selected period
         const filteredData = orbitalData
             .filter((data: any) => {
@@ -140,6 +139,7 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
             .map((data: any) => {
                 return {
                     ...data,
+                    semiMajorAxis: data.semiMajorAxis - 6371,
                     epoch: new Date(data.epoch.slice(0, 23) + "Z"),
                 };
             });
