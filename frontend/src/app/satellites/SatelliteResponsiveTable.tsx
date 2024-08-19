@@ -112,6 +112,7 @@ export default function SatelliteResponsiveTable({
                                         }
                                       : {})}
                               >
+
                                   <TableCell className="px-6">
                                       {satellite.attributes?.name}
                                   </TableCell>
