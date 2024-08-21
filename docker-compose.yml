@@ -7,7 +7,7 @@ services:
               source: /var/data/
               target: /var/data/
             - type: bind
-              source: /var/data/outreachuploads
+              source: /var/data/russemarkeduploads
               target: /usr/src/app/backend/public/uploads
         build:
             context: .
