@@ -14,8 +14,10 @@ services:
             dockerfile: Dockerfile-backend
         image: backend:outreach
         ports:
-            - "8080:8080"
-            
+            - "1337:1337"
+        environment:
+            - NODE_ENV=production
+
     frontend:
         depends_on:
             - backend
