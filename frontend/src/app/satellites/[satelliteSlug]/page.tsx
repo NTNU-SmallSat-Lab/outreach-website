@@ -74,6 +74,8 @@ export default async function SatelliteInfoPage({
         imageURL = STRAPI_URL + satelliteImage;
     }
 
+    console.log("satAttributes", satAttributes);
+
     return (
         <>
             <div className="flex flex-col items-center">
@@ -154,7 +156,6 @@ export default async function SatelliteInfoPage({
                     <BlockRendererClient content={satAttributes?.content} />
                 </div>
             </div>
-
 
             {/* Container for graph of historical orbital data */}
             <div className="mt-8 flex w-full flex-col items-center">

@@ -130,7 +130,6 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         lastChartDate.setMonth(
             firstChartDate.getMonth() + scrollBarTimeFrame.current,
         );
-
         // Filtering the data to display only the data in the selected period
         const filteredData = orbitalData
             .filter((data: any) => {
@@ -140,6 +139,7 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
             .map((data: any) => {
                 return {
                     ...data,
+                    semiMajorAxis: data.semiMajorAxis - 6371,
                     epoch: new Date(data.epoch.slice(0, 23) + "Z"),
                 };
             });
@@ -190,12 +190,14 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         return () => window.removeEventListener("resize", updateSize);
     }, []);
 
+    console.log("orbitalData", orbitalData);
+
     return (
         <>
             {orbitalData && (
                 <div ref={svgContainer} className="flex w-full flex-col">
                     <div className="mb-5 flex">
-                        <p>Orbital parameters history (source :</p>
+                        <p>Orbital parameters history (source : </p>
                         <a
                             className="hover:underline"
                             href="https://www.space-track.org/"
