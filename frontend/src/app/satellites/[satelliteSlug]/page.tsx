@@ -74,6 +74,8 @@ export default async function SatelliteInfoPage({
         imageURL = STRAPI_URL + satelliteImage;
     }
 
+    console.log("satAttributes", satAttributes);
+
     return (
         <>
             <div className="flex flex-col items-center">

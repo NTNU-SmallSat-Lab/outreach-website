@@ -190,12 +190,14 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         return () => window.removeEventListener("resize", updateSize);
     }, []);
 
+    console.log("orbitalData", orbitalData);
+
     return (
         <>
             {orbitalData && (
                 <div ref={svgContainer} className="flex w-full flex-col">
                     <div className="mb-5 flex">
-                        <p>Orbital parameters history (source :</p>
+                        <p>Orbital parameters history (source : </p>
                         <a
                             className="hover:underline"
                             href="https://www.space-track.org/"

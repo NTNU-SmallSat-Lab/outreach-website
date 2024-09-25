@@ -41,10 +41,10 @@ export default async function Satellites() {
         );
 
         let satellitesInOrbit = graphqlData.data.satellites?.data.filter(
-            (data) => data.attributes?.catalogNumberNORAD !== null,
+            (data) => data.attributes?.missionStatus === "IN ORBIT",
         );
         let satellitesNotInOrbit = graphqlData.data.satellites?.data.filter(
-            (data) => data.attributes?.catalogNumberNORAD == null,
+            (data) => data.attributes?.missionStatus !== "IN ORBIT",
         );
 
         return (
