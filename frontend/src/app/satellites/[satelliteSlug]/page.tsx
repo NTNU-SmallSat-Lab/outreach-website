@@ -115,7 +115,7 @@ export default async function SatelliteInfoPage({
                                 </p>
                             </div>
                             
-                            {satAttributes.missionStatus === "ON ORBIT" ? <div> <SatelliteDataHome satelliteNum={satAttributes?.catalogNumberNORAD}/></div> : null}
+                            {satAttributes.missionStatus === "IN ORBIT" ? <div> <SatelliteDataHome satelliteNum={satAttributes?.catalogNumberNORAD}/></div> : null}
                         </div>
                         {/* Image container */}
                         <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
@@ -146,7 +146,7 @@ export default async function SatelliteInfoPage({
                 ) : null}
 
                 {/* Container for map */}
-                {noradId && satAttributes.missionStatus === "ON ORBIT" ? (
+                {noradId && satAttributes.missionStatus === "IN ORBIT" ? (
                     <div className="mt-6 w-full">
                         <Map2d satNum={noradId} />
                     </div>
