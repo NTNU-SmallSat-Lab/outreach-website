@@ -1,8 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
-import { useSatelliteStore } from "@/lib/store";
+import { SatelliteNumber, useSatelliteStore } from "@/lib/store";
 import { flag } from "country-emoji";
+import { cp } from "fs";
+import Satellites from "@/app/satellites/page";
+import { Satellite } from "@/__generated__/graphql";
 
 const updateInterval = 50; // in ms
 
@@ -10,8 +13,8 @@ const updateInterval = 50; // in ms
  * Renders the SatelliteDataHome component.
  * This component displays information about a selected satellite, such as velocity, altitude, latitude, longitude, and country.
  */
-export default function SatelliteDataHome() {
-    const { selectedSatellite, satNumToEntry } = useSatelliteStore();
+export default function SatelliteDataHome({satelliteNum}: { satelliteNum: string }) {
+    const { selectedSatellite, setSelectedSatellite, satNumToEntry } = useSatelliteStore();
     const [satelliteInfo, setSatelliteInfo] = useState<SatelliteInfo | null>(
         null,
     );
@@ -19,6 +22,10 @@ export default function SatelliteDataHome() {
     // Update satellite info every `updateInterval` ms
     useEffect(() => {
         const intervalId = setInterval(() => {
+            if(satelliteNum){
+                const satelliteNumber = parseInt(satelliteNum, 10);
+                setSelectedSatellite(satelliteNumber as SatelliteNumber);
+            }
             if (selectedSatellite) {
                 // Access satellite data by name
                 const satData = satNumToEntry[selectedSatellite];
@@ -32,8 +39,7 @@ export default function SatelliteDataHome() {
                 }
             }
         }, updateInterval);
-
-        // Clear interval on component unmount
+        // Clear interval on component unmounts
         return () => clearInterval(intervalId);
     }, [satNumToEntry, selectedSatellite]);
 

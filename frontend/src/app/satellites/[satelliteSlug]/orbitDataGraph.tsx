@@ -190,7 +190,6 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         return () => window.removeEventListener("resize", updateSize);
     }, []);
 
-    console.log("orbitalData", orbitalData);
 
     return (
         <>
