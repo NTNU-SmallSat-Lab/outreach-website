@@ -17,7 +17,7 @@ export default function GlobeWithStats() {
             <div className="flex min-h-[calc(100vh-73px)] flex-col gap-0 bg-black md:flex-row">
                 <div className="z-10 flex flex-col border-b-2 border-l-2 border-r-2 border-t-2 border-gray-600 bg-black">
                     <SatelliteSelector />
-                    <SatelliteDataHome />
+                    <SatelliteDataHome satelliteNum={null} />
                 </div>
 
                 <div className="relative z-0 h-full w-full grow overflow-x-hidden border-b-2 border-l-2 border-r-2 border-t-0 border-gray-600 bg-black md:border-l-0 md:border-t-2 xl:w-2/3">

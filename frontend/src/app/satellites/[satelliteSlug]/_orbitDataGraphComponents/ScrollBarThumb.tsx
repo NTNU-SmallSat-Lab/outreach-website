@@ -87,7 +87,7 @@ const ScrollBarThumb: React.FC<ScrollBarThumbProps> = ({
             window.removeEventListener("mouseup", handleMouseUp);
             window.removeEventListener("mousemove", handleMouseMove);
         };
-    }, [scrollBarThumbWidth, svgContainerRect]);
+    }, [scrollBarThumbWidth, svgContainerRect, handleChartScroll]);
 
     const handleMouseDown = (
         e: React.MouseEvent<SVGRectElement, MouseEvent>,

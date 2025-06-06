@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 
 export type LaunchDateCountDownProps = {
     launchDate: string | Date | undefined;
+    missionStatus: string | undefined | null;
+    orbitalData: any;
 };
 
 /**
@@ -14,6 +16,8 @@ export type LaunchDateCountDownProps = {
  */
 const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
     launchDate: launchDateString,
+    missionStatus: status,
+    orbitalData: orbitalData,
 }) => {
     const [displayTime, setDisplayTime] = useState<string[]>([
         "0 days",
@@ -23,15 +27,18 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
     ]);
     const [hasLaunched, setHasLaunched] = useState<boolean | undefined>(true);
     const [columns, setColumns] = useState<string>("grid grid-cols-4");
+    const isMissionStatusInOrbit = status === "IN ORBIT";
 
     useEffect(() => {
         if (!launchDateString) return;
 
         const launchDate = new Date(launchDateString);
-
         const intervalId = setInterval(() => {
             const now = new Date();
-            const differenceReal = launchDate.getTime() - now.getTime();
+            const timeForDifference = isMissionStatusInOrbit
+                ? now.getTime()
+                : new Date(orbitalData[orbitalData.length - 1].epoch).getTime();
+            const differenceReal = launchDate.getTime() - timeForDifference;
             const difference = Math.abs(differenceReal);
 
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -53,7 +60,7 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
         }, 1000);
 
         return () => clearInterval(intervalId);
-    }, [launchDateString]);
+    }, [launchDateString, isMissionStatusInOrbit, orbitalData]);
 
     if (hasLaunched == undefined || launchDateString == undefined) {
         return <></>;
@@ -62,7 +69,11 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
         <>
             <div className="text-grey-400 pt-10 text-center text-4xl tracking-widest">
                 {hasLaunched ? (
-                    <p>TIME SINCE LAUNCH</p>
+                    isMissionStatusInOrbit ? (
+                        <p>TIME SINCE LAUNCH</p>
+                    ) : (
+                        <p>TIME IN ORBIT</p>
+                    )
                 ) : (
                     <p>TIME UNTIL LAUNCH</p>
                 )}

@@ -58,7 +58,7 @@ export default async function SatelliteInfoPage({
 
     // Get the satellite attributes
     let satAttributes = graphqlData?.data?.satellites?.data[0]?.attributes;
-
+    console.log("satAttributes", satAttributes);
     // If the satellite is not found return a message
     if (!satAttributes?.catalogNumberNORAD) {
         return <div className="flex justify-center">Satellite not found</div>;
@@ -73,8 +73,6 @@ export default async function SatelliteInfoPage({
     if (STRAPI_URL && satelliteImage) {
         imageURL = STRAPI_URL + satelliteImage;
     }
-
-    console.log("satAttributes", satAttributes);
 
     return (
         <>
@@ -114,9 +112,17 @@ export default async function SatelliteInfoPage({
                                         : null}
                                 </p>
                             </div>
-                            <div>
-                                <SatelliteDataHome />
-                            </div>
+
+                            {satAttributes.missionStatus === "IN ORBIT" ? (
+                                <div>
+                                    {" "}
+                                    <SatelliteDataHome
+                                        satelliteNum={
+                                            satAttributes?.catalogNumberNORAD
+                                        }
+                                    />
+                                </div>
+                            ) : null}
                         </div>
                         {/* Image container */}
                         <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
@@ -140,12 +146,14 @@ export default async function SatelliteInfoPage({
                     <div className="w-full">
                         <LaunchDateCountDown
                             launchDate={satAttributes?.launchDate}
+                            missionStatus={satAttributes?.missionStatus}
+                            orbitalData={satAttributes?.historicalOrbitalData}
                         ></LaunchDateCountDown>
                     </div>
                 ) : null}
 
                 {/* Container for map */}
-                {noradId ? (
+                {noradId && satAttributes.missionStatus === "IN ORBIT" ? (
                     <div className="mt-6 w-full">
                         <Map2d satNum={noradId} />
                     </div>

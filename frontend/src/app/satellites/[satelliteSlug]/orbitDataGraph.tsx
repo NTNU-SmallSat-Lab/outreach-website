@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useLayoutEffect, useRef } from "react";
+import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
 import {
     XAxis,
     CartesianGrid,
@@ -109,43 +109,49 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
     };
 
     // Callback function for updating the chart when the scrollbar thumb is moved
-    const handleChartScroll = (
-        thumbX: number,
-        svgContainerRect: ScrollBarThumbProps["svgContainerRect"],
-    ) => {
-        // Ratio of the thumb left border position to the svg container width
-        const dateRatio =
-            (thumbX - svgContainerRect.topLeft) / svgContainerRect.width;
-        // Taking the last date of the data period (first date is the launch date)
-        const lastDataDate = new Date(
-            orbitalData[orbitalData.length - 1].epoch.slice(0, 23) + "Z",
-        );
-        // Calculating the displayed period in milliseconds
-        const displayedPeriodMs = lastDataDate.getTime() - launchDate.getTime();
-        // Calculating the first and last date of the chart
-        const firstChartDate = new Date(
-            launchDate.getTime() + displayedPeriodMs * dateRatio,
-        );
-        const lastChartDate = new Date(firstChartDate);
-        lastChartDate.setMonth(
-            firstChartDate.getMonth() + scrollBarTimeFrame.current,
-        );
-        // Filtering the data to display only the data in the selected period
-        const filteredData = orbitalData
-            .filter((data: any) => {
-                const dataDate = new Date(data.epoch.slice(0, 23) + "Z");
-                return dataDate >= firstChartDate && dataDate <= lastChartDate;
-            })
-            .map((data: any) => {
-                return {
-                    ...data,
-                    semiMajorAxis: data.semiMajorAxis - 6371,
-                    epoch: new Date(data.epoch.slice(0, 23) + "Z"),
-                };
-            });
+    const handleChartScroll = useCallback(
+        (
+            thumbX: number,
+            svgContainerRect: ScrollBarThumbProps["svgContainerRect"],
+        ) => {
+            // Ratio of the thumb left border position to the svg container width
+            const dateRatio =
+                (thumbX - svgContainerRect.topLeft) / svgContainerRect.width;
+            // Taking the last date of the data period (first date is the launch date)
+            const lastDataDate = new Date(
+                orbitalData[orbitalData.length - 1].epoch.slice(0, 23) + "Z",
+            );
+            // Calculating the displayed period in milliseconds
+            const displayedPeriodMs =
+                lastDataDate.getTime() - launchDate.getTime();
+            // Calculating the first and last date of the chart
+            const firstChartDate = new Date(
+                launchDate.getTime() + displayedPeriodMs * dateRatio,
+            );
+            const lastChartDate = new Date(firstChartDate);
+            lastChartDate.setMonth(
+                firstChartDate.getMonth() + scrollBarTimeFrame.current,
+            );
+            // Filtering the data to display only the data in the selected period
+            const filteredData = orbitalData
+                .filter((data: any) => {
+                    const dataDate = new Date(data.epoch.slice(0, 23) + "Z");
+                    return (
+                        dataDate >= firstChartDate && dataDate <= lastChartDate
+                    );
+                })
+                .map((data: any) => {
+                    return {
+                        ...data,
+                        semiMajorAxis: data.semiMajorAxis - 6371,
+                        epoch: new Date(data.epoch.slice(0, 23) + "Z"),
+                    };
+                });
 
-        setChartData(filteredData);
-    };
+            setChartData(filteredData);
+        },
+        [orbitalData, launchDate, scrollBarTimeFrame, setChartData],
+    );
 
     // Layout effect to track the size of the container and update the svg size
     useLayoutEffect(() => {
@@ -188,9 +194,7 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         updateSize();
 
         return () => window.removeEventListener("resize", updateSize);
-    }, []);
-
-    console.log("orbitalData", orbitalData);
+    }, [handleChartScroll, months]);
 
     return (
         <>
