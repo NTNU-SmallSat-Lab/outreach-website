@@ -14,7 +14,6 @@ import { SatelliteNumber } from "@/lib/store";
 import { graphql } from "@/lib/tada/graphql";
 import { getClient } from "@/lib/ApolloClient";
 import OrbitDataGraph from "./orbitDataGraph";
-import { m } from "framer-motion";
 
 export interface ProjectOrSatellite {
     id: string;

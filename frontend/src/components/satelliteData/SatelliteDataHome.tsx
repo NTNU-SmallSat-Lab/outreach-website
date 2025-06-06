@@ -1,12 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { convertSatrec, SatelliteInfo } from "@/lib/convertSatrec";
-import { SatelliteNumber, useSatelliteStore } from "@/lib/store";
-import { flag } from "country-emoji";
-import { cp } from "fs";
-import Satellites from "@/app/satellites/page";
-import { Satellite } from "@/__generated__/graphql";
-
+import { SatelliteNumber ,useSatelliteStore } from "@/lib/store";
+import { flag } from "country-emoji";;
 const updateInterval = 50; // in ms
 
 /**
@@ -41,7 +37,7 @@ export default function SatelliteDataHome({satelliteNum}: { satelliteNum: string
         }, updateInterval);
         // Clear interval on component unmounts
         return () => clearInterval(intervalId);
-    }, [satNumToEntry, selectedSatellite]);
+    }, [satNumToEntry, selectedSatellite, satelliteNum, setSelectedSatellite]);
 
     return (
         <div>

@@ -56,7 +56,7 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
         }, 1000);
 
         return () => clearInterval(intervalId);
-    }, [launchDateString]);
+    }, [launchDateString, isMissionStatusInOrbit, orbitalData]);
 
     if (hasLaunched == undefined || launchDateString == undefined) {
         return <></>;
