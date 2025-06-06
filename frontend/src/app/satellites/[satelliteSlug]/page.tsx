@@ -74,7 +74,6 @@ export default async function SatelliteInfoPage({
         imageURL = STRAPI_URL + satelliteImage;
     }
 
-
     return (
         <>
             <div className="flex flex-col items-center">
@@ -113,8 +112,17 @@ export default async function SatelliteInfoPage({
                                         : null}
                                 </p>
                             </div>
-                            
-                            {satAttributes.missionStatus === "IN ORBIT" ? <div> <SatelliteDataHome satelliteNum={satAttributes?.catalogNumberNORAD}/></div> : null}
+
+                            {satAttributes.missionStatus === "IN ORBIT" ? (
+                                <div>
+                                    {" "}
+                                    <SatelliteDataHome
+                                        satelliteNum={
+                                            satAttributes?.catalogNumberNORAD
+                                        }
+                                    />
+                                </div>
+                            ) : null}
                         </div>
                         {/* Image container */}
                         <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
@@ -139,7 +147,7 @@ export default async function SatelliteInfoPage({
                         <LaunchDateCountDown
                             launchDate={satAttributes?.launchDate}
                             missionStatus={satAttributes?.missionStatus}
-                            orbitalData= {satAttributes?.historicalOrbitalData}
+                            orbitalData={satAttributes?.historicalOrbitalData}
                         ></LaunchDateCountDown>
                     </div>
                 ) : null}
@@ -192,7 +200,6 @@ export default async function SatelliteInfoPage({
             </div>
         </>
     );
-
 }
 
 const GET_SATELLITE_INFO = graphql(`

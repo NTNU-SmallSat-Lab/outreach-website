@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 export type LaunchDateCountDownProps = {
     launchDate: string | Date | undefined;
     missionStatus: string | undefined | null;
-    orbitalData : any;
+    orbitalData: any;
 };
 
 /**
@@ -15,7 +15,9 @@ export type LaunchDateCountDownProps = {
  * @returns {JSX.Element} - The countdown component.
  */
 const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
-    launchDate: launchDateString, missionStatus: status, orbitalData : orbitalData
+    launchDate: launchDateString,
+    missionStatus: status,
+    orbitalData: orbitalData,
 }) => {
     const [displayTime, setDisplayTime] = useState<string[]>([
         "0 days",
@@ -33,7 +35,9 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
         const launchDate = new Date(launchDateString);
         const intervalId = setInterval(() => {
             const now = new Date();
-            const timeForDifference = isMissionStatusInOrbit ? now.getTime() : new Date(orbitalData[orbitalData.length - 1].epoch).getTime();
+            const timeForDifference = isMissionStatusInOrbit
+                ? now.getTime()
+                : new Date(orbitalData[orbitalData.length - 1].epoch).getTime();
             const differenceReal = launchDate.getTime() - timeForDifference;
             const difference = Math.abs(differenceReal);
 
@@ -65,12 +69,14 @@ const LaunchDateCountDown: React.FC<LaunchDateCountDownProps> = ({
         <>
             <div className="text-grey-400 pt-10 text-center text-4xl tracking-widest">
                 {hasLaunched ? (
-                    (isMissionStatusInOrbit ? 
-                        <p>TIME SINCE LAUNCH</p> 
-                        : <p>TIME IN ORBIT</p>)
-                ) : 
+                    isMissionStatusInOrbit ? (
+                        <p>TIME SINCE LAUNCH</p>
+                    ) : (
+                        <p>TIME IN ORBIT</p>
+                    )
+                ) : (
                     <p>TIME UNTIL LAUNCH</p>
-                }
+                )}
             </div>
 
             <div className="mt-8 flex justify-center">
