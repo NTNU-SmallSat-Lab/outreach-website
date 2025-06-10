@@ -194,7 +194,9 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         updateSize();
 
         return () => window.removeEventListener("resize", updateSize);
-    }, [handleChartScroll, months]);
+    }, []);
+
+    console.log("orbitalData", orbitalData);
 
     return (
         <>

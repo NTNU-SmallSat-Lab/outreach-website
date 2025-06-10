@@ -12,7 +12,7 @@ const updateInterval = 50; // in ms
 export default function SatelliteDataHome({
     satelliteNum,
 }: {
-    satelliteNum: string | null;
+    satelliteNum: SatelliteNumber | null;
 }) {
     const { selectedSatellite, setSelectedSatellite, satNumToEntry } =
         useSatelliteStore();
@@ -24,8 +24,7 @@ export default function SatelliteDataHome({
     useEffect(() => {
         const intervalId = setInterval(() => {
             if (satelliteNum) {
-                const satelliteNumber = parseInt(satelliteNum, 10);
-                setSelectedSatellite(satelliteNumber as SatelliteNumber);
+                setSelectedSatellite(satelliteNum);
             }
             if (selectedSatellite) {
                 // Access satellite data by name
