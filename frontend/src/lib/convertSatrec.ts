@@ -30,6 +30,7 @@ interface SatelliteInfo {
 interface SatelliteFutureInfo {
     latitudeDeg: string;
     longitudeDeg: string;
+    time: number; // Time of the future position in ISO format
 }
 
 export type { SatelliteInfo, SatelliteFutureInfo };
@@ -82,6 +83,7 @@ export const convertSatrec = (
     }
 
     const positionAndVelocity = satellite.propagate(satrec, new Date());
+    
 
     const gmst = satellite.gstime(new Date());
     const positionEci = positionAndVelocity.position;
@@ -162,6 +164,7 @@ export const predictFuturePositions = (
             futurePositions.push({
                 longitudeDeg: longitudeDeg.toFixed(2),
                 latitudeDeg: latitudeDeg.toFixed(2),
+                time: futureTime.getTime(), // Store time in milliseconds
             });
         }
     }

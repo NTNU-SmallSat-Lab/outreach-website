@@ -17,6 +17,11 @@ type Nominal<Type, Identifier> = Type & {
 
 export type SatelliteName = Nominal<string, "SatelliteName">;
 export type SatelliteNumber = Nominal<number, "SatelliteNumber">;
+export type Location = {
+    latitude: number;
+    longitude: number;
+    name: string;
+};
 
 // Satellite entry for setSatellites
 export interface SatelliteEntry {
@@ -79,4 +84,36 @@ export const useSatelliteStore = create<SatelliteStore>()((set) => ({
             selectedSatellite: satNum,
         }));
     },
+}));
+
+
+export interface LocationState {
+    locations: Location[];
+    selectedLocation: Location | null;
+}
+
+export interface LocationActions {
+    setLocations: (locations: Location[]) => void;
+    addLocation: (location: Location) => void;
+    setSelectedLocation: (location: Location) => void;
+}
+
+type LocationStore = LocationState & LocationActions;
+
+// Create location store
+export const useLocationStore = create<LocationStore>()((set) => ({
+    locations: [{
+        latitude: 63.446827,
+        longitude: 10.421906,
+        name: "Trondheim",
+    },
+    // Add more default locations if needed
+],
+    
+    selectedLocation: {latitude: 63.446827, longitude: 10.421906, name: "Trondheim"},
+
+    setLocations: (locations) => set({ locations }),
+    addLocation: (location) =>
+        set((state) => ({ locations: [...state.locations, location] })),
+    setSelectedLocation: (location) => set({ selectedLocation: location }),
 }));

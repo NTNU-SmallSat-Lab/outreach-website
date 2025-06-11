@@ -114,7 +114,7 @@ export default async function SatelliteInfoPage({
                                         : null}
                                 </p>
                             </div>
-                            {satAttributes.missionStatus === "ON ORBIT" ? (
+                            {satAttributes.missionStatus === "IN ORBIT" ? (
                                 <div>
                                     <SatelliteDataHome satelliteNum={noradId} />
                                 </div>
@@ -151,7 +151,7 @@ export default async function SatelliteInfoPage({
                 ) : null}
 
                 {/* Container for map */}
-                {noradId && satAttributes.missionStatus === "ON ORBIT" ? (
+                {noradId && satAttributes.missionStatus === "IN ORBIT" ? (
                     <div className="mt-6 w-full">
                         <Map2d satNum={noradId} />
                     </div>
