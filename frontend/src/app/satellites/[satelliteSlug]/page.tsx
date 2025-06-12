@@ -174,7 +174,7 @@ export default async function SatelliteInfoPage({
                     ) : null
                 ) : null}
             </div>
-            {/* Related projects */}
+            {/* Related projects  */}
             <div className="mt-8 flex w-full flex-col items-center">
                 {relatedProjects?.length != 0 ? (
                     <>
