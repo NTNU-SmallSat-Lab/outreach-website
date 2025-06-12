@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useLayoutEffect, useRef, useCallback } from "react";
+import React, {
+    useState,
+    useLayoutEffect,
+    useRef,
+    useCallback,
+    useMemo,
+} from "react";
 import {
     XAxis,
     CartesianGrid,
@@ -45,9 +51,10 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
     const [chartData, setChartData] = useState<ChartData[]>([]);
 
     // Handling button for zooming in and out of the graph on a time scale
-    const launchDate = launchDateString
-        ? new Date(launchDateString)
-        : new Date();
+    const launchDate = useMemo(
+        () => (launchDateString ? new Date(launchDateString) : new Date()),
+        [launchDateString],
+    );
     const calculateMonthsDiff = () => {
         const currentDate = new Date();
         return (
@@ -194,7 +201,7 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
         updateSize();
 
         return () => window.removeEventListener("resize", updateSize);
-    }, []);
+    }, [handleChartScroll, months]);
 
     console.log("orbitalData", orbitalData);
 

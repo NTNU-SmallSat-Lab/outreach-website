@@ -14,9 +14,6 @@ export default function SatellitePassOverTime() {
     const selectedSatellite = useSatelliteStore(
         (state) => state.selectedSatellite,
     );
-    const setSelectedLocation = useLocationStore(
-        (state) => state.setSelectedLocation,
-    );
 
     // State to manage the display time
     const [displayTime, setDisplayTime] = useState<string[]>([
