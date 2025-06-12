@@ -17,6 +17,11 @@ type Nominal<Type, Identifier> = Type & {
 
 export type SatelliteName = Nominal<string, "SatelliteName">;
 export type SatelliteNumber = Nominal<number, "SatelliteNumber">;
+export type Location = {
+    latitude: number;
+    longitude: number;
+    name: string;
+};
 
 // Satellite entry for setSatellites
 export interface SatelliteEntry {
@@ -79,4 +84,44 @@ export const useSatelliteStore = create<SatelliteStore>()((set) => ({
             selectedSatellite: satNum,
         }));
     },
+}));
+
+// Define the state for location management, for the pass over feature
+export interface LocationState {
+    locations: Location[];
+    selectedLocation: Location | null;
+}
+
+// Define the actions for location management
+/* eslint-disable no-unused-vars */
+// Disable unused variables as the store actions defined here are used in other files,
+export interface LocationActions {
+    setLocations: (locations: Location[]) => void;
+    addLocation: (location: Location) => void;
+    setSelectedLocation: (location: Location) => void;
+}
+/* eslint-enable no-unused-vars */
+
+export type LocationStore = LocationState & LocationActions;
+// Create location store
+export const useLocationStore = create<LocationStore>()((set) => ({
+    locations: [
+        {
+            latitude: 63.446827,
+            longitude: 10.421906,
+            name: "Trondheim",
+        },
+        // Add more default locations if needed
+    ],
+
+    selectedLocation: {
+        latitude: 63.446827,
+        longitude: 10.421906,
+        name: "Trondheim",
+    },
+
+    setLocations: (locations) => set({ locations }),
+    addLocation: (location) =>
+        set((state) => ({ locations: [...state.locations, location] })),
+    setSelectedLocation: (location) => set({ selectedLocation: location }),
 }));
