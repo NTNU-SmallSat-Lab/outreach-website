@@ -92,7 +92,6 @@ export interface LocationState {
     selectedLocation: Location | null;
 }
 
-
 // Define the actions for location management
 /* eslint-disable no-unused-vars */
 // Disable unused variables as the store actions defined here are used in other files,
@@ -103,19 +102,23 @@ export interface LocationActions {
 }
 /* eslint-enable no-unused-vars */
 
-
 export type LocationStore = LocationState & LocationActions;
 // Create location store
 export const useLocationStore = create<LocationStore>()((set) => ({
-    locations: [{
+    locations: [
+        {
+            latitude: 63.446827,
+            longitude: 10.421906,
+            name: "Trondheim",
+        },
+        // Add more default locations if needed
+    ],
+
+    selectedLocation: {
         latitude: 63.446827,
         longitude: 10.421906,
         name: "Trondheim",
     },
-    // Add more default locations if needed
-],
-    
-    selectedLocation: {latitude: 63.446827, longitude: 10.421906, name: "Trondheim"},
 
     setLocations: (locations) => set({ locations }),
     addLocation: (location) =>

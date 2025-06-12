@@ -83,7 +83,6 @@ export const convertSatrec = (
     }
 
     const positionAndVelocity = satellite.propagate(satrec, new Date());
-    
 
     const gmst = satellite.gstime(new Date());
     const positionEci = positionAndVelocity.position;
