@@ -16,7 +16,7 @@ export default function GlobeWithStats() {
     return (
         <>
             <div className="flex min-h-[calc(100vh-73px)] flex-col gap-0 bg-black md:flex-row">
-                <div className="z-10 flex flex-col border-b-2 border-l-2 border-r-2 border-t-2 border-gray-600 bg-black">
+                <div className="z-10 flex w-full flex-col border-b-2 border-l-2 border-r-2 border-t-2 border-gray-600 bg-black md:w-[400px]">
                     <SatelliteSelector />
                     <SatelliteDataHome satelliteNum={null} />
                     <SatellitePassOver />

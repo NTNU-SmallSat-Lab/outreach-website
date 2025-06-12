@@ -4,11 +4,22 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Location } from "@/lib/store";
 import { useLocationStore } from "@/lib/store";
+import { parse } from "path";
 
 export default function SatellitePassOverLocation() {
     // State to manage whether the dropdown is open or closed
     let isLargeScreen = useRef<boolean>(false);
     // Useeffect to check window type
+    function isValidCoordinate(latitude: number, longitude: number): boolean {
+        return (
+            !isNaN(latitude) &&
+            !isNaN(longitude) &&
+            latitude >= -90 &&
+            latitude <= 90 &&
+            longitude >= -180 &&
+            longitude <= 180
+        );
+    }
     useEffect(() => {
         if (typeof window !== "undefined") {
             isLargeScreen.current =
@@ -45,6 +56,10 @@ export default function SatellitePassOverLocation() {
 
     const handleAddLocation = (latitude: string, longitude: string) => {
         //Placeholder for adding a location
+        if (!isValidCoordinate(parseFloat(latitude), parseFloat(longitude))) {
+            setError("Please enter valid latitude and longitude.");
+            return;
+        }
         addLocation({
             latitude: parseFloat(latitude),
             longitude: parseFloat(longitude),
@@ -97,7 +112,7 @@ export default function SatellitePassOverLocation() {
     };
 
     return (
-        <div className="m-0 w-full border-b border-gray-600 p-0">
+        <div className="w-full">
             <button
                 className="flex w-full cursor-pointer flex-row  justify-between bg-black p-4 text-left"
                 onClick={toggleDropdown}
@@ -145,27 +160,14 @@ export default function SatellitePassOverLocation() {
                     </div>
                 ))}
 
-                <div className="mb-2 flex w-full items-center gap-4">
-                    <div className="flex flex-grow items-center rounded bg-black text-white">
-                        <span className="p-2 pr-0">
-                            <svg
-                                className="h-4 w-4 text-gray-400"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </span>
+                <div className="mb-2 flex w-full items-center gap-0">
+                    <div className=" items-center rounded bg-black text-white">
                         <input
                             type="text"
                             value={latitude.toString()}
                             onChange={handleLatitudeChange}
                             onKeyDown={handleKeyDown}
-                            className="flex-grow bg-black p-2 text-white outline-none"
+                            className="flex-1 bg-black p-2 text-white outline-none"
                             placeholder="latitude"
                         />
                         <input
@@ -173,7 +175,7 @@ export default function SatellitePassOverLocation() {
                             value={longitude.toString()}
                             onChange={handleLongitudeChange}
                             onKeyDown={handleKeyDown}
-                            className="flex-grow bg-black p-2 text-white outline-none"
+                            className="flex-2 bg-black p-2 text-white outline-none"
                             placeholder="longitude"
                         />
                     </div>
@@ -183,7 +185,7 @@ export default function SatellitePassOverLocation() {
                                 handleAddLocation(latitude, longitude);
                             }
                         }}
-                        className="mr-2 whitespace-nowrap rounded-md border bg-primary p-1 text-white duration-200 ease-in-out hover:opacity-80"
+                        className="flex-3 mr-2 whitespace-nowrap rounded-md border bg-primary p-1 text-white duration-200 ease-in-out hover:opacity-80"
                     >
                         Add Location
                     </button>

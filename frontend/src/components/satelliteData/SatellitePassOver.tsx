@@ -7,7 +7,7 @@ import { Location } from "@/lib/store";
 
 export default function SatellitePassOver() {
     return (
-        <div className="m-0 w-full border-b border-gray-600 p-0">
+        <div>
             <SatellitePassOverLocation />
             <SatellitePassOverTime />
         </div>
