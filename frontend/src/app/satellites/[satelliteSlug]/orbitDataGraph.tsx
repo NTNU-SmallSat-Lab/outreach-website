@@ -365,7 +365,7 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
                                     dot={false}
                                 />
                                 <Line
-                                    name="Semi-major Axis (km)"
+                                    name="Altitude (km)"
                                     type="monotone"
                                     dataKey="semiMajorAxis"
                                     stroke="#ff0000"
