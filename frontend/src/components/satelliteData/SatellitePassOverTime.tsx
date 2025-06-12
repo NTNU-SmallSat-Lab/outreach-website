@@ -2,10 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocationStore } from "@/lib/store";
 import { useSatelliteStore } from "@/lib/store";
-import { convertSatrec, predictFuturePositions } from "@/lib/convertSatrec";
-import { time } from "console";
-import { cp } from "fs";
-import next from "next";
+import { predictFuturePositions } from "@/lib/convertSatrec";
 const updateInterval = 50; // in ms
 const deltaDegree = 1; // Delta degree to check if the satellite is over the location
 
@@ -21,16 +18,7 @@ export default function SatellitePassOverTime() {
         (state) => state.setSelectedLocation,
     );
 
-    const [point, setPoint] = useState<
-        | {
-              latitudeDeg: string;
-              longitudeDeg: string;
-              time: number;
-          }
-        | undefined
-    >(undefined);
     // State to manage the display time
-
     const [displayTime, setDisplayTime] = useState<string[]>([
         "Calculating...",
     ]);

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Location } from "@/lib/store";
 import { useLocationStore } from "@/lib/store";
-import { parse } from "path";
 
 export default function SatellitePassOverLocation() {
     // State to manage whether the dropdown is open or closed
