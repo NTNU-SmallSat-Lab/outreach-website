@@ -115,9 +115,10 @@ export default function SatellitePassOverLocation() {
             <button
                 className="flex w-full cursor-pointer flex-row  justify-between bg-black p-4 text-left"
                 onClick={toggleDropdown}
+                data-testid="location-dropdown-button"
             >
                 <div className="flex flex-col">
-                    <div>
+                    <div data-testid="location-name">
                         {displaeydCity ||
                             displayedLocation ||
                             "Select a Location"}
@@ -147,12 +148,14 @@ export default function SatellitePassOverLocation() {
                 animate={isOpen ? "open" : "collapsed"}
                 variants={variants}
                 transition={{ duration: 0.5 }}
+                data-testid="location-dropdown-list"
             >
                 {locations.map((location, idx) => (
                     <div
                         key={idx}
                         className="cursor-pointer p-2 text-white hover:bg-gray-700"
                         onClick={() => handleSelect(location)}
+                        role="option"
                     >
                         {location.name} ({location.latitude + "° N"},{" "}
                         {location.longitude + "° E"})
@@ -168,6 +171,7 @@ export default function SatellitePassOverLocation() {
                             onKeyDown={handleKeyDown}
                             className="flex-1 bg-black p-2 text-white outline-none"
                             placeholder="latitude"
+                            data-testid="latitude-input"
                         />
                         <input
                             type="text"
@@ -176,6 +180,7 @@ export default function SatellitePassOverLocation() {
                             onKeyDown={handleKeyDown}
                             className="flex-2 bg-black p-2 text-white outline-none"
                             placeholder="longitude"
+                            data-testid="longitude-input"
                         />
                     </div>
                     <button
@@ -185,6 +190,7 @@ export default function SatellitePassOverLocation() {
                             }
                         }}
                         className="flex-3 mr-2 whitespace-nowrap rounded-md border bg-primary p-1 text-white duration-200 ease-in-out hover:opacity-80"
+                        data-testid="add-location-button"
                     >
                         Add Location
                     </button>

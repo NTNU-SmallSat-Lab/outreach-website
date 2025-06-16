@@ -119,9 +119,12 @@ export default function SatDropdown() {
             <button
                 className="flex w-full cursor-pointer flex-row  justify-between bg-black p-4 text-left"
                 onClick={toggleDropdown}
+                data-testid="satellite-dropdown-button"
             >
                 <div className="flex flex-col">
-                    <div>{selectedSatelliteName || "Select a Satellite"}</div>
+                    <div data-testid="satellite-name">
+                        {selectedSatelliteName || "Select a Satellite"}
+                    </div>
                     <p className="text-gray-400">
                         {selectedSatelliteName ? "Selected Satellite" : null}
                     </p>
@@ -144,6 +147,7 @@ export default function SatDropdown() {
                 animate={isOpen ? "open" : "collapsed"}
                 variants={variants}
                 transition={{ duration: 0.5 }}
+                data-testid="satellite-dropdown-list"
             >
                 {Object.entries(satNumToEntry).map(([num]) => {
                     let satNum = Number(num) as SatelliteNumber;
@@ -157,6 +161,7 @@ export default function SatDropdown() {
                             onClick={() =>
                                 handleSelect(Number(num) as SatelliteNumber)
                             }
+                            role="option"
                         >
                             {satNumToEntry[satNum].name}
                         </div>
