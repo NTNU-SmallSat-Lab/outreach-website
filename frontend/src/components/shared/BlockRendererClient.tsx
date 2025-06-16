@@ -19,7 +19,7 @@ export default function BlockRendererClient({
 }) {
     if (!content) return null;
     return (
-        <div className="prose prose-invert lg:prose-xl">
+        <div className="prose prose-invert flex w-full flex-col lg:prose-xl">
             <BlocksRenderer
                 content={content}
                 blocks={{
@@ -62,9 +62,11 @@ export default function BlockRendererClient({
                         const text = child[0]?.props.text;
                         //Children with text have testid, excluding videoes and linebreaks.
                         if (text == "") {
-                            return <p>{children}</p>;
+                            return <div>{children}</div>;
                         }
-                        return <p data-testid="blockParagraph">{children}</p>;
+                        return (
+                            <div data-testid="blockParagraph">{children}</div>
+                        );
                     },
 
                     link: ({ url, children }) => {
@@ -72,13 +74,16 @@ export default function BlockRendererClient({
                         const isYouTubeVideo = url.includes("youtube.com");
                         // Render the iframe only if it's a YouTube video link
                         if (isYouTubeVideo) {
+                            const videoId = url.split("v=")[1]?.split("&")[0];
+                            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
                             return (
-                                <div className="flex w-full items-center">
+                                <div className="w-full items-center">
                                     <iframe
-                                        width={"100%"}
-                                        className="aspect-video"
-                                        src={url}
+                                        width="100%"
+                                        className="aspect-video w-full max-w-3xl"
+                                        src={embedUrl}
                                         title="YouTube video"
+                                        allowFullScreen
                                     ></iframe>
                                 </div>
                             );
