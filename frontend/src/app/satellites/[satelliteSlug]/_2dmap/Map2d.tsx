@@ -107,6 +107,7 @@ export default function Map2d({ satNum }: { satNum: SatelliteNumber }) {
                         value={inputValue}
                         onChange={handleSliderChange}
                         className="w-full rounded-lg bg-gray-200 py-2 text-black focus:outline-none focus:ring"
+                        data-testid="prediction-slider"
                     />
                     <p className="mt-2 font-thin">
                         Projected positions {projectionAmount / 60} hours into
