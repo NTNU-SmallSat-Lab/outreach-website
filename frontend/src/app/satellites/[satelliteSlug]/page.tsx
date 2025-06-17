@@ -16,24 +16,6 @@ import { getClient } from "@/lib/ApolloClient";
 import OrbitDataGraph from "./orbitDataGraph";
 import Render3DMod from "../render3DMod";
 
-// Add TypeScript support for the 'model-viewer' custom element
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            "model-viewer": React.DetailedHTMLProps<
-                React.HTMLAttributes<HTMLElement>,
-                HTMLElement
-            > & {
-                src?: string;
-                alt?: string;
-                "auto-rotate"?: boolean | string;
-                "camera-controls"?: boolean | string;
-                style?: React.CSSProperties;
-            };
-        }
-    }
-}
-
 export interface ProjectOrSatellite {
     id: string;
     title: string;
