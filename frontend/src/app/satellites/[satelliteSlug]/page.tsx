@@ -125,7 +125,7 @@ export default async function SatelliteInfoPage({
                         <div className="flex h-full w-full items-center justify-center bg-black">
                             {imageURL ? (
                                 is3DModel ? (
-                                    <Render3DMod url={imageURL}></Render3DMod>
+                                    <Render3DMod url={imageURL} />
                                 ) : (
                                     <Image
                                         src={imageURL}
