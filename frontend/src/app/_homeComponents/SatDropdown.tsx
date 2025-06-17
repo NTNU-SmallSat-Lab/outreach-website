@@ -162,6 +162,7 @@ export default function SatDropdown() {
                                 handleSelect(Number(num) as SatelliteNumber)
                             }
                             role="option"
+                            aria-selected={satNum === selectedSatellite}
                         >
                             {satNumToEntry[satNum].name}
                         </div>
