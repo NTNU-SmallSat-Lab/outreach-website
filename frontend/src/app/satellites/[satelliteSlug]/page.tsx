@@ -59,11 +59,6 @@ export default async function SatelliteInfoPage({
     // Get the satellite attributes
     let satAttributes = graphqlData?.data?.satellites?.data[0]?.attributes;
 
-    // If the satellite is not found return a message
-    if (!satAttributes?.catalogNumberNORAD) {
-        return <div className="flex justify-center">Satellite not found</div>;
-    }
-
     // Get the NORAD ID
     let noradId = Number(satAttributes?.catalogNumberNORAD) as SatelliteNumber;
 
@@ -89,56 +84,58 @@ export default async function SatelliteInfoPage({
                 </PageHeaderAndSubtitle>
 
                 {/* Container for satname, stats and sat image */}
-                {noradId ? (
-                    <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
-                        {/* Stats Container */}
-                        <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
-                            <div className="border-b border-gray-600 bg-black p-5">
+
+                <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
+                    {/* Stats Container */}
+                    <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
+                        <div className="border-b border-gray-600 bg-black p-5">
+                            <div className="flex flex-row">
+                                <p>NORAD ID: </p>
                                 {noradId ? (
-                                    <div className="flex flex-row">
-                                        <p>NORAD ID: </p>
-                                        <a
-                                            href={`https://www.n2yo.com/satellite/?s=${noradId}`}
-                                            target="_blank"
-                                            className="ml-2 underline"
-                                        >
-                                            {noradId}
-                                        </a>
-                                    </div>
-                                ) : null}
-                                <p className="text-gray-400">
-                                    {satAttributes?.massKg
-                                        ? "Mass: " +
-                                          satAttributes?.massKg +
-                                          " kg"
-                                        : null}
-                                </p>
+                                    <a
+                                        href={`https://www.n2yo.com/satellite/?s=${noradId}`}
+                                        target="_blank"
+                                        className="ml-2 underline"
+                                    >
+                                        {noradId}
+                                    </a>
+                                ) : (
+                                    <span className="ml-2">
+                                        No NORAD ID has been assigned yet{" "}
+                                    </span>
+                                )}
                             </div>
-                            {satAttributes.missionStatus === "IN ORBIT" ? (
-                                <div>
-                                    <SatelliteDataHome satelliteNum={noradId} />
-                                </div>
+
+                            <p className="text-gray-400">
+                                {satAttributes?.massKg
+                                    ? "Mass: " + satAttributes?.massKg + " kg"
+                                    : null}
+                            </p>
+                        </div>
+                        {satAttributes?.missionStatus === "IN ORBIT" ? (
+                            <div>
+                                <SatelliteDataHome satelliteNum={noradId} />
+                            </div>
+                        ) : null}
+                    </div>
+                    {/* Image container */}
+                    <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
+                        <div className="flex h-full w-full items-center justify-center bg-black">
+                            {imageURL ? (
+                                <Image
+                                    src={imageURL}
+                                    alt={satAttributes?.name ?? ""}
+                                    width={1600} // Set according to the aspect ratio of the image
+                                    height={0}
+                                    className="p-2"
+                                />
                             ) : null}
                         </div>
-                        {/* Image container */}
-                        <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
-                            <div className="flex h-full w-full items-center justify-center bg-black">
-                                {imageURL ? (
-                                    <Image
-                                        src={imageURL}
-                                        alt={satAttributes?.name ?? ""}
-                                        width={1600} // Set according to the aspect ratio of the image
-                                        height={0}
-                                        className="p-2"
-                                    />
-                                ) : null}
-                            </div>
-                        </div>
                     </div>
-                ) : null}
+                </div>
 
                 {/* Container for launch date */}
-                {satAttributes?.launchDate ? (
+                {noradId && satAttributes?.launchDate ? (
                     <div className="w-full">
                         <LaunchDateCountDown
                             launchDate={satAttributes?.launchDate}
@@ -151,7 +148,7 @@ export default async function SatelliteInfoPage({
                 ) : null}
 
                 {/* Container for map */}
-                {noradId && satAttributes.missionStatus === "IN ORBIT" ? (
+                {noradId && satAttributes?.missionStatus === "IN ORBIT" ? (
                     <div className="mt-6 w-full">
                         <Map2d satNum={noradId} />
                     </div>
