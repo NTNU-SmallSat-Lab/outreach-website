@@ -14,6 +14,25 @@ import { SatelliteNumber } from "@/lib/store";
 import { graphql } from "@/lib/tada/graphql";
 import { getClient } from "@/lib/ApolloClient";
 import OrbitDataGraph from "./orbitDataGraph";
+import Render3DMod from "../render3DMod";
+
+// Add TypeScript support for the 'model-viewer' custom element
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            "model-viewer": React.DetailedHTMLProps<
+                React.HTMLAttributes<HTMLElement>,
+                HTMLElement
+            > & {
+                src?: string;
+                alt?: string;
+                "auto-rotate"?: boolean | string;
+                "camera-controls"?: boolean | string;
+                style?: React.CSSProperties;
+            };
+        }
+    }
+}
 
 export interface ProjectOrSatellite {
     id: string;
@@ -64,12 +83,12 @@ export default async function SatelliteInfoPage({
 
     // Get the satellite image
     let satelliteImage = satAttributes?.satelliteImage?.data?.attributes?.url;
+
     let imageURL = undefined;
     if (STRAPI_URL && satelliteImage) {
         imageURL = STRAPI_URL + satelliteImage;
     }
-
-    console.log("satAttributes", satAttributes);
+    const is3DModel = (satelliteImage ?? "").endsWith(".glb");
 
     return (
         <>
@@ -119,16 +138,21 @@ export default async function SatelliteInfoPage({
                         ) : null}
                     </div>
                     {/* Image container */}
+
                     <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
                         <div className="flex h-full w-full items-center justify-center bg-black">
                             {imageURL ? (
-                                <Image
-                                    src={imageURL}
-                                    alt={satAttributes?.name ?? ""}
-                                    width={1600} // Set according to the aspect ratio of the image
-                                    height={0}
-                                    className="p-2"
-                                />
+                                is3DModel ? (
+                                    <Render3DMod url={imageURL}></Render3DMod>
+                                ) : (
+                                    <Image
+                                        src={imageURL}
+                                        alt={satAttributes?.name ?? ""}
+                                        width={1600} // Set according to the aspect ratio of the image
+                                        height={0}
+                                        className="p-2"
+                                    />
+                                )
                             ) : null}
                         </div>
                     </div>
