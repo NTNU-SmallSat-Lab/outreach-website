@@ -156,6 +156,7 @@ export default function SatellitePassOverLocation() {
                         className="cursor-pointer p-2 text-white hover:bg-gray-700"
                         onClick={() => handleSelect(location)}
                         role="option"
+                        aria-selected={location === selectedLocation}
                     >
                         {location.name} ({location.latitude + "° N"},{" "}
                         {location.longitude + "° E"})
