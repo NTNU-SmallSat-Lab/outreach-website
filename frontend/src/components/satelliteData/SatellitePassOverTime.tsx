@@ -5,6 +5,7 @@ import { useSatelliteStore } from "@/lib/store";
 import { predictFuturePositions } from "@/lib/convertSatrec";
 const updateInterval = 50; // in ms
 const deltaDegree = 1; // Delta degree to check if the satellite is over the location
+const predictedMinutes = 100000; // Number of minutes to predict future positions
 
 export default function SatellitePassOverTime() {
     //Computation of the time before the satellite pass over the selected location
@@ -29,7 +30,10 @@ export default function SatellitePassOverTime() {
         const satData = satNumToEntry[selectedSatellite];
 
         if (satData && satData.satrec) {
-            const futurePoints = predictFuturePositions(satData.satrec, 10000);
+            const futurePoints = predictFuturePositions(
+                satData.satrec,
+                predictedMinutes,
+            );
             const nextPass = futurePoints.find(
                 (point) =>
                     Math.abs(
