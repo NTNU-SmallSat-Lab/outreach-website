@@ -5,6 +5,7 @@ import { useSatelliteStore } from "@/lib/store";
 import { predictFuturePositions } from "@/lib/convertSatrec";
 const updateInterval = 50; // in ms
 const deltaDegree = 1; // Delta degree to check if the satellite is over the location
+const minutesPredicted = 100000; // Number of minutes to predict the satellite's position
 
 export default function SatellitePassOverTime() {
     //Computation of the time before the satellite pass over the selected location
@@ -27,9 +28,11 @@ export default function SatellitePassOverTime() {
     useEffect(() => {
         if (!selectedLocation || !selectedSatellite) return;
         const satData = satNumToEntry[selectedSatellite];
-
         if (satData && satData.satrec) {
-            const futurePoints = predictFuturePositions(satData.satrec, 10000);
+            const futurePoints = predictFuturePositions(
+                satData.satrec,
+                minutesPredicted,
+            );
             const nextPass = futurePoints.find(
                 (point) =>
                     Math.abs(
@@ -50,10 +53,14 @@ export default function SatellitePassOverTime() {
     }, [selectedSatellite, selectedLocation, satNumToEntry]);
 
     useEffect(() => {
-        if (!nextPassTime) return;
+        if (!nextPassTime) {
+            setDisplayTime(["Calculating..."]);
+            return;
+        }
         const intervalId = setInterval(() => {
             const diff = nextPassTime - Date.now();
             if (diff <= 0) {
+                console.log("Satellite is currently over the location.");
                 setDisplayTime(["Calculating..."]);
             }
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -82,8 +89,8 @@ export default function SatellitePassOverTime() {
             ))}
 
             <p className="text-gray-400">
-                Time before the satellite passes over the selected location,
-                with precision of {deltaDegree}°.
+                Predicted time before the satellite passes over the selected
+                location, with precision of {deltaDegree}°.
             </p>
         </div>
     );
