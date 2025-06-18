@@ -1,8 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
-import Hero from "./Hero";
-import { PagePaddingOnlyHorizontal } from "@/components/layout/PageLayout";
 
 const solarDataUrl =
     "https://services.swpc.noaa.gov/images/swx-overview-large.gif";
