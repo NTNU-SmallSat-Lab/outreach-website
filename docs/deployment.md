@@ -106,37 +106,53 @@ Assuming there is an exisiting apache server running on the server, we need to a
 
 ```apache
 <VirtualHost hypso.space:80>
-   ServerName hypso.space
-   DocumentRoot /var/www/html/outreach
+    ServerName hypso.space
+    DocumentRoot /var/www/html/hypso
 
-   RewriteEngine on
-   RewriteCond %{REQUEST_URI} !^/.well-known/acme-challenge/
-   RewriteRule ^/(.*)$ https://hypso.space/$1 [L,R=301]
+    RewriteEngine on
+    RewriteCond %{REQUEST_URI} !^/.well-known/acme-challenge/
+    RewriteRule ^/(.*)$ https://hypso.space/$1 [L,R=301]
+
+    <Directory "/var/www/html/hypso/dataportal_v2">
+        Header always set Access-Control-Allow-Origin "https://hypso.space/dataportal"
+        Header always set Access-Control-Allow-Methods "GET, HEAD"
+        Header always set Access-Control-Allow-Headers "Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        Header always set Access-Control-Allow-Credentials "true"
+    </Directory>
 
 </VirtualHost>
 
+
 <IfModule ssl_module>
    <VirtualHost hypso.space:443>
-   ServerName hypso.space
+      ServerName hypso.space
 
-   SSLEngine on
-   ProxyRequests off
-   ProxyPreserveHost On
-   SSLCertificateFile "/etc/letsencrypt/live/hypso.space/fullchain.pem"
-   SSLCertificateKeyFile "/etc/letsencrypt/live/hypso.space/privkey.pem"
+      SSLEngine on
+      ProxyRequests off
+      ProxyPreserveHost On
+      SSLCertificateFile "/etc/letsencrypt/live/hypso.space/fullchain.pem"
+      SSLCertificateKeyFile "/etc/letsencrypt/live/hypso.space/privkey.pem"
 
-<Location />
-   ProxyPass http://127.0.0.1:3000/
-   ProxyPassReverse http://127.0.0.1:3000/
-</Location>
+      <Location />
+        ProxyPass http://127.0.0.1:3000/
+        ProxyPassReverse http://127.0.0.1:3000/
+        ProxyPreserveHost On
+      </Location>
 
-<Location /strapi>
-   ProxyPass http://127.0.0.1:1337
-   ProxyPassReverse http://127.0.0.1:1337
-   ProxyPreserveHost On
-   </Location>
-   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
-   </VirtualHost>
+      <Location /dataportal>
+         ProxyPass http://127.0.0.1:1334/dataportal
+         ProxyPassReverse http://127.0.0.1:1334/dataportal
+         ProxyPreserveHost On
+      </Location>
+
+      <Location /strapi>
+         ProxyPass http://127.0.0.1:1337
+         ProxyPassReverse http://127.0.0.1:1337
+        ProxyPreserveHost On
+     </Location>
+
+     Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
+    </VirtualHost>
 </IfModule>
 ```
 This will redirect all traffic to the https version of the website and proxy the traffic to the correct ports as well as supporting SSL renewal on port 80
