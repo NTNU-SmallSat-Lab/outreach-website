@@ -4,7 +4,12 @@ import MissionStatement from "./_homeComponents/MissionStatement";
 import FeaturedImage from "./_homeComponents/FeaturedImage";
 import GlobeWithStats from "./_homeComponents/GlobeWithStats";
 import ScrollIndicator from "./_homeComponents/ScrollIndicator";
-import HistorySolarData from "./_homeComponents/HistorySolarData";
+import dynamic from "next/dynamic";
+
+const HistorySolarData = dynamic(
+    () => import("./_homeComponents/HistorySolarData"),
+    { ssr: false },
+);
 
 export default async function Home() {
     return (

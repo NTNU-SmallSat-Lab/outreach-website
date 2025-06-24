@@ -1,33 +1,32 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-
-const solarDataUrl =
-    "https://services.swpc.noaa.gov/images/swx-overview-large.gif";
+import HistoricalSolarCycleData from "./HistoricalSolarCycleData";
+import DailySolarActivity from "./DailySolarActivity";
 
 export default function HistorySolarData() {
     return (
-        <div className="flex w-full flex-col items-center justify-center">
-            <div className="mt-16 flex flex-col items-center justify-center text-center">
-                <div className="prose prose-invert">
-                    <h1>{"Historical Solar Data"}</h1>
-                    <p>
-                        {
-                            "Here is shown multiple charts informing the current state of the solar weather"
-                        }
-                    </p>
-                </div>
+        <div className="mt-16 flex h-full flex-col items-center justify-center text-center">
+            <div className="prose prose-invert">
+                <h1>{"Historical Solar Data"}</h1>
+                <p>
+                    {
+                        "Here is shown the daily and historical Geomagnetic Activity Index (Kp)"
+                    }
+                </p>
+                <p>
+                    {"You can find more details on the website of the"}
+                    <a
+                        href={`https://www.swpc.noaa.gov/communities/space-weather-enthusiasts-dashboard`}
+                        target="_blank"
+                        className="ml-2 underline"
+                    >
+                        {"Space Weather Prediction Center."}
+                    </a>
+                </p>
             </div>
-            {/* Images side by side */}
-            <div className="my-10 flex w-full flex-row items-center justify-center gap-8 p-4 text-center">
-                <Image
-                    alt="Historical Solar Data"
-                    src={solarDataUrl}
-                    width={900}
-                    height={400}
-                    className="w-900 h-auto"
-                />
-            </div>
+            {/* Daily Chart container */}
+            <DailySolarActivity />
+            {/* Historical Chart container */}
+            <HistoricalSolarCycleData />
         </div>
     );
 }
