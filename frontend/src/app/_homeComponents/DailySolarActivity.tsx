@@ -99,6 +99,7 @@ export default function DailySolarActivity() {
                 ],
                 point: {
                     events: {
+                        // eslint-disable-next-line no-unused-vars
                         mouseOver(this: Highcharts.Point) {
                             let groupName = "";
                             if (typeof this.y === "number") {

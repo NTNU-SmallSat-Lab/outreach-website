@@ -94,6 +94,7 @@ export default function HistoricalSolarCycleData() {
                     color: "#ffffff",
                     fontSize: "14px",
                 },
+                // eslint-disable-next-line no-unused-vars
                 formatter: function (
                     this: Highcharts.AxisLabelsFormatterContextObject,
                 ): any {
