@@ -94,22 +94,26 @@ export default function HistoricalSolarCycleData() {
                     color: "#ffffff",
                     fontSize: "14px",
                 },
-                // eslint-disable-next-line no-unused-vars
-                formatter: function (
-                    this: Highcharts.AxisLabelsFormatterContextObject,
-                ): any {
-                    const extremes = this.axis.getExtremes();
-                    const zoomLevel = extremes.max - extremes.min; // Get the current zoom range
-                    if (zoomLevel <= 18 * 30 * 24 * 3600 * 1000) {
-                        // If zoomed in to less than or equal to 1 month
-                        return Highcharts.dateFormat(
-                            "%b %Y",
-                            Number(this.value),
-                        ); // Show month and year
-                    } else {
-                        return Highcharts.dateFormat("%Y", Number(this.value)); // Show only the year
-                    }
-                },
+                formatter:
+                    // eslint-disable-next-line no-unused-vars
+                    function (
+                        this: Highcharts.AxisLabelsFormatterContextObject,
+                    ): any {
+                        const extremes = this.axis.getExtremes();
+                        const zoomLevel = extremes.max - extremes.min; // Get the current zoom range
+                        if (zoomLevel <= 18 * 30 * 24 * 3600 * 1000) {
+                            // If zoomed in to less than or equal to 1 month
+                            return Highcharts.dateFormat(
+                                "%b %Y",
+                                Number(this.value),
+                            ); // Show month and year
+                        } else {
+                            return Highcharts.dateFormat(
+                                "%Y",
+                                Number(this.value),
+                            ); // Show only the year
+                        }
+                    },
             },
             tickColor: "#ffffff", // Customize the tick color
             lineColor: "#ffffff", // Customize the axis line color
