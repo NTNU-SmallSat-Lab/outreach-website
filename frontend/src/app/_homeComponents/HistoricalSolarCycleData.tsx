@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import Highcharts, { chart } from "highcharts/highstock";
+import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 
 export default function HistoricalSolarCycleData() {
@@ -124,12 +124,10 @@ export default function HistoricalSolarCycleData() {
                 },
             },
             labels: {
-                align: "right", // Align labels to the right
                 style: {
                     color: "#ffffff",
                     fontSize: "14px",
                 },
-                x: 0, // Align labels to the left
             },
             tickColor: "#ffffff", // Customize the tick color
             lineColor: "#ffffff", // Customize the axis line color
