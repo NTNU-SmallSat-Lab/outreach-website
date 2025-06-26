@@ -14,9 +14,6 @@ export default function SatInfo({
     satAttributes: SatAttributes;
     STRAPI_URL: string | undefined;
 }) {
-    const [selectedTab, setSelectedTab] = useState<
-        "sat parameters" | "satellite image" | "satellite telemetry"
-    >("sat parameters");
     const [imageURL, setImageURL] = useState<string | undefined>(undefined);
     const [is3DModel, setIs3DModel] = useState<boolean>(false);
     useEffect(() => {
@@ -32,12 +29,6 @@ export default function SatInfo({
             );
         }
     }, [satAttributes, STRAPI_URL]);
-
-    const handleTabChange = (
-        tab: "sat parameters" | "satellite image" | "satellite telemetry",
-    ) => {
-        setSelectedTab(tab);
-    };
 
     return (
         <>

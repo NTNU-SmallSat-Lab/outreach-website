@@ -2,7 +2,7 @@
 import React from "react";
 import { useTabContext } from "@/app/satellites/tabContext";
 
-export default function TabBar({}: {}) {
+export default function TabBar() {
     const { selectedTab, setSelectedTab } = useTabContext();
     return (
         <div className="flex items-stretch justify-center  ">
