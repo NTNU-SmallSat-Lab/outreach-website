@@ -5,6 +5,7 @@ type TabType = "sat parameters" | "satellite image" | "satellite telemetry";
 
 interface TabContextType {
     selectedTab: TabType;
+    // eslint-disable-next-line no-unused-vars
     setSelectedTab: (tab: TabType) => void;
 }
 
