@@ -100,7 +100,7 @@ export default function HistoricalSolarCycleData() {
                 ): any {
                     const extremes = this.axis.getExtremes();
                     const zoomLevel = extremes.max - extremes.min; // Get the current zoom range
-                    if (zoomLevel <= 8 * 12 * 30 * 24 * 3600 * 1000) {
+                    if (zoomLevel <= 18 * 30 * 24 * 3600 * 1000) {
                         // If zoomed in to less than or equal to 1 month
                         return Highcharts.dateFormat(
                             "%b %Y",

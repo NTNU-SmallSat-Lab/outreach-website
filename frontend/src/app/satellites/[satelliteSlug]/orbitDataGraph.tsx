@@ -84,20 +84,15 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({
             if (periodType === "m") {
                 scrollBarTimeFrame.current = number;
                 SBThumbWidth =
-                    months >= number
-                        ? Math.round(
-                              (svgSize.width * 0.8 * number * 10) / months,
-                          ) / 10
-                        : svgSize.width * 0.8 - 40.5;
+                    Math.round((svgSize.width * 0.8 * number * 10) / months) /
+                    10;
                 setSBThumbWidth(SBThumbWidth);
             } else if (periodType === "y") {
                 scrollBarTimeFrame.current = number * 12;
                 SBThumbWidth =
-                    months >= 12 * number
-                        ? Math.round(
-                              (svgSize.width * 0.8 * number * 12 * 10) / months,
-                          ) / 10
-                        : svgSize.width * 0.8 - 40.5;
+                    Math.round(
+                        (svgSize.width * 0.8 * number * 12 * 10) / months,
+                    ) / 10;
                 setSBThumbWidth(SBThumbWidth);
             }
         }
