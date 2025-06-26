@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * satellite controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController('api::satellite.satellite');
+module.exports = createCoreController("api::satellite.satellite");

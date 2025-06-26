@@ -4,11 +4,14 @@ import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import { SatelliteNumber } from "@/lib/store";
 import { SatAttributes } from "@/lib/utils";
 import { useTabContext } from "../tabContext";
+import SatImage from "./satImage";
 
 export default function SatTabs({
     satAttributes,
+    STRAPI_URL,
 }: {
     satAttributes: SatAttributes;
+    STRAPI_URL: string | undefined;
 }) {
     let noradId = Number(satAttributes?.catalogNumberNORAD) as SatelliteNumber;
     const { selectedTab } = useTabContext();
@@ -47,7 +50,9 @@ export default function SatTabs({
                         </div>
                     ) : null}
                 </div>
-            ) : selectedTab === "satellite image" ? null : null}
+            ) : selectedTab === "satellite image" ? (
+                <SatImage STRAPI_URL={STRAPI_URL} noradID={noradId} />
+            ) : null}
         </div>
     );
 }

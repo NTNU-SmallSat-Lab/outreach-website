@@ -49,7 +49,10 @@ export default function SatInfo({
                 {/* Container for satname, stats and sat image */}
                 <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
                     {/* Stats Container */}
-                    <SatTabs satAttributes={satAttributes} />
+                    <SatTabs
+                        satAttributes={satAttributes}
+                        STRAPI_URL={STRAPI_URL}
+                    />
 
                     {/* Image container */}
                     <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
