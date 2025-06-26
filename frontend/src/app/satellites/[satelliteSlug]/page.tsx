@@ -2,18 +2,19 @@ import React from "react";
 import BlockRendererClient from "@/components/shared/BlockRendererClient";
 import RelatedProjectsAndSatellites from "@/components/shared/RelatedProjectsAndSatellites";
 import Map2d from "@/app/satellites/[satelliteSlug]/_2dmap/Map2d";
+import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import LaunchDateCountDown from "@/app/satellites/[satelliteSlug]/launchDateCountDown";
 import {
     PageHeader,
     PageSubtitle,
     PageHeaderAndSubtitle,
 } from "@/components/layout/PageHeader";
+import Image from "next/image";
 import { SatelliteNumber } from "@/lib/store";
 import { graphql } from "@/lib/tada/graphql";
 import { getClient } from "@/lib/ApolloClient";
 import OrbitDataGraph from "./orbitDataGraph";
-import SatInfo from "./satInfo";
-import { SatAttributes } from "@/lib/utils";
+import Render3DMod from "../render3DMod";
 
 export interface ProjectOrSatellite {
     id: string;
@@ -63,6 +64,13 @@ export default async function SatelliteInfoPage({
     let noradId = Number(satAttributes?.catalogNumberNORAD) as SatelliteNumber;
 
     // Get the satellite image
+    let satelliteImage = satAttributes?.satelliteImage?.data?.attributes?.url;
+
+    let imageURL = undefined;
+    if (STRAPI_URL && satelliteImage) {
+        imageURL = STRAPI_URL + satelliteImage;
+    }
+    const is3DModel = (satelliteImage ?? "").endsWith(".glb");
 
     return (
         <>
@@ -76,11 +84,61 @@ export default async function SatelliteInfoPage({
                     </PageSubtitle>
                 </PageHeaderAndSubtitle>
 
-                {/* Container for satellite info*/}
-                <SatInfo
-                    satAttributes={satAttributes as SatAttributes}
-                    STRAPI_URL={STRAPI_URL}
-                />
+                {/* Container for satname, stats and sat image */}
+
+                <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
+                    {/* Stats Container */}
+                    <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
+                        <div className="border-b border-gray-600 bg-black p-5">
+                            <div className="flex flex-row">
+                                <p>NORAD ID: </p>
+                                {noradId ? (
+                                    <a
+                                        href={`https://www.n2yo.com/satellite/?s=${noradId}`}
+                                        target="_blank"
+                                        className="ml-2 underline"
+                                    >
+                                        {noradId}
+                                    </a>
+                                ) : (
+                                    <span className="ml-2">
+                                        No NORAD ID has been assigned yet{" "}
+                                    </span>
+                                )}
+                            </div>
+
+                            <p className="text-gray-400">
+                                {satAttributes?.massKg
+                                    ? "Mass: " + satAttributes?.massKg + " kg"
+                                    : null}
+                            </p>
+                        </div>
+                        {satAttributes?.missionStatus === "IN ORBIT" ? (
+                            <div>
+                                <SatelliteDataHome satelliteNum={noradId} />
+                            </div>
+                        ) : null}
+                    </div>
+                    {/* Image container */}
+
+                    <div className="w-full border-t-2 border-gray-600 xl:border-t-0">
+                        <div className="flex h-full w-full items-center justify-center bg-black">
+                            {imageURL ? (
+                                is3DModel ? (
+                                    <Render3DMod url={imageURL} />
+                                ) : (
+                                    <Image
+                                        src={imageURL}
+                                        alt={satAttributes?.name ?? ""}
+                                        width={1600} // Set according to the aspect ratio of the image
+                                        height={0}
+                                        className="p-2"
+                                    />
+                                )
+                            ) : null}
+                        </div>
+                    </div>
+                </div>
 
                 {/* Container for launch date */}
                 {noradId && satAttributes?.launchDate ? (
