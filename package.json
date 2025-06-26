@@ -13,6 +13,7 @@
     "dependencies": {
         "@react-three/drei": "^9.56.14",
         "@react-three/fiber": "^8.15.13",
+        "@slack/web-api": "^7.9.3",
         "@types/recharts": "^1.8.29",
         "ci": "^2.3.0",
         "concurrently": "^8.2.2",
