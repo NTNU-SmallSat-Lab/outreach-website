@@ -23,7 +23,8 @@ export interface ProjectOrSatellite {
     isProject: boolean;
 }
 
-const STRAPI_URL = process.env.BACKEND_INTERNAL_URL;
+const BACKEND_INTERNAL_URL = process.env.BACKEND_INTERNAL_URL;
+const STRAPI_URL = process.env.STRAPI_URL;
 
 export default async function SatelliteInfoPage({
     params,
@@ -80,6 +81,7 @@ export default async function SatelliteInfoPage({
                 <SatInfo
                     satAttributes={satAttributes as SatAttributes}
                     STRAPI_URL={STRAPI_URL}
+                    BACKEND_INTERNAL_URL={BACKEND_INTERNAL_URL}
                 />
 
                 {/* Container for launch date */}

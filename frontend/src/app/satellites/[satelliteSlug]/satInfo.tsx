@@ -10,17 +10,19 @@ import { TabProvider } from "../tabContext";
 export default function SatInfo({
     satAttributes,
     STRAPI_URL,
+    BACKEND_INTERNAL_URL,
 }: {
     satAttributes: SatAttributes;
     STRAPI_URL: string | undefined;
+    BACKEND_INTERNAL_URL: string | undefined;
 }) {
     const [imageURL, setImageURL] = useState<string | undefined>(undefined);
     const [is3DModel, setIs3DModel] = useState<boolean>(false);
     useEffect(() => {
         let satelliteImage =
             satAttributes?.satelliteImage?.data?.attributes?.url;
-        if (STRAPI_URL && satelliteImage) {
-            const fullImage = STRAPI_URL + satelliteImage;
+        if (BACKEND_INTERNAL_URL && satelliteImage) {
+            const fullImage = BACKEND_INTERNAL_URL + satelliteImage;
             setImageURL(fullImage);
             setIs3DModel(
                 satelliteImage.endsWith(".glb") ||
@@ -28,7 +30,7 @@ export default function SatInfo({
                     satelliteImage.endsWith(".glb?"),
             );
         }
-    }, [satAttributes, STRAPI_URL]);
+    }, [satAttributes, BACKEND_INTERNAL_URL]);
 
     return (
         <>
