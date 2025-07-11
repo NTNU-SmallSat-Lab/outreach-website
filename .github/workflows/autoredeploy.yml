@@ -30,6 +30,7 @@ jobs:
           echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" >> .env
           echo "SLACK_CHANNEL_ID=${{ secrets.SLACK_CHANNEL_ID }}" >> .env
           echo "SLACK_USER_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" >> .env
+          echo "GRAFANA_BOT_TOKEN=${{ secrets.GRAFANA_BOT_TOKEN }}" >> .env
 
           # Create .env.production for the frontend nextjs
           echo "BACKEND_INTERNAL_URL=${{ vars.BACKEND_INTERNAL_URL }}" >> .env.production

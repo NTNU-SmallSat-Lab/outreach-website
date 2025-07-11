@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSatelliteStore } from "@/lib/store";
 import { SatelliteNumber } from "@/lib/store";
+import Image from "next/image";
 
 export default function SatImage({
     STRAPI_URL,
@@ -110,7 +111,15 @@ export default function SatImage({
             }
         }
         fetchSlackImages();
-    }, [satImage, selectedSatellite]);
+    }, [
+        satImage,
+        selectedSatellite,
+        STRAPI_URL,
+        noradID,
+        satNumToEntry,
+        makeTheImagePublic,
+        createImageUrl,
+    ]);
 
     if (loading) {
         return <div>Loading satellite image...</div>;
@@ -120,11 +129,12 @@ export default function SatImage({
     }
     return satImage ? (
         <div className="flex h-full w-full items-center justify-center bg-black">
-            <img
+            <Image
                 key={satImage}
                 src={satImage}
                 alt="Satellite Image"
-                style={{ width: "100%", height: "100%" }}
+                width={1600} // Set according to the aspect ratio of the image
+                height={0}
                 className="max-h-[600px] max-w-[600px] object-contain p-2"
             />
         </div>
