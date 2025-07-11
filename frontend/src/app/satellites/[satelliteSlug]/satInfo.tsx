@@ -1,12 +1,9 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import Render3DMod from "../render3DMod";
+import React from "react";
 import SatTabs from "./satTabs";
 import { SatAttributes } from "@/lib/utils";
 import TabBar from "./tabBars";
 import { TabProvider } from "../tabContext";
-import { useTabContext } from "../tabContext";
 
 export default function SatInfo({
     satAttributes,

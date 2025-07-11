@@ -62,7 +62,7 @@ export default function SatTelemetry({
             }
         }
         fetchTelemetryData();
-    }, [STRAPI_URL, noradID]);
+    }, [STRAPI_URL, noradID, satNumToEntry]);
 
     if (loading) {
         return <div>Loading telemetry data...</div>;
