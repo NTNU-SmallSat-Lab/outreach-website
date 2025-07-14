@@ -199,6 +199,8 @@ export default function SatTelemetry({
             yAxisTitle: "Temperature (°C)",
             series: solarPanelChartData,
             valueSuffix: " °C",
+            description:
+                "There is that much difference in temperature between some solar panels because those panels point more or less towards the sun.",
         },
         {
             title: "Uptime",
@@ -224,6 +226,7 @@ export default function SatTelemetry({
                 fontSize: "24px",
             },
         },
+
         xAxis: {
             type: "datetime",
             labels: {
@@ -292,6 +295,11 @@ export default function SatTelemetry({
                             style: { height: "400px", width: "100%" },
                         }}
                     />
+                    {config.description && (
+                        <div className="mt-2 px-4 text-center text-sm text-gray-400">
+                            {config.description}
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
