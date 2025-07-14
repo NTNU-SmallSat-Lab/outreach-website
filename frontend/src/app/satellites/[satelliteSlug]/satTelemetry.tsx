@@ -4,7 +4,6 @@ import { useSatelliteStore } from "@/lib/store";
 import { SatelliteNumber } from "@/lib/store";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { time } from "console";
 
 export default function SatTelemetry({
     STRAPI_URL,
