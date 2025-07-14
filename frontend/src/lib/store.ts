@@ -111,7 +111,6 @@ export const useLocationStore = create<LocationStore>()((set) => ({
             longitude: 10.421906,
             name: "Trondheim",
         },
-        // Add more default locations if needed
     ],
 
     selectedLocation: {

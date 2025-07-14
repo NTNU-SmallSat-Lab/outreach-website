@@ -1,6 +1,10 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
+/**
+ * This file provides a context for managing the selected tab in the satellite information view.
+ */
+
 type TabType = "sat parameters" | "satellite image" | "satellite telemetry";
 
 interface TabContextType {

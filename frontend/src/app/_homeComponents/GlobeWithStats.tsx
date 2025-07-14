@@ -2,7 +2,7 @@
 import SatelliteSelector from "./SatelliteSelector";
 import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import dynamic from "next/dynamic";
-import SatellitePassOver from "@/components/satelliteData/SatellitePassOver";
+import SatellitePassOver from "@/components/satelliteData/_PassOverFeat/SatellitePassOver";
 
 const SatelliteGlobeNoSSR = dynamic(() => import("./SatelliteGlobe"), {
     ssr: false,

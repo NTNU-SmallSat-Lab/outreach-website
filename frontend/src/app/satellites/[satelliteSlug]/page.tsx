@@ -12,7 +12,7 @@ import { SatelliteNumber } from "@/lib/store";
 import { graphql } from "@/lib/tada/graphql";
 import { getClient } from "@/lib/ApolloClient";
 import OrbitDataGraph from "./orbitDataGraph";
-import SatInfo from "./satInfo";
+import SatInfo from "./_infoSat/satInfo";
 import { SatAttributes } from "@/lib/utils";
 
 export interface ProjectOrSatellite {

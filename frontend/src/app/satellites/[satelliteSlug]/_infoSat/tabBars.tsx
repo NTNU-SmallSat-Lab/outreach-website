@@ -2,6 +2,10 @@
 import React from "react";
 import { useTabContext } from "@/app/satellites/tabContext";
 
+/**
+ * This component renders the tab bar for satellite information, allowing users to switch between parameters, image, and telemetry tabs.
+ */
+
 export default function TabBar() {
     const { selectedTab, setSelectedTab } = useTabContext();
     return (
