@@ -18,9 +18,11 @@ export default function SatInfo({
         <>
             {" "}
             <TabProvider>
-                <div className="flex w-full ">
-                    <TabBar />
-                </div>
+                {satAttributes.missionStatus === "IN ORBIT" ? (
+                    <div className="flex w-full ">
+                        <TabBar />
+                    </div>
+                ) : null}
                 {/* Container for satname, stats and sat image */}
                 <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
                     {/* Stats Container */}
