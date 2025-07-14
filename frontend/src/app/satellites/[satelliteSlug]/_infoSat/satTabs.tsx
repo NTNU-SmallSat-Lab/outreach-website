@@ -1,17 +1,21 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SatelliteDataHome from "@/components/satelliteData/SatelliteDataHome";
 import { SatelliteNumber } from "@/lib/store";
 import { SatAttributes } from "@/lib/utils";
-import { useTabContext } from "../tabContext";
+import { useTabContext } from "../../tabContext";
 import SatImage from "./satImage";
-import Render3DMod from "../render3DMod";
+import Render3DMod from "../../render3DMod";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import SatParameters from "./satParameters";
 
 const SatTelemetry = dynamic(() => import("./satTelemetry"), {
     ssr: false,
 });
+
+/* This component renders the tabs for satellite information, including parameters, image, and telemetry.
+It uses the `useTabContext` to manage the selected tab and displays the appropriate content based
+*/
 
 export default function SatTabs({
     satAttributes,
@@ -43,38 +47,10 @@ export default function SatTabs({
         <div className="flex w-full flex-col border-2 border-gray-600 xl:flex-row">
             <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
                 {selectedTab === "sat parameters" ? (
-                    // Render the parameters of the satellite
-                    <div className="z-10 flex w-full flex-col border-gray-600 xl:border-r-2">
-                        <div className="border-b border-gray-600 bg-black p-5">
-                            <div className="flex flex-row">
-                                <p>NORAD ID: </p>
-                                {noradId ? (
-                                    <a
-                                        href={`https://www.n2yo.com/satellite/?s=${noradId}`}
-                                        target="_blank"
-                                        className="ml-2 underline"
-                                    >
-                                        {noradId}
-                                    </a>
-                                ) : (
-                                    <span className="ml-2">
-                                        No NORAD ID has been assigned yet{" "}
-                                    </span>
-                                )}
-                            </div>
-
-                            <p className="text-gray-400">
-                                {satAttributes?.massKg
-                                    ? "Mass: " + satAttributes?.massKg + " kg"
-                                    : null}
-                            </p>
-                        </div>
-                        {satAttributes?.missionStatus === "IN ORBIT" ? (
-                            <div>
-                                <SatelliteDataHome satelliteNum={noradId} />
-                            </div>
-                        ) : null}
-                    </div>
+                    <SatParameters
+                        satAttributes={satAttributes}
+                        noradId={noradId}
+                    />
                 ) : selectedTab === "satellite image" ? (
                     <SatImage STRAPI_URL={STRAPI_URL} noradID={noradId} />
                 ) : selectedTab === "satellite telemetry" ? (

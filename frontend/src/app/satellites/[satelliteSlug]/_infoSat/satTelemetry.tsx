@@ -5,6 +5,10 @@ import { SatelliteNumber } from "@/lib/store";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
+/**
+ * This component renders the satellite telemetry data, including battery voltage, current, panel temperatures, and uptime.
+ */
+
 export default function SatTelemetry({
     STRAPI_URL,
     noradID,

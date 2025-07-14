@@ -4,6 +4,10 @@ import { useSatelliteStore } from "@/lib/store";
 import { SatelliteNumber } from "@/lib/store";
 import Image from "next/image";
 
+/**
+ * This component renders the satellite image, fetching it from a backend service and displaying it.
+ */
+
 export default function SatImage({
     STRAPI_URL,
     noradID,

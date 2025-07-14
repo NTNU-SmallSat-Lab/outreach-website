@@ -3,7 +3,11 @@ import React from "react";
 import SatTabs from "./satTabs";
 import { SatAttributes } from "@/lib/utils";
 import TabBar from "./tabBars";
-import { TabProvider } from "../tabContext";
+import { TabProvider } from "../../tabContext";
+
+/**
+ * This component renders the satellite information view, including tabs for parameters, image, and telemetry.
+ */
 
 export default function SatInfo({
     satAttributes,
