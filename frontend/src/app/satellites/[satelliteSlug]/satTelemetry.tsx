@@ -4,6 +4,7 @@ import { useSatelliteStore } from "@/lib/store";
 import { SatelliteNumber } from "@/lib/store";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import { time } from "console";
 
 export default function SatTelemetry({
     STRAPI_URL,
@@ -71,6 +72,8 @@ export default function SatTelemetry({
         return <div className="text-red-500">{error}</div>;
     }
 
+    const currentTime = Date.now();
+
     {
         /* Battery Voltage Data */
     }
@@ -83,15 +86,57 @@ export default function SatTelemetry({
     );
 
     {
-        /* Solar Panel Temperature Data */
+        /* Battery Current Data */
     }
-    const SolarTempData = data.solarPanelTemp1;
-    console.log(
-        "SolarTempData",
-        SolarTempData[0].map((timestamp: number) => {
-            return new Date(timestamp).toLocaleString();
+
+    const batteryCurrentData = [data?.battCurrIn, data?.battCurrOut].filter(
+        (curr) => curr,
+    ); // Filter out any undefined values
+    const chartDataIBatt = batteryCurrentData.map(
+        (currData: any, currIndex: number) => ({
+            name:
+                currIndex === 0 ? "Battery Current In" : "Battery Current Out",
+            data: currData[0]
+                .map((timestamp: number, index: number) => [
+                    timestamp,
+                    currData[1][index] / 1000, // Assuming you need to divide by 1000
+                ])
+                .filter(([timestamp]: number[]) => timestamp <= currentTime), // Filter out future timestamps
+            color: currIndex === 0 ? "yellow" : "red", // Different color for in and out
         }),
     );
+
+    {
+        /* Temperature Panel Data */
+    }
+
+    const checkLine = (data: number[]) => {
+        return data.every((index) => data[index] === data[0]);
+    };
+
+    const tempPanelChart = [];
+    for (let i = 0; i <= 13; i++) {
+        const tempData = data?.[`tempPanelData${i}`];
+        if (tempData && !checkLine(tempData[1])) {
+            tempPanelChart.push({
+                name: `Panel ${i}`,
+                data: tempData[0]
+                    .map((timestamp: number, index: number) => [
+                        timestamp,
+                        tempData[1][index], // Assuming you need to divide by 1000
+                    ])
+                    .filter(
+                        ([timestamp]: number[]) => timestamp <= currentTime,
+                    ), // Filter out future timestamps
+                color: `hsl(${i * 30}, 70%, 50%)`, // Different color for each panel
+            });
+        }
+    }
+
+    {
+        /* Solar Panel Temperature Data */
+    }
+
     const solarPanelTempData = [
         data?.solarPanelTemp1,
         data?.solarPanelTemp2,
@@ -100,7 +145,6 @@ export default function SatTelemetry({
         data?.solarPanelTemp5,
         data?.solarPanelTemp6,
     ].filter((temp) => temp); // Filter out any undefined values
-    const currentTime = Date.now();
     const solarPanelChartData = solarPanelTempData.map(
         (tempData, panelIndex) => ({
             name: `Solar Panel ${panelIndex + 1}`,
@@ -112,17 +156,6 @@ export default function SatTelemetry({
                 .filter(([timestamp]: number[]) => timestamp <= currentTime), // Filter out future timestamps
             color: `hsl(${panelIndex * 60}, 70%, 50%)`, // Different color for each panel
         }),
-    );
-
-    {
-        /* Battery Current Data */
-    }
-    const batteryCurrentData = data?.battCurr;
-    const chartDataIBatt = batteryCurrentData[0].map(
-        (timestamp: number, index: number) => [
-            timestamp,
-            batteryCurrentData[1][index] / 1000, // Convert to Amperes
-        ],
     );
 
     {
@@ -152,15 +185,16 @@ export default function SatTelemetry({
         {
             title: "Battery Current",
             yAxisTitle: "Current (A)",
-            series: [
-                {
-                    name: "Battery Current",
-                    data: chartDataIBatt,
-                    color: "yellow",
-                },
-            ],
+            series: chartDataIBatt,
             valueSuffix: " A",
         },
+        {
+            title: "Panel Temperatures",
+            yAxisTitle: "Temperature (°C)",
+            series: tempPanelChart,
+            valueSuffix: " °C",
+        },
+
         {
             title: "Solar Panel Temperatures",
             yAxisTitle: "Temperature (°C)",

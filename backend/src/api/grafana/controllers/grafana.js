@@ -12,9 +12,10 @@ module.exports = {
       const grafanaHost = "https://monitoring.hypso.space"; // Grafana URL
       const datasourceId = 3; // Replace with your datasource UID
 
-      const fields = [
+      const baseFields = [
         { refId: "batteryVoltage", field: "vBatt", measurement: "eps" },
-        { refId: "battCurr", field: "curBattIn", measurement: "eps" },
+        { refId: "battCurrIn", field: "curBattIn", measurement: "eps" },
+        { refId: "battCurrOut", field: "curBattOut", measurement: "eps" },
         { refId: "uptime", field: "uptimeInS", measurement: "eps" },
         {
           refId: "solarPanelTemp1",
@@ -47,6 +48,17 @@ module.exports = {
           measurement: "fc",
         },
       ];
+      const tempFields = [];
+      for (let i = 0; i <= 13; i++) {
+        tempFields.push({
+          refId: `tempPanelData${i}`,
+          field: `temp_${i}`,
+          measurement: "eps",
+        });
+      }
+
+      // Combine both arrays
+      const fields = [...baseFields, ...tempFields];
 
       const queries = fields.map((item) => ({
         refId: item.refId,
