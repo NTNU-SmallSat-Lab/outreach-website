@@ -24,8 +24,6 @@ module.exports = {
   },
   getSharedURL: async (ctx) => {
     const { fileId } = ctx.request.body;
-    const slackToken = process.env.SLACK_BOT_TOKEN;
-
     if (!fileId) {
       return ctx.badRequest("File ID is required");
     }

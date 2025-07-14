@@ -27,8 +27,9 @@ module.exports = {
     try {
       const result = await slack.conversations.history({
         channel: process.env.SLACK_CHANNEL_ID,
-        limit: 20,
+        limit: 15,
       });
+      console.log("Fetched images from Slack:", result.messages.length);
       cachedImages = result.messages.filter(
         (msg) =>
           msg.bot_profile?.name === "hypso1bot" &&

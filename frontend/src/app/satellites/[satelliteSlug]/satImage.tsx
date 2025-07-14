@@ -80,6 +80,7 @@ export default function SatImage({
                     files: SlackFile[];
                 }
 
+                console.log("Fetched Slack images:", data);
                 const rightMessage: SlackMessage | undefined = (
                     data as SlackMessage[]
                 ).find((message: SlackMessage) => {
@@ -92,7 +93,13 @@ export default function SatImage({
                     }
                     return false;
                 });
-
+                if (!rightMessage) {
+                    console.warn("No matching satellite image found.");
+                    setError(
+                        "No matching satellite image found. Try again later when a new image is uploaded.",
+                    );
+                    return;
+                }
                 const rightFile: SlackFile | undefined = rightMessage?.files[0];
                 makeTheImagePublic(rightFile?.id as number).catch((err) => {
                     console.error("Error making image public:", err);
