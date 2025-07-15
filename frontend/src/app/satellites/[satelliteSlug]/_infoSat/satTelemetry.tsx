@@ -87,7 +87,6 @@ export default function SatTelemetry({
             batteryVoltageData[1][index] / 1000,
         ],
     );
-
     {
         /* Battery Current Data */
     }

@@ -53,4 +53,24 @@ test.describe("Individual Satellite Page Test", () => {
         await slider.fill("180"); //Prediction of position in 180 minutes
         await expect(slider).toHaveValue("180");
     });
+    test("TestSwitchingTabs", async ({ page }) => {
+        await page.goto("/");
+        await page.getByRole("button", { name: "Satellites" }).click();
+        await page.getByTestId("satellitesTableRow").first().click();
+        await expect(page).toHaveURL(/\/satellites\/.+$/);
+        const tabs = page.getByTestId("satellite-tab-bar");
+        await expect(tabs).toBeVisible();
+        // Check if the first tab is active
+        await expect(tabs.getByRole("tab").first()).toHaveAttribute(
+            "aria-selected",
+            "true",
+        );
+        // Click on the second tab
+        await tabs.getByRole("tab").nth(1).click();
+        // Check if the second tab is now active
+        await expect(tabs.getByRole("tab").nth(1)).toHaveAttribute(
+            "aria-selected",
+            "true",
+        );
+    });
 });

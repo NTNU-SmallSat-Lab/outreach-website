@@ -84,7 +84,6 @@ export default function SatImage({
                     files: SlackFile[];
                 }
 
-                console.log("Fetched Slack images:", data);
                 const rightMessage: SlackMessage | undefined = (
                     data as SlackMessage[]
                 ).find((message: SlackMessage) => {

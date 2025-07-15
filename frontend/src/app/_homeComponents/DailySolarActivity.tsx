@@ -38,6 +38,7 @@ export default function DailySolarActivity() {
                 console.error("Error fetching Kp index data:", error);
             });
     }, []);
+
     const optionsDailyCharts = {
         chart: {
             type: "column",
