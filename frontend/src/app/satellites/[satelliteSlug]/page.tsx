@@ -11,9 +11,13 @@ import {
 import { SatelliteNumber } from "@/lib/store";
 import { graphql } from "@/lib/tada/graphql";
 import { getClient } from "@/lib/ApolloClient";
-import OrbitDataGraph from "./orbitDataGraph";
 import SatInfo from "./_infoSat/satInfo";
 import { SatAttributes } from "@/lib/utils";
+import dynamic from "next/dynamic";
+
+const OrbitDataGraph = dynamic(() => import("./orbitDataGraph"), {
+    ssr: false,
+});
 
 export interface ProjectOrSatellite {
     id: string;
@@ -115,7 +119,6 @@ export default async function SatelliteInfoPage({
                 {noradId ? (
                     satAttributes?.launchDate ? (
                         <OrbitDataGraph
-                            launchDateString={satAttributes?.launchDate}
                             orbitalData={satAttributes?.historicalOrbitalData}
                         />
                     ) : null
