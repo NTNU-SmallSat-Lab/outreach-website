@@ -30,7 +30,7 @@ export default function SatellitePassOverLocation() {
     const [latitude, setLatitude] = useState<string>("");
     const [longitude, setLongitude] = useState<string>("");
     const [error, setError] = useState<string>("");
-    const locations = useLocationStore((state) => state.locations);
+    const locations = useLocationStore((state) => state.location);
     const addLocation = useLocationStore((state) => state.addLocation);
     const setSelectedLocation = useLocationStore(
         (state) => state.setSelectedLocation,

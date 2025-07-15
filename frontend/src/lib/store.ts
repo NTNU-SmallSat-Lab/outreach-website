@@ -88,7 +88,7 @@ export const useSatelliteStore = create<SatelliteStore>()((set) => ({
 
 // Define the state for location management, for the pass over feature
 export interface LocationState {
-    locations: Location[];
+    location: Location[];
     selectedLocation: Location | null;
 }
 
@@ -96,7 +96,7 @@ export interface LocationState {
 /* eslint-disable no-unused-vars */
 // Disable unused variables as the store actions defined here are used in other files,
 export interface LocationActions {
-    setLocations: (locations: Location[]) => void;
+    setLocations: (location: Location[]) => void;
     addLocation: (location: Location) => void;
     setSelectedLocation: (location: Location) => void;
 }
@@ -105,7 +105,7 @@ export interface LocationActions {
 export type LocationStore = LocationState & LocationActions;
 // Create location store
 export const useLocationStore = create<LocationStore>()((set) => ({
-    locations: [
+    location: [
         {
             latitude: 63.446827,
             longitude: 10.421906,
@@ -119,8 +119,8 @@ export const useLocationStore = create<LocationStore>()((set) => ({
         name: "Trondheim",
     },
 
-    setLocations: (locations) => set({ locations }),
+    setLocations: (location) => set({ location }),
     addLocation: (location) =>
-        set((state) => ({ locations: [...state.locations, location] })),
+        set((state) => ({ location: [...state.location, location] })),
     setSelectedLocation: (location) => set({ selectedLocation: location }),
 }));
