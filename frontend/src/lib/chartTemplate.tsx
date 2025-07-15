@@ -107,8 +107,8 @@ export function createStockChartBaseConfig({
                     color: theme.text,
                     fontSize: "14px",
                 },
-                //eslint-disable-next-line no-unused-vars
                 formatter: function (
+                    //eslint-disable-next-line no-unused-vars
                     this: Highcharts.AxisLabelsFormatterContextObject,
                 ): string {
                     const extremes = this.axis.getExtremes();
