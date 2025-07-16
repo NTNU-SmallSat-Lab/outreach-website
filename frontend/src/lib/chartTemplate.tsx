@@ -113,7 +113,12 @@ export function createStockChartBaseConfig({
                 ): string {
                     const extremes = this.axis.getExtremes();
                     const zoomLevel = extremes.max - extremes.min; // Get the current zoom range
-                    if (zoomLevel <= 10 * 12 * 30 * 24 * 3600 * 1000) {
+                    if (zoomLevel <= 12 * 30 * 24 * 3600 * 1000) {
+                        return Highcharts.dateFormat(
+                            "%d %b %Y",
+                            Number(this.value),
+                        ); // Show day, month, and year
+                    } else if (zoomLevel <= 10 * 12 * 30 * 24 * 3600 * 1000) {
                         // If zoomed in to less than or equal to 1 month
                         return Highcharts.dateFormat(
                             "%b %Y",
