@@ -60,6 +60,7 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({ orbitalData }) => {
                         fontSize: "14px",
                     },
                 },
+                opposite: false, // Left side
             },
             // Second Y-axis (right) - Eccentricity
             {
@@ -88,6 +89,7 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({ orbitalData }) => {
                         fontSize: "14px",
                     },
                 },
+                opposite: false, // Left side
             },
         ],
         series: [
