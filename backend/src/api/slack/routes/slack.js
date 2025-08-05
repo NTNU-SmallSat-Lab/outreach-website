@@ -6,7 +6,7 @@
 module.exports = {
   routes: [
     {
-      method: "GET",
+      method: "POST",
       path: "/slack-images",
       handler: "slack.fetchImages",
       config: {

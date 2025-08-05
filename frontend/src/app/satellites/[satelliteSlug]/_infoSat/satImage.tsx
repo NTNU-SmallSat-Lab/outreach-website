@@ -63,54 +63,52 @@ export default function SatImage({
         [],
     );
 
+    const getMesasgeBySatellite = useCallback(
+        async (satName: string) => {
+            const requestDetails = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    satName: satName,
+                }),
+            };
+
+            const response = await fetch(
+                STRAPI_URL + "/api/slack-images",
+                requestDetails,
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.message;
+        },
+        [STRAPI_URL],
+    );
+
     useEffect(() => {
         async function fetchSlackImages() {
             try {
                 setLoading(true);
-                const response = await fetch(STRAPI_URL + "/api/slack-images");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
+                const satName = satNumToEntry[noradID as SatelliteNumber]?.name;
                 interface SlackFile {
                     id: number;
                     name: string;
                     permalink_public: string;
                 }
-
-                interface SlackMessage {
-                    text: string;
-                    files: SlackFile[];
-                }
-
-                const rightMessage: SlackMessage | undefined = (
-                    data as SlackMessage[]
-                ).find((message: SlackMessage) => {
-                    if (noradID !== undefined) {
-                        const satName: string | undefined =
-                            satNumToEntry[noradID as SatelliteNumber]?.name;
-                        if (satName && message.text.includes(satName)) {
-                            return true;
-                        }
-                    }
-                    return false;
-                });
-                if (!rightMessage) {
-                    console.warn("No matching satellite image found.");
-                    setError(
-                        "No matching satellite image found. Try again later when a new image is uploaded.",
-                    );
-                    return;
-                }
-                const rightFile: SlackFile | undefined = rightMessage?.files[0];
-                makeTheImagePublic(rightFile?.id as number).catch((err) => {
+                const message = (await getMesasgeBySatellite(
+                    satName as string,
+                )) as SlackFile;
+                makeTheImagePublic(message?.id as number).catch((err) => {
                     console.error("Error making image public:", err);
                     setError("Failed to make image public.");
                 });
                 const imageUrl = createImageUrl(
-                    rightFile?.permalink_public as string,
-                    rightFile?.name as string,
+                    message?.permalink_public as string,
+                    message?.name as string,
                 );
                 setSatImage(imageUrl ?? null);
             } catch (err) {
