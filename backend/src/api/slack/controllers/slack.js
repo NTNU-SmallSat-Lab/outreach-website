@@ -8,18 +8,46 @@
 const fetchImagesFromSlack = require("../services/slack");
 const fetch = require("node-fetch");
 
+let cachedImage = null;
+let cacheTimestamp = null;
+
 module.exports = {
   fetchImages: async (ctx) => {
+    const CACHE_DURATION = 60 * 1000; // 1 minute
+    const now = Date.now();
+
+    if (
+      cachedImage &&
+      cacheTimestamp &&
+      now - cacheTimestamp < CACHE_DURATION
+    ) {
+      ctx.body = cachedImage;
+      return;
+    }
     try {
-      const images = await strapi
-        .service("api::slack.slack")
-        .fetchImagesFromSlack();
-      return ctx.send(images);
+      const { satName } = ctx.request.body;
+
+      const message = await fetchImagesFromSlack.fetchImagesFromSlack(satName);
+      cachedImage = {
+        success: true,
+        message: {
+          id: message.files[0].id,
+          name: message.files[0].name,
+          permalink_public: message.files[0].permalink_public,
+        },
+      };
+      cacheTimestamp = now;
+      if (message) {
+        ctx.body = cachedImage;
+      } else {
+        ctx.body = {
+          success: false,
+          error: "No message found",
+        };
+      }
     } catch (error) {
-      return ctx.throw(
-        500,
-        "Error fetching images from Slack: " + error.message
-      );
+      ctx.status = 500;
+      ctx.body = { error: error.message };
     }
   },
   getSharedURL: async (ctx) => {

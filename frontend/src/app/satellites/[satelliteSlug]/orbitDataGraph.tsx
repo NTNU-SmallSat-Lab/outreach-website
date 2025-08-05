@@ -38,13 +38,6 @@ const OrbitDataGraph: React.FC<OrbitDataProps> = ({ orbitalData }) => {
         data.semiMajorAxis,
     ]);
 
-    console.log(
-        "Filtered orbital data:",
-        filteredData.map((data: ChartData) => [
-            data.epoch.getTime(),
-            parseFloat(data.inclination),
-        ]),
-    );
     const optChart = createStockChartBaseConfig({
         title: "Orbital Graph Data",
         yAxisArray: [

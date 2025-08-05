@@ -173,7 +173,7 @@ export default function SatTelemetry({
 
     const chartConfigs = [
         {
-            title: "Battery Voltage",
+            title: "EPS Battery Voltage",
             yAxisTitle: "Voltage (V)",
             series: [
                 {
@@ -185,20 +185,20 @@ export default function SatTelemetry({
             valueSuffix: " V",
         },
         {
-            title: "Battery Current",
+            title: "EPS Battery Current",
             yAxisTitle: "Current (A)",
             series: chartDataIBatt,
             valueSuffix: " A",
         },
         {
-            title: "Panel Temperatures",
+            title: "EPS Panel Temperatures",
             yAxisTitle: "Temperature (°C)",
             series: tempPanelChart,
             valueSuffix: " °C",
         },
 
         {
-            title: "Solar Panel Temperatures",
+            title: "EPS Solar Panel Temperatures",
             yAxisTitle: "Temperature (°C)",
             series: solarPanelChartData,
             valueSuffix: " °C",
@@ -206,7 +206,7 @@ export default function SatTelemetry({
                 "There is that much difference in temperature between some solar panels because those panels point more or less towards the sun.",
         },
         {
-            title: "Uptime",
+            title: "EPS Uptime",
             yAxisTitle: "Uptime (weeks)",
             series: [
                 { name: "Uptime", data: chartDataUptime, color: "orange" },
