@@ -82,6 +82,10 @@ API_TOKEN_SALT=toBeGenerated
 ADMIN_JWT_SECRET=toBeGenerated
 TRANSFER_TOKEN_SALT=toBeGenerated
 JWT_SECRET=toBeGenerated
+SLACK_BOT_TOKEN=toGetFromServer
+SLACK_USER_TOKEN=toGetFromServer
+SLACK_CHANNEL_ID=toGetFromServer
+GRAFANA_BOT_TOKEN=toGetFromServer
 ```
 
 And the following variables:
@@ -95,6 +99,29 @@ OUTWARD_FACING_URL=https://hypso.space
 PORT=1337
 STRAPI_URL=https://hypso.space/strapi
 ```
+
+The tokens labelled as `toGetFromServer` can be found on the smallsat02 server in the file at `root/website_secrets/secrets`.
+Concerning the `SLACK_BOT_TOKEN` and `SLACK_USER_TOKEN`, if you ever need to create a new bot for the website, you need to go on [Slack API website](https://api.slack.com/) and 
+connect with your NTNU account. 
+
+You click on "Create New App" and then click on "From scratch". From there you need to name the bot and select the work place 
+"NTNU smallSat Lab". Note that you need that the administrator of the slack server to approve your bot creation.
+
+Once your bot is created, you need to give this permissions to the bot. Click to the "OAuth & Permissions" on the sidebar and then search for the section "Scopes" 
+
+For the bot token scopes:
+
+1. `channels:history`
+2. `channels:read`
+3. `chat:write`
+4. `files:read`
+5. `files:write`
+
+For the user token scopes:
+1. `files:write`
+
+Once those steps are done, you can follow the step 3 of the [quickstart tutorial](https://api.slack.com/quickstart) of Slack.
+After that, you should have access to both tokens at "OAuth Tokens" section of "OAuth & Permissions" 
 
 ### Apache
 
