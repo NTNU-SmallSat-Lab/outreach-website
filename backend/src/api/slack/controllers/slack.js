@@ -10,21 +10,23 @@ const fetch = require("node-fetch");
 
 let cachedImage = null;
 let cacheTimestamp = null;
+let cacheSat = null;
 
 module.exports = {
   fetchImages: async (ctx) => {
     const CACHE_DURATION = 60 * 1000; // 1 minute
     const now = Date.now();
+    const { satName } = ctx.request.body;
     if (
       cachedImage &&
       cacheTimestamp &&
-      now - cacheTimestamp < CACHE_DURATION
+      now - cacheTimestamp < CACHE_DURATION &&
+      cacheSat === satName
     ) {
       ctx.body = cachedImage;
       return;
     }
     try {
-      const { satName } = ctx.request.body;
       const message = await fetchImagesFromSlack.fetchImagesFromSlack(satName);
       const image = message ? message.files[0] : null;
       if (!image.public_url_shared) {

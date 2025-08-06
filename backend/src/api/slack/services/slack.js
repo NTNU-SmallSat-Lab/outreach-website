@@ -25,8 +25,9 @@ module.exports = {
           console.log("No messages found in the channel.");
           return null;
         }
+        console.log(satellite);
         for (const message of result.messages) {
-          if (message.text && message.text.includes(satellite)) {
+          if (message.text.includes(satellite)) {
             if (!image) {
               image = message;
               break;
