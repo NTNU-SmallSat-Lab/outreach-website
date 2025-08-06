@@ -15,11 +15,7 @@ export default function SatImage({
     STRAPI_URL: string | undefined;
     noradID: number | undefined;
 }) {
-    const [selectedSatellite] = useSatelliteStore((state) => [
-        state.selectedSatellite,
-    ]);
     const satNumToEntry = useSatelliteStore((state) => state.satNumToEntry);
-
     const [satImage, setSatImage] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -68,7 +64,7 @@ export default function SatImage({
             }
         }
         fetchSlackImages();
-    }, [satImage, noradID, satNumToEntry]);
+    }, [satImage, noradID, satNumToEntry, getImageUrl]);
 
     if (loading) {
         return <div>Loading satellite image...</div>;
