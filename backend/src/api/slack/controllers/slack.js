@@ -26,15 +26,18 @@ module.exports = {
     }
     try {
       const { satName } = ctx.request.body;
-
       const message = await fetchImagesFromSlack.fetchImagesFromSlack(satName);
+      const image = message ? message.files[0] : null;
+      if (!image.public_url_shared) {
+        await fetchImagesFromSlack.getSharedURL(image?.id);
+      }
+      const imageURl = fetchImagesFromSlack.createImageUrl(
+        image?.permalink_public,
+        image?.name
+      );
       cachedImage = {
         success: true,
-        message: {
-          id: message.files[0].id,
-          name: message.files[0].name,
-          permalink_public: message.files[0].permalink_public,
-        },
+        image: imageURl,
       };
       cacheTimestamp = now;
       if (message) {
@@ -48,37 +51,6 @@ module.exports = {
     } catch (error) {
       ctx.status = 500;
       ctx.body = { error: error.message };
-    }
-  },
-  getSharedURL: async (ctx) => {
-    const { fileId } = ctx.request.body;
-    if (!fileId) {
-      return ctx.badRequest("File ID is required");
-    }
-
-    try {
-      const response = await fetch(
-        "https://slack.com/api/files.sharedPublicURL",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.SLACK_USER_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ file: fileId }),
-        }
-      );
-
-      const data = await response.json();
-      if (!data.ok && !data.error.includes("already_public")) {
-        throw new Error(data.error || "Failed to make the image public");
-      }
-      ctx.send({
-        message: "Image has been made public successfully",
-      });
-    } catch (error) {
-      console.error("Error generating public URL:", error);
-      ctx.internalServerError("Failed to make the image URL " + fileId);
     }
   },
 };
