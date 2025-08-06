@@ -15,7 +15,6 @@ module.exports = {
   fetchImages: async (ctx) => {
     const CACHE_DURATION = 60 * 1000; // 1 minute
     const now = Date.now();
-
     if (
       cachedImage &&
       cacheTimestamp &&
