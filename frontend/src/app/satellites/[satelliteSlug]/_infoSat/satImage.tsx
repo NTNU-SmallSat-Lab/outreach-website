@@ -15,55 +15,13 @@ export default function SatImage({
     STRAPI_URL: string | undefined;
     noradID: number | undefined;
 }) {
-    const [selectedSatellite] = useSatelliteStore((state) => [
-        state.selectedSatellite,
-    ]);
     const satNumToEntry = useSatelliteStore((state) => state.satNumToEntry);
 
     const [satImage, setSatImage] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const makeTheImagePublic = useCallback(
-        async (ID: number) => {
-            const requestDetails = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    fileId: ID,
-                }),
-            };
-
-            const responseUrl = await fetch(
-                STRAPI_URL + "/api/slack-shared-url",
-                requestDetails,
-            );
-            if (!responseUrl.ok) {
-                throw new Error(`HTTP error! status: ${responseUrl.status}`);
-            }
-        },
-        [STRAPI_URL],
-    );
-
-    const createImageUrl = useCallback(
-        (originalURL: string, fileName: string) => {
-            if (originalURL !== undefined) {
-                const lastSegment = originalURL.split("/").pop();
-                if (!lastSegment) return;
-                const arrayInfo = lastSegment.split("-");
-                const userTeam = arrayInfo[0];
-                const fileId = arrayInfo[1];
-                const pubSecret = arrayInfo[2];
-                const fileNameLowered = fileName.toLowerCase();
-                return `https://files.slack.com/files-pri/${userTeam}-${fileId}/${fileNameLowered}?pub_secret=${pubSecret}`;
-            }
-        },
-        [],
-    );
-
-    const getMesasgeBySatellite = useCallback(
+    const getImageUrl = useCallback(
         async (satName: string) => {
             const requestDetails = {
                 method: "POST",
@@ -84,7 +42,10 @@ export default function SatImage({
             }
 
             const data = await response.json();
-            return data.message;
+            if (data.success === false) {
+                throw new Error(data.message.error || "Failed to fetch image");
+            }
+            return data.image;
         },
         [STRAPI_URL],
     );
@@ -94,22 +55,7 @@ export default function SatImage({
             try {
                 setLoading(true);
                 const satName = satNumToEntry[noradID as SatelliteNumber]?.name;
-                interface SlackFile {
-                    id: number;
-                    name: string;
-                    permalink_public: string;
-                }
-                const message = (await getMesasgeBySatellite(
-                    satName as string,
-                )) as SlackFile;
-                makeTheImagePublic(message?.id as number).catch((err) => {
-                    console.error("Error making image public:", err);
-                    setError("Failed to make image public.");
-                });
-                const imageUrl = createImageUrl(
-                    message?.permalink_public as string,
-                    message?.name as string,
-                );
+                const imageUrl = await getImageUrl(satName);
                 setSatImage(imageUrl ?? null);
             } catch (err) {
                 console.error("Error fetching satellite images:", err);
@@ -119,15 +65,7 @@ export default function SatImage({
             }
         }
         fetchSlackImages();
-    }, [
-        satImage,
-        selectedSatellite,
-        STRAPI_URL,
-        noradID,
-        satNumToEntry,
-        makeTheImagePublic,
-        createImageUrl,
-    ]);
+    }, [satImage, noradID, satNumToEntry, getImageUrl]);
 
     if (loading) {
         return <div>Loading satellite image...</div>;

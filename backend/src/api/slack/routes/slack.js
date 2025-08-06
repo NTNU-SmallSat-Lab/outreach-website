@@ -13,13 +13,5 @@ module.exports = {
         auth: false,
       },
     },
-    {
-      method: "POST",
-      path: "/slack-shared-url",
-      handler: "slack.getSharedURL",
-      config: {
-        auth: false,
-      },
-    },
   ],
 };
