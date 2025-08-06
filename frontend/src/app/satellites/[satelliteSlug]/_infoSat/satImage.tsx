@@ -16,6 +16,7 @@ export default function SatImage({
     noradID: number | undefined;
 }) {
     const satNumToEntry = useSatelliteStore((state) => state.satNumToEntry);
+
     const [satImage, setSatImage] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
