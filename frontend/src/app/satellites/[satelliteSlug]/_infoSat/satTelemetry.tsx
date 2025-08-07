@@ -4,7 +4,6 @@ import { useSatelliteStore } from "@/lib/store";
 import { SatelliteNumber } from "@/lib/store";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { cp } from "fs";
 
 /**
  * This component renders the satellite telemetry data, including battery voltage, current, panel temperatures, and uptime.
