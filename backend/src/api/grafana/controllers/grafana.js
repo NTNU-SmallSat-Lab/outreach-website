@@ -28,11 +28,6 @@ module.exports = {
           measurement: "fc",
         },
         {
-          refId: "solarPanelTemp3",
-          field: "solarPanelTemp3",
-          measurement: "fc",
-        },
-        {
           refId: "solarPanelTemp4",
           field: "solarPanelTemp4",
           measurement: "fc",
@@ -42,14 +37,11 @@ module.exports = {
           field: "solarPanelTemp5",
           measurement: "fc",
         },
-        {
-          refId: "solarPanelTemp6",
-          field: "solarPanelTemp6",
-          measurement: "fc",
-        },
       ];
       const tempFields = [];
       for (let i = 0; i <= 13; i++) {
+        if (satSQL === "hypso1" && (i === 12 || i === 13)) continue;
+        if (satSQL === "hypso2" && i === 10) continue;
         tempFields.push({
           refId: `tempPanelData${i}`,
           field: `temp_${i}`,
@@ -85,11 +77,41 @@ module.exports = {
       }
 
       const data = await response.json();
+      const createNameForTemp = (i) => {
+        let name = `Panel ${i + 1}`;
+        if (i <= 3) {
+          name = `MPPT Conv ${i + 1}`;
+        } else if (i <= 7) {
+          name = `OUT Conv ${i + 1 - 4}`;
+        } else if (satSQL === "hypso1" && i <= 11) {
+          name = `BP ${i + 1 - 8}`;
+        } else if (satSQL === "hypso2" && i <= 13) {
+          if (i <= 9) {
+            name = `BP ${i + 1 - 8}`;
+          } else if (i === 11) {
+            name = "BP 4";
+          } else if (i >= 12 && i <= 13) {
+            name = `Ext. Board ${i - 10}`;
+          }
+        }
+        return name;
+      };
+
       const values = fields.reduce((acc, item) => {
         const result = data.results[item.refId];
         if (result && result.frames && result.frames.length > 0) {
-          acc[item.refId] = result.frames[0].data.values; // Store as key-value pair
+          if (item.refId.startsWith("tempPanelData")) {
+            // Handle temperature data with specific refId logic
+            let i = parseInt(item.refId.replace("tempPanelData", ""), 10);
+            acc[item.refId] = {
+              array: result.frames[0].data.values,
+              name: createNameForTemp(i), // Create name based on index
+            }; // Store as an object with array and panelIndex
+          } else {
+            acc[item.refId] = result.frames[0].data.values; // Store as key-value pair
+          }
         }
+        console.log(acc["tempPanelData10"]);
         return acc;
       }, {});
       // Return the data to the client

@@ -4,6 +4,7 @@ import { useSatelliteStore } from "@/lib/store";
 import { SatelliteNumber } from "@/lib/store";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import { cp } from "fs";
 
 /**
  * This component renders the satellite telemetry data, including battery voltage, current, panel temperatures, and uptime.
@@ -21,6 +22,7 @@ export default function SatTelemetry({
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [data, setData] = useState<any>(null);
+    // Fetch telemetry data from the backend)
 
     useEffect(() => {
         async function fetchTelemetryData() {
@@ -117,15 +119,26 @@ export default function SatTelemetry({
     };
 
     const tempPanelChart = [];
+    let satName = "";
+    if (noradID !== undefined) {
+        satName = satNumToEntry[noradID as SatelliteNumber]?.name || "";
+    }
+
     for (let i = 0; i <= 13; i++) {
+        if (satName === "HYPSO-1" && (i === 12 || i === 13)) continue;
+        if (satName === "HYPSO-2" && i === 10) continue;
+        // Skip panel 10 for HYPSO-2
+
         const tempData = data?.[`tempPanelData${i}`];
-        if (tempData && !checkLine(tempData[1])) {
+        console.log(`tempPanelData${i}`, checkLine(tempData?.array[1]));
+        // Check if tempData is defined and has
+        if (tempData && !checkLine(tempData.array[1])) {
             tempPanelChart.push({
-                name: `Panel ${i}`,
-                data: tempData[0]
+                name: tempData.name || `Panel ${i}`,
+                data: tempData.array[0]
                     .map((timestamp: number, index: number) => [
                         timestamp,
-                        tempData[1][index], // Assuming you need to divide by 1000
+                        tempData.array[1][index], // Assuming you need to divide by 1000
                     ])
                     .filter(
                         ([timestamp]: number[]) => timestamp <= currentTime,
@@ -140,25 +153,21 @@ export default function SatTelemetry({
     }
 
     const solarPanelTempData = [
-        data?.solarPanelTemp1,
-        data?.solarPanelTemp2,
-        data?.solarPanelTemp3,
-        data?.solarPanelTemp4,
-        data?.solarPanelTemp5,
-        data?.solarPanelTemp6,
+        { array: data?.solarPanelTemp1, panelIndex: "1" },
+        { array: data?.solarPanelTemp2, panelIndex: "2" },
+        { array: data?.solarPanelTemp4, panelIndex: "4" },
+        { array: data?.solarPanelTemp5, panelIndex: "5" },
     ].filter((temp) => temp); // Filter out any undefined values
-    const solarPanelChartData = solarPanelTempData.map(
-        (tempData, panelIndex) => ({
-            name: `Solar Panel ${panelIndex + 1}`,
-            data: tempData[0]
-                .map((timestamp: number, index: number) => [
-                    timestamp,
-                    tempData[1][index], // Assuming you need to divide by 1000
-                ])
-                .filter(([timestamp]: number[]) => timestamp <= currentTime), // Filter out future timestamps
-            color: `hsl(${panelIndex * 60}, 70%, 50%)`, // Different color for each panel
-        }),
-    );
+    const solarPanelChartData = solarPanelTempData.map((tempData) => ({
+        name: `Solar Panel ${tempData.panelIndex}`,
+        data: tempData.array[0]
+            .map((timestamp: number, index: number) => [
+                timestamp,
+                tempData.array[1][index], // Assuming you need to divide by 1000
+            ])
+            .filter(([timestamp]: number[]) => timestamp <= currentTime), // Filter out future timestamps
+        color: `hsl(${parseInt(tempData.panelIndex) * 60}, 70%, 50%)`, // Different color for each panel
+    }));
 
     {
         /* Uptime Data */
@@ -198,7 +207,7 @@ export default function SatTelemetry({
         },
 
         {
-            title: "EPS Solar Panel Temperatures",
+            title: "FC Solar Panel Temperatures",
             yAxisTitle: "Temperature (°C)",
             series: solarPanelChartData,
             valueSuffix: " °C",
