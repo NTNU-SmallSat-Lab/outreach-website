@@ -2,6 +2,11 @@
 import HistoricalSolarCycleData from "./HistoricalSolarCycleData";
 import DailySolarActivity from "./DailySolarActivity";
 
+/**
+ * This component renders the historical solar data page, including daily and historical solar activity charts.
+ * It provides an overview of geomagnetic activity and sunspot numbers.
+ */
+
 export default function HistorySolarData() {
     return (
         <div className="mt-16 flex h-full flex-col items-center justify-center text-center">

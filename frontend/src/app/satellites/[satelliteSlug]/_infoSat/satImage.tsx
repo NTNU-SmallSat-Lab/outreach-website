@@ -21,6 +21,9 @@ export default function SatImage({
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    {
+        /**  Making a request to the backend to obtain the satellite image URL  */
+    }
     const getImageUrl = useCallback(
         async (satName: string) => {
             const requestDetails = {
@@ -79,8 +82,8 @@ export default function SatImage({
                 key={satImage}
                 src={satImage}
                 alt="Satellite Image"
-                width={1600} // Set according to the aspect ratio of the image
-                height={0}
+                width={600} // Set according to the aspect ratio of the image
+                height={600}
                 className="max-h-[600px] max-w-[600px] object-contain p-2"
             />
         </div>

@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 
+/**
+ *
+ * This component renders a graph of geomagnetic activity index (Kp) data.
+ */
+
 export default function DailySolarActivity() {
     const [dailyKpIndex, setDailyKpIndex] = useState<any>(null);
     const [dailyTimestamps, setDailyTimestamps] = useState<string[]>([]);

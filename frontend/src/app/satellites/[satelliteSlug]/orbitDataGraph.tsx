@@ -15,6 +15,10 @@ type ChartData = {
     eccentricity: string;
     semiMajorAxis: number;
 };
+/**
+ * This component renders a graph of orbital data, including inclination, eccentricity, and altitude.
+ * It uses Highcharts to create a stock chart with multiple Y-axes for different parameters.
+ */
 
 const OrbitDataGraph: React.FC<OrbitDataProps> = ({ orbitalData }) => {
     const filteredData = orbitalData.map((data: any) => {

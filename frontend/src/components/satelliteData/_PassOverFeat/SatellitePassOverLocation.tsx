@@ -5,6 +5,11 @@ import { cn } from "@/lib/utils";
 import { Location } from "@/lib/store";
 import { useLocationStore } from "@/lib/store";
 
+/**
+ * This component allows users to select a location for satellite pass over predictions.
+ * It includes a dropdown for selecting predefined locations or entering custom coordinates.
+ */
+
 export default function SatellitePassOverLocation() {
     // State to manage whether the dropdown is open or closed
     let isLargeScreen = useRef<boolean>(false);

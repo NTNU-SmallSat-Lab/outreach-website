@@ -4,8 +4,13 @@ import { useLocationStore } from "@/lib/store";
 import { useSatelliteStore } from "@/lib/store";
 import { predictFuturePositions } from "@/lib/convertSatrec";
 const updateInterval = 50; // in ms
-const deltaDegree = 1; // Delta degree to check if the satellite is over the location
+const deltaDegree = 1.5; // Delta degree to check if the satellite is over the location
 const predictedMinutes = 100000; // Number of minutes to predict future positions
+
+/**
+ * This component computes the time before the satellite passes over the selected location.
+ * It uses the satellite's predicted positions to determine when it will pass over the location.
+ */
 
 export default function SatellitePassOverTime() {
     //Computation of the time before the satellite pass over the selected location

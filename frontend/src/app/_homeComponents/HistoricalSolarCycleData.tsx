@@ -4,12 +4,18 @@ import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { createStockChartBaseConfig } from "@/lib/chartTemplate";
 
+/**
+ * This component renders a graph of historical solar cycle data, specifically sunspot numbers.
+ * It fetches data from a public API and displays it using Highcharts.
+ */
+
 export default function HistoricalSolarCycleData() {
     const [historicalSunSpot, setHistoricalSunSpot] = useState<any>(null);
     const [historicalTimestamps, setHistoricalTimestamps] = useState<number[]>(
         [],
     );
 
+    // Fetch historical sunspot data from NOAA SWPC
     useEffect(() => {
         fetch("https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json")
             .then((response) => {
@@ -37,6 +43,7 @@ export default function HistoricalSolarCycleData() {
             });
     }, []);
 
+    // Prepare data for Highcharts
     const formattedHistoricalData = historicalTimestamps.map(
         (timestamp, index) => [
             new Date(timestamp).getTime(), // Convert to Unix timestamp (milliseconds)
@@ -44,6 +51,7 @@ export default function HistoricalSolarCycleData() {
         ],
     );
 
+    // function to calculate moving average
     const calculateMovingAverage = (
         data: number[][],
         windowSize: number,
@@ -67,6 +75,7 @@ export default function HistoricalSolarCycleData() {
         10,
     );
 
+    // Chart options
     const optionsHistoricalChart = createStockChartBaseConfig({
         title: "Historical Solar Cycle Data",
         yAxisTitle: "Sunspot Number (SSN)",

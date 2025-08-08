@@ -27,15 +27,21 @@ module.exports = {
       return;
     }
     try {
+      // Getting the message with the image needed from Slack
       const message = await fetchImagesFromSlack.fetchImagesFromSlack(satName);
       const image = message ? message.files[0] : null;
+
+      //Making the image public if it is not already
       if (!image.public_url_shared) {
         await fetchImagesFromSlack.getSharedURL(image?.id);
       }
+
+      // Creating the image URL
       const imageURl = fetchImagesFromSlack.createImageUrl(
         image?.permalink_public,
         image?.name
       );
+
       cachedImage = {
         success: true,
         image: imageURl,

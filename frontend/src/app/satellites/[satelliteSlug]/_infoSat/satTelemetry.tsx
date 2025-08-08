@@ -21,8 +21,10 @@ export default function SatTelemetry({
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [data, setData] = useState<any>(null);
-    // Fetch telemetry data from the backend)
 
+    {
+        /** Fetching telemetry data from the backend */
+    }
     useEffect(() => {
         async function fetchTelemetryData() {
             try {
@@ -179,6 +181,9 @@ export default function SatTelemetry({
         ],
     );
 
+    {
+        /* Chart configurations */
+    }
     const chartConfigs = [
         {
             title: "EPS Battery Voltage",

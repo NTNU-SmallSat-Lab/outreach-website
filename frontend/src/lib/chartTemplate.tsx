@@ -25,6 +25,11 @@ interface StockChartBaseConfigProps {
     customOptions?: Highcharts.Options;
 }
 
+/** Creates a base configuration for a Highcharts stock chart.
+ * @param {StockChartBaseConfigProps} config - Configuration options for the chart.
+ * @returns {Highcharts.Options} - The base configuration object for the chart.
+ */
+
 export function createStockChartBaseConfig({
     title,
     yAxisArray = [],
@@ -60,6 +65,7 @@ export function createStockChartBaseConfig({
         enabled: false, // Disable credits by default
     },
 }: StockChartBaseConfigProps) {
+    // Base yAxis configuration
     if (yAxisArray.length === 0) {
         yAxisArray.push({
             title: {
@@ -107,6 +113,7 @@ export function createStockChartBaseConfig({
                     color: theme.text,
                     fontSize: "14px",
                 },
+                // Handling date formatting based on zoom level
                 formatter: function (
                     //eslint-disable-next-line no-unused-vars
                     this: Highcharts.AxisLabelsFormatterContextObject,
