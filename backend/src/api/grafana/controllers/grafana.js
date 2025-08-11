@@ -93,7 +93,7 @@ module.exports = {
           } else if (i === 11) {
             name = "BP 4";
           } else if (i >= 12 && i <= 13) {
-            name = `Ext. Board ${i - 10}`;
+            name = `Ext. Board ${i - 11}`;
           }
         }
         return name;

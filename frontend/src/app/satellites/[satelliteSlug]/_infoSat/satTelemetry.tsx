@@ -90,10 +90,10 @@ export default function SatTelemetry({
             batteryVoltageData[1][index] / 1000,
         ],
     );
+
     {
         /* Battery Current Data */
     }
-
     const batteryCurrentData = [data?.battCurrIn, data?.battCurrOut].filter(
         (curr) => curr,
     ); // Filter out any undefined values
@@ -114,7 +114,6 @@ export default function SatTelemetry({
     {
         /* Temperature Panel Data */
     }
-
     const checkLine = (data: number[]) => {
         return data.every((index) => data[index] === data[0]);
     };
@@ -127,12 +126,13 @@ export default function SatTelemetry({
 
     for (let i = 0; i <= 13; i++) {
         if (satName === "HYPSO-1" && (i === 12 || i === 13)) continue;
+        // HYPSO-1 has no Ext. Board
         if (satName === "HYPSO-2" && i === 10) continue;
         // Skip panel 10 for HYPSO-2
 
         const tempData = data?.[`tempPanelData${i}`];
         console.log(`tempPanelData${i}`, checkLine(tempData?.array[1]));
-        // Check if tempData is defined and has
+        // Check if tempData is defined and has no uncoherent data
         if (tempData && !checkLine(tempData.array[1])) {
             tempPanelChart.push({
                 name: tempData.name || `Panel ${i}`,
