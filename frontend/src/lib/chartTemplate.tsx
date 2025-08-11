@@ -120,7 +120,16 @@ export function createStockChartBaseConfig({
                 ): string {
                     const extremes = this.axis.getExtremes();
                     const zoomLevel = extremes.max - extremes.min; // Get the current zoom range
-                    if (zoomLevel <= 12 * 30 * 24 * 3600 * 1000) {
+                    if (zoomLevel <= 10 * 24 * 3600 * 1000) {
+                        return (
+                            Highcharts.dateFormat("%H:%M", Number(this.value)) +
+                            "<br>" +
+                            Highcharts.dateFormat(
+                                "%d %b %Y",
+                                Number(this.value),
+                            )
+                        );
+                    } else if (zoomLevel <= 12 * 30 * 24 * 3600 * 1000) {
                         return Highcharts.dateFormat(
                             "%d %b %Y",
                             Number(this.value),
